@@ -1,0 +1,8 @@
+---
+title: "Posts"
+listing:
+  contents: .
+  type: default
+---
+
+여기는 모든 포스트 목록입니다.
