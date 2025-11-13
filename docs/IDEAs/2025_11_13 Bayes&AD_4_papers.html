@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>master_paper – Master Thesis Literature Review</title>
+<title>bayesad_4_papers – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,76 +68,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Master Thesis Literature Review</span>
     </a>
   </div>
@@ -150,11 +90,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -163,7 +103,7 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="./posts/index.qmd">
+    <a class="dropdown-item" href="../posts/index.qmd">
  <span class="dropdown-text">All posts</span></a>
   </li>  
     </ul>
@@ -176,108 +116,220 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">master_paper</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="YW5hbHlzaXM=">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(2)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
+<table class="caption-top table">
+<colgroup>
+<col style="width: 1%">
+<col style="width: 16%">
+<col style="width: 41%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Category</th>
+<th>Reference (Authors, Title)</th>
+<th>Why Relevant / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Anomaly detection – classic survey</td>
+<td>Chandola et al., <strong>“Anomaly Detection: A Survey”</strong> (ACM Computing Surveys)</td>
+<td>고전적인 이상치 탐지 전반 개요. 전통 기법들과 용어 정리용.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Deep anomaly detection – survey</td>
+<td>Pang et al., <strong>“Deep Learning for Anomaly Detection: A Review”</strong></td>
+<td>딥러닝 기반 AD를 종합적으로 정리. 딥 모델 분류·비교 구조 잡을 때 중요.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Image/video anomaly – survey</td>
+<td>Mohammadi et al., <strong>“Deep Learning for Video Anomaly Detection – A Survey”</strong></td>
+<td>영상 도메인 위주지만, 딥 AD 패턴과 실험 관행 참고용.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Graph anomaly – survey</td>
+<td>Xu et al., <strong>“A Comprehensive Survey on Graph Anomaly Detection with Deep Learning”</strong></td>
+<td>그래프 도메인이지만, deep AD 설계 아이디어·평가 지표 참고 가능.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>General anomaly – survey</td>
+<td>Salehi et al., <strong>“A Comprehensive Survey of Anomaly Detection Algorithms”</strong></td>
+<td>통계·머신러닝·딥러닝 AD 기법을 넓게 개관.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Multivariate time series AD</td>
+<td>Malhotra et al., <strong>“LSTM-based Encoder-Decoder for Multi-sensor Anomaly Detection”</strong></td>
+<td>다변량 시계열 + LSTM AE 구조. baseline 및 시계열 세팅 참고.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Multivariate time series AD</td>
+<td>Hundman et al., <strong>“Detecting Spacecraft Anomalies Using LSTMs and Nonparametric Dynamic Thresholding”</strong></td>
+<td>NASA/spacecraft 시계열 AD. thresholding 전략까지 포함해 실전 감각 참고.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Multivariate time series AD (deep)</td>
+<td>Audibert et al., <strong>“USAD: UnSupervised Anomaly Detection on Multivariate Time Series”</strong></td>
+<td>USAD 구조. 다변량 시계열 AD 대표적인 딥 모델 중 하나.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Deep generative AD (AE+GMM)</td>
+<td>Zong et al., <strong>“Deep Autoencoding Gaussian Mixture Model for Unsupervised Anomaly Detection”</strong></td>
+<td>AE + GMM 조합. latent mixture 아이디어 참고 (Mixture-of-VAEs와 연결).</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Time-series anomaly – survey</td>
+<td>Braei &amp; Wagner, <strong>“Anomaly Detection in Univariate Time Series: A Survey on the State-of-the-Art”</strong></td>
+<td>시계열 AD 전반 survey. 데이터셋·지표·평가 관행 정리용.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Time-series anomaly – survey</td>
+<td>Blázquez-García et al., <strong>“A Review on Outlier/Anomaly Detection in Time Series Data”</strong></td>
+<td>시계열 이상치 탐지 종합 리뷰. 논문 인용·관련연구 작성에 유용.</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>VAE – 기본 이론</td>
+<td>Kingma &amp; Welling, <strong>“Auto-Encoding Variational Bayes”</strong></td>
+<td>VAE 이론의 원 논문. ELBO, reparameterization 등 수식의 기반.</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>VAE for anomaly detection (초기)</td>
+<td>An &amp; Cho, <strong>“Variational Autoencoder based Anomaly Detection using Reconstruction Probability”</strong></td>
+<td>VAE를 AD에 직접 적용한 초창기 아이디어. reconstruction probability 개념.</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>VAE AD – 비교 연구</td>
+<td>Nguyen et al., <strong>“Variational Autoencoder for Anomaly Detection: A Comparative Study”</strong></td>
+<td>여러 VAE 기반 AD 변형을 비교. 어떤 변형을 baseline으로 잡을지 참고 가능.</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>Classification-based AD</td>
+<td>Bergman &amp; Hoshen, <strong>“Classification-Based Anomaly Detection for General Data”</strong></td>
+<td>분류 기반 AD 접근. VAE/모델링과는 다른 관점의 비교 대상으로 참고.</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>Deep one-class AD</td>
+<td>Xu et al., <strong>“Deep One-Class Classification”</strong></td>
+<td>Deep SVDD류. one-class 관점의 AD 이론·구조 참고.</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>Deep semi-supervised AD</td>
+<td>Ruff et al., <strong>“Deep Semi-Supervised Anomaly Detection”</strong></td>
+<td>일부 라벨이 있는 경우 AD 설계. 비지도/반지도 경계 정리하는 데 도움.</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>GM-VAE / mixture latent</td>
+<td>Dilokthanakul et al., <strong>“Deep Unsupervised Clustering with Gaussian Mixture Variational Autoencoders”</strong></td>
+<td>latent space에 GMM을 둔 VAE. Mixture-of-VAEs/클러스터링 설계에 기초.</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>Entangled Mixture-of-VAEs</td>
+<td>Caciularu &amp; Goldberger, <strong>“An Entangled Mixture of Variational Autoencoders Approach to Deep Clustering”</strong></td>
+<td>여러 VAE의 mixture로 클러스터링. 우리가 말한 Mixture-of-VAEs와 매우 직접적으로 연결.</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>Mixture-of-VAEs for clustering</td>
+<td>(OpenReview) <strong>“A Mixture of Variational Autoencoders for Deep Clustering”</strong></td>
+<td>MoVAE 구조를 직접 다루는 논문. 모드별 VAE·게이팅 설계 참고.</td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td>VAE + Gamma mixture latent</td>
+<td>Li et al., <strong>“Deep Clustering Analysis via VAE with Gamma Mixture Latent Model (GamMM-VAE)”</strong></td>
+<td>latent mixture를 변형한 모델. 모드 표현/클러스터링 관점에서 아이디어 참고.</td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>MoE + (C)VAE for AD</td>
+<td>Moradi et al., <strong>“Mixture of Experts with Convolutional and Variational Autoencoders for Anomaly Detection”</strong></td>
+<td>CNN+VAE 기반 expert mixture로 AD 수행. MoE와 AD를 직접 연결한 사례.</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td>Bayesian DL – MC Dropout</td>
+<td>Gal &amp; Ghahramani, <strong>“Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning”</strong></td>
+<td>MC Dropout으로 epistemic UQ 추정. VAE/encoder/decoder에 바로 적용 가능.</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>UQ (aleatoric/epistemic) in DL</td>
+<td>Kendall &amp; Gal, <strong>“What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision?”</strong></td>
+<td>aleatoric vs epistemic 구분 + loss에 UQ 넣는 방법. 이상치 + UQ 해석에 핵심.</td>
+</tr>
+<tr class="odd">
+<td>25</td>
+<td>Deep ensembles for UQ</td>
+<td>Lakshminarayanan et al., <strong>“Simple and Scalable Predictive Uncertainty Estimation Using Deep Ensembles”</strong></td>
+<td>Ensemble 기반 UQ. VAE/decoder ensemble 설계 시 참고 가능.</td>
+</tr>
+<tr class="even">
+<td>26</td>
+<td>UQ under dataset shift</td>
+<td>Ovadia et al., <strong>“Can You Trust Your Model’s Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift”</strong></td>
+<td>UQ의 신뢰성 평가. 제안 모델 UQ를 어떻게 검증할지 아이디어 제공.</td>
+</tr>
+<tr class="odd">
+<td>27</td>
+<td>Bayesian DL – thesis</td>
+<td>Gal, <strong>“Uncertainty in Deep Learning” (PhD thesis)</strong></td>
+<td>Bayesian DL 전반 정리. 이론 챕터(정의·정리) 쓸 때 구조 참고.</td>
+</tr>
+<tr class="even">
+<td>28</td>
+<td>Selective prediction – theory</td>
+<td>Geifman &amp; El-Yaniv, <strong>“Selective Classification for Deep Neural Networks”</strong></td>
+<td>risk–coverage, abstention 개념의 정석 논문. STOP/CHECK/IGNORE 이론 기반.</td>
+</tr>
+<tr class="odd">
+<td>29</td>
+<td>Selective prediction in NLP</td>
+<td>Xin et al., <strong>“The Art of Abstention: Selective Prediction and Error Regularization for NLP”</strong></td>
+<td>selective prediction을 딥 모델에 적용한 실전 예. loss 설계·실험 세팅 참고.</td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>Selective classification + AUC</td>
+<td>Pugnana et al., <strong>“AUC-based Selective Classification”</strong></td>
+<td>선택적 분류에서 AUC 기반 기준 제안. selective rule 평가 지표 설계에 참고 가능.</td>
+</tr>
+</tbody>
+</table>
 
 
 
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763017424763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="7">
-<div class="thumbnail"><a href="./posts/post-with-code/index.html" class="no-external">
-
-<img loading="lazy" src="./posts/post-with-code/image.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/post-with-code/index.html" class="no-external">Post With Code</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">news</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('YW5hbHlzaXM='); return false;">analysis</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/post-with-code/index.html" class="no-external">
-This is a post with executable code.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/post-with-code/index.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-Harlow Malloc
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bmV3cw==" data-listing-date-sort="1762700400000" data-listing-file-modified-sort="1763017424761" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
-<div class="thumbnail"><a href="./posts/welcome/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts\welcome\thumbnail.jpg"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome/index.html" class="no-external">Welcome To My Blog</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">news</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/welcome/index.html" class="no-external">
-This is the first post in a Quarto blog. Welcome!
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Nov 10, 2025
-</div>
-<div class="listing-author">
-Tristan O’Malley
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
