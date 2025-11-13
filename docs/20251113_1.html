@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-11-13">
+<meta name="description" content="메타 러닝 관련 논문 요약 및 주요 내용">
 
-<title>quarto-inputc730de9a4ca62a7d – Master Thesis Literature Review</title>
+<title>Meta Learning in Neural Networks — A Survey – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -166,9 +168,40 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Meta Learning in Neural Networks — A Survey</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">MetaLearning</div>
+    <div class="quarto-category">Survey</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    메타 러닝 관련 논문 요약 및 주요 내용
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 13, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <section id="paper-review-meta-learning-in-neural-networks-a-survey" class="level1">
@@ -245,23 +278,57 @@ During meta-learning, an outer (or upper/meta) algorithm updates the inner learn
 &gt; 정규화(Regularization) 방법: L1, L2, Dropout 등 어떤 정규화 기법을 적용할 것인가?</li>
 </ul>
 </section>
-<section id="메타러닝-과제-분포-관점" class="level4">
-<h4 class="anchored" data-anchor-id="메타러닝-과제-분포-관점"><strong>메타러닝: 과제 분포 관점</strong></h4>
-<p>메타러닝에 대한 일반적인 관점은 과제 전반에 걸쳐 일반화할 수 있고, 이상적으로는 각각의 새로운 과제를 이전보다 더 잘 학습할 수 있게 하는 범용 학습 알고리즘을 배우는 것입니다. 우리는 과제 분포 <span class="math inline">\(p(\mathcal{T})\)</span>에 대한 <span class="math inline">\(\omega\)</span>의 성능을 평가할 수 있습니다. 여기서 과제를 데이터셋과 손실 함수의 조합인 <span class="math inline">\(\mathcal{T} = \{D, L\}\)</span>로 느슨하게 정의합니다. 따라서 학습 방법을 학습하는 것은 다음과 같이 됩니다:</p>
+<section id="메타러닝-과제-분포task-distribution-관점" class="level4">
+<h4 class="anchored" data-anchor-id="메타러닝-과제-분포task-distribution-관점">메타러닝: 과제 분포(Task-Distribution) 관점</h4>
+<p>메타러닝을 바라보는 가장 흔한 관점은, <strong>여러 다양한 과제에 두루두루 잘 통하는 범용 학습 방법을 배우는 것</strong>입니다. 이상적으로는, 새로운 과제를 배울 때마다 이전에 배운 경험 덕분에 더 잘 배우게 되는 것을 목표로 합니다.</p>
+<p>어떤 학습 방법(ω)이 얼마나 좋은지를 평가하려면, 하나의 과제만 보는 것이 아니라 <strong>과제들이 모여있는 전체 분포(<span class="math inline">\(p(\mathcal{T})\)</span>)</strong>를 봐야 합니다. 여기서 ‘과제(<span class="math inline">\(\mathcal{T}\)</span>)’란 특정 ’데이터셋(<span class="math inline">\(D\)</span>)’과 그 데이터셋으로 달성하려는 ’목표(손실 함수 <span class="math inline">\(L\)</span>)’의 조합이라고 생각할 수 있습니다. (예: ’고양이/개 이미지 분류’라는 과제 = ’고양이/개 이미지 데이터셋’ + ‘분류 정확도를 높이는 손실 함수’)</p>
+<p>따라서 <strong>“학습하는 법을 배운다”</strong>는 것은, 결국 다음과 같은 목표를 달성하는 과정이 됩니다.</p>
 <p><span class="math display">\[
 \min_{\omega} \mathbb{E}_{\mathcal{T} \sim p(\mathcal{T})} \mathcal{L}(D; \omega) \quad (2)
 \]</span></p>
-<p>여기서 <span class="math inline">\(\mathcal{L}(D; \omega)\)</span>는 데이터셋 <span class="math inline">\(D\)</span>에서 <span class="math inline">\(\omega\)</span>를 사용하여 훈련된 모델의 성능을 측정합니다. ‘학습 방법’, 즉 <span class="math inline">\(\omega\)</span>는 종종 <strong>과제 전반의 지식(across-task knowledge)</strong> 또는 <strong>메타 지식(meta-knowledge)</strong> 이라고 불립니다.</p>
-<p>실제로 이 문제를 해결하기 위해, 우리는 종종 <span class="math inline">\(p(\mathcal{T})\)</span>에서 샘플링된 소스 과제(source tasks) 집합에 접근할 수 있다고 가정합니다. 공식적으로, 메타 훈련 단계에서 사용되는 <span class="math inline">\(M\)</span>개의 소스 과제 집합을 <span class="math inline">\(\mathcal{D}_{\text{source}} = \{(D_{\text{train}}^{\text{source}}, D_{\text{val}}^{\text{source}})^{(i)}\}_{i=1}^M\)</span>로 표기하며, 각 과제는 훈련 데이터와 검증 데이터를 모두 가집니다. 종종 소스 훈련 및 검증 데이터셋은 각각 <strong>서포트셋(support set)</strong> 과 <strong>쿼리셋(query set)</strong> 이라고 불립니다. ‘학습 방법을 학습하는’ 메타 훈련 단계는 다음과 같이 쓸 수 있습니다:</p>
+<blockquote class="blockquote">
+<p><strong>[수식 (2) 해설]</strong> * <strong>ω (오메가)</strong>: 우리가 찾고 싶은 ‘최고의 학습 전략’ 또는 ’학습 노하우’입니다. * <strong><span class="math inline">\(\mathcal{T} \sim p(\mathcal{T})\)</span></strong>: 세상에 존재할 수 있는 수많은 과제들 중에서 무작위로 하나를 뽑는다는 뜻입니다. * <strong><span class="math inline">\(\mathbb{E}\)</span></strong>: ’평균적으로(기댓값)’라는 의미입니다. * <strong><span class="math inline">\(\mathcal{L}(D; \omega)\)</span></strong>: 학습 전략(ω)을 사용해서 어떤 과제의 데이터(D)를 학습했을 때의 최종 성능(손실 값)입니다.</p>
+<p><strong>전체 의미</strong>: “어떤 과제가 주어지든 <strong>평균적으로 가장 좋은 성능을 내는 만능 학습 전략(ω)을 찾아라!</strong>” 라는 뜻입니다. 이 학습 전략(ω)을 <strong>메타 지식(meta-knowledge)</strong>이라고 부릅니다.</p>
+</blockquote>
+<p>실제로는 세상의 모든 과제에 접근할 수 없으므로, 우리는 <strong>샘플 과제들</strong>을 가지고 학습을 진행합니다. 이 과정을 두 단계로 나눌 수 있습니다.</p>
+<hr>
+</section>
+<section id="단계-메타-훈련-meta-training---학습-노하우-배우기" class="level4">
+<h4 class="anchored" data-anchor-id="단계-메타-훈련-meta-training---학습-노하우-배우기">1단계: 메타-훈련 (Meta-Training) - “학습 노하우 배우기”</h4>
+<p>먼저, ’훈련용’으로 사용할 M개의 샘플 과제 묶음 <span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>를 준비합니다. 각 과제는 두 종류의 데이터로 나뉩니다. * <strong>훈련용 데이터 (<span class="math inline">\(D_{\text{train}}\)</span>)</strong>: 이 과제를 ’학습’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>서포트셋(support set)</strong> 이라고 부릅니다. * <strong>검증용 데이터 (<span class="math inline">\(D_{\text{val}}\)</span>)</strong>: 위에서 학습이 얼마나 잘 되었는지 ’평가’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>쿼리셋(query set)</strong> 이라고 부릅니다.</p>
+<p>이 훈련용 과제 묶음을 가지고 “학습 노하우를 배우는” 메타-훈련 단계는 다음과 같이 표현됩니다.</p>
 <p><span class="math display">\[
 \omega^* = \arg\max_{\omega} \log p(\omega|\mathcal{D}_{\text{source}}) \quad (3)
 \]</span></p>
-<p>이제 메타 테스트 단계에서 사용되는 <span class="math inline">\(Q\)</span>개의 타겟 과제(target tasks) 집합을 <span class="math inline">\(\mathcal{D}_{\text{target}} = \{(D_{\text{train}}^{\text{target}}, D_{\text{test}}^{\text{target}})^{(i)}\}_{i=1}^Q\)</span>로 표기하며, 각 과제는 훈련 데이터와 테스트 데이터를 모두 가집니다. 메타 테스트 단계에서는 학습된 메타 지식 <span class="math inline">\(\omega^*\)</span>를 사용하여 이전에 보지 못한 각 타겟 과제 <span class="math inline">\(i\)</span>에 대한 기반 모델을 훈련합니다:</p>
+<blockquote class="blockquote">
+<p><strong>[수식 (3) 해설]</strong> 이 단계의 목표는 “주어진 훈련용 과제들(<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>)을 가장 잘 해결할 수 있게 해주는 <strong>최고의 학습 전략(<span class="math inline">\(\omega^*\)</span>)</strong>을 찾는 것”입니다. 비유하자면, 여러 학교의 기출문제들을 풀어보면서 어떤 시험에도 통할 ’만능 공부법’을 터득하는 과정입니다.</p>
+</blockquote>
+<hr>
+</section>
+<section id="단계-메타-테스트-meta-testing---배운-노하우로-실전-문제-풀기" class="level4">
+<h4 class="anchored" data-anchor-id="단계-메타-테스트-meta-testing---배운-노하우로-실전-문제-풀기">2단계: 메타-테스트 (Meta-Testing) - “배운 노하우로 실전 문제 풀기”</h4>
+<p>이제 학습이 끝났으니, 한 번도 본 적 없는 ‘실전용’ 타겟 과제 묶음 <span class="math inline">\(\mathcal{D}_{\text{target}}\)</span>으로 테스트를 합니다. 각 타겟 과제(<span class="math inline">\(i\)</span>)에 대해, 우리는 1단계에서 배운 <strong>최고의 학습 전략(<span class="math inline">\(\omega^*\)</span>)</strong>을 사용하여 모델을 훈련시킵니다.</p>
 <p><span class="math display">\[
 \theta^{*(i)} = \arg\max_{\theta} \log p(\theta|\omega^*, D_{\text{train}}^{\text{target}}(i)) \quad (4)
 \]</span></p>
-<p>식 (1)의 기존 학습과 대조적으로, 타겟 과제 <span class="math inline">\(i\)</span>의 훈련 세트에 대한 학습은 이제 사용할 알고리즘에 대한 메타 지식 <span class="math inline">\(\omega^*\)</span>의 이점을 얻습니다. 이것은 초기 파라미터의 추정치[16]일 수도 있고, 전체 학습 모델[38] 또는 최적화 전략[39]일 수도 있습니다. 우리는 각 타겟 과제의 테스트 스플릿 <span class="math inline">\(D_{\text{test}}^{\text{target}}(i)\)</span>에 대한 <span class="math inline">\(\theta^{*(i)}\)</span>의 성능으로 메타 학습기의 정확도를 평가할 수 있습니다.</p>
-<p>이러한 설정은 기존의 과소적합 및 과적합과 유사한 개념인 <strong>메타 과소적합(meta-underfitting)</strong> 과 <strong>메타 과적합(meta-overfitting)</strong> 으로 이어집니다. 특히, 메타 과적합은 소스 과제에서 학습된 메타 지식이 타겟 과제로 일반화되지 않는 문제입니다. 이는 비교적 흔하며, 특히 소수의 소스 과제만 사용할 수 있는 경우에 그렇습니다. 이것은 가설 공간 <span class="math inline">\(\theta\)</span>를 소스 과제의 해법 주변으로 너무 강하게 제약하는 귀납적 편향 <span class="math inline">\(\omega\)</span>를 학습하는 것으로 볼 수 있습니다.</p>
+<blockquote class="blockquote">
+<p><strong>[수식 (4) 해설]</strong> 기존의 학습(수식 1)과 가장 큰 차이점은 <strong><span class="math inline">\(\omega^*\)</span>가 추가되었다</strong>는 점입니다.</p>
+<ul>
+<li>기존 학습: 백지상태에서 특정 과제(<span class="math inline">\(D_{\text{train}}\)</span>)를 열심히 풀어 모델 파라미터(<span class="math inline">\(\theta\)</span>)를 찾습니다.</li>
+<li>메타 학습 후: 우리가 미리 터득한 ‘만능 공부법’(<span class="math inline">\(\omega^*\)</span>)을 <strong>바탕으로</strong> 새로운 과제(<span class="math inline">\(D_{\text{train}}^{\text{target}}\)</span>)를 훨씬 효율적으로 풀어 모델 파라미터(<span class="math inline">\(\theta^*\)</span>)를 찾습니다.</li>
+</ul>
+<p>이 <span class="math inline">\(\omega^*\)</span>는 좋은 <strong>출발점(초기 파라미터)</strong>이 될 수도 있고[16], 아예 새로운 <strong>모델 자체</strong>[38]나 <strong>최적화 방법</strong>[39]이 될 수도 있습니다.</p>
+</blockquote>
+<p>최종적으로 메타러닝이 얼마나 성공적이었는지는, 이렇게 훈련된 모델(<span class="math inline">\(\theta^{*(i)}\)</span>)이 실전 문제의 테스트 데이터(<span class="math inline">\(D_{\text{test}}^{\text{target}}(i)\)</span>)에서 얼마나 높은 점수를 받는지로 평가합니다.</p>
+<hr>
+</section>
+<section id="메타-과적합-meta-overfitting-문제" class="level4">
+<h4 class="anchored" data-anchor-id="메타-과적합-meta-overfitting-문제">메타-과적합 (Meta-Overfitting) 문제</h4>
+<p>일반적인 머신러닝에 과소적합/과적합이 있듯이, 메타러닝에도 <strong>메타-과소적합</strong>과 <strong>메타-과적합</strong>이 있습니다. 특히 메타-과적합은 중요한 문제입니다.</p>
+<p><strong>메타-과적합이란?</strong> 훈련용 과제들(source tasks)에서 배운 학습 전략(<span class="math inline">\(\omega\)</span>)이 너무 그 훈련용 과제들에만 특화되어서, 막상 새로운 실전 과제들(target tasks)에는 전혀 통하지 않는 현상입니다.</p>
+<blockquote class="blockquote">
+<p><strong>[쉬운 예시]</strong> 수학 공부를 할 때 ‘대수학’ 기출문제만 잔뜩 풀어서 “모든 문제는 인수분해로 풀면 된다!”는 식의 편협한 공부법(<span class="math inline">\(\omega\)</span>)을 터득했다고 상상해보세요. 이 학생은 대수학 문제에서는 최고의 성적을 낼 것입니다. 하지만 갑자기 ‘기하학’ 시험을 보게 되면, 인수분해 전략이 통하지 않아 완전히 망치게 됩니다. 이것이 바로 <strong>메타-과적합</strong>입니다. 너무 좁은 범위의 문제에만 통하는 ’학습 전략’을 배운 탓입니다.</p>
+</blockquote>
 
 
 </section>
