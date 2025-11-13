@@ -134,7 +134,7 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="./posts/index.qmd">
+    <a class="dropdown-item" href="./posts/index.html">
  <span class="dropdown-text">All posts</span></a>
   </li>  
     </ul>
@@ -222,15 +222,36 @@ window.Quarto = {
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>메타러닝은 머신러닝 모델이 여러 학습 에피소드를 통해 경험을 쌓고, 이 경험을 바탕으로 미래의 학습 성능을 향상시키는 대안적인 패러다임을 제공하게 됨.<br>
-+ ’Learning-to-learn’은 데이터 및 컴퓨팅 효율성과 같은 다양한 이점을 가져올 수 있음.<br>
-+ 학습 전략이 일생과 진화의 시간 척도 모두에서 향상되는 인간과 동물의 학습 방식과 더 잘 부합.</p>
-<p>역사적으로 + 머신러닝의 성공은 사람이 직접 설계한 특징(hand-engineered features)의 선택에 의해 주도되었습니다. + 딥러닝은 특징과 모델을 함께 학습하는 가능성을 실현하여 많은 과제에서 성능을 크게 향상시켰습니다.</p>
-<p>신경망에서의 메타러닝은 특징, 모델, 그리고 알고리즘을 함께 학습하는 다음 단계의 통합을 목표로 하는 것으로 볼 수 있습니다. + 특히 메타러닝은 데이터 효율성, 지식 전이, 비지도 학습을 개선함으로써 현대 딥러닝의 주요 비판점들 다수를 완화할 잠재력을 가지고 있습니다.</p>
-<p>메타러닝은 + 과제군(a family of tasks)에서 과제에 구애받지 않는(task-agnostic) 지식을 추출하여 해당 과제군 내의 새로운 과제 학습을 개선하는 다중 과제 시나리오 와 + 단일 문제를 반복적으로 해결하며 여러 에피소드에 걸쳐 개선해 나가는 단일 과제 시나리오 모두에서 유용성이 입증되었습니다. 성공적인 응용 사례는 퓨샷 이미지 인식, 비지도 학습, 데이터 효율 개선 및 자기 주도적 강화 학습(RL), 하이퍼파라미터 최적화, 신경망 구조 탐색(NAS) 등 다양한 분야에서 입증되었습니다.</p>
-<p>Thrun은 learning-to-learn을 ‘주어진 과제군에서 추출된 과제를 해결하는 학습자의 성능이 접하는 과제의 수에 따라 향상될 때’ 발생하는 것으로 조작적으로 정의합니다. + 단일 과제에서 더 많은 데이터를 볼수록 성능이 향상되는 기존의 머신러닝과는 대조적입니다.</p>
+<p>메타러닝은 머신러닝 모델이 여러 학습 에피소드를 통해 경험을 쌓고, 이 경험을 바탕으로 미래의 학습 성능을 향상시키는 대안적인 패러다임을 제공하게 됨.</p>
+<ul>
+<li>’Learning-to-learn’은 데이터 및 컴퓨팅 효율성과 같은 다양한 이점을 가져올 수 있음.<br>
+</li>
+<li>학습 전략이 일생과 진화의 시간 척도 모두에서 향상되는 인간과 동물의 학습 방식과 더 잘 부합.</li>
+</ul>
+<p>역사적으로</p>
+<ul>
+<li>머신러닝의 성공은 사람이 직접 설계한 특징(hand-engineered features)의 선택에 의해 주도되었습니다.</li>
+<li>딥러닝은 특징과 모델을 함께 학습하는 가능성을 실현하여 많은 과제에서 성능을 크게 향상시켰습니다.</li>
+</ul>
+<p>신경망에서의 메타러닝은 특징, 모델, 그리고 알고리즘을 함께 학습하는 다음 단계의 통합을 목표로 하는 것으로 볼 수 있습니다.</p>
+<ul>
+<li>특히 메타러닝은 데이터 효율성, 지식 전이, 비지도 학습을 개선함으로써 현대 딥러닝의 주요 비판점들 다수를 완화할 잠재력을 가지고 있습니다.</li>
+</ul>
+<p>메타러닝은</p>
+<ul>
+<li>과제군(a family of tasks)에서 과제에 구애받지 않는(task-agnostic) 지식을 추출하여 해당 과제군 내의 새로운 과제 학습을 개선하는 다중 과제 시나리오 와</li>
+<li>단일 문제를 반복적으로 해결하며 여러 에피소드에 걸쳐 개선해 나가는 단일 과제 시나리오 모두에서 유용성이 입증되었습니다. 성공적인 응용 사례는 퓨샷 이미지 인식, 비지도 학습, 데이터 효율 개선 및 자기 주도적 강화 학습(RL), 하이퍼파라미터 최적화, 신경망 구조 탐색(NAS) 등 다양한 분야에서 입증되었습니다.</li>
+</ul>
+<p>Thrun은 learning-to-learn을 ‘주어진 과제군에서 추출된 과제를 해결하는 학습자의 성능이 접하는 과제의 수에 따라 향상될 때’ 발생하는 것으로 조작적으로 정의합니다.</p>
+<ul>
+<li>단일 과제에서 더 많은 데이터를 볼수록 성능이 향상되는 기존의 머신러닝과는 대조적입니다.</li>
+</ul>
 <p>이러한 관점은 메타러닝을 ‘공짜 점심은 없다(no free lunch)’ 정리에 대처하는 도구라고 볼 수 있게 됩니다. 주어진 문제 또는 문제군에 가장 적합한 알고리즘(귀납적 편향)을 탐색하여 일반화 성능을 향상시키는 도구로 봅니다.</p>
-<p>하지만 이 정의는 오늘날 일반적으로 메타러닝으로 간주되지 않는 전이 학습, 다중 과제 학습, 특징 선택, 모델 앙상블 학습까지 포함할 수 있습니다. 메타러닝의 또 다른 용례는 데이터셋의 특징에 기반한 알고리즘 선택을 다루는데, 이는 <strong>자동화된 머신러닝(AutoML)</strong> 과 구별하기 어려워집니다. 본 논문에서는 현대의 신경망 메타러닝에 초점을 맞춥니다. + 특히 명시적으로 정의된 목적 함수(예: 교차 엔트로피 손실)의 종단간(end-to-end) 학습을 통해 달성되는 경우에 집중합니다. + 단일 과제 메타러닝을 고려하고, 강건성(robustness) 및 컴퓨팅 효율성과 같은 더 넓고 다양한 (메타) 목적 함수에 대해서도 논의합니다.</p>
+<p>하지만 이 정의는 오늘날 일반적으로 메타러닝으로 간주되지 않는 전이 학습, 다중 과제 학습, 특징 선택, 모델 앙상블 학습까지 포함할 수 있습니다. 메타러닝의 또 다른 용례는 데이터셋의 특징에 기반한 알고리즘 선택을 다루는데, 이는 <strong>자동화된 머신러닝(AutoML)</strong> 과 구별하기 어려워집니다. 본 논문에서는 현대의 신경망 메타러닝에 초점을 맞춥니다.</p>
+<ul>
+<li>특히 명시적으로 정의된 목적 함수(예: 교차 엔트로피 손실)의 종단간(end-to-end) 학습을 통해 달성되는 경우에 집중합니다.</li>
+<li>단일 과제 메타러닝을 고려하고, 강건성(robustness) 및 컴퓨팅 효율성과 같은 더 넓고 다양한 (메타) 목적 함수에 대해서도 논의합니다.</li>
+</ul>
 </section>
 <section id="배경" class="level2">
 <h2 class="anchored" data-anchor-id="배경">배경</h2>
@@ -244,7 +265,12 @@ window.Quarto = {
 
 During meta-learning, an outer (or upper/meta) algorithm updates the inner learning algorithm such that the model it learns improves an outer objective.</code></pre>
 <blockquote class="blockquote">
-<p>Base learning은 메타러닝의 <strong>내부 루프(inner loop)</strong> 에서 일어나는 개별적인 단일 과제(single task)에 대한 학습 과정을 의미함. 1. <strong>내부 수준 (Inner Level) = Base Learning (기반 학습)</strong> * <strong>목표</strong>: 주어진 <strong>하나의 특정 과제</strong>를 해결하는 것 (예: ‘고양이’와 ’개’ 이미지를 분류하는 문제). * <strong>구성 요소</strong>: 이 과제를 해결하기 위한 데이터셋(고양이/개 이미지)과 목적 함수(분류 정확도를 높이는 손실 함수)가 주어집니다. * <strong>알고리즘</strong>: <strong><code>inner learning algorithm</code></strong> (기반 학습 알고리즘)이 이 데이터셋을 사용하여 모델 파라미터(<span class="math inline">\(\theta\)</span>)를 최적화합니다. 우리가 흔히 아는 경사 하강법(Gradient Descent) 같은 최적화 과정이 여기서 일어납니다.</p>
+<p>Base learning은 메타러닝의 <strong>내부 루프(inner loop)</strong> 에서 일어나는 개별적인 단일 과제(single task)에 대한 학습 과정을 의미함. 1. <strong>내부 수준 (Inner Level) = Base Learning (기반 학습)</strong></p>
+<ul>
+<li><strong>목표</strong>: 주어진 <strong>하나의 특정 과제</strong>를 해결하는 것 (예: ‘고양이’와 ’개’ 이미지를 분류하는 문제).</li>
+<li><strong>구성 요소</strong>: 이 과제를 해결하기 위한 데이터셋(고양이/개 이미지)과 목적 함수(분류 정확도를 높이는 손실 함수)가 주어집니다.</li>
+<li><strong>알고리즘</strong>: <strong><code>inner learning algorithm</code></strong> (기반 학습 알고리즘)이 이 데이터셋을 사용하여 모델 파라미터(<span class="math inline">\(\theta\)</span>)를 최적화합니다. 우리가 흔히 아는 경사 하강법(Gradient Descent) 같은 최적화 과정이 여기서 일어납니다.</li>
+</ul>
 </blockquote>
 <blockquote class="blockquote">
 <ol start="2" type="1">
@@ -272,11 +298,14 @@ During meta-learning, an outer (or upper/meta) algorithm updates the inner learn
 </ul>
 <p>기존의 가정은 이 최적화가 모든 문제 <span class="math inline">\(D\)</span>에 대해 처음부터 수행되고, <span class="math inline">\(\omega\)</span>는 사전에 지정된다는 것입니다. 그러나 <span class="math inline">\(\omega\)</span>의 <strong>사양</strong>은 정확도나 데이터 효율성과 같은 성능 지표에 큰 영향을 미칠 수 있습니다. 메타러닝은 이러한 지표를 개선하기 위해 학습 알고리즘 자체를 사전에 지정하고 고정하는 대신 학습함으로써 개선하고자 합니다. 이는 종종 위의 첫 번째 가정을 재검토하고, 처음부터 학습하는 대신 과제 분포로부터 학습함으로써 달성됩니다.</p>
 <ul>
-<li>사양? 학습 알고리즘의 구체적인 내용과 구성이라고 할 수 있음 &gt; 최적화기(Optimizer)의 종류: SGD, Adam, RMSprop 등 어떤 것을 쓸 것인가?<br>
-&gt; 학습률(Learning Rate): 학습률을 얼마로 설정할 것인가?<br>
-&gt; 모델 구조(Model Architecture): 어떤 종류의 신경망(CNN, RNN 등)을 사용할 것인가?<br>
-&gt; 정규화(Regularization) 방법: L1, L2, Dropout 등 어떤 정규화 기법을 적용할 것인가?</li>
+<li>사양? 학습 알고리즘의 구체적인 내용과 구성이라고 할 수 있음</li>
 </ul>
+<blockquote class="blockquote">
+<p>최적화기(Optimizer)의 종류: SGD, Adam, RMSprop 등 어떤 것을 쓸 것인가?<br>
+학습률(Learning Rate): 학습률을 얼마로 설정할 것인가?<br>
+모델 구조(Model Architecture): 어떤 종류의 신경망(CNN, RNN 등)을 사용할 것인가?<br>
+정규화(Regularization) 방법: L1, L2, Dropout 등 어떤 정규화 기법을 적용할 것인가?</p>
+</blockquote>
 </section>
 <section id="메타러닝-과제-분포task-distribution-관점" class="level4">
 <h4 class="anchored" data-anchor-id="메타러닝-과제-분포task-distribution-관점">메타러닝: 과제 분포(Task-Distribution) 관점</h4>
@@ -287,21 +316,30 @@ During meta-learning, an outer (or upper/meta) algorithm updates the inner learn
 \min_{\omega} \mathbb{E}_{\mathcal{T} \sim p(\mathcal{T})} \mathcal{L}(D; \omega) \quad (2)
 \]</span></p>
 <blockquote class="blockquote">
-<p><strong>[수식 (2) 해설]</strong> * <strong>ω (오메가)</strong>: 우리가 찾고 싶은 ‘최고의 학습 전략’ 또는 ’학습 노하우’입니다. * <strong><span class="math inline">\(\mathcal{T} \sim p(\mathcal{T})\)</span></strong>: 세상에 존재할 수 있는 수많은 과제들 중에서 무작위로 하나를 뽑는다는 뜻입니다. * <strong><span class="math inline">\(\mathbb{E}\)</span></strong>: ’평균적으로(기댓값)’라는 의미입니다. * <strong><span class="math inline">\(\mathcal{L}(D; \omega)\)</span></strong>: 학습 전략(ω)을 사용해서 어떤 과제의 데이터(D)를 학습했을 때의 최종 성능(손실 값)입니다.</p>
-<p><strong>전체 의미</strong>: “어떤 과제가 주어지든 <strong>평균적으로 가장 좋은 성능을 내는 만능 학습 전략(ω)을 찾아라!</strong>” 라는 뜻입니다. 이 학습 전략(ω)을 <strong>메타 지식(meta-knowledge)</strong>이라고 부릅니다.</p>
+<p><strong>[수식 (2) 해설]</strong><br>
+* <strong>ω (오메가)</strong>: 우리가 찾고 싶은 ‘최고의 학습 전략’ 또는 ’학습 노하우’입니다.<br>
+* <strong><span class="math inline">\(\mathcal{T} \sim p(\mathcal{T})\)</span></strong>: 세상에 존재할 수 있는 수많은 과제들 중에서 무작위로 하나를 뽑는다는 뜻입니다.<br>
+* <strong><span class="math inline">\(\mathbb{E}\)</span></strong>: 평균적으로(기댓값)라는 의미입니다.<br>
+* <strong><span class="math inline">\(\mathcal{L}(D; \omega)\)</span></strong>: 학습 전략(ω)을 사용해서 어떤 과제의 데이터(D)를 학습했을 때의 최종 성능(손실 값)입니다.</p>
+<p><strong>전체 의미</strong>: “어떤 과제가 주어지든 <strong>평균적으로 가장 좋은 성능을 내는 만능 학습 전략(ω)을 찾아라!</strong>” 라는 뜻입니다. 이 학습 전략(ω)을 <strong>메타 지식(meta-knowledge)</strong> 이라고 부릅니다.</p>
 </blockquote>
 <p>실제로는 세상의 모든 과제에 접근할 수 없으므로, 우리는 <strong>샘플 과제들</strong>을 가지고 학습을 진행합니다. 이 과정을 두 단계로 나눌 수 있습니다.</p>
 <hr>
 </section>
 <section id="단계-메타-훈련-meta-training---학습-노하우-배우기" class="level4">
 <h4 class="anchored" data-anchor-id="단계-메타-훈련-meta-training---학습-노하우-배우기">1단계: 메타-훈련 (Meta-Training) - “학습 노하우 배우기”</h4>
-<p>먼저, ’훈련용’으로 사용할 M개의 샘플 과제 묶음 <span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>를 준비합니다. 각 과제는 두 종류의 데이터로 나뉩니다. * <strong>훈련용 데이터 (<span class="math inline">\(D_{\text{train}}\)</span>)</strong>: 이 과제를 ’학습’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>서포트셋(support set)</strong> 이라고 부릅니다. * <strong>검증용 데이터 (<span class="math inline">\(D_{\text{val}}\)</span>)</strong>: 위에서 학습이 얼마나 잘 되었는지 ’평가’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>쿼리셋(query set)</strong> 이라고 부릅니다.</p>
+<p>먼저, ’훈련용’으로 사용할 M개의 샘플 과제 묶음 <span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>를 준비합니다. 각 과제는 두 종류의 데이터로 나뉩니다.</p>
+<ul>
+<li><strong>훈련용 데이터 (<span class="math inline">\(D_{\text{train}}\)</span>)</strong>: 이 과제를 ’학습’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>서포트셋(support set)</strong> 이라고 부릅니다.</li>
+<li><strong>검증용 데이터 (<span class="math inline">\(D_{\text{val}}\)</span>)</strong>: 위에서 학습이 얼마나 잘 되었는지 ’평가’하는 데 사용됩니다. 메타러닝에서는 이를 <strong>쿼리셋(query set)</strong> 이라고 부릅니다.</li>
+</ul>
 <p>이 훈련용 과제 묶음을 가지고 “학습 노하우를 배우는” 메타-훈련 단계는 다음과 같이 표현됩니다.</p>
 <p><span class="math display">\[
 \omega^* = \arg\max_{\omega} \log p(\omega|\mathcal{D}_{\text{source}}) \quad (3)
 \]</span></p>
 <blockquote class="blockquote">
-<p><strong>[수식 (3) 해설]</strong> 이 단계의 목표는 “주어진 훈련용 과제들(<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>)을 가장 잘 해결할 수 있게 해주는 <strong>최고의 학습 전략(<span class="math inline">\(\omega^*\)</span>)</strong>을 찾는 것”입니다. 비유하자면, 여러 학교의 기출문제들을 풀어보면서 어떤 시험에도 통할 ’만능 공부법’을 터득하는 과정입니다.</p>
+<p><strong>[수식 (3) 해설]</strong><br>
+이 단계의 목표는 “주어진 훈련용 과제들(<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>)을 가장 잘 해결할 수 있게 해주는 <strong>최고의 학습 전략(<span class="math inline">\(\omega^*\)</span>)</strong>을 찾는 것”입니다. 비유하자면, 여러 학교의 기출문제들을 풀어보면서 어떤 시험에도 통할 ’만능 공부법’을 터득하는 과정입니다.</p>
 </blockquote>
 <hr>
 </section>
@@ -317,7 +355,7 @@ During meta-learning, an outer (or upper/meta) algorithm updates the inner learn
 <li>기존 학습: 백지상태에서 특정 과제(<span class="math inline">\(D_{\text{train}}\)</span>)를 열심히 풀어 모델 파라미터(<span class="math inline">\(\theta\)</span>)를 찾습니다.</li>
 <li>메타 학습 후: 우리가 미리 터득한 ‘만능 공부법’(<span class="math inline">\(\omega^*\)</span>)을 <strong>바탕으로</strong> 새로운 과제(<span class="math inline">\(D_{\text{train}}^{\text{target}}\)</span>)를 훨씬 효율적으로 풀어 모델 파라미터(<span class="math inline">\(\theta^*\)</span>)를 찾습니다.</li>
 </ul>
-<p>이 <span class="math inline">\(\omega^*\)</span>는 좋은 <strong>출발점(초기 파라미터)</strong>이 될 수도 있고[16], 아예 새로운 <strong>모델 자체</strong>[38]나 <strong>최적화 방법</strong>[39]이 될 수도 있습니다.</p>
+<p>이 <span class="math inline">\(\omega^*\)</span>는 좋은 <strong>출발점(초기 파라미터)</strong>이 될 수도 있고, 아예 새로운 <strong>모델 자체</strong>나 <strong>최적화 방법</strong>이 될 수도 있습니다.</p>
 </blockquote>
 <p>최종적으로 메타러닝이 얼마나 성공적이었는지는, 이렇게 훈련된 모델(<span class="math inline">\(\theta^{*(i)}\)</span>)이 실전 문제의 테스트 데이터(<span class="math inline">\(D_{\text{test}}^{\text{target}}(i)\)</span>)에서 얼마나 높은 점수를 받는지로 평가합니다.</p>
 <hr>
