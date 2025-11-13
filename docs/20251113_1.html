@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quarto-inputc791e04da7bf69d4 – Master Thesis Literature Review</title>
+<title>quarto-input9af79cf06cffd67d – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -128,6 +157,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#초록" id="toc-초록" class="nav-link" data-scroll-target="#초록">초록</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경">배경</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -157,14 +187,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>메타러닝은 머신러닝 모델이 여러 학습 에피소드를 통해 경험을 쌓고, 이 경험을 바탕으로 미래의 학습 성능을 향상시키는 대안적인 패러다임을 제공하게 됨.<br>
-- ’Learning-to-learn’은 데이터 및 컴퓨팅 효율성과 같은 다양한 이점을 가져올 수 있음.<br>
-- 학습 전략이 일생과 진화의 시간 척도 모두에서 향상되는 인간과 동물의 학습 방식과 더 잘 부합.</p>
-<p>역사적으로 - 머신러닝의 성공은 사람이 직접 설계한 특징(hand-engineered features)의 선택에 의해 주도되었습니다. - 딥러닝은 특징과 모델을 함께 학습하는 가능성을 실현하여 많은 과제에서 성능을 크게 향상시켰습니다.</p>
-<p>신경망에서의 메타러닝은 특징, 모델, 그리고 알고리즘을 함께 학습하는 다음 단계의 통합을 목표로 하는 것으로 볼 수 있습니다. - 특히 메타러닝은 데이터 효율성, 지식 전이, 비지도 학습을 개선함으로써 현대 딥러닝의 주요 비판점들 다수를 완화할 잠재력을 가지고 있습니다.</p>
-<p>메타러닝은 - 과제군(a family of tasks)에서 과제에 구애받지 않는(task-agnostic) 지식을 추출하여 해당 과제군 내의 새로운 과제 학습을 개선하는 다중 과제 시나리오 와 - 단일 문제를 반복적으로 해결하며 여러 에피소드에 걸쳐 개선해 나가는 단일 과제 시나리오 모두에서 유용성이 입증되었습니다. 성공적인 응용 사례는 퓨샷 이미지 인식, 비지도 학습, 데이터 효율 개선 및 자기 주도적 강화 학습(RL), 하이퍼파라미터 최적화, 신경망 구조 탐색(NAS) 등 다양한 분야에서 입증되었습니다.</p>
-<p>Thrun은 learning-to-learn을 ‘주어진 과제군에서 추출된 과제를 해결하는 학습자의 성능이 접하는 과제의 수에 따라 향상될 때’ 발생하는 것으로 조작적으로 정의합니다. - 단일 과제에서 더 많은 데이터를 볼수록 성능이 향상되는 기존의 머신러닝과는 대조적입니다.</p>
++ ’Learning-to-learn’은 데이터 및 컴퓨팅 효율성과 같은 다양한 이점을 가져올 수 있음.<br>
++ 학습 전략이 일생과 진화의 시간 척도 모두에서 향상되는 인간과 동물의 학습 방식과 더 잘 부합.</p>
+<p>역사적으로 + 머신러닝의 성공은 사람이 직접 설계한 특징(hand-engineered features)의 선택에 의해 주도되었습니다. + 딥러닝은 특징과 모델을 함께 학습하는 가능성을 실현하여 많은 과제에서 성능을 크게 향상시켰습니다.</p>
+<p>신경망에서의 메타러닝은 특징, 모델, 그리고 알고리즘을 함께 학습하는 다음 단계의 통합을 목표로 하는 것으로 볼 수 있습니다. + 특히 메타러닝은 데이터 효율성, 지식 전이, 비지도 학습을 개선함으로써 현대 딥러닝의 주요 비판점들 다수를 완화할 잠재력을 가지고 있습니다.</p>
+<p>메타러닝은 + 과제군(a family of tasks)에서 과제에 구애받지 않는(task-agnostic) 지식을 추출하여 해당 과제군 내의 새로운 과제 학습을 개선하는 다중 과제 시나리오 와 + 단일 문제를 반복적으로 해결하며 여러 에피소드에 걸쳐 개선해 나가는 단일 과제 시나리오 모두에서 유용성이 입증되었습니다. 성공적인 응용 사례는 퓨샷 이미지 인식, 비지도 학습, 데이터 효율 개선 및 자기 주도적 강화 학습(RL), 하이퍼파라미터 최적화, 신경망 구조 탐색(NAS) 등 다양한 분야에서 입증되었습니다.</p>
+<p>Thrun은 learning-to-learn을 ‘주어진 과제군에서 추출된 과제를 해결하는 학습자의 성능이 접하는 과제의 수에 따라 향상될 때’ 발생하는 것으로 조작적으로 정의합니다. + 단일 과제에서 더 많은 데이터를 볼수록 성능이 향상되는 기존의 머신러닝과는 대조적입니다.</p>
 <p>이러한 관점은 메타러닝을 ‘공짜 점심은 없다(no free lunch)’ 정리에 대처하는 도구라고 볼 수 있게 됩니다. 주어진 문제 또는 문제군에 가장 적합한 알고리즘(귀납적 편향)을 탐색하여 일반화 성능을 향상시키는 도구로 봅니다.</p>
-<p>하지만 이 정의는 오늘날 일반적으로 메타러닝으로 간주되지 않는 전이 학습, 다중 과제 학습, 특징 선택, 모델 앙상블 학습까지 포함할 수 있습니다. 메타러닝의 또 다른 용례는 데이터셋의 특징에 기반한 알고리즘 선택을 다루는데, 이는 <strong>자동화된 머신러닝(AutoML)</strong>과 구별하기 어려워집니다. 본 논문에서는 현대의 신경망 메타러닝에 초점을 맞춥니다. - 특히 명시적으로 정의된 목적 함수(예: 교차 엔트로피 손실)의 종단간(end-to-end) 학습을 통해 달성되는 경우에 집중합니다. - 단일 과제 메타러닝을 고려하고, 강건성(robustness) 및 컴퓨팅 효율성과 같은 더 넓고 다양한 (메타) 목적 함수에 대해서도 논의합니다.</p>
+<p>하지만 이 정의는 오늘날 일반적으로 메타러닝으로 간주되지 않는 전이 학습, 다중 과제 학습, 특징 선택, 모델 앙상블 학습까지 포함할 수 있습니다. 메타러닝의 또 다른 용례는 데이터셋의 특징에 기반한 알고리즘 선택을 다루는데, 이는 <strong>자동화된 머신러닝(AutoML)</strong>과 구별하기 어려워집니다. 본 논문에서는 현대의 신경망 메타러닝에 초점을 맞춥니다. + 특히 명시적으로 정의된 목적 함수(예: 교차 엔트로피 손실)의 종단간(end-to-end) 학습을 통해 달성되는 경우에 집중합니다. + 단일 과제 메타러닝을 고려하고, 강건성(robustness) 및 컴퓨팅 효율성과 같은 더 넓고 다양한 (메타) 목적 함수에 대해서도 논의합니다.</p>
+</section>
+<section id="배경" class="level2">
+<h2 class="anchored" data-anchor-id="배경">배경</h2>
+<p><span class="math inline">\(33\)</span></p>
+<p><span class="math display">\[ \frac{ss}{11}\]</span></p>
 
 
 </section>
