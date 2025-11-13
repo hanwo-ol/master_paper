@@ -3,7 +3,7 @@ project:
   output-dir: docs   # GitHub Pages가 읽을 폴더
 
 website:
-  title: "석사 졸논 연구 기록부"
+  title: "Master Thesis Literature Review"
   navbar:
     left:
       - href: index.qmd
