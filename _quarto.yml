@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs   # GitHub Pages가 읽을 폴더
+
+website:
+  title: "석사 졸논 연구 기록부"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - text: Posts
+        menu:
+          - href: posts/index.qmd
+            text: All posts
+
+format:
+  html:
+    theme: cosmo     # 마음대로 바꿔도 됨
+    toc: true
