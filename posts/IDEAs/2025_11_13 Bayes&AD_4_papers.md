@@ -1,3 +1,12 @@
+---
+title: "Paper Lists - Bayesian+AnomalyDetection"
+date: 2025-11-13       
+description: "졸업 논문 주제 구체화 - Bayesian+AnomalyDetection"
+categories: [Bayesian, AnomalyDetection, Paper]
+author: "김한울"
+---
+
+
 | No. | Category                                      | Reference (Authors, Title)                                                                                         | Why Relevant / Notes                                                                                          |
 |-----|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | 1   | Anomaly detection – classic survey            | Chandola et al., **“Anomaly Detection: A Survey”** (ACM Computing Surveys)                                        | 고전적인 이상치 탐지 전반 개요. 전통 기법들과 용어 정리용.                                                   |

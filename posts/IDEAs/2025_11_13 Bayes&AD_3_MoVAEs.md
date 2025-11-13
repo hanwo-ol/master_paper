@@ -1,3 +1,12 @@
+---
+title: "Mixture of Experts But VAE - Bayesian+AnomalyDetection"
+date: 2025-11-13       
+description: "졸업 논문 주제 구체화 - Bayesian+AnomalyDetection"
+categories: [Bayesian, AnomalyDetection, Idea, MoE, VAE]
+author: "김한울"
+---
+
+
 
 ## 1. Mixture-of-Experts(MoE)의 기본 모양
 

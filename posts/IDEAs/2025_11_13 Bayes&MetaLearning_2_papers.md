@@ -1,3 +1,13 @@
+---
+title: "Paper Lists - Bayesian+MetaLearning"
+date: 2025-11-13       
+description: "졸업 논문 주제 구체화 - Bayesian+MetaLearning"
+categories: [Bayesian, MetaLearning, Idea, Paper]
+author: "김한울"
+---
+
+
+
 | No. | 카테고리                             | 제목 / 정보                                                                                                  | 저자 / 연도                              | 메모(간단)                                 |
 |-----|--------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------|--------------------------------------------|
 | 1   | Meta-learning 개관                  | Meta-Learning in Neural Networks: A Survey                                                                  | Hospedales et al., 2020                  | 메타러닝 전반 서베이, taxonomy·응용 정리  |

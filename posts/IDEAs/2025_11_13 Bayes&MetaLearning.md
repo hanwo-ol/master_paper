@@ -1,3 +1,12 @@
+---
+title: "석사 학위 논문 연구 계획서 - Bayesian+MetaLearning"
+date: 2025-11-13       
+description: "졸업 논문 주제 구체화 - Bayesian+MetaLearning"
+categories: [Bayesian, MetaLearning, Idea]
+author: "김한울"
+---
+
+
 # 석사 학위 논문 연구 계획서
 
 ## 1. 연구 주제
