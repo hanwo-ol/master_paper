@@ -1,6 +1,6 @@
 ---
 title: "Post With Code"
-author: "Harlow Malloc"
+author: "김한울"
 date: "2025-11-13"
 categories: [news, code, analysis]
 image: "image.jpg"
