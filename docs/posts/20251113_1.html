@@ -201,7 +201,8 @@ window.Quarto = {
   <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경">배경</a>
   <ul class="collapse">
   <li><a href="#메타러닝" id="toc-메타러닝" class="nav-link" data-scroll-target="#메타러닝">메타러닝?</a></li>
-  <li><a href="#메타러닝의-정형화" id="toc-메타러닝의-정형화" class="nav-link" data-scroll-target="#메타러닝의-정형화">2.1 메타러닝의 정형화</a></li>
+  <li><a href="#현대의-neural-network-meta-learning의-두드러지는-특징" id="toc-현대의-neural-network-meta-learning의-두드러지는-특징" class="nav-link" data-scroll-target="#현대의-neural-network-meta-learning의-두드러지는-특징">현대의 neural-network meta-learning의 두드러지는 특징</a></li>
+  <li><a href="#메타러닝을-공식화-해보자" id="toc-메타러닝을-공식화-해보자" class="nav-link" data-scroll-target="#메타러닝을-공식화-해보자">2.1 메타러닝을 공식화 해보자</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -386,46 +387,47 @@ window.Quarto = {
 </p></li>
 <li><p><strong>메타러닝</strong> 중에는 <strong>외부(outer)</strong>(또는 상위/메타) 알고리즘이 내부 학습 알고리즘을 업데이트하여, 그것이 학습하는 모델이 외부 목적 함수를 개선하도록 만듦.</p>
 <ul>
-<li>예를 들어, 이 목적 함수는 내부 알고리즘의 일반화 성능이나 학습 속도가 될 수 있습니다. (기반 알고리즘, 학습된 모델, 성능) 튜플로 구성된 기반 과제의 학습 에피소드들은 외부 알고리즘이 기반 학습 알고리즘을 학습하는 데 필요한 인스턴스를 제공하는 것으로 볼 수 있습니다.</li>
-</ul></li>
+<li>예를 들어, 이 외부 목적 함수는 내부 알고리즘의 일반화 성능이나 학습 속도가 될 수 있음.</li>
+<li>(기반 알고리즘, 학습된 모델, 성능) 튜플로 구성된 기반 과제의 학습 에피소드들은 외부 알고리즘이 기반 학습 알고리즘을 학습하는 데 필요한 인스턴스를 제공하는 것으로 볼 수 있습니다.</li>
 </ul>
-<pre><code>During base learning, an inner (or lower/base) learning algorithm solves a task such as image classification [13], defined by a dataset and objective.
-
-During meta-learning, an outer (or upper/meta) algorithm updates the inner learning algorithm such that the model it learns improves an outer objective.</code></pre>
 <blockquote class="blockquote">
-<p>Base learning은 메타러닝의 <strong>내부 루프(inner loop)</strong> 에서 일어나는 개별적인 단일 과제(single task)에 대한 학습 과정을 의미함. 1. <strong>내부 수준 (Inner Level) = Base Learning (기반 학습)</strong></p>
-<ul>
-<li><strong>목표</strong>: 주어진 <strong>하나의 특정 과제</strong>를 해결하는 것 (예: ‘고양이’와 ’개’ 이미지를 분류하는 문제).</li>
-<li><strong>구성 요소</strong>: 이 과제를 해결하기 위한 데이터셋(고양이/개 이미지)과 목적 함수(분류 정확도를 높이는 손실 함수)가 주어집니다.</li>
-<li><strong>알고리즘</strong>: <strong><code>inner learning algorithm</code></strong> (기반 학습 알고리즘)이 이 데이터셋을 사용하여 모델 파라미터(<span class="math inline">\(\theta\)</span>)를 최적화합니다. 우리가 흔히 아는 경사 하강법(Gradient Descent) 같은 최적화 과정이 여기서 일어납니다.</li>
+<p>inner loop의 결과물이라고 할 수 있는 (Base Algorithm, Trained Model, Performance)을 outer loop의 알고리즘이 “학습 데이터”로 삼아서 “기반 알고리즘 자체를 좋게 만드는 방법”을 학습하게 됨.</p>
+</blockquote></li>
 </ul>
-</blockquote>
 <blockquote class="blockquote">
-<ol start="2" type="1">
-<li><strong>외부 수준 (Outer Level) = Meta-Learning (메타러닝)</strong></li>
-</ol>
-<ul>
-<li><strong>목표</strong>: Base learning 자체를 <strong>더 잘하게 만드는 것</strong>입니다. 즉, 새로운 과제가 주어졌을 때 더 빠르거나, 더 적은 데이터로, 더 정확하게 학습할 수 있도록 <strong>학습 알고리즘 자체(<span class="math inline">\(\omega\)</span>)를 개선</strong>하는 것입니다.</li>
-<li><strong>알고리즘</strong>: <strong><code>outer algorithm</code></strong> (메타 학습 알고리즘)이 여러 번의 base learning 에피소드를 관찰하고, 그 결과를 바탕으로 <code>inner learning algorithm</code>을 업데이트합니다.</li>
-</ul>
+<p>메타 러닝은 여러 학습 에피소드에 걸쳐 학습 알고리즘을 개선하는 과정?</p>
 </blockquote>
-<p>위에 정의된 대로라면, 교차 검증을 통한 하이퍼파라미터의 무작위 탐색과 같은 많은 기존 알고리즘이 메타러닝의 정의에 포함될 수 있습니다.</p>
-<p>현대 신경망 메타러닝의 두드러진 특징은 <strong>명시적으로 정의된 메타 수준의 목적 함수</strong>와, 이 목적 함수에 대한 내부 알고리즘의 <strong>종단간(end-to-end) 최적화</strong> 입니다. 종종 메타러닝은 과제군(task family)에서 샘플링된 학습 에피소드에 대해 수행되어, 이 과제군에서 샘플링된 새로운 과제에 대해 좋은 성능을 보이는 기반 학습 알고리즘을 만듭니다. 하지만, 극한의 경우 모든 훈련 에피소드가 단일 과제에서 샘플링될 수도 있습니다.</p>
-<hr>
+<p>위에 정의된 대로라면, <code>Cross Validtion</code>을 통한 하이퍼파라미터의 무작위 탐색과 같은 많은 기존 알고리즘이 메타러닝의 정의에 포함되어 버림.</p>
 </section>
-<section id="메타러닝의-정형화" class="level3">
-<h3 class="anchored" data-anchor-id="메타러닝의-정형화">2.1 메타러닝의 정형화</h3>
+<section id="현대의-neural-network-meta-learning의-두드러지는-특징" class="level3">
+<h3 class="anchored" data-anchor-id="현대의-neural-network-meta-learning의-두드러지는-특징">현대의 neural-network meta-learning의 두드러지는 특징</h3>
+<ul>
+<li><strong>명시적으로 정의된 메타 수준의 목적 함수</strong>이 있고,<br>
+</li>
+<li>이 목적 함수에 대한 내부 알고리즘의 <strong>end-to-end 최적화</strong>가 이루어짐.</li>
+</ul>
+</section>
+<section id="메타러닝을-공식화-해보자" class="level3">
+<h3 class="anchored" data-anchor-id="메타러닝을-공식화-해보자">2.1 메타러닝을 공식화 해보자</h3>
 <section id="기존-머신러닝" class="level4">
 <h4 class="anchored" data-anchor-id="기존-머신러닝"><strong>기존 머신러닝</strong></h4>
-<p>기존의 지도(supervised) 머신러닝에서는 (입력 이미지, 출력 레이블) 쌍과 같은 훈련 데이터셋 <span class="math inline">\(D = \{(x_1, y_1), \dots, (x_N, y_N)\}\)</span>이 주어집니다. 우리는 <span class="math inline">\(\theta\)</span>로 매개변수화된 예측 모델 <span class="math inline">\(\hat{y} = f_{\theta}(x)\)</span>를 다음 식을 풀어 훈련시킬 수 있습니다:</p>
+<p>기존의 지도(supervised) 머신러닝에서는 (입력 이미지, 출력 레이블) 쌍과 같은 훈련 데이터셋 <span class="math inline">\(D = \{(x_1, y_1), \dots, (x_N, y_N)\}\)</span>이 주어짐.</p>
+<p><span class="math inline">\(\theta\)</span>로 매개변수화된 예측 모델 <span class="math inline">\(\hat{y} = f_{\theta}(x)\)</span>를 다음 식을 풀어 훈련시키게 됨:</p>
 <p><span class="math display">\[
 \theta^* = \arg\min_{\theta} \mathcal{L}(D; \theta, \omega) \quad (1)
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\mathcal{L}\)</span>은 실제 레이블과 <span class="math inline">\(f_{\theta}(\cdot)\)</span>가 예측한 값 사이의 오차를 측정하는 손실 함수입니다.</li>
-<li><span class="math inline">\(\omega\)</span>에 대한 조건은 이 해법이 <span class="math inline">\(\theta\)</span>에 대한 최적화기(optimizer)나 함수 <span class="math inline">\(f\)</span>의 클래스 선택과 같은 ’학습 방법’에 대한 가정에 의존함을 나타냅니다. 일반화 성능은 알려진 레이블을 가진 여러 테스트 포인트를 평가하여 측정됩니다.</li>
+<li><span class="math inline">\(\mathcal{L}\)</span>은 실제 레이블과 <span class="math inline">\(f_{\theta}(\cdot)\)</span>가 예측한 값 사이의 오차를 측정하는 손실 함수.</li>
+<li><span class="math inline">\(\omega\)</span>라는 조건이 걸려 있음.
+<ul>
+<li>이는 학습하는 방법 <span class="math inline">\(\omega\)</span>에 따라 이 식(1)의 해인 <span class="math inline">\(\theta\)</span>가 달라질 수 있다는 의미임.<br>
+</li>
+<li><span class="math inline">\(\omega\)</span> 예를 들어보자면 Optimizer의 선택, model의 선택이 될 수 있음.</li>
+</ul></li>
+<li>일반화 성능은 알려진 레이블을 가진 여러 테스트 포인트를 평가하여 측정됨.</li>
 </ul>
-<p>기존의 가정은 이 최적화가 모든 문제 <span class="math inline">\(D\)</span>에 대해 처음부터 수행되고, <span class="math inline">\(\omega\)</span>는 사전에 지정된다는 것입니다. 그러나 <span class="math inline">\(\omega\)</span>의 <strong>사양</strong>은 정확도나 데이터 효율성과 같은 성능 지표에 큰 영향을 미칠 수 있습니다. 메타러닝은 이러한 지표를 개선하기 위해 학습 알고리즘 자체를 사전에 지정하고 고정하는 대신 학습함으로써 개선하고자 합니다. 이는 종종 위의 첫 번째 가정을 재검토하고, 처음부터 학습하는 대신 과제 분포로부터 학습함으로써 달성됩니다.</p>
+<p>기존의 가정은 이 최적화가 모든 문제 <span class="math inline">\(D\)</span>에 대해 처음부터 수행되고, <span class="math inline">\(\omega\)</span>는 사전에 지정된다는 것입니다.</p>
+<p>그러나 <span class="math inline">\(\omega\)</span>의 <strong>사양</strong>은 정확도나 데이터 효율성과 같은 성능 지표에 큰 영향을 미칠 수 있습니다. 메타러닝은 이러한 지표를 개선하기 위해 학습 알고리즘 자체를 사전에 지정하고 고정하는 대신 학습함으로써 개선하고자 합니다. 이는 종종 위의 첫 번째 가정을 재검토하고, 처음부터 학습하는 대신 과제 분포로부터 학습함으로써 달성됩니다.</p>
 <ul>
 <li>사양? 학습 알고리즘의 구체적인 내용과 구성이라고 할 수 있음</li>
 </ul>
