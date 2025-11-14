@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-14">
+<meta name="description" content="메타 러닝 관련 논문 요약 및 주요 내용">
 
-<title>Posts – Master Thesis Literature Review</title>
+<title>Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,35 +71,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -179,14 +151,36 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Posts</h1>
-                      </div>
+      <h1 class="title">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</h1>
+                  <div>
+        <div class="description">
+          메타 러닝 관련 논문 요약 및 주요 내용
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MetaLearning</div>
+                <div class="quarto-category">MAML</div>
+                <div class="quarto-category">Review</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 14, 2025</p>
+      </div>
+    </div>
     
       
     </div>
@@ -195,8 +189,28 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#초록-abstract" id="toc-초록-abstract" class="nav-link active" data-scroll-target="#초록-abstract">초록 (Abstract)</a></li>
+  <li><a href="#서론-introduction" id="toc-서론-introduction" class="nav-link" data-scroll-target="#서론-introduction">1. 서론 (Introduction)</a>
+  <ul class="collapse">
+  <li><a href="#인간-지능의-핵심적인-특징과-ai-agent에게-바라는-것" id="toc-인간-지능의-핵심적인-특징과-ai-agent에게-바라는-것" class="nav-link" data-scroll-target="#인간-지능의-핵심적인-특징과-ai-agent에게-바라는-것">인간 지능의 핵심적인 특징과 AI agent에게 바라는 것</a></li>
+  <li><a href="#빠르고-유연한-학습은-어려운-과제" id="toc-빠르고-유연한-학습은-어려운-과제" class="nav-link" data-scroll-target="#빠르고-유연한-학습은-어려운-과제">빠르고 유연한 학습은 어려운 과제</a></li>
+  <li><a href="#제안-모델에-구애받지-않는model-agnostic-메타-러닝-알고리즘" id="toc-제안-모델에-구애받지-않는model-agnostic-메타-러닝-알고리즘" class="nav-link" data-scroll-target="#제안-모델에-구애받지-않는model-agnostic-메타-러닝-알고리즘">제안: <strong>모델에 구애받지 않는(model-agnostic)</strong> 메타 러닝 알고리즘</a></li>
+  <li><a href="#핵심-아이디어-of-maml" id="toc-핵심-아이디어-of-maml" class="nav-link" data-scroll-target="#핵심-아이디어-of-maml">핵심 아이디어 of MAML</a></li>
+  <li><a href="#이-연구의-주된-기여" id="toc-이-연구의-주된-기여" class="nav-link" data-scroll-target="#이-연구의-주된-기여">이 연구의 주된 기여</a></li>
+  </ul></li>
+  <li><a href="#서론-짚고-넘어가기" id="toc-서론-짚고-넘어가기" class="nav-link" data-scroll-target="#서론-짚고-넘어가기">1.0 서론 짚고 넘어가기</a>
+  <ul class="collapse">
+  <li><a href="#핵심-개념-민감도sensitivity-기울기gradient의-크기" id="toc-핵심-개념-민감도sensitivity-기울기gradient의-크기" class="nav-link" data-scroll-target="#핵심-개념-민감도sensitivity-기울기gradient의-크기">핵심 개념: 민감도(Sensitivity) = 기울기(Gradient)의 크기</a></li>
+  <li><a href="#수식을-통한-설명" id="toc-수식을-통한-설명" class="nav-link" data-scroll-target="#수식을-통한-설명">수식을 통한 설명</a></li>
+  <li><a href="#비유를-통한-이해" id="toc-비유를-통한-이해" class="nav-link" data-scroll-target="#비유를-통한-이해">비유를 통한 이해</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -205,266 +219,151 @@ window.Quarto = {
 
 
 
-<p>여기는 모든 포스트 목록입니다.</p>
+<section id="초록-abstract" class="level1">
+<h1>초록 (Abstract)</h1>
+<p>본 논문은 경사 하강법(gradient descent)으로 훈련되는 어떠한 모델과도 호환되며 분류, 회귀, 강화학습 등 다양한 학습 문제에 적용할 수 있다는 점에서 <strong>모델에 구애받지 않는(model-agnostic) 메타 러닝 알고리즘</strong>을 제안합니다. 메타 러닝의 목표는 다양한 학습 과제(task)에 대해 모델을 훈련함으로써, 적은 수의 훈련 샘플만으로도 새로운 과제를 해결할 수 있도록 하는 것입니다.</p>
+<p>우리가 제안하는 방식은 새로운 과제에 대한 소량의 훈련 데이터와 몇 번의 경사 하강 단계(gradient step)만으로도 해당 과제에서 우수한 일반화 성능을 달성할 수 있도록 모델의 파라미터를 명시적으로 훈련합니다. 다시 말해, 본 방법은 모델이 <strong>미세조정(fine-tuning)에 용이하도록 훈련</strong>하는 것입니다.</p>
+<p>본 논문은 이 접근법이 두 개의 퓨샷(few-shot) 이미지 분류 벤치마크에서 최고 수준(state-of-the-art)의 성능을 달성하고, 퓨샷 회귀 문제에서도 우수한 결과를 보이며, 신경망 정책을 사용하는 정책 경사(policy gradient) 강화학습의 미세조정 속도를 크게 향상시킨다는 것을 입증합니다.</p>
+</section>
+<section id="서론-introduction" class="level1">
+<h1>1. 서론 (Introduction)</h1>
+<section id="인간-지능의-핵심적인-특징과-ai-agent에게-바라는-것" class="level2">
+<h2 class="anchored" data-anchor-id="인간-지능의-핵심적인-특징과-ai-agent에게-바라는-것">인간 지능의 핵심적인 특징과 AI agent에게 바라는 것</h2>
+<ul>
+<li>적은 수의 예시만으로 사물을 인식하거나, 단 몇 분의 경험만으로 새로운 기술을 습득하는 등, 빠르게 학습하는 능력</li>
+<li>우리가 만드는 인공 에이전트 역시 인간의 지능과 같은 특징을 가지면 좋다.</li>
+</ul>
+<p>즉, 소수의 예시만으로도 신속하게 학습하고 적응하며, 더 많은 데이터가 주어짐에 따라 지속적으로 적응해 나가야 함.</p>
+</section>
+<section id="빠르고-유연한-학습은-어려운-과제" class="level2">
+<h2 class="anchored" data-anchor-id="빠르고-유연한-학습은-어려운-과제">빠르고 유연한 학습은 어려운 과제</h2>
+<ul>
+<li>에이전트는 새로운 데이터에 과적합(overfitting)되는 것을 피해야 하고,</li>
+<li>기존의 경험을 소량의 새로운 정보와 통합해야 한다.</li>
+<li>더욱이, 사전 경험(prior experiments)과 새로운 데이터의 형태는 과제(task)에 따라 달라진다.</li>
+</ul>
+<p>따라서 최대한의 적용 가능성을 확보하기 위해서는, ’학습하는 방법을 학습’하는 메커니즘(즉, 메타 러닝)이 특정 과제나 연산 형태에 국한되지 않고 범용적(general)이어야 합니다.</p>
+</section>
+<section id="제안-모델에-구애받지-않는model-agnostic-메타-러닝-알고리즘" class="level2">
+<h2 class="anchored" data-anchor-id="제안-모델에-구애받지-않는model-agnostic-메타-러닝-알고리즘">제안: <strong>모델에 구애받지 않는(model-agnostic)</strong> 메타 러닝 알고리즘</h2>
+<ul>
+<li>경사 하강법(gradient descent)으로 훈련되는 어떠한 학습 문제와 모델에도 직접 적용될 수 있다는 의미.</li>
+<li>심층 신경망 모델(deep neural network models)에 초점을 맞추고 있긴 하지만, 본 논문이 제안하는 접근법(MAML)은 최소한의 수정만으로도 분류, 회귀, 정책 경사(policy gradient) 강화학습 등 다양한 아키텍처와 문제 설정에 얼마나 쉽게 적용될 수 있는지를 보여줌.</li>
+</ul>
+<p>메타 러닝에서 훈련된 모델의 목표는 적은 양의 새로운 데이터만으로 새로운 과제를 신속하게 학습하는 것이며, 모델은 메타 학습기에 의해 수많은 다른 과제에 대해 학습할 수 있도록 훈련됩니다.</p>
+</section>
+<section id="핵심-아이디어-of-maml" class="level2">
+<h2 class="anchored" data-anchor-id="핵심-아이디어-of-maml">핵심 아이디어 of MAML</h2>
+<p>새로운 과제에서 얻은 소량의 데이터로 계산된 한 번 이상의 경사 하강 단계를 거쳐 파라미터가 업데이트되었을 때, 해당 과제에서 모델의 성능이 극대화되도록 모델의 <strong>초기 파라미터</strong>를 훈련하는 것입니다.</p>
+<ul>
+<li>업데이트 함수나 학습 규칙을 학습하는 기존의 메타 러닝 방법들[1]과 달리, MAML 알고리즘은 학습해야 할 파라미터의 수를 늘리지 않으며, 순환 모델(recurrent model) [2]이나 샴 네트워크(Siamese network)[3]를 요구하는 것처럼 모델 아키텍처에 제약을 가하지도 않습니다.
+<ul>
+<li>[1] (Schmidhuber, 1987; Bengio et al., 1992; Andrychowicz et al., 2016; Ravi &amp; Larochelle, 2017)<br>
+</li>
+<li>[2] (Santoro et al., 2016)<br>
+</li>
+<li>[3] (Koch, 2015)<br>
+</li>
+</ul></li>
+<li>또한, 완전 연결(fully connected), 컨볼루션(convolutional), 순환(recurrent) 신경망 등과 쉽게 결합할 수 있습니다.</li>
+<li>미분 가능한 지도 학습 손실 함수는 물론, 미분 불가능한 강화학습 목표 함수를 포함한 다양한 종류의 손실 함수와도 함께 사용할 수 있습니다.</li>
+</ul>
+<p>단 몇 번의 경사 하강 단계만으로, 혹은 단 한 번의 단계만으로도 새로운 과제에서 좋은 결과를 낼 수 있도록 모델의 파라미터를 훈련하는 과정은, <strong>특징 학습(feature learning)</strong>의 관점에서 볼 때 여러 과제에 폭넓게 적용 가능한 내부 표현(internal representation)을 구축하는 것으로 해석할 수 있습니다.</p>
+<ul>
+<li>만약 내부 표현이 여러 과제에 적합하다면, 파라미터를 약간만 미세조정하는 것(예: 피드포워드 모델의 마지막 레이어 가중치를 주로 수정하는 것)만으로도 좋은 결과를 얻을 수 있습니다.<br>
+</li>
+<li>결과적으로, 우리 절차는 쉽고 빠르게 미세조정될 수 있는 모델을 최적화하여, 신속한 학습에 적합한 공간에서 적응이 일어나도록 만듭니다.</li>
+</ul>
+<p><strong>동적 시스템(dynamical systems)</strong> 관점에서 보면, 우리의 학습 과정은 파라미터에 대한 새로운 과제들의 손실 함수의 민감도(sensitivity)를 극대화하는 것으로 볼 수 있습니다.</p>
+<ul>
+<li>민감도가 높을 때, 파라미터의 작은 국소적 변화가 과제 손실(task loss)을 크게 개선할 수 있기 때문입니다.</li>
+</ul>
+<blockquote class="blockquote">
+<p>maximizing the sensitivity of the loss functions of new tasks with respect to the parameters?</p>
+</blockquote>
+</section>
+<section id="이-연구의-주된-기여" class="level2">
+<h2 class="anchored" data-anchor-id="이-연구의-주된-기여">이 연구의 주된 기여</h2>
+<ul>
+<li>적은 횟수의 경사 하강 업데이트만으로 새로운 과제에 대한 빠른 학습이 가능하도록 모델의 파라미터를 훈련하는, 단순하면서도 모델과 과제에 구애받지 않는 메타 러닝 알고리즘.</li>
+<li>이 알고리즘을 완전 연결 신경망과 컨볼루션 신경망을 포함한 다양한 모델 유형과, 퓨샷(few-shot) 회귀, 이미지 분류, 강화학습 등 여러 영역에서 시연.</li>
+</ul>
+<p>평가는 제안된 메타 러닝 알고리즘이 지도 분류를 위해 특별히 설계된 최신 원샷(one-shot) 학습 방법들과 비교하여 더 적은 파라미터를 사용하면서도 우수한 성능을 보이며, 회귀 문제에도 쉽게 적용될 수 있고, 과제 가변성이 존재하는 상황에서 강화학습을 가속화하여 초기화 방식으로서의 직접적인 사전 훈련(pretraining)보다 월등히 뛰어난 성능을 보인다는 것을 보여줍니다.</p>
+</section>
+</section>
+<section id="서론-짚고-넘어가기" class="level1">
+<h1>1.0 서론 짚고 넘어가기</h1>
+<blockquote class="blockquote">
+<p><strong>maximizing the sensitivity of the loss functions</strong></p>
+</blockquote>
+<section id="핵심-개념-민감도sensitivity-기울기gradient의-크기" class="level2">
+<h2 class="anchored" data-anchor-id="핵심-개념-민감도sensitivity-기울기gradient의-크기">핵심 개념: 민감도(Sensitivity) = 기울기(Gradient)의 크기</h2>
+<p>수학, 특히 최적화 문제에서 어떤 함수의 “파라미터에 대한 민감도”는 <strong>기울기(gradient)</strong>로 표현됩니다. 기울기는 파라미터를 아주 약간 변경했을 때 함수 값이 얼마나, 그리고 어느 방향으로 변하는지를 나타냅니다.</p>
+<ul>
+<li><strong>기울기의 방향</strong>: 함수 값이 가장 가파르게 증가하는 방향</li>
+<li><strong>기울기의 크기(magnitude)</strong>: 그 가파른 정도. 즉, <strong>민감도</strong></li>
+</ul>
+<p>따라서 “파라미터(θ)에 대한 새로운 과제의 손실 함수(L)의 민감도를 극대화한다”는 것은, 손실 함수의 기울기 벡터 <span class="math inline">\(\nabla_{\theta} \mathcal{L}\)</span>의 크기(norm), 즉 <span class="math inline">\(\Vert \nabla_{\theta} \mathcal{L} \Vert\)</span> 를 크게 만드는 것을 의미합니다.</p>
+</section>
+<section id="수식을-통한-설명" class="level2">
+<h2 class="anchored" data-anchor-id="수식을-통한-설명">수식을 통한 설명</h2>
+<ol type="1">
+<li><strong>기본 설정</strong></li>
+</ol>
+<ul>
+<li>모델 파라미터: <span class="math inline">\(\theta\)</span></li>
+<li>새로운 (임의의) 과제 <span class="math inline">\(\mathcal{T}_i\)</span>에 대한 손실 함수: <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}(\theta)\)</span></li>
+</ul>
+<ol start="2" type="1">
+<li><strong>민감도(Sensitivity)의 수학적 표현</strong></li>
+</ol>
+<p>파라미터 <span class="math inline">\(\theta\)</span>에 대한 손실 함수 <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}\)</span>의 민감도는 기울기(gradient)의 크기(norm)로 나타낼 수 있습니다.</p>
+<p><span class="math display">\[ \text{Sensitivity} = \| \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \| \]</span></p>
+<ul>
+<li>이 값이 크다는 것은 손실 함수의 “경사면”이 매우 가파르다는 것을 의미합니다.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>파라미터의 작은 변화와 손실의 큰 개선</strong></li>
+</ol>
+<p>경사 하강법에서는 파라미터를 다음과 같이 업데이트합니다.</p>
+<p><span class="math display">\[ \theta' = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \]</span></p>
+<p>여기서 <span class="math inline">\(\alpha\)</span>는 학습률(learning rate)입니다.</p>
+<ul>
+<li>이때, 업데이트 후의 손실 값 <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}(\theta')\)</span>는 1차 테일러 근사(first-order Taylor approximation)를 통해 다음과 같이 예측할 수 있습니다.</li>
+</ul>
+<p><span class="math display">\[ \mathcal{L}_{\mathcal{T}_i}(\theta') \approx \mathcal{L}_{\mathcal{T}_i}(\theta) + (\theta' - \theta)^T \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \]</span></p>
+<p>위 식에 <span class="math inline">\(\theta' - \theta = -\alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta)\)</span>를 대입하면,</p>
+<p><span class="math display">\[ \mathcal{L}_{\mathcal{T}_i}(\theta') \approx \mathcal{L}_{\mathcal{T}_i}(\theta) + (-\alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta))^T \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \]</span></p>
+<p><span class="math display">\[ \mathcal{L}_{\mathcal{T}_i}(\theta') \approx \mathcal{L}_{\mathcal{T}_i}(\theta) - \alpha (\nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta))^T (\nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta)) \]</span></p>
+<p>벡터와 자신의 내적(dot product)은 크기의 제곱이므로,</p>
+<p><span class="math display">\[ \mathcal{L}_{\mathcal{T}_i}(\theta') \approx \mathcal{L}_{\mathcal{T}_i}(\theta) - \alpha \| \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \|^2 \]</span></p>
+<ol start="4" type="1">
+<li><strong>결론: 손실 개선량</strong></li>
+</ol>
+<p>위 식을 정리하여 한 번의 업데이트로 인한 <strong>손실 개선량</strong>을 살펴보면 다음과 같습니다.</p>
+<p><span class="math display">\[ \text{Loss Improvement} = \mathcal{L}_{\mathcal{T}_i}(\theta) - \mathcal{L}_{\mathcal{T}_i}(\theta') \approx \alpha \| \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) \|^2 \]</span></p>
+<p>이 수식은 매우 중요한 점을 시사합니다.</p>
+<blockquote class="blockquote">
+<p><strong>손실 개선량은 민감도(기울기의 크기)의 제곱에 비례합니다.</strong></p>
+</blockquote>
+<p>따라서 MAML의 학습 과정은 어떤 새로운 과제 <span class="math inline">\(\mathcal{T}_i\)</span>가 주어지더라도, 현재 파라미터 <span class="math inline">\(\theta\)</span> 위치에서 손실 함수의 기울기 크기 $| <em></em>{_i}()| $가 크도록 만드는 것입니다.</p>
+<ul>
+<li>이렇게 되면 단 한 번의 경사 하강 단계만으로도 손실 값을 <strong>크게</strong> 줄일 수 있어, 빠르고 효율적인 적응(adaptation)이 가능해집니다.</li>
+</ul>
+</section>
+<section id="비유를-통한-이해" class="level2">
+<h2 class="anchored" data-anchor-id="비유를-통한-이해">비유를 통한 이해</h2>
+<ul>
+<li><strong>나쁜 초기 파라미터 (낮은 민감도)</strong>: 넓은 고원이나 평지에 서 있는 것과 같습니다. 어느 방향으로 한 걸음 내딛어도 고도(손실)는 거의 변하지 않습니다. 최저점(최적해)에 도달하려면 수많은 걸음을 옮겨야 합니다.</li>
+<li><strong>좋은 초기 파라미터 (높은 민감도, MAML의 목표)</strong>: 여러 계곡(각 과제의 최적해)으로 내려가는 길이 시작되는 <strong>산등성이의 중앙</strong>에 서 있는 것과 같습니다. 어떤 계곡으로 내려가야 할지 목표가 주어지면, 그 방향은 매우 가파르기 때문에 단 몇 걸음만으로도 고도(손실)를 크게 낮출 수 있습니다.</li>
+</ul>
+<p>MAML은 바로 이 “산등성이의 중앙”과 같은 초기 파라미터 <span class="math inline">\(\theta\)</span>를 찾는 알고리즘이라고 할 수 있습니다.</p>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TWV0YUxlYXJuaW5nJTJDU3VydmV5JTJDUmV2aWV3" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763079226661" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2346">
-<div class="thumbnail"><a href="../posts/20251113_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251113_1.html" class="no-external">Meta Learning in Neural Networks — A Survey</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251113_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251113_1.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYSUyQ01vRSUyQ1ZBRQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041981616" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="757">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">Mixture of Experts But VAE - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="TWV0YUxlYXJuaW5nJTJDTUFNTCUyQ1Jldmlldw==" data-listing-date-sort="1763046000000" data-listing-file-modified-sort="1763083033431" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1084">
-<div class="thumbnail"><a href="../posts/20251114_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251114_1.html" class="no-external">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251114_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251114_1.html" class="no-external">
-<div class="listing-date">
-Nov 14, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDUGFwZXI=" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041889041" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3908">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">Paper Lists - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="QmF5ZXNpYW4lMkNNZXRhTGVhcm5pbmclMkNJZGVhJTJDUGFwZXI=" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041812955" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3409">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">Paper Lists - Bayesian+MetaLearning</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+MetaLearning</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763024422943" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="7">
-<div class="thumbnail"><a href="../posts/post-with-code/index.html" class="no-external">
-
-<img loading="lazy" src="../posts/post-with-code/image.jpg" class="thumbnail-image">
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/post-with-code/index.html" class="no-external">Post With Code</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/post-with-code/index.html" class="no-external">
-This is a post with executable code.
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/post-with-code/index.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYSUyQ01vRSUyQ1ZBRQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763042002485" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="2000">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">석사 학위 논문 연구 계획서 - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="QmF5ZXNpYW4lMkNNZXRhTGVhcm5pbmclMkNJZGVh" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041825235" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2416">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">석사 학위 논문 연구 계획서 - Bayesian+MetaLearning</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+MetaLearning</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="bmV3cw==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763024422943" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
-<div class="thumbnail"><a href="../posts/welcome/index.html" class="no-external">
-
-<p class="card-img-top"><img src="welcome\thumbnail.jpg"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/welcome/index.html" class="no-external">어케 쓰는거냐</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/welcome/index.html" class="no-external">
-This is the first post in a Quarto blog. Welcome!
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041706605" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="912">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">이상치 탐지 with Uncertainty?</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
