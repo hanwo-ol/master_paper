@@ -346,7 +346,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p><strong>손실 개선량은 민감도(기울기의 크기)의 제곱에 비례합니다.</strong></p>
 </blockquote>
-<p>따라서 MAML의 학습 과정은 어떤 새로운 과제 <span class="math inline">\(\mathcal{T}_i\)</span>가 주어지더라도, 현재 파라미터 <span class="math inline">\(\theta\)</span> 위치에서 손실 함수의 기울기 크기 $| <em></em>{_i}()| $가 크도록 만드는 것입니다.</p>
+<p>따라서 MAML의 학습 과정은 어떤 새로운 과제 <span class="math inline">\(\mathcal{T}_i\)</span>가 주어지더라도, 현재 파라미터 <span class="math inline">\(\theta\)</span> 위치에서 손실 함수의 기울기 크기 <span class="math inline">\(\vert \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta)\vert\)</span>가 크도록 만드는 것입니다.</p>
 <ul>
 <li>이렇게 되면 단 한 번의 경사 하강 단계만으로도 손실 값을 <strong>크게</strong> 줄일 수 있어, 빠르고 효율적인 적응(adaptation)이 가능해집니다.</li>
 </ul>
