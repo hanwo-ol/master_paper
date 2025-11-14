@@ -201,6 +201,8 @@ window.Quarto = {
   <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경">배경</a>
   <ul class="collapse">
   <li><a href="#메타러닝을-공식화-해보자" id="toc-메타러닝을-공식화-해보자" class="nav-link" data-scroll-target="#메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</a></li>
+  <li><a href="#기존-머신러닝" id="toc-기존-머신러닝" class="nav-link" data-scroll-target="#기존-머신러닝"><strong>기존 머신러닝</strong></a></li>
+  <li><a href="#과제-분포task-distribution-관점에서-본-메타러닝" id="toc-과제-분포task-distribution-관점에서-본-메타러닝" class="nav-link" data-scroll-target="#과제-분포task-distribution-관점에서-본-메타러닝">과제 분포(Task-Distribution) 관점에서 본 메타러닝</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -403,8 +405,9 @@ window.Quarto = {
 </section>
 <section id="메타러닝을-공식화-해보자" class="level3">
 <h3 class="anchored" data-anchor-id="메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</h3>
-<section id="기존-머신러닝" class="level4">
-<h4 class="anchored" data-anchor-id="기존-머신러닝"><strong>기존 머신러닝</strong></h4>
+</section>
+<section id="기존-머신러닝" class="level3">
+<h3 class="anchored" data-anchor-id="기존-머신러닝"><strong>기존 머신러닝</strong></h3>
 <p>기존의 지도(supervised) 머신러닝에서는 (입력 이미지, 출력 레이블) 쌍과 같은 훈련 데이터셋 <span class="math inline">\(D = \{(x_1, y_1), \dots, (x_N, y_N)\}\)</span>이 주어짐.</p>
 <p><span class="math inline">\(\theta\)</span>로 매개변수화된 예측 모델 <span class="math inline">\(\hat{y} = f_{\theta}(x)\)</span>를 다음 식을 풀어 훈련시키게 됨:</p>
 <p><span class="math display">\[
@@ -440,8 +443,8 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="메타러닝-과제-분포task-distribution-관점" class="level4">
-<h4 class="anchored" data-anchor-id="메타러닝-과제-분포task-distribution-관점">메타러닝: 과제 분포(Task-Distribution) 관점</h4>
+<section id="과제-분포task-distribution-관점에서-본-메타러닝" class="level3">
+<h3 class="anchored" data-anchor-id="과제-분포task-distribution-관점에서-본-메타러닝">과제 분포(Task-Distribution) 관점에서 본 메타러닝</h3>
 <blockquote class="blockquote">
 <p>메타러닝을 통해 여러 과제에 걸쳐 일반화할 수 있고,<br>
 이상적으로는 새로운 과제를 접할 때마다 이전보다 더 잘 학습할 수 있게 해주는 <strong>범용 학습 알고리즘</strong>을 학습하자.</p>
@@ -466,17 +469,49 @@ window.Quarto = {
 <li>현실: 모든 과제 분포의 모든 문제인 <span class="math inline">\(p(\mathcal{T})\)</span>를 다룰 수는 없음.</li>
 <li>타협: 그러니까, 우리가 가진 문제는 “전체 과제들의 분포 <span class="math inline">\(p(\mathcal{T})\)</span>를 어느정도 대표할 수 있는 샘플들”이야! –&gt; source tasks(소스 과제)</li>
 </ul>
-<p>공식적으로, 메타-훈련 단계에서 사용되는 <span class="math inline">\(M\)</span>개의 소스 과제 집합을 <span class="math inline">\(\mathcal{D}_{\text{source}} = \{(D_{\text{source}}^{\text{train}}, D_{\text{source}}^{\text{val}})^{(i)}\}_{i=1}^M\)</span> 로 표기하며, 각 과제는 훈련 데이터와 검증 데이터를 모두 가집니다. 종종 소스 훈련 및 검증 데이터셋은 각각 <strong>서포트셋(support set)</strong> 과 <strong>쿼리셋(query set)</strong> 이라고 불립니다. ‘학습하는 법을 배우는’ 메타-훈련 단계는 다음과 같이 쓸 수 있습니다:</p>
+<p><strong>Notation 2</strong></p>
+<p><span class="math inline">\(\mathcal{D}_{\text{source}} = \{(D_{\text{source}}^{\text{train}}, D_{\text{source}}^{\text{val}})^{(i)}\}_{i=1}^M\)</span></p>
+<ul>
+<li><strong>메타-훈련(meta-training)에 사용할 전체 데이터셋</strong>을 나타내는 기호.</li>
+</ul>
+<p>하나씩 뜯어보면</p>
+<ul>
+<li><span class="math inline">\(\mathcal{D}_{\text{source}}\)</span> : <strong>‘소스 데이터셋(Source Dataset)’</strong>이라는 뜻. 여기서 ’소스(Source)’는 메타 지식(학습 노하우)을 배우는 <strong>원천(Source)</strong>이 된다는 의미. 즉, <strong>“훈련용”</strong>이라는 뜻.</li>
+<li><span class="math inline">\(M\)</span>: 우리가 가지고 있는 <strong>훈련용 과제(task)의 총 개수</strong>. (예: 50개의 다른 종류의 동물 분류 문제)</li>
+<li><span class="math inline">\(\{ \dots \}_{i=1}^M\)</span>: 괄호 안의 내용이 <strong>1번부터 M번까지 M개</strong>가 있다는 뜻.</li>
+<li><span class="math inline">\(( \dots )^{(i)}\)</span>: 그중에서 <strong>i번째 과제</strong>를 의미. (예: 50개 중 17번째 과제)</li>
+<li><span class="math inline">\((D_{\text{source}}^{\text{train}}, D_{\text{source}}^{\text{val}})\)</span>: 하나의 과제(<span class="math inline">\(i\)</span>)가 두 종류의 데이터로 구성되어 있다는 뜻.
+<ul>
+<li><span class="math inline">\(D_{\text{train}}^{\text{source}}\)</span>: <strong>‘훈련용’ 데이터(train data)</strong>. 이 과제를 풀기 위해 공부하는 데 사용되는 데이터. 메타러닝에서는 이것을 특별히 <strong>서포트셋(support set)</strong>이라고 함.</li>
+<li><span class="math inline">\(D_{\text{val}}^{\text{source}}\)</span>: <strong>‘검증용’ 데이터(validation data)</strong>. 위에서 공부한 내용으로 얼마나 잘하는지 쪽지시험을 보는 데 사용되는 데이터. 메타러닝에서는 이것을 특별히 <strong>쿼리셋(query set)</strong>이라고 함.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>“<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>란, 총 M개의 훈련용 과제 묶음인데, 각 과제<span class="math inline">\(i\)</span>는 ’서포트셋(훈련용)’과 ’쿼리셋(검증용)’이라는 두 개의 데이터 묶음으로 이루어져 있다.”</p>
+</blockquote>
+<p>아무튼, 저런 데이터 묶음으로 뭘할거냐 하면, 식 (3)을 풀기 위함이다.</p>
 <p><span class="math display">\[
 \omega^* = \arg\max_{\omega} \log p(\omega|\mathcal{D}_{\text{source}}) \quad (3)
 \]</span></p>
+<p>또, 식을 하나씩 요소별로 뜯어보자.</p>
+<ul>
+<li><span class="math inline">\(\omega\)</span> (오메가): 우리가 찾고 싶은 <strong>‘학습 방법’ 또는 ‘공부법’</strong></li>
+<li><span class="math inline">\(\omega^{\ast}\)</span> (오메가 스타): 수많은 가능한 공부법(<span class="math inline">\(\omega\)</span>) 중에서 우리가 찾아낸 <strong>최고의(optimal) 공부법</strong>을 의미함.</li>
+<li><span class="math inline">\(\arg\max_{\omega}\)</span>: “괄호 안의 값을 <strong>최대(max)로 만드는</strong> <span class="math inline">\(\omega\)</span>를 <strong>찾아라(arg)</strong>”라는 명령어.</li>
+<li><span class="math inline">\(p(\omega|\mathcal{D}_{\text{source}})\)</span>: <strong>사후 확률(posterior probability)</strong>.
+<ul>
+<li><strong>“우리가 가진 훈련용 과제 데이터(<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>)를 관찰했을 때, 어떤 공부법(<span class="math inline">\(\omega\)</span>)이 가장 그럴듯한가(정답일 확률이 높은가)?”</strong>.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>“우리가 가진 <strong>훈련용 과제 데이터(<span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>)를 가장 잘 설명하고 해결할 수 있는, 가장 그럴듯한(확률이 가장 높은) 학습 방법(<span class="math inline">\(\omega\)</span>)을 찾아서, 그것을 우리의 최종 학습법(<span class="math inline">\(\omega^{\ast}\)</span>)으로 삼아라!“</strong></p>
+</blockquote>
 <p>이제 메타-테스트 단계에서 사용되는 <span class="math inline">\(Q\)</span>개의 타겟 과제(target tasks) 집합을 <span class="math inline">\(\mathcal{D}_{\text{target}} = \{(D_{\text{train}}^{\text{target}}, D_{\text{test}}^{\text{target}})^{(i)}\}_{i=1}^Q\)</span>로 표기하며, 각 과제는 훈련 데이터와 테스트 데이터를 모두 가집니다. 메타-테스트 단계에서는 학습된 메타 지식 <span class="math inline">\(\omega^*\)</span>를 사용하여 이전에 보지 못한 각 타겟 과제 <span class="math inline">\(i\)</span>에 대한 기반 모델을 훈련합니다:</p>
 <p><span class="math display">\[
 \theta^{*(i)} = \arg\max_{\theta} \log p(\theta|\omega^*, D_{\text{train}}^{\text{target}}(i)) \quad (4)
 \]</span></p>
 <p>식 (1)의 기존 학습과 대조적으로, 타겟 과제 <span class="math inline">\(i\)</span>의 훈련 세트에 대한 학습은 이제 사용할 알고리즘에 대한 메타 지식 <span class="math inline">\(\omega^*\)</span>의 이점을 얻습니다. 이것은 좋은 초기 파라미터의 추정치[16]일 수도 있고, 전체 학습 모델[38] 또는 최적화 전략[39]일 수도 있습니다. 우리는 각 타겟 과제의 테스트 스플릿 <span class="math inline">\(D_{\text{test}}^{\text{target}}(i)\)</span>에 대한 <span class="math inline">\(\theta^{*(i)}\)</span>의 성능으로 메타 학습기의 정확도를 평가할 수 있습니다.</p>
 <p>이러한 설정은 기존의 과소적합 및 과적합과 유사한 개념인 <strong>메타-과소적합(meta-underfitting)</strong> 과 <strong>메타-과적합(meta-overfitting)</strong> 으로 이어집니다. 특히, 메타-과적합은 소스 과제에서 학습된 메타 지식이 타겟 과제로 일반화되지 않는 문제입니다. 이는 비교적 흔하며, 특히 소수의 소스 과제만 사용할 수 있는 경우에 그렇습니다. 이것은 가설 공간 <span class="math inline">\(\theta\)</span>를 소스 과제의 해법 주변으로 너무 강하게 제약하는 귀납적 편향 <span class="math inline">\(\omega\)</span>를 학습하는 것으로 볼 수 있습니다.</p>
-</section>
 <section id="단계-메타-훈련-meta-training---학습-노하우-배우기" class="level4">
 <h4 class="anchored" data-anchor-id="단계-메타-훈련-meta-training---학습-노하우-배우기">1단계: 메타-훈련 (Meta-Training) - “학습 노하우 배우기”</h4>
 <p>먼저, ’훈련용’으로 사용할 M개의 샘플 과제 묶음 <span class="math inline">\(\mathcal{D}_{\text{source}}\)</span>를 준비합니다. 각 과제는 두 종류의 데이터로 나뉩니다.</p>
