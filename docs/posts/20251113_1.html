@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="김한울">
-<meta name="dcterms.date" content="2025-11-13">
+<meta name="dcterms.date" content="2025-11-14">
 <meta name="description" content="메타 러닝 관련 논문 요약 및 주요 내용">
 
 <title>Meta Learning in Neural Networks — A Survey – Master Thesis Literature Review</title>
@@ -178,7 +178,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 13, 2025</p>
+        <p class="date">November 14, 2025</p>
       </div>
     </div>
     
@@ -200,6 +200,7 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경">배경</a>
   <ul class="collapse">
+  <li><a href="#메타러닝" id="toc-메타러닝" class="nav-link" data-scroll-target="#메타러닝">메타러닝?</a></li>
   <li><a href="#메타러닝의-정형화" id="toc-메타러닝의-정형화" class="nav-link" data-scroll-target="#메타러닝의-정형화">2.1 메타러닝의 정형화</a></li>
   </ul></li>
   </ul></li>
@@ -359,9 +360,9 @@ window.Quarto = {
 <li>참고문헌 [27], [28]에 따라 <strong>‘알고리즘 학습’</strong>으로 간주하지만, 특히 이 학습이 명시적으로 정의된 목적 함수(예: 교차 엔트로피 손실)의 종단간(end-to-end) 학습을 통해 달성되는 경우에 초점을 맞춥니다.</li>
 <li>이에 더해, 우리는 단일 과제 메타러닝을 고려하고, 강건성(robustness) 및 컴퓨팅 효율성과 같은 더 폭넓고 다양한 (메타) 목적 함수에 대해서도 논의할 것입니다.</li>
 </ul></li>
-<li>메타러닝의 방법론과 응용 분야를 모두 다룰 것입니다.
+<li>본 논문에서는 메타러닝의 방법론과 응용 분야를 모두 다루려고 함.
 <ul>
-<li>먼저, 이 분야의 연구들을 이해하고 그 위상을 정립하는 데 사용할 수 있는 고수준의 문제 정형화를 통해 메타러닝을 소개합니다</li>
+<li>먼저, 이 분야의 연구들을 이해하고 그 위상을 정립하는 데 사용할 수 있는 고수준의 문제 정형화(formalization)를 통해 메타러닝을 소개합니다</li>
 <li>그런 다음, <strong>메타-표현(meta-representation), 메타-목적(meta-objective), 메타-최적화기(meta-optimizer)</strong>라는 관점에서 새로운 분류 체계를 제공할 것입니다.</li>
 <li>이 프레임워크는 새로운 메타러닝 방법을 개발하고 다양한 응용에 맞게 맞춤화하기 위한 <strong>설계 공간(design-space)</strong>을 제시합니다.</li>
 <li>우리는 퓨샷 학습, 강화 학습, 구조 탐색 등 여러 인기 있고 새롭게 부상하는 응용 분야를 살펴보고, 전이 학습 및 다중과제 학습과 같은 관련 주제와 비교하여 메타러닝의 위상을 정립할 것입니다.</li>
@@ -371,12 +372,23 @@ window.Quarto = {
 </section>
 <section id="배경" class="level2">
 <h2 class="anchored" data-anchor-id="배경">배경</h2>
-<p>메타러닝은 현대 신경망 문헌 내에서조차 다양하고 일관성 없는 방식으로 사용되어 왔기 때문에 정의하기가 어렵습니다. 이 섹션에서는 우리의 정의와 주요 용어를 소개하고, 관련 분야와 비교하여 메타러닝의 위상을 정립하겠습니다.</p>
-<p>가장 일반적으로 <strong>’학습하는 방법을 학습하는 것(learning to learn)’으로 이해</strong>되며, 이는 <strong>여러 학습 에피소드에 걸쳐 학습 알고리즘을 개선하는 과정을 의미</strong>합니다.</p>
+<p>메타러닝은 현대 신경망 문헌 내에서조차 다양하고 일관성 없는 방식으로 사용되어 왔기 때문에 “한 단어, 한 문장”으로 명확하게 정의하기가 어려운 상태임.</p>
 <ul>
-<li>기존의 머신러닝이 여러 데이터 인스턴스에 걸쳐 모델 예측을 개선하는 것과 대조적.</li>
+<li>이 섹션에서는 우리의 정의와 주요 용어를 소개하고, 관련 분야와 비교하여 메타러닝의 position을 정립하고 있음.</li>
 </ul>
-<p><strong>기반 학습(base learning)</strong> 중에는 <strong>내부(inner)</strong> (또는 하위/기반) 학습 알고리즘이 이미지 분류와 같은 과제를 해결하며, 이는 데이터셋과 목적 함수에 의해 정의됩니다. <strong>메타러닝</strong> 중에는 <strong>외부(outer)</strong>(또는 상위/메타) 알고리즘이 내부 학습 알고리즘을 업데이트하여, 그것이 학습하는 모델이 외부 목적 함수를 개선하도록 만듭니다. 예를 들어, 이 목적 함수는 내부 알고리즘의 일반화 성능이나 학습 속도가 될 수 있습니다. (기반 알고리즘, 학습된 모델, 성능) 튜플로 구성된 기반 과제의 학습 에피소드들은 외부 알고리즘이 기반 학습 알고리즘을 학습하는 데 필요한 인스턴스를 제공하는 것으로 볼 수 있습니다.</p>
+<section id="메타러닝" class="level3">
+<h3 class="anchored" data-anchor-id="메타러닝">메타러닝?</h3>
+<p><strong>‘학습하는 방법을 학습하는 것(learning to learn)’</strong></p>
+<ul>
+<li><p>이는 <strong>여러 학습 에피소드에 걸쳐 학습 알고리즘을 개선하는 과정을 의미</strong>함.</p></li>
+<li><p>기존의 머신러닝이 여러 데이터 인스턴스에 걸쳐 모델 예측을 개선하는 것과 대조적.</p></li>
+<li><p><strong>기반 학습(base learning)</strong> 중에는 <strong>내부(inner)</strong> (또는 하위/기반) 학습 알고리즘이 이미지 분류와 같은 과제를 해결하며, 이는 데이터셋과 목적 함수에 의해 정의됨. 흔히 inner loop라는 표현으로도 많이 쓰임<br>
+</p></li>
+<li><p><strong>메타러닝</strong> 중에는 <strong>외부(outer)</strong>(또는 상위/메타) 알고리즘이 내부 학습 알고리즘을 업데이트하여, 그것이 학습하는 모델이 외부 목적 함수를 개선하도록 만듦.</p>
+<ul>
+<li>예를 들어, 이 목적 함수는 내부 알고리즘의 일반화 성능이나 학습 속도가 될 수 있습니다. (기반 알고리즘, 학습된 모델, 성능) 튜플로 구성된 기반 과제의 학습 에피소드들은 외부 알고리즘이 기반 학습 알고리즘을 학습하는 데 필요한 인스턴스를 제공하는 것으로 볼 수 있습니다.</li>
+</ul></li>
+</ul>
 <pre><code>During base learning, an inner (or lower/base) learning algorithm solves a task such as image classification [13], defined by a dataset and objective.
 
 During meta-learning, an outer (or upper/meta) algorithm updates the inner learning algorithm such that the model it learns improves an outer objective.</code></pre>
@@ -400,6 +412,7 @@ During meta-learning, an outer (or upper/meta) algorithm updates the inner learn
 <p>위에 정의된 대로라면, 교차 검증을 통한 하이퍼파라미터의 무작위 탐색과 같은 많은 기존 알고리즘이 메타러닝의 정의에 포함될 수 있습니다.</p>
 <p>현대 신경망 메타러닝의 두드러진 특징은 <strong>명시적으로 정의된 메타 수준의 목적 함수</strong>와, 이 목적 함수에 대한 내부 알고리즘의 <strong>종단간(end-to-end) 최적화</strong> 입니다. 종종 메타러닝은 과제군(task family)에서 샘플링된 학습 에피소드에 대해 수행되어, 이 과제군에서 샘플링된 새로운 과제에 대해 좋은 성능을 보이는 기반 학습 알고리즘을 만듭니다. 하지만, 극한의 경우 모든 훈련 에피소드가 단일 과제에서 샘플링될 수도 있습니다.</p>
 <hr>
+</section>
 <section id="메타러닝의-정형화" class="level3">
 <h3 class="anchored" data-anchor-id="메타러닝의-정형화">2.1 메타러닝의 정형화</h3>
 <section id="기존-머신러닝" class="level4">
