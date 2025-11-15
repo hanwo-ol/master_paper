@@ -1,16 +1,16 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Kim Hanwool"
+image: profile.png
 about:
   template: jolla
   links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://linkedin.com
+    - icon: naver
+      text: Naver Blog
+      href: https://blog.naver.com/d0njusey0
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/hanwo-ol
 
 ---
 
-About this blog
+졸업하고 싶은 대학원생의 몸부림 기록 일지
