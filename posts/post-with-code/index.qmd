@@ -1,9 +1,0 @@
----
-title: "Post With Code"
-author: "김한울"
-date: "2025-11-13"
-categories: [news, code, analysis]
-image: "image.jpg"
----
-
-This is a post with executable code.
