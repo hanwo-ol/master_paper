@@ -209,6 +209,15 @@ window.Quarto = {
   <li><a href="#수식을-통한-설명" id="toc-수식을-통한-설명" class="nav-link" data-scroll-target="#수식을-통한-설명">수식을 통한 설명</a></li>
   <li><a href="#비유를-통한-이해" id="toc-비유를-통한-이해" class="nav-link" data-scroll-target="#비유를-통한-이해">비유를 통한 이해</a></li>
   </ul></li>
+  <li><a href="#모델에-구애받지-않는-메타-러닝-model-agnostic-meta-learning" id="toc-모델에-구애받지-않는-메타-러닝-model-agnostic-meta-learning" class="nav-link" data-scroll-target="#모델에-구애받지-않는-메타-러닝-model-agnostic-meta-learning">2. 모델에 구애받지 않는 메타 러닝 (Model-Agnostic Meta-Learning)</a>
+  <ul class="collapse">
+  <li><a href="#메타-러닝-문제-설정-meta-learning-problem-set-up" id="toc-메타-러닝-문제-설정-meta-learning-problem-set-up" class="nav-link" data-scroll-target="#메타-러닝-문제-설정-meta-learning-problem-set-up">2.1. 메타 러닝 문제 설정 (Meta-Learning Problem Set-Up)</a></li>
+  <li><a href="#상세-설명" id="toc-상세-설명" class="nav-link" data-scroll-target="#상세-설명">2.1.0 상세 설명</a>
+  <ul class="collapse">
+  <li><a href="#과제mathcalt의-일반적-정의" id="toc-과제mathcalt의-일반적-정의" class="nav-link" data-scroll-target="#과제mathcalt의-일반적-정의">1. 과제(<span class="math inline">\(\mathcal{T}\)</span>)의 일반적 정의</a></li>
+  <li><a href="#메타-러닝의-전체-과정" id="toc-메타-러닝의-전체-과정" class="nav-link" data-scroll-target="#메타-러닝의-전체-과정">2. 메타 러닝의 전체 과정</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -219,6 +228,21 @@ window.Quarto = {
 
 
 
+<p><code>업데이트 내역</code></p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>2025-11-14</td>
+<td>첫 게시</td>
+<td>서론 심화 업데이트</td>
+</tr>
+<tr class="even">
+<td>2025-11-16</td>
+<td>섹션 2.1 업데이트</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <pre><code>@inproceedings{finn2017model,
   title={Model-agnostic meta-learning for fast adaptation of deep networks},
   author={Finn, Chelsea and Abbeel, Pieter and Levine, Sergey},
@@ -366,8 +390,128 @@ window.Quarto = {
 <li><strong>좋은 초기 파라미터 (높은 민감도, MAML의 목표)</strong>: 여러 계곡(각 과제의 최적해)으로 내려가는 길이 시작되는 <strong>산등성이의 중앙</strong>에 서 있는 것과 같습니다. 어떤 계곡으로 내려가야 할지 목표가 주어지면, 그 방향은 매우 가파르기 때문에 단 몇 걸음만으로도 고도(손실)를 크게 낮출 수 있습니다.</li>
 </ul>
 <p>MAML은 바로 이 “산등성이의 중앙”과 같은 초기 파라미터 <span class="math inline">\(\theta\)</span>를 찾는 알고리즘이라고 할 수 있습니다.</p>
+</section>
+</section>
+<section id="모델에-구애받지-않는-메타-러닝-model-agnostic-meta-learning" class="level1">
+<h1>2. 모델에 구애받지 않는 메타 러닝 (Model-Agnostic Meta-Learning)</h1>
+<p>우리는 신속한 적응(rapid adaptation)이 가능한 모델을 훈련하고자 하며, 이러한 문제 설정은 종종 퓨샷 학습(few-shot learning)으로 공식화됩니다. 본 섹션에서는 문제 설정을 정의하고, 우리가 제안하는 알고리즘의 일반적인 형태를 제시하겠습니다.</p>
+<section id="메타-러닝-문제-설정-meta-learning-problem-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="메타-러닝-문제-설정-meta-learning-problem-set-up">2.1. 메타 러닝 문제 설정 (Meta-Learning Problem Set-Up)</h2>
+<p><strong>The Goal of few-shot meta-learning?</strong></p>
+<p>퓨샷 메타 러닝의 목표는 단 몇 개의 데이터포인트와 훈련 반복만으로 새로운 과제에 신속하게 적응할 수 있는 모델을 훈련하는 것입니다.</p>
+<ul>
+<li>이를 위해, 모델 또는 학습기는 메타-학습 단계에서 여러 과제(task)에 대해 훈련을 받습니다.</li>
+<li>그 결과 훈련된 모델은 적은 수의 예시나 시도만으로도 새로운 과제에 빠르게 적응할 수 있게 됩니다.</li>
+</ul>
+<p>결과적으로, 메타 러닝 문제는 개별 과제 전체를 하나의 훈련 예시로 취급하는 셈입니다. 본 섹션에서는 다양한 학습 영역의 간략한 예시를 포함하여 이 메타 러닝 문제 설정을 일반적인 방식으로 공식화합니다. 섹션 3에서는 두 가지 다른 학습 영역을 자세히 논의할 것입니다.</p>
+<p>우리는 관측값 <span class="math inline">\(\mathbf{x}\)</span>를 출력값 <strong>a</strong>로 매핑하는 모델 <span class="math inline">\(f\)</span>를 고려합니다. 메타 러닝 과정에서, 모델은 수많은 혹은 무한한 수의 과제에 적응할 수 있도록 훈련됩니다.</p>
+<ul>
+<li>우리는 분류에서 강화학습에 이르기까지 다양한 학습 문제에 우리의 프레임워크를 적용하고자 하므로, 아래에 학습 과제에 대한 일반적인 개념을 도입합니다. 공식적으로, 각 과제 <span class="math inline">\(\mathcal{T}\)</span>는 다음과 같이 구성됩니다.</li>
+</ul>
+<p><span class="math display">\[\mathcal{T} = \{\mathcal{L}(x_1, a_1, ..., x_H, a_H), q(x_1), q(x_{t+1}|x_t, a_t), H\}\]</span></p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}\)</span>: 손실함수</li>
+<li><span class="math inline">\(q(x_1)\)</span>: 초기 관측값의 분포</li>
+<li><span class="math inline">\(q(x_{t+1}|x_t, a_t)\)</span>: 전이 분포</li>
+<li><span class="math inline">\(H\)</span>: 에피소드 길이</li>
+</ul>
+<p>i.i.d.에서, 지도 학습 문제에서는 에피소드 길이가 <span class="math inline">\(H=1\)</span>입니다. 모델은 각 시점 <span class="math inline">\(t\)</span>에서 출력값 <span class="math inline">\(a_t\)</span>를 선택하여 길이 <span class="math inline">\(H\)</span>의 샘플을 생성할 수 있습니다.</p>
+<p>손실 함수 <span class="math inline">\(\mathcal{L}(x_1, a_1, ..., x_H, a_H) \rightarrow \mathbb{R}\)</span>은 과제별 피드백을 제공하며, 이는 마르코프 결정 과정(Markov decision process)에서의 오분류 손실(misclassification loss)이나 비용 함수(cost function)의 형태일 수 있습니다.</p>
+<p>우리의 메타 러닝 시나리오에서는, 모델이 적응해야 할 과제들의 분포 <span class="math inline">\(p(\mathcal{T})\)</span>를 고려합니다. K-샷(K-shot) 학습 설정에서, 모델은 <span class="math inline">\(p(\mathcal{T})\)</span>로부터 추출된 새로운 과제 <span class="math inline">\(\mathcal{T}_i\)</span>를 학습하도록 훈련됩니다. 이때 학습에는 <span class="math inline">\(q_i\)</span>에서 추출된 단 K개의 샘플과, <span class="math inline">\(\mathcal{T}_i\)</span>에 의해 생성된 피드백(손실) <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}\)</span>만이 사용됩니다. 메타-훈련(meta-training) 중에는 <span class="math inline">\(p(\mathcal{T})\)</span>에서 과제 <span class="math inline">\(\mathcal{T}_i\)</span>가 샘플링되고, 모델은 K개의 샘플과 해당 손실 <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}\)</span>로부터의 피드백으로 훈련된 후, <span class="math inline">\(\mathcal{T}_i\)</span>의 새로운 샘플에 대해 테스트됩니다. 모델 <span class="math inline">\(f\)</span>는 <span class="math inline">\(q_i\)</span>의 새로운 데이터에 대한 테스트 오차(test error)가 파라미터에 따라 어떻게 변하는지를 고려하여 개선됩니다. 결과적으로, 샘플링된 과제 <span class="math inline">\(\mathcal{T}_i\)</span>에 대한 테스트 오차가 메타-학습 과정의 훈련 오차(training error) 역할을 하게 됩니다. 메타-훈련이 끝나면, <span class="math inline">\(p(\mathcal{T})\)</span>에서 새로운 과제들이 샘플링되고, K개의 샘플로부터 학습한 후의 모델 성능으로 메타-성능(meta-performance)이 측정됩니다. 일반적으로, 메타-테스트에 사용되는 과제들은 메타-훈련 과정에서는 사용되지 않습니다(held out).</p>
+</section>
+<section id="상세-설명" class="level2">
+<h2 class="anchored" data-anchor-id="상세-설명">2.1.0 상세 설명</h2>
+<p>해당 섹션은 MAML이 해결하고자 하는 문제, 즉 <strong>퓨샷 메타 러닝(Few-shot Meta-Learning)</strong>을 수학적으로 엄밀하게 정의합니다. 핵심은 기존의 머신러닝처럼 ‘데이터포인트’를 학습하는 것이 아니라, ’과제(Task)’ 자체를 하나의 학습 단위로 보고, 새로운 과제에 빠르게 적응하는 능력을 학습하는 것입니다.</p>
+<section id="과제mathcalt의-일반적-정의" class="level3">
+<h3 class="anchored" data-anchor-id="과제mathcalt의-일반적-정의">1. 과제(<span class="math inline">\(\mathcal{T}\)</span>)의 일반적 정의</h3>
+<p>MAML은 분류, 회귀, 강화학습 등 다양한 문제에 적용 가능하도록 ’과제’를 매우 일반적인 형태로 정의합니다.</p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(\mathcal{T} = \{\mathcal{L}(x_1, a_1, ..., x_H, a_H), q(x_1), q(x_{t+1}|x_t, a_t), H\}\)</span></p>
+</blockquote>
+<p>이 수식의 각 구성 요소는 다음과 같은 의미를 가집니다.</p>
+<ul>
+<li><strong><span class="math inline">\(\mathcal{L}(\dots)\)</span> : 손실 함수 (Loss Function)</strong>
+<ul>
+<li><strong>의미</strong>: 해당 과제(<span class="math inline">\(\mathcal{T}\)</span>)에서 모델의 성능을 평가하는 기준입니다. 즉, “무엇을 잘해야 하는가?”를 정의합니다.</li>
+<li><strong>예시</strong>:
+<ul>
+<li><strong>분류</strong>: Cross-Entropy Loss (예측 레이블과 실제 레이블 간의 차이)</li>
+<li><strong>회귀</strong>: Mean Squared Error (MSE) (예측값과 실제값 간의 제곱 오차)</li>
+<li><strong>강화학습</strong>: 에피소드 동안 받은 보상(Reward)의 합에 음수를 취한 값 (보상을 최대화하는 것이 목표이므로, 손실은 음수 보상으로 정의)</li>
+</ul></li>
+</ul></li>
+<li><strong><span class="math inline">\(q(x_1)\)</span> : 초기 상태 분포 (Initial State Distribution)</strong>
+<ul>
+<li><strong>의미</strong>: 과제가 시작될 때, 첫 번째 관측값(데이터) <span class="math inline">\(x_1\)</span>이 어떤 분포를 따르는지를 나타냅니다.</li>
+<li><strong>예시</strong>:
+<ul>
+<li><strong>지도학습 (분류/회귀)</strong>: 전체 데이터셋에서 입력 데이터(예: 이미지, 문장)를 샘플링하는 분포입니다.</li>
+<li><strong>강화학습</strong>: 에이전트가 에피소드를 시작하는 초기 상태(예: 미로의 시작점, 로봇의 초기 자세)의 분포입니다.</li>
+</ul></li>
+</ul></li>
+<li><strong><span class="math inline">\(q(x_{t+1}|x_t, a_t)\)</span> : 상태 전이 분포 (State Transition Distribution)</strong>
+<ul>
+<li><strong>의미</strong>: 현재 상태 <span class="math inline">\(x_t\)</span>에서 모델이 행동 <span class="math inline">\(a_t\)</span>를 취했을 때, 다음 상태 <span class="math inline">\(x_{t+1}\)</span>이 어떻게 될지를 결정하는 환경의 동역학(dynamics)입니다.</li>
+<li><strong>예시</strong>:
+<ul>
+<li><strong>지도학습 (분류/회귀)</strong>: 이 부분은 <strong>적용되지 않습니다</strong>. 지도학습은 데이터가 독립적이고 순서가 없으며, 모델의 출력이 다음 입력에 영향을 주지 않기 때문입니다. 논문에서 언급하듯, 이 경우 에피소드 길이 <span class="math inline">\(H=1\)</span>로 간주하여 상태 전이를 무시합니다.</li>
+<li><strong>강화학습</strong>: 환경의 물리 법칙이나 게임의 규칙에 해당합니다. (예: 로봇이 ’오른쪽으로 힘주기’라는 행동 <span class="math inline">\(a_t\)</span>를 취하면, 물리 엔진에 의해 다음 자세 <span class="math inline">\(x_{t+1}\)</span>이 결정됩니다.)</li>
+</ul></li>
+</ul></li>
+<li><strong><span class="math inline">\(H\)</span> : 에피소드 길이 (Horizon)</strong>
+<ul>
+<li><strong>의미</strong>: 하나의 과제를 수행하는 데 걸리는 시간 스텝의 길이입니다.</li>
+<li><strong>예시</strong>:
+<ul>
+<li><strong>지도학습 (분류/회귀)</strong>: <span class="math inline">\(H=1\)</span> 입니다. 입력 하나에 대해 출력 하나를 내놓고 과제가 종료됩니다.</li>
+<li><strong>강화학습</strong>: 미로 찾기에서 목표에 도달하거나, 정해진 스텝(예: 100 스텝)이 지날 때까지의 길이입니다.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="메타-러닝의-전체-과정" class="level3">
+<h3 class="anchored" data-anchor-id="메타-러닝의-전체-과정">2. 메타 러닝의 전체 과정</h3>
+<p>MAML은 단일 과제 <span class="math inline">\(\mathcal{T}\)</span>를 푸는 것이 아니라, 수많은 과제들의 <strong>분포 <span class="math inline">\(p(\mathcal{T})\)</span></strong>로부터 학습합니다.</p>
+<ul>
+<li><strong><span class="math inline">\(p(\mathcal{T})\)</span> : 과제들의 분포 (Distribution over Tasks)</strong>
+<ul>
+<li><strong>의미</strong>: 풀고자 하는 문제들의 ‘종류’ 또는 ’집합’을 의미합니다. 개별 데이터의 분포가 아니라, <strong>학습 문제 자체의 분포</strong>입니다.</li>
+<li><strong>예시</strong>:
+<ul>
+<li><strong>이미지 분류</strong>: “Omniglot 데이터셋에서 5개의 클래스를 무작위로 뽑아, 이 5개를 분류하는 모든 가능한 문제들의 집합”</li>
+<li><strong>회귀</strong>: “진폭과 위상이 특정 범위 내에서 무작위로 변하는 모든 사인 함수(sinusoid)를 맞추는 문제들의 집합”</li>
+<li><strong>강화학습</strong>: “목표 지점이 단위 정사각형 내에서 무작위로 설정되는 모든 2D 길찾기 문제들의 집합”</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="메타-훈련-meta-training-단계" class="level4">
+<h4 class="anchored" data-anchor-id="메타-훈련-meta-training-단계">메타-훈련 (Meta-Training) 단계</h4>
+<p>모델이 “빠르게 적응하는 법”을 배우는 과정입니다.</p>
+<ol type="1">
+<li><p><strong>과제 샘플링</strong>: 과제 분포 <span class="math inline">\(p(\mathcal{T})\)</span>에서 하나의 과제 <span class="math inline">\(\mathcal{T}_i\)</span>를 뽑습니다. (예: ‘개’, ‘고양이’, ’새’를 분류하는 문제를 하나 만듭니다.)</p></li>
+<li><p><strong>K-샷 데이터 샘플링 (Support Set)</strong>: 샘플링된 과제 <span class="math inline">\(\mathcal{T}_i\)</span>에서 <strong>적응(adaptation)을 위한</strong> K개의 데이터 샘플을 뽑습니다. (예: ‘개’, ‘고양이’, ‘새’ 사진을 각각 K장씩 뽑습니다.)</p></li>
+<li><p><strong>내부 학습 (Inner-loop Update)</strong>: 현재 모델 파라미터 <span class="math inline">\(\theta\)</span>를 K개의 샘플을 사용하여 <strong>임시로</strong> 업데이트합니다. 이 과정은 새로운 과제에 대한 빠른 적응을 모방하는 단계입니다. (MAML에서는 1회 이상의 경사 하강을 통해 임시 파라미터 <span class="math inline">\(\theta'_i\)</span>를 계산합니다.)</p></li>
+<li><p><strong>테스트 데이터 샘플링 (Query Set)</strong>: <strong>동일한 과제</strong> <span class="math inline">\(\mathcal{T}_i\)</span>에서 <strong>평가를 위한</strong> 새로운 데이터 샘플들을 뽑습니다. (예: 앞서 사용하지 않은 ‘개’, ‘고양이’, ‘새’ 사진들을 추가로 뽑습니다.)</p></li>
+<li><p><strong>메타-최적화 (Meta-Optimization)</strong>: <strong>임시로 업데이트된</strong> 파라미터 <span class="math inline">\(\theta'_i\)</span>를 사용하여 테스트 데이터에 대한 손실 <span class="math inline">\(\mathcal{L}_{\mathcal{T}_i}(\theta'_i)\)</span>를 계산합니다. 이 손실을 줄이는 방향으로 <strong>원본 파라미터 <span class="math inline">\(\theta\)</span></strong>를 업데이트합니다.</p>
+<ul>
+<li><strong>핵심 아이디어</strong>: 이 과정은 “어떻게 <span class="math inline">\(\theta\)</span>를 수정해야, 한 번의 경사 하강만으로도 새로운 과제를 더 잘 풀 수 있을까?”를 학습하는 것과 같습니다. 즉, <strong>적응 후의 성능</strong>을 기준으로 <strong>적응 전의 파라미터</strong>를 최적화합니다.</li>
+</ul></li>
+</ol>
+<p>이 1~5번 과정을 수많은 다른 과제 <span class="math inline">\(\mathcal{T}_j, \mathcal{T}_k, \dots\)</span>에 대해 반복합니다.</p>
+</section>
+<section id="메타-테스트-meta-testing-단계" class="level4">
+<h4 class="anchored" data-anchor-id="메타-테스트-meta-testing-단계">메타-테스트 (Meta-Testing) 단계</h4>
+<p>학습된 모델의 일반화 성능, 즉 “처음 보는 과제에 얼마나 빠르게 적응하는가?”를 평가하는 과정입니다.</p>
+<ol type="1">
+<li><p><strong>새로운 과제 샘플링</strong>: 메타-훈련 과정에서 <strong>한 번도 보지 못했던</strong> 새로운 과제 <span class="math inline">\(\mathcal{T}_{test}\)</span>를 <span class="math inline">\(p(\mathcal{T})\)</span>에서 뽑습니다.</p></li>
+<li><p><strong>K-샷 적응</strong>: <span class="math inline">\(\mathcal{T}_{test}\)</span>에서 K개의 샘플을 뽑아 모델을 딱 한 번 (또는 몇 번) 업데이트합니다.</p></li>
+<li><p><strong>최종 평가</strong>: <span class="math inline">\(\mathcal{T}_{test}\)</span>의 새로운 데이터에 대해 적응된 모델의 최종 성능을 측정합니다.</p></li>
+</ol>
+<p>이처럼 MAML의 문제 설정은, 특정 과제에 대한 전문가 모델을 만드는 것이 아니라, 어떤 과제가 주어지더라도 K개의 예시만 보고 빠르게 전문가 수준으로 적응할 수 있는 <strong>“준비된 초기 모델 파라미터 <span class="math inline">\(\theta\)</span>”</strong>를 찾는 것을 목표로 합니다.</p>
 
 
+</section>
+</section>
 </section>
 </section>
 
