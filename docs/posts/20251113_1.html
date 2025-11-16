@@ -194,17 +194,28 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#paper-review-meta-learning-in-neural-networks-a-survey" id="toc-paper-review-meta-learning-in-neural-networks-a-survey" class="nav-link active" data-scroll-target="#paper-review-meta-learning-in-neural-networks-a-survey">Paper Review: Meta Learning in Neural Networks: A Survey</a>
-  <ul class="collapse">
-  <li><a href="#초록" id="toc-초록" class="nav-link" data-scroll-target="#초록">초록</a></li>
+  <li><a href="#paper-review-meta-learning-in-neural-networks-a-survey" id="toc-paper-review-meta-learning-in-neural-networks-a-survey" class="nav-link active" data-scroll-target="#paper-review-meta-learning-in-neural-networks-a-survey">Paper Review: Meta Learning in Neural Networks: A Survey</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경">배경</a>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">BackGround</a>
   <ul class="collapse">
-  <li><a href="#메타러닝을-공식화-해보자" id="toc-메타러닝을-공식화-해보자" class="nav-link" data-scroll-target="#메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</a></li>
-  <li><a href="#기존-머신러닝" id="toc-기존-머신러닝" class="nav-link" data-scroll-target="#기존-머신러닝"><strong>기존 머신러닝</strong></a></li>
+  <li><a href="#메타러닝을-공식화-해보자" id="toc-메타러닝을-공식화-해보자" class="nav-link" data-scroll-target="#메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</a>
+  <ul class="collapse">
+  <li><a href="#기존-머신러닝" id="toc-기존-머신러닝" class="nav-link" data-scroll-target="#기존-머신러닝">기존 머신러닝</a></li>
   <li><a href="#과제-분포task-distribution-관점에서-본-메타러닝" id="toc-과제-분포task-distribution-관점에서-본-메타러닝" class="nav-link" data-scroll-target="#과제-분포task-distribution-관점에서-본-메타러닝">과제 분포(Task-Distribution) 관점에서 본 메타러닝</a></li>
   <li><a href="#이중-최적화bilevel-optimization-관점에서-본-메타러닝" id="toc-이중-최적화bilevel-optimization-관점에서-본-메타러닝" class="nav-link" data-scroll-target="#이중-최적화bilevel-optimization-관점에서-본-메타러닝">이중 최적화(Bilevel Optimization) 관점에서 본 메타러닝</a></li>
   <li><a href="#피드-포워드-모델feed-forward-model-관점에서-본-메타러닝" id="toc-피드-포워드-모델feed-forward-model-관점에서-본-메타러닝" class="nav-link" data-scroll-target="#피드-포워드-모델feed-forward-model-관점에서-본-메타러닝">피드-포워드 모델(Feed-Forward Model) 관점에서 본 메타러닝</a></li>
+  </ul></li>
+  <li><a href="#메타러닝의-역사적-배경" id="toc-메타러닝의-역사적-배경" class="nav-link" data-scroll-target="#메타러닝의-역사적-배경">메타러닝의 역사적 배경</a></li>
+  <li><a href="#관련-분야" id="toc-관련-분야" class="nav-link" data-scroll-target="#관련-분야">관련 분야</a>
+  <ul class="collapse">
+  <li><a href="#전이-학습-transfer-learning-tl" id="toc-전이-학습-transfer-learning-tl" class="nav-link" data-scroll-target="#전이-학습-transfer-learning-tl">전이 학습 (Transfer Learning, TL)</a></li>
+  <li><a href="#도메인-적응domain-adaptation-da-및-도메인-일반화domain-generalization-dg" id="toc-도메인-적응domain-adaptation-da-및-도메인-일반화domain-generalization-dg" class="nav-link" data-scroll-target="#도메인-적응domain-adaptation-da-및-도메인-일반화domain-generalization-dg">도메인 적응(Domain Adaptation, DA) 및 도메인 일반화(Domain Generalization, DG)</a></li>
+  <li><a href="#연속-학습-continual-learning-cl" id="toc-연속-학습-continual-learning-cl" class="nav-link" data-scroll-target="#연속-학습-continual-learning-cl">연속 학습 (Continual Learning, CL)</a></li>
+  <li><a href="#다중과제-학습-multi-task-learning-mtl" id="toc-다중과제-학습-multi-task-learning-mtl" class="nav-link" data-scroll-target="#다중과제-학습-multi-task-learning-mtl">다중과제 학습 (Multi-Task Learning, MTL)</a></li>
+  <li><a href="#하이퍼파라미터-최적화-hyperparameter-optimization-ho" id="toc-하이퍼파라미터-최적화-hyperparameter-optimization-ho" class="nav-link" data-scroll-target="#하이퍼파라미터-최적화-hyperparameter-optimization-ho">하이퍼파라미터 최적화 (Hyperparameter Optimization, HO)</a></li>
+  <li><a href="#계층적-베이즈-모델-hierarchical-bayesian-models-hbm" id="toc-계층적-베이즈-모델-hierarchical-bayesian-models-hbm" class="nav-link" data-scroll-target="#계층적-베이즈-모델-hierarchical-bayesian-models-hbm">계층적 베이즈 모델 (Hierarchical Bayesian Models, HBM)</a></li>
+  <li><a href="#automl" id="toc-automl" class="nav-link" data-scroll-target="#automl">AutoML</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -242,14 +253,28 @@ window.Quarto = {
 <td>Bilevel optimization View 업데이트</td>
 <td></td>
 </tr>
+<tr class="odd">
+<td>2025-11-16</td>
+<td>2.2-2.3 업데이트</td>
+<td>배고프군</td>
+</tr>
 </tbody>
 </table>
-<section id="초록" class="level2">
-<h2 class="anchored" data-anchor-id="초록">초록</h2>
-<p><code>Learning-to-learn</code>이라고도 불리는 메타-러닝 분야는 최근 몇 년간 관심이 급격히 증가해왔습니다. 고정된 학습 알고리즘을 사용하여 처음부터 과제를 해결하는 기존의 AI 접근 방식과는 대조적으로, 메타-러닝은 다수의 학습 에피소드 경험을 바탕으로 <strong>학습 알고리즘 자체를 개선하는 것을 목표</strong>로 합니다. 이 패러다임은 데이터 및 계산 병목 현상, 그리고 일반화 성능 등 딥러닝의 여러 기존 난제들을 해결할 기회를 제공합니다. 본 서베이는 현대 메타-러닝의 전반적인 동향을 기술합니다. 먼저 메타-러닝의 정의를 논하고, 전이 학습(transfer learning) 및 하이퍼파라미터 최적화(hyperparameter optimization)와 같은 관련 분야와 비교하여 그 위치를 정립합니다. 다음으로, 오늘날의 메타-러닝 방법 공간을 더 포괄적으로 분석하는 새로운 분류 체계를 제안합니다. 또한 퓨샷 러닝(few-shot learning) 및 강화 학습(reinforcement learning)과 같은 메타-러닝의 유망한 응용 분야와 성공 사례들을 살펴봅니다. 마지막으로, 아직 해결되지 않은 과제들과 향후 연구를 위한 유망한 영역들에 대해 논의합니다.</p>
 </section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p><code>Learning-to-learn</code>이라고도 불리는 메타-러닝 분야는 최근 몇 년간 관심이 급격히 증가해왔습니다. 고정된 학습 알고리즘을 사용하여 처음부터 과제를 해결하는 기존의 AI 접근 방식과는 대조적으로, 메타-러닝은 다수의 학습 에피소드 경험을 바탕으로 <strong>학습 알고리즘 자체를 개선하는 것을 목표</strong>로 합니다.</p>
+<p>이 패러다임은 데이터 및 계산 병목 현상, 그리고 일반화 성능 등 딥러닝의 여러 기존 난제들을 해결할 기회를 제공합니다.</p>
+<p>본 서베이는 현대 메타-러닝의 전반적인 동향을 기술합니다.</p>
+<ul>
+<li>먼저 메타-러닝의 정의를 논하고, 전이 학습(transfer learning) 및 하이퍼파라미터 최적화(hyperparameter optimization)와 같은 관련 분야와 비교하여 그 위치를 정립합니다.</li>
+<li>다음으로, 오늘날의 메타-러닝 방법 공간을 더 포괄적으로 분석하는 새로운 분류 체계를 제안합니다.</li>
+<li>또한 퓨샷 러닝(few-shot learning) 및 강화 학습(reinforcement learning)과 같은 메타-러닝의 유망한 응용 분야와 성공 사례들을 살펴봅니다.</li>
+<li>마지막으로, 아직 해결되지 않은 과제들과 향후 연구를 위한 유망한 영역들에 대해 논의합니다.</li>
+</ul>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>메타러닝이란, “머신러닝 모델”이 “공부하는 법”자체를 배우게 하는 새로운 패러다임이라고 할 수 있음</p>
 <blockquote class="blockquote">
 <p>Meta-learning provides an alternative paradigm where a machine learning model gains experience over multiple learning episodes – often covering a distribution of related tasks – and uses this experience to improve its future learning performance.</p>
@@ -384,8 +409,8 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
-<section id="배경" class="level2">
-<h2 class="anchored" data-anchor-id="배경">배경</h2>
+<section id="background" class="level1">
+<h1>BackGround</h1>
 <p>메타러닝은 현대 신경망 문헌 내에서조차 다양하고 일관성 없는 방식으로 사용되어 왔기 때문에 “한 단어, 한 문장”으로 명확하게 정의하기가 어려운 상태임.</p>
 <ul>
 <li>이 섹션에서는 우리의 정의와 주요 용어를 소개하고, 관련 분야와 비교하여 메타러닝의 position을 정립하고 있음.</li>
@@ -420,11 +445,10 @@ window.Quarto = {
 <li>이 목적 함수에 대한 내부 알고리즘의 <strong>end-to-end 최적화</strong>가 이루어짐.</li>
 </ul>
 </section>
-<section id="메타러닝을-공식화-해보자" class="level3">
-<h3 class="anchored" data-anchor-id="메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</h3>
-</section>
+<section id="메타러닝을-공식화-해보자" class="level2">
+<h2 class="anchored" data-anchor-id="메타러닝을-공식화-해보자">메타러닝을 공식화 해보자</h2>
 <section id="기존-머신러닝" class="level3">
-<h3 class="anchored" data-anchor-id="기존-머신러닝"><strong>기존 머신러닝</strong></h3>
+<h3 class="anchored" data-anchor-id="기존-머신러닝">기존 머신러닝</h3>
 <p>기존의 지도(supervised) 머신러닝에서는 (입력 이미지, 출력 레이블) 쌍과 같은 훈련 데이터셋 <span class="math inline">\(D = \{(x_1, y_1), \dots, (x_N, y_N)\}\)</span>이 주어짐.</p>
 <p><span class="math inline">\(\theta\)</span>로 매개변수화된 예측 모델 <span class="math inline">\(\hat{y} = f_{\theta}(x)\)</span>를 다음 식을 풀어 훈련시키게 됨:</p>
 <p><span class="math display">\[
@@ -722,9 +746,184 @@ D^{\text{val}}_{\text{source}})\)</span> 와 메타-테스트를 위한 <span cl
 <li><strong>메타-테스트 (비용이 거의 0)</strong>: 일단 생성기만 만들어지면, 새로운 문제는 그냥 함수에 데이터 한 번 넣는 것으로 끝나므로 거의 즉시 해결됩니다. (미리 지불한 비용의 혜택을 봄)</li>
 </ul>
 <p>이 피드-포워드 방식은 특히 <strong>새로운 문제에 대한 반응 속도가 매우 빨라야 하는 응용 분야</strong>에 매우 유용합니다.</p>
-
-
 </section>
+</section>
+</section>
+<section id="메타러닝의-역사적-배경" class="level2">
+<h2 class="anchored" data-anchor-id="메타러닝의-역사적-배경">메타러닝의 역사적 배경</h2>
+<p>메타러닝과 러닝-투-런(learning-to-learn)은 1987년 문헌에 처음 등장합니다.</p>
+<p><strong>위르겐 슈미트후버(J. Schmidhuber)</strong> + <strong>자기 참조 학습(self-referential learning)</strong>을 사용하여 ’학습하는 방법을 학습’할 수 있는 방법론의 한 갈래를 소개했습니다. 자기 참조 학습은 신경망이 자신의 가중치를 입력으로 받아 해당 가중치에 대한 업데이트 값을 예측하도록 훈련하는 것을 포함합니다. 슈미트후버는 진화 알고리즘을 사용하여 모델 자체를 학습할 것을 제안했습니다.</p>
+<p>메타러닝은 이후 여러 분야로 확장되었습니다.</p>
+<p><strong>요슈아 벤지오(Bengio)</strong> + <strong>생물학적으로 타당한 학습 규칙(biologically plausible learning rules)</strong>을 메타-학습하는 방법을 제안했습니다. + 슈미트후버 등은 자기 참조 시스템과 메타러닝을 계속해서 탐구했습니다.</p>
+<p><strong>세바스찬 스런(S. Thrun)</strong> + ’learning to learn’이라는 용어를 더 명확하게 정의하는 데 힘썼으며, 초기의 이론적 정당성과 실용적인 구현 방법을 소개했습니다. + 경사 하강법과 역전파를 사용하여 메타러닝 시스템을 훈련시키자는 제안은 1991년에 처음으로 나왔고, 2001년에 더 확장된 연구들이 뒤따랐으며 당시 문헌에 대한 개요를 제공합니다. 메타러닝은 1995년에 강화 학습의 맥락에서 사용되었고, 이후 다양한 확장 연구가 이어졌습니다.</p>
+<p><strong>comments</strong></p>
+<p>이 섹션은 메타러닝의 아이디어가 어떻게 시작되고 발전했는지를 시간 순서대로 보여줍니다.</p>
+<ul>
+<li><strong>1987년, 슈미트후버의 시작</strong>:
+<ul>
+<li><strong>“자기 참조 학습(Self-referential Learning)”</strong>이라는 혁신적인 아이디어를 제시합니다.</li>
+<li><strong>아이디어</strong>: 보통 신경망은 외부 데이터(예: 이미지)를 입력받습니다. 하지만 슈미트후버는 신경망이 <strong>자기 자신의 설계도(가중치)</strong>를 들여다보고, “내 설계도를 어떻게 수정해야 더 똑똑해질까?”를 <strong>스스로 예측</strong>하게 만들자고 제안했습니다. 마치 AI가 자기 자신을 성찰하고 개선하는 것과 같습니다.</li>
+<li><strong>방법</strong>: 당시에는 경사 하강법으로 이런 복잡한 구조를 훈련하기 어려웠기 때문에, 다윈의 진화론처럼 좋은 해결책은 살아남고 나쁜 해결책은 도태되는 <strong>진화 알고리즘</strong>을 사용하자고 제안했습니다.</li>
+</ul></li>
+<li><strong>1990년대 초, 벤지오와 스런의 발전</strong>:
+<ul>
+<li><strong>벤지오</strong>: “실제 뇌가 학습하는 방식과 유사한, <strong>생물학적으로 그럴듯한 학습 규칙</strong>을 AI가 스스로 배우게 만들 수는 없을까?”라는 방향으로 연구를 확장했습니다.</li>
+<li><strong>스런</strong>: ’learning-to-learn’이 무엇인지 개념적으로 명확하게 다듬고, “이것이 왜 이론적으로 타당한가?”에 대한 근거를 제시하며 연구의 기틀을 다졌습니다.</li>
+</ul></li>
+<li><strong>1991년, 경사 하강법의 도입</strong>:
+<ul>
+<li>“진화 알고리즘 말고, 우리가 신경망 훈련에 흔히 쓰는 <strong>경사 하강법과 역전파</strong>를 메타러닝에도 적용해보자!”라는 제안이 처음 등장합니다. 이것이 현대 메타러닝 방법론의 시초가 됩니다. (예: MAML 같은 알고리즘의 먼 조상)</li>
+</ul></li>
+<li><strong>1995년, 강화 학습과의 만남</strong>:
+<ul>
+<li>메타러닝은 지도 학습뿐만 아니라, 로봇 제어나 게임처럼 시행착오를 통해 학습하는 <strong>강화 학습(RL)</strong> 분야에도 적용되기 시작하며 그 활용 범위를 넓혔습니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="관련-분야" class="level2">
+<h2 class="anchored" data-anchor-id="관련-분야">관련 분야</h2>
+<p>여기서는 메타러닝과 자주 혼동을 일으키는 관련 분야들과 비교하여 메타러닝의 위상을 정립합니다.</p>
+<section id="전이-학습-transfer-learning-tl" class="level3">
+<h3 class="anchored" data-anchor-id="전이-학습-transfer-learning-tl">전이 학습 (Transfer Learning, TL)</h3>
+<p>전이 학습(TL)은 소스 과제(source task)의 과거 경험을 사용하여 타겟 과제(target task)의 학습(속도, 데이터 효율성, 정확도)을 향상시키는 것을 목표로 합니다. TL은 이러한 문제 영역과 해결책 계열을 모두 지칭하며, 가장 흔한 방법은 파라미터 전이 후 선택적으로 미세 조정(fine tuning)을 하는 것입니다 (물론 다른 수많은 접근법도 있습니다[34]).</p>
+<blockquote class="blockquote">
+<p>[34] survey: S. J. Pan and Q. Yang, “A Survey On Transfer Learning,” IEEE TKDE, 2010.</p>
+</blockquote>
+<p>반면, 메타러닝은 다른 문제들뿐만 아니라 TL을 개선하는 데 사용될 수 있는 패러다임입니다. TL에서는 <strong>메타-목적(meta-objective)을 사용하지 않고</strong> 소스 과제에 대한 일반적인(vanilla) 학습을 통해 사전 지식(prior)을 추출합니다.</p>
+<p>메타러닝에서는, MAML[16]에서 보여주듯이,</p>
+<ul>
+<li>새로운 과제를 학습할 때 사전 지식의 이점을 평가하는 <strong>외부 최적화(outer optimization)</strong>를 통해 해당 사전 지식이 정의됩니다.</li>
+<li>더 일반적으로, 메타러닝은 단지 모델 파라미터뿐만 아니라 훨씬 더 넓은 범위의 메타-표현을 다룹니다 (섹션 4.1 참조).</li>
+</ul>
+<blockquote class="blockquote">
+<p>[16] MAML: C.Finn,P. Abbeel, and S. Levine, “Model-Agnostic Meta-learning For Fast Adaptation Of Deep Networks,” in ICML, 2017.</p>
+</blockquote>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>전이 학습(TL)이란?</strong>: 어떤 분야에서 얻은 지식을 다른 분야에 써먹는 것입니다.</li>
+<li><strong>메타러닝과의 핵심 차이</strong>: <strong>‘어떻게’ 지식을 옮길지를 최적화하는가?</strong>
+<ul>
+<li><strong>전이 학습</strong>: 일단 A라는 과제를 열심히 공부해서 지식을 쌓고 (예: 이미지넷으로 모델 훈련), 그 지식을 B라는 과제에 가져가서 약간 수정해서(fine-tuning) 씁니다. ’어떻게 하면 B에 더 잘 써먹을 수 있을까?’를 고민하며 A를 공부하지는 않습니다.</li>
+<li><strong>메타러닝</strong>: “나중에 B, C, D 같은 과제들을 <strong>가장 빠르고 쉽게 배울 수 있도록</strong>, 지금 A를 <strong>어떤 방식으로</strong> 공부해 둬야 할까?”라는 <strong>’학습 전략 자체’를 최적화</strong>합니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="도메인-적응domain-adaptation-da-및-도메인-일반화domain-generalization-dg" class="level3">
+<h3 class="anchored" data-anchor-id="도메인-적응domain-adaptation-da-및-도메인-일반화domain-generalization-dg">도메인 적응(Domain Adaptation, DA) 및 도메인 일반화(Domain Generalization, DG)</h3>
+<p><strong>도메인 이동(Domain-shift)</strong></p>
+<ul>
+<li>소스 문제와 타겟 문제가 동일한 목표를 공유하지만, 타겟 문제의 입력 데이터 분포가 소스 과제와 달라 모델 성능이 저하되는 상황을 말합니다[34], [58].</li>
+</ul>
+<p><strong>DA</strong></p>
+<ul>
+<li>타겟 도메인의 희소하거나 레이블이 없는 데이터를 사용하여 소스에서 훈련된 모델을 조정함으로써 이 문제를 완화하려는 전이 학습의 한 변형입니다.</li>
+</ul>
+<p><strong>DG</strong></p>
+<ul>
+<li>추가적인 적응 없이 이러한 도메인 이동에 강건한 소스 모델을 훈련시키는 방법을 말합니다.</li>
+</ul>
+<p>TL과 마찬가지로, 일반적인(vanilla) DA와 DG는 여러 도메인에 걸쳐 ’학습하는 방법’을 최적화하기 위한 메타-목적을 사용하지 않습니다. 반면, 메타러닝 방법은 DA[59]와 DG[42]를 모두 수행하는 데 사용될 수 있습니다 (섹션 5.8 참조).</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>DA/DG란?</strong>: 같은 문제인데 데이터의 ’스타일’이 다른 상황에 대처하는 것입니다. (예: 낮에 찍은 사진으로 학습한 자율주행차가 밤에도 운전해야 하는 상황)</li>
+<li><strong>메타러닝과의 핵심 차이</strong>: <strong>’스타일 변화에 대한 강건함’을 직접적인 목표로 최적화하는가?</strong>
+<ul>
+<li><strong>DA/DG</strong>: 특정 기술(예: 밤 사진을 낮 사진처럼 보이게 변환)을 사용하여 스타일 차이를 줄이려고 노력합니다. ’어떻게 훈련해야 어떤 스타일 변화에도 강해질까?’를 최적화하지는 않습니다.</li>
+<li><strong>메타러닝</strong>: 훈련 단계에서 일부러 <strong>다양한 스타일의 데이터(낮, 밤, 비 오는 날, 흐린 날)를 경험</strong>하게 하고, “어떤 스타일의 데이터가 들어와도 성능이 떨어지지 않는 <strong>‘강건한 학습법’</strong>” 자체를 찾도록 최적화합니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="연속-학습-continual-learning-cl" class="level3">
+<h3 class="anchored" data-anchor-id="연속-학습-continual-learning-cl">연속 학습 (Continual Learning, CL)</h3>
+<p>연속 또는 평생 학습(lifelong learning)[60]-[62]은 잠재적으로 비정상(non-stationary) 분포에서 추출된 일련의 과제들을 학습하는 능력을 말하며, 특히 새로운 과제를 더 빠르게 배우면서 오래된 과제는 잊지 않는 것을 목표로 합니다.</p>
+<p>메타러닝과 유사하게 과제 분포가 고려되며, 목표의 일부는 타겟 과제의 학습을 가속화하는 것입니다. 그러나 대부분의 연속 학습 방법론은 이 메타-목표를 명시적으로 풀지 않기 때문에 메타러닝 방법론이 아닙니다. 반면에, 메타러닝은 연속 학습을 발전시키기 위한 잠재적인 프레임워크를 제공하며, 최근 몇몇 연구들은 연속 학습 성능을 인코딩하는 메타-목표를 개발함으로써 이를 시도하기 시작했습니다[63]–[65].</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>연속 학습(CL)이란?</strong>: 과제 A를 배운 뒤, 과제 B를 배우고, 이어서 과제 C를 배울 때, 이전에 배운 A와 B를 잊어버리지 않는(catastrophic forgetting 방지) 능력입니다.</li>
+<li><strong>메타러닝과의 핵심 차이</strong>: <strong>’연속 학습 자체’를 하나의 학습 목표로 삼는가?</strong>
+<ul>
+<li><strong>연속 학습</strong>: 특정 기술(예: 중요한 지식은 얼려서 보존)을 사용하여 과거의 지식을 잊지 않으려고 노력합니다.</li>
+<li><strong>메타러닝</strong>: “어떻게 훈련해야 <strong>‘새로운 것을 배우면서도 옛것을 잊지 않는 능력’</strong> 자체를 극대화할 수 있을까?”라는 메타-목표를 설정하고, 이 목표를 달성하는 학습 전략을 찾습니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="다중과제-학습-multi-task-learning-mtl" class="level3">
+<h3 class="anchored" data-anchor-id="다중과제-학습-multi-task-learning-mtl">다중과제 학습 (Multi-Task Learning, MTL)</h3>
+<p>다중과제 학습(MTL)은 여러 관련 과제를 동시에 학습하여, 파라미터 공유와 그로 인한 공유 표현의 다양성 덕분에 정규화 효과를 보고[66]–[68], 컴퓨팅/메모리 절약 효과를 얻는 것을 목표로 합니다. TL, DA, CL과 마찬가지로, 전통적인 MTL은 메타-목적이 없는 단일-수준 최적화입니다.</p>
+<p>더욱이, MTL의 목표는 <strong>이미 알려진 고정된 수의 과제</strong>를 푸는 것인 반면, 메타러닝의 핵심은 종종 <strong>미래에 보게 될 미지의 과제</strong>를 푸는 것입니다. 그럼에도 불구하고, 메타러닝은 MTL에 이점을 가져다줄 수 있습니다. 예를 들어, 과제 간의 관련성을 학습하거나[69] 여러 과제 간의 우선순위를 정하는 방법을 배우는 것[70]입니다.</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>다중과제 학습(MTL)이란?</strong>: 여러 과제를 <strong>동시에</strong> 학습시켜서 서로 도움을 주고받게 하는 것입니다.</li>
+<li><strong>메타러닝과의 핵심 차이</strong>: <strong>‘알려진 과제’ vs ‘미지의 과제’</strong>
+<ul>
+<li><strong>다중과제 학습</strong>: 목표는 <strong>“주어진 A, B, C 과제 모두”</strong>에서 최고의 성능을 내는 것입니다. 미래에 D라는 과제가 나타날 것은 고려하지 않습니다.</li>
+<li><strong>메타러닝</strong>: A, B, C 과제를 학습하는 이유는 <strong>“미래에 나타날 미지의 과제 D”</strong>를 더 잘 풀기 위함입니다. A, B, C 자체의 성능보다는 일반화 능력이 더 중요합니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="하이퍼파라미터-최적화-hyperparameter-optimization-ho" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼파라미터-최적화-hyperparameter-optimization-ho">하이퍼파라미터 최적화 (Hyperparameter Optimization, HO)</h3>
+<p>하이퍼파라미터 최적화(HO)는 학습률이나 정규화 강도와 같은 하이퍼파라미터가 ’학습하는 방법’을 기술한다는 점에서 메타러닝의 영역에 속합니다. 여기서 우리는 경사 하강법 기반 하이퍼파라미터 학습[69], [71] 및 신경망 구조 탐색[18]과 같이 신경망으로 종단간(end-to-end) 훈련되는 메타-목표를 정의하는 HO 과제들을 포함합니다. 그러나 우리는 무작위 탐색[72]이나 베이지안 하이퍼파라미터 최적화[73]와 같이, 메타러닝으로 거의 간주되지 않는 다른 접근법들은 제외합니다.</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>하이퍼파라미터 최적화(HO)란?</strong>: 모델 학습에 영향을 주는 설정값(학습률, 층의 개수 등)들을 사람이 아니라 기계가 자동으로 찾게 하는 것입니다.</li>
+<li><strong>메타러닝과의 관계</strong>: ’학습하는 방법(<span class="math inline">\(\omega\)</span>)’을 찾는다는 점에서 메타러닝과 매우 유사합니다.</li>
+<li><strong>이 논문에서의 구분 기준</strong>: <strong>’신경망’과 ’종단간 최적화’를 사용하는가?</strong>
+<ul>
+<li><strong>메타러닝으로 간주</strong>: 학습률이나 모델 구조 자체를 또 다른 신경망을 이용해, 전체 학습 과정에 대한 경사 하강법으로 최적화하는 방식. (과정이 매끄럽게 연결됨)</li>
+<li><strong>메타러닝에서 제외</strong>: 단순히 여러 하이퍼파라미터 조합을 무작위로 시도해 보거나(무작위 탐색), 통계적 추정(베이지안 최적화)을 통해 최적값을 탐색하는 전통적인 방식. (학습 과정과 분리되어 있음)</li>
+</ul></li>
+</ul>
+</section>
+<section id="계층적-베이즈-모델-hierarchical-bayesian-models-hbm" class="level3">
+<h3 class="anchored" data-anchor-id="계층적-베이즈-모델-hierarchical-bayesian-models-hbm">계층적 베이즈 모델 (Hierarchical Bayesian Models, HBM)</h3>
+<p>계층적 베이즈 모델(HBM)은 사전 확률 <span class="math inline">\(p(\theta|\omega)\)</span> 하에서 파라미터 <span class="math inline">\(\theta\)</span>의 베이지안 학습을 포함합니다.</p>
+<p>이 사전 확률은 자체적인 사전 확률 <span class="math inline">\(p(\omega)\)</span>를 갖는 다른 변수 <span class="math inline">\(\omega\)</span>에 대한 조건부 밀도 함수로 작성됩니다.</p>
+<p>계층적 베이즈 모델은 <span class="math inline">\(D = \{D_i | i = 1, 2, ..., M\}\)</span>과 같이 그룹화된 데이터 모델로 강력하게 사용되며, 각 그룹 <span class="math inline">\(i\)</span>는 자체적인 <span class="math inline">\(\theta_i\)</span>를 가집니다.</p>
+<p>전체 모델은 아래와 같습니다.</p>
+<p><span class="math display">\[[\prod_{i=1}^{M} P(D_i|\theta_i) p(\theta_i|\omega)] p(\omega)\]</span></p>
+<p>계층 구조는 더 확장될 수 있으며, 특히 <span class="math inline">\(\omega\)</span> 자체가 매개변수화되어 <span class="math inline">\(p(\omega)\)</span>가 학습될 수 있습니다.</p>
+<p>학습은 보통 전체 파이프라인에 걸쳐 이루어지지만, 베이지안 주변화(Bayesian marginalisation)의 한 형태를 사용하여 <span class="math inline">\(\omega\)</span>에 대한 사후 확률을 계산하기도 합니다.</p>
+<p><span class="math display">\[P(\omega|D) \propto p(\omega) \prod_{i=1}^{M} \int d\theta_i p(D_i|\theta_i)p(\theta_i|\omega)\]</span></p>
+<p>주변화를 수행하는 용이성은 모델에 따라 다릅니다.</p>
+<ul>
+<li>어떤 모델(예: 잠재 디리클레 할당[74])에서는 켤레 지수 모델(conjugate exponential models) 선택 덕분에 주변화가 정확하지만,</li>
+<li>다른 모델(예: [75])에서는 확률적 변분 추론(stochastic variational approach)을 사용하여 근사적인 사후 확률을 계산하고, 이를 통해 주변 우도(marginal likelihood)의 하한(lower bound)을 계산합니다.</li>
+</ul>
+<p>베이지안 계층 모델은 메타러닝 과정을 이해하기 위한 알고리즘적 프레임워크보다는 모델링 프레임워크를 제공함으로써, 메타러닝에 대한 가치 있는 관점을 제공합니다. 실제로는, HBM에 대한 이전 연구들은 주로 다루기 쉬운 간단한 모델 <span class="math inline">\(\theta\)</span>를 학습하는 데 초점을 맞춘 반면, 대부분의 메타러닝 연구는 여러 번의 반복을 포함하는 복잡한 내부-루프 학습 과정을 고려합니다. 그럼에도 불구하고, MAML[16]과 같은 일부 메타러닝 방법은 HBM의 렌즈를 통해 이해될 수 있습니다[76].</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>계층적 베이즈 모델(HBM)이란?</strong>: “개별 그룹(과제)의 특성(<span class="math inline">\(\theta_i\)</span>)은 전체 그룹(과제 분포)의 공통적인 특성(<span class="math inline">\(\omega\)</span>)으로부터 나온다”는 계층적 가정을 사용하는 통계 모델입니다.</li>
+<li><strong>메타러닝과의 관계</strong>: <strong>구조가 매우 유사합니다.</strong>
+<ul>
+<li><code>전체 그룹 특성(ω)</code> ↔︎ <code>메타 지식(ω)</code></li>
+<li><code>개별 그룹 특성(θ_i)</code> ↔︎ <code>개별 과제 모델(θ_i)</code></li>
+</ul></li>
+<li><strong>핵심 차이점</strong>: <strong>‘관점’과 ’복잡성’</strong>
+<ul>
+<li><strong>관점</strong>: HBM은 “이 데이터가 어떻게 생성되었을까?”를 확률적으로 <strong>모델링</strong>하는 데 초점을 맞춥니다. 반면, 메타러닝은 “어떻게 하면 성능을 최적화할까?”라는 <strong>알고리즘적</strong> 관점에 더 가깝습니다.</li>
+<li><strong>복잡성</strong>: 전통적인 HBM은 수학적으로 다루기 쉬운 간단한 모델에 주로 사용된 반면, 현대 메타러닝은 수백만 개의 파라미터를 가진 복잡한 딥러닝 모델의 학습 과정을 다룹니다.</li>
+</ul></li>
+<li><strong>결론</strong>: HBM은 메타러닝의 철학적, 구조적 배경을 이해하는 데 훌륭한 이론적 틀을 제공하지만, 오늘날 딥러닝에서 다루는 문제의 규모와 복잡성에는 직접 적용하기 어렵습니다.</li>
+</ul>
+</section>
+<section id="automl" class="level3">
+<h3 class="anchored" data-anchor-id="automl">AutoML</h3>
+<p>AutoML[31]-[33]은 데이터 준비, 알고리즘 선택, 하이퍼파라미터 튜닝, 구조 탐색과 같이 일반적으로 수동으로 이루어지는 <strong>머신러닝 과정의 일부를 자동화하려는 접근법들을 포괄하는 다소 넓은 분야를 통칭하는 말</strong>입니다.</p>
+<p>AutoML은 종종 여기서 정의한 메타러닝의 범위를 벗어나는 수많은 휴리스틱을 사용하며, 데이터 정제와 같이 메타러닝에서는 덜 중심적인 과제에 초점을 맞춥니다.</p>
+<p>하지만, AutoML은 때때로 메타-목표의 종단간 최적화를 사용하기도 하므로, 메타러닝은 <strong>AutoML의 한 전문 분야(specialization)</strong>로 볼 수 있습니다.</p>
+<p><strong>comments</strong></p>
+<ul>
+<li><strong>AutoML이란?</strong>: 머신러닝의 A부터 Z까지(데이터 정제, 모델 선택, 튜닝 등) 모든 과정을 자동화하려는 기술 분야입니다.</li>
+<li><strong>메타러닝과의 관계</strong>:
+<ul>
+<li><strong>AutoML이 더 넓은 개념</strong>: AutoML은 ’자동화’라는 목표를 위해 메타러닝뿐만 아니라 온갖 종류의 기법(휴리스틱, 탐색 알고리즘 등)을 모두 사용합니다.</li>
+<li><strong>메타러닝은 AutoML의 한 도구</strong>: AutoML이 여러 단계를 자동화할 때, 특히 ‘최적의 학습 전략을 찾는’ 부분에서 메타러닝의 아이디어(메타-목표의 종단간 최적화)를 강력한 도구로 사용할 수 있습니다.</li>
+</ul></li>
+<li><strong>결론</strong>: 메타러닝은 <strong>AutoML이라는 거대한 목표를 달성하기 위한, 특히 ’학습 원리’에 초점을 맞춘 정교하고 전문화된 방법론 중 하나</strong>라고 볼 수 있습니다.</li>
+</ul>
+
+
 </section>
 </section>
 </section>
