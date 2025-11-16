@@ -282,6 +282,12 @@ window.Quarto = {
 
 
 
+<pre><code>@inproceedings{ha2017hypernetworks,
+  title={HyperNetworks},
+  author={Ha, David and Dai, Andrew M and Le, Quoc V},
+  booktitle={International Conference on Learning Representations},
+  year={2017}
+}</code></pre>
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
 <p>이 연구는 하이퍼네트워크를 탐구합니다. <strong>하이퍼네트워크</strong>는 <strong>한 네트워크를 사용하여 다른 네트워크의 가중치를 생성하는 방식</strong>입니다.</p>
@@ -596,34 +602,34 @@ W_t ~ N(μ_W(t), diag(σ_W(t)^2))</code></pre>
 <section id="ensemble-기반-접근" class="level4">
 <h4 class="anchored" data-anchor-id="ensemble-기반-접근">6.2 Ensemble 기반 접근</h4>
 <p><strong>Deep Ensemble과 HyperNetworks 결합</strong>:[18][15]</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple hypernetworks</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hypernetworks <span class="op">=</span> [HyperNet() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N)]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate ensemble predictions</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hyper <span class="kw">in</span> hypernetworks:</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hyper.generate_weights(task_embedding)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncertainty estimation</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>mean_pred <span class="op">=</span> mean(predictions)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>epistemic_unc <span class="op">=</span> variance(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple hypernetworks</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hypernetworks <span class="op">=</span> [HyperNet() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate ensemble predictions</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hyper <span class="kw">in</span> hypernetworks:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hyper.generate_weights(task_embedding)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncertainty estimation</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>mean_pred <span class="op">=</span> mean(predictions)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>epistemic_unc <span class="op">=</span> variance(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>장점</strong>:[18] - 구현 간단 - 병렬화 용이 - Gradient 기반 학습 가능</p>
 </section>
 <section id="mc-dropout-with-hypernetworks" class="level4">
 <h4 class="anchored" data-anchor-id="mc-dropout-with-hypernetworks">6.3 MC Dropout with HyperNetworks</h4>
 <p><strong>Variational inference의 근사</strong>:[17]</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable dropout during inference</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hypernetwork.train()  <span class="co"># Keep dropout active</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(K):  <span class="co"># K samples</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hypernetwork(task_embedding)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> std(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable dropout during inference</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hypernetwork.train()  <span class="co"># Keep dropout active</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(K):  <span class="co"># K samples</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hypernetwork(task_embedding)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> std(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>계산 효율성</strong>:[17] - 단일 모델만 필요 - Inference 시 multiple forward pass - 추가 학습 비용 없음</p>
 </section>
 </section>
