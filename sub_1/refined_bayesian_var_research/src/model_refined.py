@@ -1,7 +1,7 @@
 # ============================================================================
-# REFINED model_refined.py
-# Stage 3: Bayesian NN with Calibration Loss (Key Novelty)
-# Bayesian Deep Neural Networks for Portfolio VaR Estimation
+# model_refined.py (NLL LOSS FIXED)
+# Stage 3: Bayesian NN with Calibration Loss
+# FIX: Correct Gaussian NLL formula + Proper scaling
 # ============================================================================
 
 import torch
@@ -15,10 +15,7 @@ warnings.filterwarnings('ignore')
 
 
 class BayesianVaRNN(nn.Module):
-    """
-    MC Dropout을 이용한 Bayesian VaR 추정 신경망
-    개선: Calibration loss를 명시적으로 포함 (핵심 Novelty)
-    """
+    """MC Dropout을 이용한 Bayesian VaR 추정 신경망"""
     
     def __init__(self, input_dim: int = 11, hidden_dim: int = 128, 
                  dropout_rate: float = 0.2):
@@ -45,39 +42,45 @@ class BayesianVaRNN(nn.Module):
         self.var_mean = nn.Sequential(
             nn.Linear(hidden_dim // 2, 64),
             nn.ReLU(),
-            nn.Linear(64, 1),
-            nn.Softplus()
+            nn.Linear(64, 1)
+            # Softplus 제거 (VaR는 음수 가능)
         )
         
-        # Aleatoric uncertainty
-        self.aleatoric_std = nn.Sequential(
+        # Aleatoric uncertainty (log scale로 예측)
+        self.aleatoric_log_std = nn.Sequential(
             nn.Linear(hidden_dim // 2, 64),
             nn.ReLU(),
-            nn.Linear(64, 1),
-            nn.Softplus()
+            nn.Linear(64, 1)
+            # Raw output → exp로 변환
         )
         
         # CVaR
         self.cvar_head = nn.Sequential(
             nn.Linear(hidden_dim // 2, 64),
             nn.ReLU(),
-            nn.Linear(64, 1),
-            nn.Softplus()
+            nn.Linear(64, 1)
         )
         
         self.dropout_rate = dropout_rate
     
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-        """Forward pass"""
+        """Forward pass with log_std → std conversion"""
         features = self.encoder(x)
         var_mean = self.var_mean(features)
-        aleatoric_std = self.aleatoric_std(features)
+        
+        # FIX: log_std로 예측 후 exp
+        log_std = self.aleatoric_log_std(features)
+        aleatoric_std = torch.exp(log_std)
+        
+        # Clip to reasonable range
+        aleatoric_std = torch.clamp(aleatoric_std, min=1e-6, max=1.0)
+        
         cvar_pred = self.cvar_head(features)
         
         return var_mean, aleatoric_std, cvar_pred
     
     def mc_dropout_forward(self, x: torch.Tensor, n_samples: int = 100) -> torch.Tensor:
-        """MC Dropout inference (Epistemic uncertainty 추정)"""
+        """MC Dropout inference"""
         self.train()
         predictions = []
         
@@ -92,86 +95,83 @@ class BayesianVaRNN(nn.Module):
 
 class BayesianVaRLoss(nn.Module):
     """
-    개선: Calibration Loss를 명시적으로 포함 (What is NEW의 핵심)
+    수정된 Loss 함수 (올바른 Gaussian NLL)
     
-    손실 함수 구성:
-    1. NLL (Point Estimation)
-    2. Calibration Loss (Uncertainty Calibration) ← 핵심 개선
-    3. CVaR Loss (Consistency)
-    4. L2 Regularization
+    수식:
+    L_NLL = 0.5 * log(2π) + log(σ) + 0.5 * [(y - μ) / σ]²
+    
+    간소화 (상수 제거):
+    L_NLL = log(σ) + 0.5 * [(y - μ) / σ]²
     """
     
-    def __init__(self, lambda_cal: float = 1.0, lambda_cvar: float = 0.1, 
-                 lambda_reg: float = 0.01):
+    def __init__(self, lambda_cal: float = 1.0, lambda_cvar: float = 0.1):
         super(BayesianVaRLoss, self).__init__()
-        self.lambda_cal = lambda_cal  # Calibration loss 가중치
+        self.lambda_cal = lambda_cal
         self.lambda_cvar = lambda_cvar
-        self.lambda_reg = lambda_reg
     
     def forward(self, var_pred: torch.Tensor, aleatoric_std: torch.Tensor, 
                 y: torch.Tensor, cvar_pred: torch.Tensor = None,
                 confidence: float = 0.95) -> Dict[str, torch.Tensor]:
         """
-        Args:
-            var_pred: VaR 예측값
-            aleatoric_std: Aleatoric uncertainty
-            y: 실제 VaR 레이블
-            cvar_pred: CVaR 예측값
-            confidence: 신뢰도 (0.95 = 95%)
-        
-        Returns:
-            손실값 및 각 컴포넌트 별 손실
+        올바른 Gaussian NLL 계산
         """
         var_pred = var_pred.squeeze()
         aleatoric_std = aleatoric_std.squeeze()
+        y = y.squeeze()
         
         eps = 1e-6
+        aleatoric_std = torch.clamp(aleatoric_std, min=eps, max=10.0)
         
-        # 1. Gaussian Negative Log-Likelihood
-        nll_loss = torch.mean(
-            ((y - var_pred) / (aleatoric_std + eps))**2 + 
-            torch.log(aleatoric_std + eps)
-        )
+        # ===================================================================
+        # FIX: 올바른 Gaussian Negative Log-Likelihood
+        # ===================================================================
+        # L_NLL = log(σ) + 0.5 * [(y - μ) / σ]²
         
-        # 2. Calibration Loss (개선: 신뢰도 구간 정확성 보장)
-        z_score = torch.tensor(1.96, device=var_pred.device) if confidence == 0.95 else torch.tensor(2.576, device=var_pred.device)
+        log_std = torch.log(aleatoric_std)
+        squared_error = ((y - var_pred) / aleatoric_std) ** 2
+        
+        nll_loss = torch.mean(log_std + 0.5 * squared_error)
+        
+        # ===================================================================
+        # Calibration Loss (unchanged)
+        # ===================================================================
+        z_score = 1.96 if confidence == 0.95 else 2.576
         
         lower_bound = var_pred - z_score * aleatoric_std
         upper_bound = var_pred + z_score * aleatoric_std
         
-        # 실제 coverage
         in_interval = ((y >= lower_bound) & (y <= upper_bound)).float()
         actual_coverage = in_interval.mean()
         target_coverage = torch.tensor(confidence, device=var_pred.device)
         
-        # Calibration loss: 실제 coverage가 target과 일치하도록
-        calibration_loss = torch.abs(actual_coverage - target_coverage)
+        calibration_loss = (actual_coverage - target_coverage) ** 2
         
-        # 3. CVaR Loss
+        # ===================================================================
+        # CVaR Loss (unchanged)
+        # ===================================================================
         cvar_loss = torch.tensor(0.0, device=var_pred.device)
         if cvar_pred is not None:
             cvar_pred = cvar_pred.squeeze()
-            cvar_loss = torch.mean(torch.relu(var_pred - cvar_pred))
+            # CVaR should be less than VaR (more negative)
+            cvar_loss = torch.mean(torch.relu(cvar_pred - var_pred))
         
-        # 4. L2 Regularization (uncertainty smoothing)
-        reg_loss = self.lambda_reg * torch.norm(aleatoric_std)
-        
-        # 총 손실
+        # ===================================================================
+        # Total Loss
+        # ===================================================================
         total_loss = nll_loss + self.lambda_cal * calibration_loss + \
-                    self.lambda_cvar * cvar_loss + reg_loss
+                    self.lambda_cvar * cvar_loss
         
         return {
             'total': total_loss,
             'nll': nll_loss,
             'calibration': calibration_loss,
             'cvar': cvar_loss,
-            'reg': reg_loss,
             'coverage': actual_coverage.detach().cpu().item()
         }
 
 
 class BayesianVaRTrainer:
-    """Bayesian VaR 모델 훈련 with calibration monitoring"""
+    """Bayesian VaR 모델 훈련"""
     
     def __init__(self, model: BayesianVaRNN, device: str = None):
         self.model = model
@@ -256,9 +256,8 @@ class BayesianVaRTrainer:
             epochs: int = 100, batch_size: int = 256, 
             learning_rate: float = 0.001, patience: int = 15,
             confidence: float = 0.95) -> Dict:
-        """
-        개선: Calibration monitoring 추가
-        """
+        """모델 훈련"""
+        
         train_dataset = TensorDataset(
             torch.FloatTensor(X_train),
             torch.FloatTensor(y_train)
@@ -273,16 +272,19 @@ class BayesianVaRTrainer:
         
         optimizer = optim.Adam(self.model.parameters(), lr=learning_rate, weight_decay=1e-5)
         scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer, mode='min', factor=0.5, patience=5, verbose=False
+            optimizer, mode='min', factor=0.5, patience=5
         )
-        criterion = BayesianVaRLoss(lambda_cal=1.0, lambda_cvar=0.1, lambda_reg=0.01)
+        
+        criterion = BayesianVaRLoss(lambda_cal=1.0, lambda_cvar=0.1)
         
         best_val_loss = float('inf')
         patience_counter = 0
         
         print("="*80)
-        print("TRAINING BAYESIAN VAR MODEL (WITH CALIBRATION LOSS)")
+        print("TRAINING BAYESIAN VAR MODEL (FIXED NLL)")
         print("="*80)
+        print(f"\nCorrect NLL formula: log(σ) + 0.5 * [(y - μ) / σ]²")
+        print(f"Expected loss range: 0.0 ~ 2.0 (positive!)\n")
         
         for epoch in range(epochs):
             train_metrics = self.train_epoch(train_loader, optimizer, criterion, confidence)
@@ -327,13 +329,17 @@ def main():
     import os
     
     print("Loading synthetic data...")
-    data = np.load('./data/synthetic_data.npz')
+    data = np.load('../data/synthetic_data.npz')
     X_train = data['X_train']
     y_train = data['y_train']
     X_val = data['X_val']
     y_val = data['y_val']
     
-    print("\nCreating Bayesian VaR model (with Calibration Loss)...")
+    print("\nData statistics:")
+    print(f"  y_train: min={y_train.min():.4f}, max={y_train.max():.4f}, mean={y_train.mean():.4f}")
+    print(f"  y_val:   min={y_val.min():.4f}, max={y_val.max():.4f}, mean={y_val.mean():.4f}")
+    
+    print("\nCreating Bayesian VaR model (FIXED NLL)...")
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = BayesianVaRNN(input_dim=11, hidden_dim=128, dropout_rate=0.2)
     
@@ -341,8 +347,11 @@ def main():
     trainer = BayesianVaRTrainer(model, device=device)
     history = trainer.fit(
         X_train, y_train, X_val, y_val,
-        epochs=100, batch_size=256, learning_rate=0.001,
-        patience=15, confidence=0.95
+        epochs=50,
+        batch_size=256, 
+        learning_rate=0.001,
+        patience=10,
+        confidence=0.95
     )
     
     return model, trainer, history

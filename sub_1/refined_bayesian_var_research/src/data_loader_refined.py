@@ -23,58 +23,56 @@ class PortfolioDataLoader:
         self.returns_df = None
         
     def download_data(self) -> pd.DataFrame:
-        """야후 파이넌스에서 데이터 다운로드 (FIXED)"""
+        """개선된 다운로드"""
         print(f"Downloading data for {len(self.tickers)} assets...")
-        print(f"Period: {self.start_date} to {self.end_date}\n")
         
-        data = {}
+        # 방법 1: 한번에 다운로드
+        try:
+            data = yf.download(
+                self.tickers, 
+                start=self.start_date, 
+                end=self.end_date, 
+                group_by='ticker',
+                progress=False
+            )
+            
+            # 각 ticker의 Adj Close 추출
+            prices = {}
+            for ticker in self.tickers:
+                if ticker in data.columns.levels[0]:
+                    prices[ticker] = data[ticker]['Adj Close']
+            
+            if prices:
+                self.prices_df = pd.DataFrame(prices)
+                print(f"\n[OK] Real data downloaded: {self.prices_df.shape}")
+                return self.prices_df
+        
+        except Exception as e:
+            print(f"[ERROR] Batch download failed: {e}")
+        
+        # 방법 2: 개별 다운로드 (fallback)
+        prices = {}
         for ticker in self.tickers:
             try:
-                # Download single ticker
-                df = yf.download(ticker, start=self.start_date, 
-                               end=self.end_date, progress=False)
+                ticker_obj = yf.Ticker(ticker)
+                hist = ticker_obj.history(start=self.start_date, end=self.end_date)
                 
-                # Handle MultiIndex or single column
-                if isinstance(df.columns, pd.MultiIndex):
-                    # MultiIndex case
-                    if ('Adj Close', ticker) in df.columns:
-                        data[ticker] = df[('Adj Close', ticker)]
-                    elif 'Adj Close' in df.columns.get_level_values(0):
-                        data[ticker] = df['Adj Close'].iloc[:, 0]
-                else:
-                    # Single index case
-                    if 'Adj Close' in df.columns:
-                        data[ticker] = df['Adj Close']
-                    else:
-                        data[ticker] = df['Close']  # Fallback
-                
-                print(f"✓ {ticker}: {len(df)} trading days")
-                
+                if not hist.empty:
+                    prices[ticker] = hist['Close']
+                    print(f"✓ {ticker}: {len(hist)} days")
             except Exception as e:
-                print(f"✗ {ticker}: Error - {e}")
-                continue
+                print(f"✗ {ticker}: {e}")
         
-        if not data:
-            print("\n[WARNING] No data downloaded. Using demo data...")
-            # Create demo data
-            np.random.seed(42)
-            n_days = 1000
-            dates = pd.date_range(start=self.start_date, periods=n_days, freq='B')
-            
-            demo_data = {}
-            for ticker in self.tickers:
-                # Simulate price series
-                returns = np.random.randn(n_days) * 0.02 + 0.0005
-                prices = 100 * np.cumprod(1 + returns)
-                demo_data[ticker] = pd.Series(prices, index=dates)
-            
-            self.prices_df = pd.DataFrame(demo_data)
-            print(f"\n[OK] Demo data created: {self.prices_df.shape}")
-        else:
-            self.prices_df = pd.DataFrame(data)
+        if prices:
+            self.prices_df = pd.DataFrame(prices)
             print(f"\n[OK] Real data downloaded: {self.prices_df.shape}")
+        else:
+            # Demo data fallback
+            print("\n[WARNING] Using demo data...")
+            self.prices_df = self._create_demo_data()
         
         return self.prices_df
+
     
     def compute_returns(self) -> pd.DataFrame:
         """일일 수익률 계산"""
