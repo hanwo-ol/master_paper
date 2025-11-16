@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-16">
+<meta name="description" content="메타 러닝 관련 논문 요약 및 주요 내용">
+
+<title>Hypernetworks – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Hypernetworks</h1>
+                  <div>
+        <div class="description">
+          메타 러닝 관련 논문 요약 및 주요 내용
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MetaLearning</div>
+                <div class="quarto-category">Review</div>
+                <div class="quarto-category">Hypernetworks</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 16, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#motivation-and-related-work" id="toc-motivation-and-related-work" class="nav-link" data-scroll-target="#motivation-and-related-work">Motivation and Related Work</a>
+  <ul class="collapse">
+  <li><a href="#hyperneat-framework" id="toc-hyperneat-framework" class="nav-link" data-scroll-target="#hyperneat-framework">HyperNEAT Framework</a></li>
+  <li><a href="#this-paper-vs.-hyperneat" id="toc-this-paper-vs.-hyperneat" class="nav-link" data-scroll-target="#this-paper-vs.-hyperneat">This Paper vs.&nbsp;HyperNEAT</a></li>
+  <li><a href="#the-key-point" id="toc-the-key-point" class="nav-link" data-scroll-target="#the-key-point">The Key Point</a></li>
+  </ul></li>
+  <li><a href="#paper-appendix" id="toc-paper-appendix" class="nav-link" data-scroll-target="#paper-appendix">Paper Appendix</a></li>
+  <li><a href="#my-appendix-1" id="toc-my-appendix-1" class="nav-link" data-scroll-target="#my-appendix-1">My Appendix 1</a>
+  <ul class="collapse">
+  <li><a href="#what-is-evolutionary-computing" id="toc-what-is-evolutionary-computing" class="nav-link" data-scroll-target="#what-is-evolutionary-computing">What is Evolutionary Computing?</a>
+  <ul class="collapse">
+  <li><a href="#핵심-개념과-작동-원리" id="toc-핵심-개념과-작동-원리" class="nav-link" data-scroll-target="#핵심-개념과-작동-원리">핵심 개념과 작동 원리</a></li>
+  <li><a href="#주요-알고리즘-종류" id="toc-주요-알고리즘-종류" class="nav-link" data-scroll-target="#주요-알고리즘-종류">주요 알고리즘 종류</a></li>
+  <li><a href="#연구-분야로서의-특징" id="toc-연구-분야로서의-특징" class="nav-link" data-scroll-target="#연구-분야로서의-특징">연구 분야로서의 특징</a></li>
+  <li><a href="#기계학습과의-결합" id="toc-기계학습과의-결합" class="nav-link" data-scroll-target="#기계학습과의-결합">기계학습과의 결합</a></li>
+  </ul></li>
+  <li><a href="#최신-연구-동향-2024-2025" id="toc-최신-연구-동향-2024-2025" class="nav-link" data-scroll-target="#최신-연구-동향-2024-2025">최신 연구 동향 (2024-2025)</a>
+  <ul class="collapse">
+  <li><a href="#뉴로진화와-신경망-최적화" id="toc-뉴로진화와-신경망-최적화" class="nav-link" data-scroll-target="#뉴로진화와-신경망-최적화">1. 뉴로진화와 신경망 최적화</a></li>
+  <li><a href="#gpu-가속-진화-알고리즘" id="toc-gpu-가속-진화-알고리즘" class="nav-link" data-scroll-target="#gpu-가속-진화-알고리즘">2. GPU 가속 진화 알고리즘</a></li>
+  <li><a href="#협력적-공진화cooperative-co-evolution" id="toc-협력적-공진화cooperative-co-evolution" class="nav-link" data-scroll-target="#협력적-공진화cooperative-co-evolution">3. 협력적 공진화(Cooperative Co-evolution)</a></li>
+  <li><a href="#진화와-학습의-시너지" id="toc-진화와-학습의-시너지" class="nav-link" data-scroll-target="#진화와-학습의-시너지">4. 진화와 학습의 시너지</a></li>
+  <li><a href="#분산-진화-신경망" id="toc-분산-진화-신경망" class="nav-link" data-scroll-target="#분산-진화-신경망">5. 분산 진화 신경망</a></li>
+  <li><a href="#최신-응용-분야" id="toc-최신-응용-분야" class="nav-link" data-scroll-target="#최신-응용-분야">6. 최신 응용 분야</a></li>
+  <li><a href="#주요-학술-컨퍼런스-및-저널" id="toc-주요-학술-컨퍼런스-및-저널" class="nav-link" data-scroll-target="#주요-학술-컨퍼런스-및-저널">7. 주요 학술 컨퍼런스 및 저널</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#my-appendix-2" id="toc-my-appendix-2" class="nav-link" data-scroll-target="#my-appendix-2">My Appendix 2</a>
+  <ul class="collapse">
+  <li><a href="#hypernetworks와-bayesian-meta-learning-uncertainty의-결합" id="toc-hypernetworks와-bayesian-meta-learning-uncertainty의-결합" class="nav-link" data-scroll-target="#hypernetworks와-bayesian-meta-learning-uncertainty의-결합">HyperNetworks와 Bayesian Meta-Learning, Uncertainty의 결합</a>
+  <ul class="collapse">
+  <li><a href="#hypernetworks의-bayesian-결합-가능-요소" id="toc-hypernetworks의-bayesian-결합-가능-요소" class="nav-link" data-scroll-target="#hypernetworks의-bayesian-결합-가능-요소">1. HyperNetworks의 Bayesian 결합 가능 요소</a></li>
+  <li><a href="#최신-연구-bayesianhmaml-2022" id="toc-최신-연구-bayesianhmaml-2022" class="nav-link" data-scroll-target="#최신-연구-bayesianhmaml-2022">2. 최신 연구: BayesianHMAML (2022)</a></li>
+  <li><a href="#최신-연구-트렌드-2024-2025" id="toc-최신-연구-트렌드-2024-2025" class="nav-link" data-scroll-target="#최신-연구-트렌드-2024-2025">3. 최신 연구 트렌드 (2024-2025)</a></li>
+  <li><a href="#decision-making에서-uncertainty의-역할" id="toc-decision-making에서-uncertainty의-역할" class="nav-link" data-scroll-target="#decision-making에서-uncertainty의-역할">4. Decision Making에서 Uncertainty의 역할</a></li>
+  <li><a href="#hypernetworks-논문에-bayesian을-적용할-구체적-방법" id="toc-hypernetworks-논문에-bayesian을-적용할-구체적-방법" class="nav-link" data-scroll-target="#hypernetworks-논문에-bayesian을-적용할-구체적-방법">5. HyperNetworks 논문에 Bayesian을 적용할 구체적 방법</a></li>
+  <li><a href="#실용적-구현-전략" id="toc-실용적-구현-전략" class="nav-link" data-scroll-target="#실용적-구현-전략">6. 실용적 구현 전략</a></li>
+  <li><a href="#향후-연구-방향과-제안" id="toc-향후-연구-방향과-제안" class="nav-link" data-scroll-target="#향후-연구-방향과-제안">7. 향후 연구 방향과 제안</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>이 연구는 하이퍼네트워크를 탐구합니다. <strong>하이퍼네트워크</strong>는 <strong>한 네트워크를 사용하여 다른 네트워크의 가중치를 생성하는 방식</strong>입니다.</p>
+<p>하이퍼네트워크는 자연에서 발견되는 것과 유사한 추상화를 제공합니다: 유전형질(하이퍼네트워크)과 표현형(주 네트워크) 간의 관계입니다.</p>
+<p>진화 알고리즘의 HyperNEAT과 유사하지만, 본 연구의 하이퍼네트워크는 역전파(backpropagation)로 End-to-End 학습되므로 일반적으로 더 빠릅니다.</p>
+<p>본 연구의 초점은 하이퍼네트워크를 심층 합성곱 신경망과 장기 순환 신경망에 유용하게 만드는 것입니다. 여기서 하이퍼네트워크는 계층 간 가중치 공유의 완화된 형태로 볼 수 있습니다. 주요 결과는 하이퍼네트워크가 LSTM의 비공유 가중치를 생성할 수 있으며, 문자 수준의 언어 모델링, 필기 생성, 신경 기계 번역을 포함한 다양한 시퀀스 모델링 작업에서 최첨단에 가까운 성능을 달성할 수 있다는 것입니다.</p>
+<p>이는 순환 신경망의 가중치 공유 패러다임에 도전합니다. 또한 결과는 합성곱 신경망에 적용된 하이퍼네트워크가 최첨단 기준 모델과 비교하여 이미지 인식 작업에서 뛰어난 결과를 달성하면서도 학습 가능한 매개변수가 더 적음을 보여줍니다.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>본 연구에서는 작은 네트워크(하이퍼네트워크라고 불림)를 사용하여 더 큰 네트워크(주 네트워크라고 불림)의 가중치를 생성하는 방식을 고려합니다. 주 네트워크의 동작은 일반적인 신경망과 동일합니다: 원시 입력을 원하는 목표로 매핑하도록 학습합니다. 반면 하이퍼네트워크는 가중치 구조에 대한 정보를 포함하는 입력 세트를 받아서 해당 계층의 가중치를 생성합니다(그림 1 참조).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="..\sources/20251116_1_figure1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1</figcaption>
+</figure>
+</div>
+<p>HyperNEAT은 하이퍼네트워크의 예이며, 여기서 입력은 주 네트워크의 각 가중치에 대한 가상 좌표 집합입니다. 본 연구에서는 입력이 주어진 계층의 전체 가중치를 설명하는 임베딩 벡터인 더 강력한 방식에 중점을 둡니다. 우리의 임베딩 벡터는 고정 매개변수가 될 수 있으며, End-to-End 학습 중에도 학습되므로 주 네트워크의 계층 내 및 계층 간 가중치 공유를 근사할 수 있습니다. 또한 우리의 임베딩 벡터는 하이퍼네트워크에 의해 동적으로 생성될 수도 있으므로, 순환 네트워크의 가중치가 시간 단계에 따라 변경되고 입력 시퀀스에 적응할 수 있습니다.</p>
+<p>우리는 다양한 맥락에서 하이퍼네트워크의 동작을 조사하기 위해 실험을 수행하고, 하이퍼네트워크가 배치 정규화 및 계층 정규화와 같은 다른 기술과 잘 혼합된다는 것을 발견했습니다.</p>
+<p>주요 결과는 하이퍼네트워크가 LSTM을 위한 비공유 가중치를 생성할 수 있으며, 이것이 표준 LSTM 버전(Hochreiter &amp; Schmidhuber, 1997)보다 더 잘 작동한다는 것입니다.</p>
+<ol type="1">
+<li><p>Character Penn Treebank, Hutter Prize Wikipedia 데이터세트를 사용한 언어 모델링 작업에서 LSTM을 위한 하이퍼네트워크는 최첨단에 가까운 결과를 달성합니다.</p></li>
+<li><p>IAM 필기 데이터세트를 사용한 필기 생성 작업에서 LSTM을 위한 하이퍼네트워크는 높은 정량적 및 정성적 결과를 달성합니다.</p></li>
+<li><p>CIFAR-10을 사용한 이미지 분류에서 하이퍼네트워크가 깊은 합성곱 신경망(LeCun 외, 1990)의 가중치를 생성하는 데 사용될 때, 더 적은 학습 가능한 매개변수를 가지면서도 최첨단 모델과 비교하여 존경할만한 결과를 얻습니다.</p></li>
+<li><p>단순한 작업 외에도, 우리는 LSTM을 위한 하이퍼네트워크가 대규모의 프로덕션 수준의 신경 기계 번역 모델의 성능 증가를 제공한다는 것을 보여줍니다.</p></li>
+</ol>
+</section>
+<section id="motivation-and-related-work" class="level1">
+<h1>Motivation and Related Work</h1>
+<p>본 연구의 접근법은 진화 컴퓨팅 방법에서 영감을 받았습니다. 진화 컴퓨팅에서는 수백만 개의 가중치 매개변수로 구성된 대규모 탐색 공간에서 직접 작업하는 것이 어렵습니다. 더 효율적인 방법은 더 작은 네트워크를 진화시켜 더 큰 네트워크의 가중치 구조를 생성하도록 하여, 훨씬 작은 가중치 공간 내에서 탐색이 제한되도록 하는 것입니다. 이 접근법의 한 사례가 HyperNEAT 프레임워크입니다.</p>
+<section id="hyperneat-framework" class="level2">
+<h2 class="anchored" data-anchor-id="hyperneat-framework">HyperNEAT Framework</h2>
+<p>HyperNEAT 프레임워크에서는 구성 패턴 생성 네트워크(Compositional Pattern-Producing Networks, CPPNs)가 진화하여 훨씬 더 큰 주 네트워크의 가중치 구조를 정의합니다.</p>
+<ul>
+<li>본 연구의 접근법과 밀접하게 관련된 것은 HyperNEAT의 단순화된 변형으로, 구조는 고정되고 가중치는 <strong>이산 코사인 변환(Discrete Cosine Transform, DCT)</strong>을 통해 진화하는 <strong>압축 가중치 탐색(Compressed Weight Search)</strong>입니다.</li>
+<li>본 연구의 접근법과 더욱 밀접하게 관련된 것은 구조는 진화하지만 가중치는 학습되는 미분 가능한 패턴 생성 네트워크(Differentiable Pattern Producing Networks, DPPNs)와 선형 계층이 DCT로 압축되고 매개변수가 학습되는 ACDC-Networks입니다.</li>
+</ul>
+<p>그러나 이러한 방법을 사용한 대부분의 보고된 결과는 소규모 수준에 그쳤는데, 아마도 학습이 느리고 효율적이기 위해 휴리스틱이 필요하기 때문일 것입니다.</p>
+</section>
+<section id="this-paper-vs.-hyperneat" class="level2">
+<h2 class="anchored" data-anchor-id="this-paper-vs.-hyperneat">This Paper vs.&nbsp;HyperNEAT</h2>
+<p>본 연구의 접근법과 HyperNEAT의 주요 차이점은 본 연구의 하이퍼네트워크가 주 네트워크와 함께 그래디언트 하강법을 사용하여 End-to-End 학습되므로 더 효율적이라는 것입니다.</p>
+<p>그래디언트 하강법을 사용한 End-to-End 학습 외에도, 본 연구의 접근법은 모델 유연성과 학습 단순성 측면에서 압축 가중치 탐색과 HyperNEAT 사이에서 좋은 균형을 이룹니다.</p>
+<ul>
+<li>첫째, 압축 가중치 탐색에 사용되는 이산 코사인 변환이 너무 단순할 수 있으며 DCT 사전 지식이 많은 문제에 적합하지 않을 수 있다고 주장할 수 있습니다.</li>
+<li>둘째, HyperNEAT가 더 유연하지만, HyperNEAT에서 아키텍처와 가중치를 모두 진화시키는 것은 대부분의 실용적인 문제에 대해 과도한 방법입니다.</li>
+</ul>
+<p>HyperNEAT와 DCT에 관한 연구 이전에도, Schmidhuber(1992, 1993)는 빠른 가중치(fast weights) 개념을 제안했습니다. 이 개념에서는 한 네트워크가 두 번째 네트워크에 대한 문맥 의존적 가중치 변경을 생성할 수 있습니다. 당시 피드포워드 네트워크를 위한 빠른 가중치를 입증하기 위해 소규모 실험이 수행되었지만, 아마도 현대적인 계산 도구가 부족했기 때문에 순환 네트워크 버전은 주로 사고 실험(thought experiment)으로 언급되었습니다. 후속 연구에서는 빠른 가중치의 실용적 응용을 입증했으며, 생성기 네트워크가 진화를 통해 학습되어 인공 제어 문제를 해결했습니다.</p>
+</section>
+<section id="the-key-point" class="level2">
+<h2 class="anchored" data-anchor-id="the-key-point">The Key Point</h2>
+<p>한 네트워크가 다른 네트워크와 상호 작용하는 개념은 여러 연구의 핵심이며, 특히 합성곱 네트워크의 특정 매개변수가 다른 네트워크에 의해 예측되는 연구들이 있습니다. 그러나 이러한 연구들은 순환 네트워크에 이 접근법을 사용하는 것을 탐구하지 않았으며, 이것이 본 연구의 주요 기여입니다.</p>
+<p><strong>본 연구의 초점은 계층 임베딩 벡터를 입력으로 받아 합성곱 네트워크 및 순환 네트워크와 같은 실용적인 아키텍처를 위한 가중치를 생성하는 것</strong>입니다.</p>
+<ul>
+<li>그러나 본 연구의 하이퍼네트워크는 DPPNs와 유사하게 좌표 정보를 입력으로 받아 완전 연결 네트워크의 가중치를 생성하는 데도 활용될 수 있습니다. 이 설정을 사용하면, 하이퍼네트워크는 명시적으로 지시받지 않고도 합성곱 아키텍처를 근사적으로 복원할 수 있으며, 이는 진화에 의한 합성곱(Convolution by Evolution)에서 얻은 것과 유사한 결과입니다. 이 결과는 부록 A.1에 설명되어 있습니다.</li>
+</ul>
+</section>
+</section>
+<section id="paper-appendix" class="level1">
+<h1>Paper Appendix</h1>
+<p>논문의 실제 Appendix를 위한 공간입니다. 다음 장인 My Appendix는 제가 공부하면서 정리한 Appendix입니다.</p>
+</section>
+<section id="my-appendix-1" class="level1">
+<h1>My Appendix 1</h1>
+<section id="what-is-evolutionary-computing" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-evolutionary-computing">What is Evolutionary Computing?</h2>
+<p><strong>Evolutionary Computing</strong>은 생물학적 진화 과정에서 영감을 받은 최적화 알고리즘의 한 분야입니다. 자연 선택, 유전, 돌연변이 같은 자연의 진화 메커니즘을 컴퓨터 상에서 모방하여 복잡한 문제를 해결하는 인공지능 및 소프트 컴퓨팅의 하위 분야입니다.</p>
+<section id="핵심-개념과-작동-원리" class="level3">
+<h3 class="anchored" data-anchor-id="핵심-개념과-작동-원리">핵심 개념과 작동 원리</h3>
+<p>진화 연산은 <strong>개체군 기반(population-based)</strong> 탐색 방식을 사용합니다. 후보 솔루션들(개체)을 모집단으로 구성하고, 각 개체의 적합도(fitness)를 평가한 후, 우수한 개체를 선택하여 교배(crossover)와 돌연변이(mutation)를 통해 새로운 세대를 생성합니다. 이 과정을 반복하면서 점진적으로 더 나은 솔루션으로 진화해 나갑니다.</p>
+<p>주요 구성 요소는 다음과 같습니다:</p>
+<ul>
+<li><strong>선택(Selection)</strong>: 적합도가 높은 개체를 우선적으로 선택</li>
+<li><strong>교배(Crossover/Recombination)</strong>: 부모 개체의 정보를 결합하여 자손 생성</li>
+<li><strong>돌연변이(Mutation)</strong>: 무작위 변화를 도입하여 다양성 확보</li>
+<li><strong>적합도 함수(Fitness Function)</strong>: 솔루션의 품질을 평가하는 기준</li>
+</ul>
+</section>
+<section id="주요-알고리즘-종류" class="level3">
+<h3 class="anchored" data-anchor-id="주요-알고리즘-종류">주요 알고리즘 종류</h3>
+<p>진화 연산은 여러 알고리즘 계열을 포함합니다:</p>
+<ul>
+<li><strong>유전 알고리즘(Genetic Algorithms, GA)</strong>: 가장 널리 사용되는 방법</li>
+<li><strong>진화 전략(Evolution Strategies, ES)</strong>: 실수형 최적화에 특화</li>
+<li><strong>진화 프로그래밍(Evolutionary Programming, EP)</strong>: 유한 상태 기계 진화</li>
+<li><strong>유전 프로그래밍(Genetic Programming, GP)</strong>: 프로그램 구조 자체를 진화</li>
+<li><strong>군집 지능(Swarm Intelligence)</strong>: 개미 군집 최적화(ACO), 입자 군집 최적화(PSO) 등</li>
+</ul>
+</section>
+<section id="연구-분야로서의-특징" class="level3">
+<h3 class="anchored" data-anchor-id="연구-분야로서의-특징">연구 분야로서의 특징</h3>
+<p>진화 연산은 다음과 같은 특징으로 인해 광범위하게 활용됩니다:</p>
+<ul>
+<li><strong>전역 최적화</strong>: 지역 최적점(local optima)에 덜 빠지고 전역 해를 찾을 수 있음</li>
+<li><strong>문제 독립성</strong>: 문제에 대한 사전 가정이 거의 필요 없음</li>
+<li><strong>병렬화 가능성</strong>: 개체군 기반 특성으로 대규모 병렬 처리에 적합</li>
+<li><strong>복잡한 문제 해결</strong>: 방대한 해공간과 비선형성을 가진 문제에 효과적</li>
+</ul>
+</section>
+<section id="기계학습과의-결합" class="level3">
+<h3 class="anchored" data-anchor-id="기계학습과의-결합">기계학습과의 결합</h3>
+<p>진화 연산은 기계학습, 특히 신경망 분야와 깊이 결합되고 있습니다:</p>
+<ul>
+<li><strong>신경망 구조 탐색(Neural Architecture Search, NAS)</strong>: 최적의 신경망 구조를 자동으로 설계</li>
+<li><strong>뉴로진화(Neuroevolution)</strong>: 신경망의 가중치, 구조, 하이퍼파라미터를 진화</li>
+<li><strong>AutoML</strong>: 기계학습 모델과 파이프라인을 자동으로 최적화</li>
+</ul>
+</section>
+</section>
+<section id="최신-연구-동향-2024-2025" class="level2">
+<h2 class="anchored" data-anchor-id="최신-연구-동향-2024-2025">최신 연구 동향 (2024-2025)</h2>
+<section id="뉴로진화와-신경망-최적화" class="level3">
+<h3 class="anchored" data-anchor-id="뉴로진화와-신경망-최적화">1. 뉴로진화와 신경망 최적화</h3>
+<p><strong>대규모 심층 신경망 최적화</strong>가 주요 연구 주제입니다. 2024-2025년 연구들은 진화 알고리즘을 사용하여 심층 신경망의 구조와 하이퍼파라미터를 최적화하는 방법을 탐구하고 있습니다.</p>
+<ul>
+<li><p><strong>“Evolving Neural Architectures: A Genetic Algorithm Approach to Deep Learning Optimization”</strong> (2024): 유전 알고리즘을 사용한 신경망 구조 최적화 연구로, 적응적 개체군 제어, 다양성 보존 돌연변이, 하이브리드 강화학습 전략을 제안했습니다. 병렬 처리와 가중치 공유를 통해 계산 부담을 줄이는 생물학적 영감 접근법을 도입했습니다.</p></li>
+<li><p><strong>GECCO 2025 - Neuroevolution at Work Workshop</strong>: 2025년 주요 학회에서는 뉴로진화와 NAS의 통합이 핵심 주제입니다. 파라미터 공간 다양성 부족 문제와 계산 효율성 향상이 주요 도전 과제로 제기되고 있습니다.</p></li>
+</ul>
+</section>
+<section id="gpu-가속-진화-알고리즘" class="level3">
+<h3 class="anchored" data-anchor-id="gpu-가속-진화-알고리즘">2. GPU 가속 진화 알고리즘</h3>
+<p><strong>텐서화(Tensorization)를 활용한 GPU 가속</strong>이 중요한 트렌드입니다:</p>
+<ul>
+<li><strong>“GPU-accelerated Evolutionary Multiobjective Optimization Using Tensorized RVEA”</strong> (GECCO 2024): GPU를 활용한 대규모 다목적 최적화</li>
+<li><strong>“Tensorized NeuroEvolution of Augmenting Topologies for GPU Acceleration”</strong> (GECCO 2024): NEAT 알고리즘의 GPU 가속 버전</li>
+<li><strong>“Tensorized Ant Colony Optimization for GPU Acceleration”</strong> (GECCO 2024): 개미 군집 최적화의 GPU 병렬화</li>
+</ul>
+</section>
+<section id="협력적-공진화cooperative-co-evolution" class="level3">
+<h3 class="anchored" data-anchor-id="협력적-공진화cooperative-co-evolution">3. 협력적 공진화(Cooperative Co-evolution)</h3>
+<p><strong>고차원 문제 해결을 위한 협력적 공진화</strong> 연구가 활발합니다:[8]</p>
+<ul>
+<li><strong>“PyCCEA: A Python package of cooperative co-evolutionary algorithms for feature selection”</strong> (2025): 고차원 특징 선택 문제를 위한 협력적 공진화 프레임워크를 제공합니다. 문제를 여러 하위 구성요소로 분할하여 각각 독립적으로 진화시키는 방식입니다.</li>
+</ul>
+</section>
+<section id="진화와-학습의-시너지" class="level3">
+<h3 class="anchored" data-anchor-id="진화와-학습의-시너지">4. 진화와 학습의 시너지</h3>
+<p><strong>진화와 학습의 결합</strong>이 주목받고 있습니다:</p>
+<ul>
+<li><p><strong>“Neuroevolution insights into biological neural computation”</strong> (Science, 2025년 2월): 진화가 신경 회로 구조를 어떻게 형성하는지, 그리고 진화와 학습이 어떻게 협력하는지에 대한 종합적 리뷰. 진화는 신경망 구조를 최적화하고, 학습은 개체가 생애 동안 적응할 수 있게 합니다.</p></li>
+<li><p>연구 결과에 따르면, 진화된 신경망은 모듈성(modularity), 전문화된 제어 메커니즘(command neurons), 효율적 학습을 위한 구조적 특성을 자연스럽게 발달시킵니다.</p></li>
+</ul>
+</section>
+<section id="분산-진화-신경망" class="level3">
+<h3 class="anchored" data-anchor-id="분산-진화-신경망">5. 분산 진화 신경망</h3>
+<p><strong>빅데이터를 위한 분산 처리 프레임워크</strong>가 발전하고 있습니다:</p>
+<ul>
+<li><strong>“A novel neural network model with distributed evolutionary algorithm”</strong> (Nature, 2023): Apache Spark 프레임워크를 사용한 분산 유전 알고리즘 기반 신경망 학습. 대용량 데이터에서 전통적 방법 대비 80% 이상의 계산 시간 개선을 달성했습니다.</li>
+</ul>
+</section>
+<section id="최신-응용-분야" class="level3">
+<h3 class="anchored" data-anchor-id="최신-응용-분야">6. 최신 응용 분야</h3>
+<p>2024-2025년 연구들은 다양한 실제 응용에 진화 연산을 적용하고 있습니다:</p>
+<ul>
+<li><strong>재료 과학</strong>: Neuroevolution Potential (NEP) 접근법이 분자 동역학 시뮬레이션에서 탁월한 정확도와 계산 효율성을 보이고 있습니다.</li>
+<li><strong>음악 분류</strong>: 차등 진화 알고리즘을 사용한 CNN 파라미터 최적화</li>
+<li><strong>의료 진단</strong>: 암 스크리닝을 위한 앙상블 자연 영감 알고리즘</li>
+<li><strong>로봇공학</strong>: 자가 조직화 입자 시스템의 집단 행동 진화</li>
+<li><strong>공기역학</strong>: 심층학습과 유전 알고리즘을 결합한 공기역학적 설계</li>
+</ul>
+</section>
+<section id="주요-학술-컨퍼런스-및-저널" class="level3">
+<h3 class="anchored" data-anchor-id="주요-학술-컨퍼런스-및-저널">7. 주요 학술 컨퍼런스 및 저널</h3>
+<p>진화 연산 분야의 최신 연구는 다음 학술 장소에서 발표됩니다:</p>
+<ul>
+<li><strong>GECCO (Genetic and Evolutionary Computation Conference)</strong>: 가장 권위 있는 학회</li>
+<li><strong>Evolutionary Computation (MIT Press)</strong>: 최고 수준의 저널</li>
+<li><strong>Swarm and Evolutionary Computation</strong>: 전문 저널</li>
+<li><strong>Nature</strong>, <strong>Science</strong>: 최근 뉴로진화 관련 리뷰 논문 게재</li>
+</ul>
+<p>진화 연산은 생물학적 원리를 컴퓨터 과학에 적용하여 복잡한 최적화 문제를 해결하는 강력한 도구로, 현재 인공지능, 특히 신경망 설계와 최적화 분야에서 혁신적인 돌파구를 제공하고 있습니다.</p>
+<p><a href="https://www.sciencedirect.com/topics/computer-science/evolutionary-computation">1</a> <a href="https://en.wikipedia.org/wiki/Evolutionary_computation">2</a> <a href="https://github.com/Evolutionary-Intelligence/DistributedEvolutionaryComputation">3</a> <a href="https://nn.cs.utexas.edu/?stanley%3Anaturemi19">4</a> <a href="https://gecco-2025.sigevo.org/Workshop?itemId=2341">5</a> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5115996">6</a> <a href="https://arxiv.org/list/cs.NE/2024-04">7</a> <a href="https://joss.theoj.org/papers/10.21105/joss.08348.pdf">8</a> <a href="https://www.cognizant.com/us/en/ai-lab/blog/neuroevolution-insights">9</a> <a href="https://www.science.org/doi/10.1126/science.adp7478">10</a> <a href="https://www.nature.com/articles/s41598-023-37540-z">11</a> <a href="https://pubs.aip.org/aip/cpr/article/6/1/011310/3340020/Advances-in-modeling-complex-materials-The-rise-of">12</a> <a href="https://arxiv.org/abs/2501.11191">13</a> <a href="https://dl.acm.org/doi/10.1016/j.asoc.2024.111262">14</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0045782524004432">15</a> <a href="https://direct.mit.edu/evco">16</a> <a href="https://www.sciencedirect.com/journal/swarm-and-evolutionary-computation">17</a> <a href="https://hexaware.com/glossary/evolutionary-computation/">18</a> <a href="https://tavtechsolutions.com/glossary/evolutionary-computation/">19</a> <a href="https://ceng.metu.edu.tr/evolutionary-computing-group">20</a> <a href="https://www.walshmedicalmedia.com/open-access/evolutionary-computation-adapting-biological-processes-for-algorithmic-innovation.pdf">21</a> <a href="https://gecco-2025.sigevo.org/Workshop?itemId=2338">22</a> <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118534823.ch6">23</a> <a href="https://dl.acm.org/doi/10.1145/3712256.3726318">24</a> <a href="https://www.igi-global.com/dictionary/evolutionary-computing/39414">25</a> <a href="https://www.sciencedirect.com/science/article/pii/S2773064625000064">26</a> <a href="https://ieeexplore.ieee.org/document/819926">27</a> <a href="http://ieeexplore.ieee.org/document/572107/">28</a> <a href="https://taylorandfrancis.com/knowledge/Engineering_and_technology/Artificial_intelligence/Evolutionary_computation/">29</a> <a href="https://ieeexplore.ieee.org/document/10612194/">30</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0957417423032530">31</a> <a href="https://www.arxiv.org/list/cs.NE/2024-12?skip=25&amp;show=2000">32</a> <a href="https://arxiv.org/abs/2506.10184">33</a> <a href="https://pubs.aip.org/aip/acp/article/3021/1/060035/3280120/Evolutionary-algorithm-for-automated-formation-of">34</a> <a href="https://ieeexplore.ieee.org/document/10576350/">35</a> <a href="https://dl.acm.org/doi/10.1145/2598394.2602287">36</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S1386947725001936">37</a> <a href="https://www.nature.com/articles/s41598-025-06375-1">38</a> <a href="https://dl.acm.org/doi/pdf/10.1145/3712256.3726457">39</a></p>
+</section>
+</section>
+</section>
+<section id="my-appendix-2" class="level1">
+<h1>My Appendix 2</h1>
+<section id="hypernetworks와-bayesian-meta-learning-uncertainty의-결합" class="level2">
+<h2 class="anchored" data-anchor-id="hypernetworks와-bayesian-meta-learning-uncertainty의-결합">HyperNetworks와 Bayesian Meta-Learning, Uncertainty의 결합</h2>
+<section id="hypernetworks의-bayesian-결합-가능-요소" class="level3">
+<h3 class="anchored" data-anchor-id="hypernetworks의-bayesian-결합-가능-요소">1. HyperNetworks의 Bayesian 결합 가능 요소</h3>
+<section id="가중치-생성-메커니즘의-확률적-해석" class="level4">
+<h4 class="anchored" data-anchor-id="가중치-생성-메커니즘의-확률적-해석">1.1 가중치 생성 메커니즘의 확률적 해석</h4>
+<p><strong>HyperNetworks의 핵심 구조</strong>가 Bayesian 프레임워크와 자연스럽게 결합됩니다:[1][2]</p>
+<p>논문에서 하이퍼네트워크는 임베딩 벡터 <span class="math display">\[z\]</span>를 받아 가중치 <span class="math display">\[W\]</span>를 생성합니다. 이를 Bayesian 관점에서 재해석하면:[3]</p>
+<ul>
+<li><strong>Point estimate</strong> (원논문): <span class="math display">\[W = f_{\theta}(z)\]</span></li>
+<li><strong>Bayesian 확장</strong>: <span class="math display">\[W \sim p(W|z, \theta)\]</span>로 가중치의 <strong>사후 분포(posterior distribution)</strong>를 모델링[2][1][4]</li>
+</ul>
+<p><strong>장점</strong>: - 태스크별 가중치의 불확실성을 명시적으로 모델링 - 데이터가 적은 few-shot 상황에서 epistemic uncertainty 포착[2][1]</p>
+</section>
+<section id="동적-임베딩의-불확실성" class="level4">
+<h4 class="anchored" data-anchor-id="동적-임베딩의-불확실성">1.2 동적 임베딩의 불확실성</h4>
+<p>논문의 <strong>동적 하이퍼네트워크</strong>는 입력에 따라 임베딩이 변하는데, 이는 Bayesian 관점에서 매우 풍부한 연구 주제입니다:[5][3]</p>
+<ul>
+<li>임베딩 자체에 불확실성 부여: <span class="math display">\[z \sim p(z|\text{task})\]</span>[6][5]</li>
+<li><strong>Bayesian meta-prompt</strong> 개념과 연결[5]</li>
+<li>태스크 표현의 불확실성이 가중치 불확실성으로 전파[4][7]</li>
+</ul>
+</section>
+<section id="계층별-가중치-스케일링" class="level4">
+<h4 class="anchored" data-anchor-id="계층별-가중치-스케일링">1.3 계층별 가중치 스케일링</h4>
+<p>논문의 <strong>weight scaling vectors</strong> 접근법:[3]</p>
+<pre><code>W(d(z)) = W ⊙ d(z)</code></pre>
+<p>이는 Bayesian 관점에서: - <span class="math display">\[d(z)\]</span>를 확률 변수로 확장 가능 - 전체 가중치 행렬보다 <strong>낮은 차원에서 불확실성 모델링</strong> - 계산 효율적인 Variational Inference 가능[1][2]</p>
+</section>
+</section>
+<section id="최신-연구-bayesianhmaml-2022" class="level3">
+<h3 class="anchored" data-anchor-id="최신-연구-bayesianhmaml-2022">2. 최신 연구: BayesianHMAML (2022)</h3>
+<p><strong>Hypernetwork approach to Bayesian MAML</strong>이 대표적인 사례입니다.[2][1]</p>
+<section id="핵심-아이디어" class="level4">
+<h4 class="anchored" data-anchor-id="핵심-아이디어">2.1 핵심 아이디어</h4>
+<p><strong>기존 MAML의 한계</strong>: - 그래디언트 기반 업데이트만 사용 - 불확실성 정량화 불가 - Few-shot 상황에서 과적합 위험[1][2]</p>
+<p><strong>BayesianHMAML의 해결책</strong>:[2][1]</p>
+<pre><code>(μ(Si), σ(Si)) = Hφ(Si, fθ(Si))
+θ'i ~ N(θ + μ(Si), σ(Si))</code></pre>
+<p>하이퍼네트워크 <span class="math display">\[H_{\phi}\]</span>가: - 서포트 세트 <span class="math display">\[S_i\]</span>로부터 정보 집계 - 태스크별 가중치의 <strong>평균(μ)과 분산(σ)</strong> 생성[1][2] - 가중치를 분포에서 샘플링하여 불확실성 포착[2][1]</p>
+<p><strong>Decision Making 관점의 장점</strong>:[8][2] - <strong>Epistemic uncertainty 정량화</strong>: 모델이 얼마나 확신하는지 측정 - <strong>Rejection diagnosis</strong>: 불확실성이 높은 예측은 거부 가능[7] - <strong>Risk-aware decision</strong>: 불확실성을 고려한 안전한 의사결정[9]</p>
+</section>
+<section id="실험-결과" class="level4">
+<h4 class="anchored" data-anchor-id="실험-결과">2.2 실험 결과</h4>
+<p>BayesianHMAML은 다음에서 우수한 성능을 보였습니다:[8][2] - <strong>miniImageNet 5-way 1-shot</strong>: 기존 MAML 대비 정확도 향상 - <strong>Uncertainty calibration</strong>: 예측 불확실성이 실제 오류와 높은 상관관계 - <strong>Out-of-distribution detection</strong>: OOD 샘플 탐지 능력 향상[8]</p>
+</section>
+</section>
+<section id="최신-연구-트렌드-2024-2025" class="level3">
+<h3 class="anchored" data-anchor-id="최신-연구-트렌드-2024-2025">3. 최신 연구 트렌드 (2024-2025)</h3>
+<section id="meta-mol-약물-발견을-위한-bayesian-meta-learning" class="level4">
+<h4 class="anchored" data-anchor-id="meta-mol-약물-발견을-위한-bayesian-meta-learning">3.1 Meta-Mol: 약물 발견을 위한 Bayesian Meta-Learning</h4>
+<p><strong>“Pushing the boundaries of few-shot learning for low-data drug discovery”</strong> (Nature Communications, 2025):[4]</p>
+<p><strong>문제 상황</strong>: - 약물 특성 예측은 데이터 부족 문제 심각 - 잘못된 예측은 임상 시험 실패로 이어짐 - <strong>Uncertainty 정량화 필수</strong>[4]</p>
+<p><strong>Meta-Mol의 접근법</strong>:[4] 1. <strong>Bayesian MAML 변형</strong>: 범용 가중치(universal weights)는 point estimate, 태스크별 가중치는 사후 분포로 학습 2. <strong>HyperNetwork 활용</strong>: 서포트 세트에서 사후 분포의 파라미터(평균, 분산) 직접 생성[4] 3. <strong>복잡한 사후 분포 학습</strong>: 충분히 표현력 있는 하이퍼네트워크로 임의의 사후 분포 근사[4]</p>
+<p><strong>Decision Making에의 기여</strong>:[4] - <strong>불확실성 기반 샘플 필터링</strong>: 신뢰도 낮은 예측 제거 - <strong>리스크 인지 약물 설계</strong>: 부작용 가능성이 높은 화합물 사전 제외 - <strong>능동 학습(Active Learning)</strong>: 불확실성이 높은 영역에 실험 자원 집중</p>
+</section>
+<section id="ubmf-결함-진단을-위한-uncertainty-aware-bayesian-meta-learning" class="level4">
+<h4 class="anchored" data-anchor-id="ubmf-결함-진단을-위한-uncertainty-aware-bayesian-meta-learning">3.2 UBMF: 결함 진단을 위한 Uncertainty-aware Bayesian Meta-Learning</h4>
+<p><strong>“UBMF: Uncertainty-aware bayesian meta-learning framework”</strong> (2025):[7]</p>
+<p><strong>산업 응용에서의 Uncertainty</strong>:[7] - <strong>3가지 불확실성 원천</strong>: 미지의 조건, 적은 샘플, 도메인 외 데이터 - 잘못된 진단은 장비 파손이나 안전 사고로 이어질 수 있음[7]</p>
+<p><strong>핵심 기여</strong>:[7] 1. <strong>통합 불확실성 모델링</strong>: Aleatoric과 epistemic uncertainty를 체계적으로 구분하고 정량화[7] 2. <strong>불확실성 기반 샘플 필터링</strong>: OOD 샘플을 자동으로 감지하고 제거[7] 3. <strong>Bayesian 메타 지식 추출</strong>: 사후 확률 보정으로 분류기 정밀도 향상[7]</p>
+<p><strong>Decision Making 프레임워크</strong>:[7] - <strong>신뢰도 임계값 설정</strong>: 불확실성이 높으면 인간 전문가에게 판단 위임 - <strong>리스크 기반 우선순위</strong>: 고위험 결함을 우선 처리 - <strong>적응적 진단</strong>: 새로운 조건에서 메타 지식을 활용하여 빠르게 적응</p>
+</section>
+<section id="trust-bayes-신뢰할-수-있는-uncertainty-quantification" class="level4">
+<h4 class="anchored" data-anchor-id="trust-bayes-신뢰할-수-있는-uncertainty-quantification">3.3 Trust-Bayes: 신뢰할 수 있는 Uncertainty Quantification</h4>
+<p><strong>“Bayesian meta learning for trustworthy uncertainty quantification”</strong> (2024):[10][11]</p>
+<p><strong>문제 정의</strong>:[10] - 기존 Bayesian 방법들은 모델 불확실성과 데이터 불확실성을 혼동 - 부정확한 불확실성 추정은 잘못된 의사결정으로 이어짐[10]</p>
+<p><strong>Trust-Bayes 프레임워크</strong>:[10] - <strong>Trustworthy uncertainty</strong>: 보정된(calibrated) 불확실성 제공 - <strong>Meta-learning과 결합</strong>: 다양한 태스크에서 학습하여 일반화 가능한 불확실성 추정 - <strong>최적화 프레임워크</strong>: 불확실성 품질을 명시적으로 최적화[10]</p>
+</section>
+<section id="survunc-생존-분석을-위한-meta-model-기반-uncertainty" class="level4">
+<h4 class="anchored" data-anchor-id="survunc-생존-분석을-위한-meta-model-기반-uncertainty">3.4 SurvUnc: 생존 분석을 위한 Meta-Model 기반 Uncertainty</h4>
+<p><strong>“SurvUnc: A Meta-Model Based Uncertainty Quantification Framework”</strong> (2024):[12][13]</p>
+<p><strong>의료 의사결정에서의 중요성</strong>:[12] - 생존 예측의 불확실성은 치료 결정에 직접적 영향 - 높은 불확실성 → 추가 검사 필요 - 낮은 불확실성 → 적극적 치료 가능[12]</p>
+<p><strong>메타 모델 접근법</strong>:[13][12] - Base survival model 위에 경량 메타 모델 구축 - <strong>Anchor-based learning</strong>: Concordance 개념을 활용한 불확실성 학습[12] - <strong>Post-hoc uncertainty</strong>: 기존 모델 수정 없이 불확실성 추가[12]</p>
+<p><strong>평가 프로토콜</strong>:[12] - <strong>Selective prediction</strong>: 확신도 높은 예측만 사용 - <strong>Misprediction detection</strong>: 오류 가능성 사전 파악 - <strong>OOD detection</strong>: 분포 외 환자 식별[12]</p>
+</section>
+</section>
+<section id="decision-making에서-uncertainty의-역할" class="level3">
+<h3 class="anchored" data-anchor-id="decision-making에서-uncertainty의-역할">4. Decision Making에서 Uncertainty의 역할</h3>
+<section id="exploration-exploitation-trade-off" class="level4">
+<h4 class="anchored" data-anchor-id="exploration-exploitation-trade-off">4.1 Exploration-Exploitation Trade-off</h4>
+<p><strong>Meta-RL에서의 불확실성 활용</strong>:[14][15][9]</p>
+<p><strong>Risk-aware Meta-level Decision Making</strong> (2022):[9] - 로봇 탐사에서 <strong>epistemic uncertainty</strong>로 탐사 전략 결정 - 불확실성 높은 영역 → 탐사 가치 높음 - 불확실성 낮은 영역 → 활용(exploitation) 전략[9]</p>
+<p><strong>Meta-reinforcement learning for quantum control</strong> (Nature, 2025):[14] - 양자 시스템의 불확실성 존재 하 제어 - 메타 학습으로 <strong>환경 변화에 강건한 제어</strong> - 내부 루프(specific task)와 외부 루프(meta-learning) 이중 구조[14]</p>
+<p><strong>Grasp Learning with Uncertainty</strong> (2018):[15] - <strong>Epistemic uncertainty</strong>: 지식 부족으로 인한 불확실성 → 탐사로 감소 가능 - <strong>Aleatoric uncertainty</strong>: 데이터 노이즈 → 탐사로 감소 불가 - <strong>Epistemic만 활용</strong>한 탐사가 훨씬 효과적[15]</p>
+</section>
+<section id="uncertainty의-두-가지-유형과-의사결정" class="level4">
+<h4 class="anchored" data-anchor-id="uncertainty의-두-가지-유형과-의사결정">4.2 Uncertainty의 두 가지 유형과 의사결정</h4>
+<p><strong>Epistemic Uncertainty (인식론적 불확실성)</strong>:[16][15][12][7] - <strong>원인</strong>: 모델의 지식 부족, 학습 데이터 부족 - <strong>특징</strong>: 추가 데이터로 감소 가능 - <strong>Decision making</strong>: - 높은 epistemic uncertainty → 더 많은 데이터 수집 필요[15] - Active learning의 샘플 선택 기준[15] - 탐사(exploration) 전략에 활용[16][9]</p>
+<p><strong>Aleatoric Uncertainty (우연적 불확실성)</strong>:[15][12][7] - <strong>원인</strong>: 데이터 자체의 노이즈, 측정 오류 - <strong>특징</strong>: 더 많은 데이터로도 감소 불가 - <strong>Decision making</strong>: - 높은 aleatoric uncertainty → 본질적으로 예측 어려운 케이스 - 리스크 관리: 보수적 결정 필요[7] - 예측 거부(rejection) 고려[7]</p>
+</section>
+<section id="uncertainty-guided-meta-learning" class="level4">
+<h4 class="anchored" data-anchor-id="uncertainty-guided-meta-learning">4.3 Uncertainty-guided Meta-Learning</h4>
+<p><strong>UAPML: Uncertainty-Aware Prompted Meta-Learning</strong> (2024):[5]</p>
+<p><strong>핵심 아이디어</strong>:[5] - <strong>Bayesian meta-prompt</strong>: 메타 프롬프트 자체에 불확실성 부여 - 사후 불확실성이 태스크별 프롬프트 불확실성과 일치함을 이론적으로 증명[5] - <strong>Hard vs Soft 방식</strong>: 불확실성에 따라 자동으로 프롬프트 구성 방식 선택[5]</p>
+<p><strong>계산 효율성</strong>:[5] - 모델 백본 고정, 프롬프트만 조정 - 전체 가중치 업데이트 대비 <strong>80% 이상 계산 비용 감소</strong> - 성능 저하 없이 빠른 적응[5]</p>
+</section>
+</section>
+<section id="hypernetworks-논문에-bayesian을-적용할-구체적-방법" class="level3">
+<h3 class="anchored" data-anchor-id="hypernetworks-논문에-bayesian을-적용할-구체적-방법">5. HyperNetworks 논문에 Bayesian을 적용할 구체적 방법</h3>
+<section id="정적-하이퍼네트워크의-bayesian-확장" class="level4">
+<h4 class="anchored" data-anchor-id="정적-하이퍼네트워크의-bayesian-확장">5.1 정적 하이퍼네트워크의 Bayesian 확장</h4>
+<p><strong>원논문의 접근</strong>:[3]</p>
+<pre><code>z_i: fixed layer embedding (learnable parameter)
+W_i = f_θ(z_i)</code></pre>
+<p><strong>Bayesian 확장 방안</strong>:</p>
+<pre><code>z_i ~ N(μ_z, Σ_z): 임베딩의 사후 분포
+W_i = f_θ(z_i): 가중치 생성
+p(W_i | data) = ∫ p(W_i | z_i) p(z_i | data) dz_i</code></pre>
+<p><strong>구현 방법</strong>:[1][2] - Variational Inference로 <span class="math display">\[q(z_i)\]</span> 학습 - Reparameterization trick: <span class="math display">\[z_i = \mu_z + \sigma_z \odot \epsilon\]</span>, where <span class="math display">\[\epsilon \sim N(0,1)\]</span> - 여러 샘플로 앙상블 예측[2]</p>
+</section>
+<section id="동적-하이퍼네트워크의-bayesian-확장" class="level4">
+<h4 class="anchored" data-anchor-id="동적-하이퍼네트워크의-bayesian-확장">5.2 동적 하이퍼네트워크의 Bayesian 확장</h4>
+<p><strong>원논문의 동적 임베딩</strong>:[3] - LSTM의 hidden state가 시간에 따라 변하며 가중치 생성 - 입력 시퀀스에 적응적</p>
+<p><strong>Bayesian 해석</strong>:[2][4]</p>
+<pre><code>h_t: LSTM hidden state at time t
+z_t = g(h_t): dynamic embedding
+(μ_W(t), σ_W(t)) = Hypernetwork(z_t)
+W_t ~ N(μ_W(t), diag(σ_W(t)^2))</code></pre>
+<p><strong>Uncertainty 전파</strong>: - 시간에 따른 epistemic uncertainty 변화 추적 - 초반에는 높은 불확실성, 더 많은 정보 관찰 시 감소 - <strong>Decision making</strong>: 불확실성 임계값 이하일 때만 예측 출력[12][7]</p>
+</section>
+<section id="layer-normalization과-bayesian의-결합" class="level4">
+<h4 class="anchored" data-anchor-id="layer-normalization과-bayesian의-결합">5.3 Layer Normalization과 Bayesian의 결합</h4>
+<p>논문에서 <strong>Layer Norm + HyperLSTM</strong>이 효과적임을 보였습니다.[3]</p>
+<p><strong>Bayesian 관점의 해석</strong>:[17] - Layer Normalization은 <strong>암묵적 정규화</strong> 효과 - Bayesian 프레임워크와 결합 시 사후 분포의 분산 안정화[17] - 불확실성 추정의 품질 향상[17]</p>
+</section>
+</section>
+<section id="실용적-구현-전략" class="level3">
+<h3 class="anchored" data-anchor-id="실용적-구현-전략">6. 실용적 구현 전략</h3>
+<section id="경량-bayesian-hypernetworks" class="level4">
+<h4 class="anchored" data-anchor-id="경량-bayesian-hypernetworks">6.1 경량 Bayesian HyperNetworks</h4>
+<p><strong>문제</strong>: Full Bayesian inference는 계산 비용이 높음[2][4]</p>
+<p><strong>해결책</strong>:[2][4] 1. <strong>Universal weights는 point estimate</strong>: 공통 지식은 deterministic 2. <strong>Task-specific weights만 Bayesian</strong>: 불확실성이 중요한 부분만 3. <strong>Low-rank approximation</strong>: <span class="math display">\[\Sigma = LL^T\]</span>로 분산 행렬 저차원화[2]</p>
+</section>
+<section id="ensemble-기반-접근" class="level4">
+<h4 class="anchored" data-anchor-id="ensemble-기반-접근">6.2 Ensemble 기반 접근</h4>
+<p><strong>Deep Ensemble과 HyperNetworks 결합</strong>:[18][15]</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple hypernetworks</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hypernetworks <span class="op">=</span> [HyperNet() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N)]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate ensemble predictions</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hyper <span class="kw">in</span> hypernetworks:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hyper.generate_weights(task_embedding)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncertainty estimation</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>mean_pred <span class="op">=</span> mean(predictions)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>epistemic_unc <span class="op">=</span> variance(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>장점</strong>:[18] - 구현 간단 - 병렬화 용이 - Gradient 기반 학습 가능</p>
+</section>
+<section id="mc-dropout-with-hypernetworks" class="level4">
+<h4 class="anchored" data-anchor-id="mc-dropout-with-hypernetworks">6.3 MC Dropout with HyperNetworks</h4>
+<p><strong>Variational inference의 근사</strong>:[17]</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable dropout during inference</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hypernetwork.train()  <span class="co"># Keep dropout active</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(K):  <span class="co"># K samples</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> hypernetwork(task_embedding)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> main_network(<span class="bu">input</span>, W)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    predictions.append(pred)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> std(predictions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>계산 효율성</strong>:[17] - 단일 모델만 필요 - Inference 시 multiple forward pass - 추가 학습 비용 없음</p>
+</section>
+</section>
+<section id="향후-연구-방향과-제안" class="level3">
+<h3 class="anchored" data-anchor-id="향후-연구-방향과-제안">7. 향후 연구 방향과 제안</h3>
+<section id="hypernetworks-bayesian-meta-learning-통합" class="level4">
+<h4 class="anchored" data-anchor-id="hypernetworks-bayesian-meta-learning-통합">7.1 HyperNetworks + Bayesian + Meta-Learning 통합</h4>
+<p><strong>제안하는 프레임워크</strong>:</p>
+<ol type="1">
+<li><strong>Outer loop (Meta-learning)</strong>:
+<ul>
+<li>다양한 태스크에서 하이퍼네트워크 파라미터 학습</li>
+<li>태스크 분포 <span class="math display">\[p(T)\]</span>에서 샘플링[19][2]</li>
+</ul></li>
+<li><strong>Middle loop (HyperNetwork)</strong>:
+<ul>
+<li>태스크 임베딩에서 가중치 분포 생성[1][2]</li>
+<li><span class="math display">\[(μ_W, σ_W) = H_φ(z_{\text{task}})\]</span></li>
+</ul></li>
+<li><strong>Inner loop (Bayesian Inference)</strong>:
+<ul>
+<li>소수의 샘플로 빠른 적응[1][2]</li>
+<li>Uncertainty 정량화로 예측 신뢰도 제공[12][7]</li>
+</ul></li>
+</ol>
+</section>
+<section id="decision-making-응용-시나리오" class="level4">
+<h4 class="anchored" data-anchor-id="decision-making-응용-시나리오">7.2 Decision Making 응용 시나리오</h4>
+<p><strong>금융 의사결정</strong>: - 시장 변화 → 새로운 태스크 - HyperNetwork로 빠르게 새 전략 생성 - Uncertainty로 리스크 관리 - 불확실성 높은 시기 → 보수적 포트폴리오</p>
+<p><strong>자율주행</strong>: - 다양한 날씨/도로 조건 → 태스크 - Meta-learning으로 새 조건 빠른 적응 - Epistemic uncertainty로 탐사 영역 결정 - 높은 불확실성 → 인간에게 제어 이양[9]</p>
+<p><strong>의료 진단</strong>:[4] - 환자 특성 → 태스크 - Few-shot으로 희귀 질환 진단 - Uncertainty로 추가 검사 필요성 판단 - Aleatoric uncertainty 높음 → 예측 불가능, 경과 관찰</p>
+</section>
+</section>
+<section id="결론" class="level3">
+<h3 class="anchored" data-anchor-id="결론">결론</h3>
+<p>HyperNetworks 논문은 <strong>Bayesian 프레임워크와 결합할 수 있는 풍부한 요소</strong>들을 가지고 있습니다:</p>
+<p><strong>주요 결합 요소</strong>: - 가중치 생성 메커니즘 → 확률 분포로 확장 - 임베딩 벡터 → 불확실성 부여 - 동적 가중치 → 시간에 따른 불확실성 변화</p>
+<p><strong>최신 연구 현황</strong>: - BayesianHMAML (2022): Few-shot learning + uncertainty[1][2] - Meta-Mol (2025): 약물 발견 + Bayesian hypernetwork[4] - UBMF (2025): 결함 진단 + uncertainty-aware meta-learning[7] - SurvUnc (2024): 생존 분석 + meta-model uncertainty[12]</p>
+<p><strong>Decision Making에의 기여</strong>: - <strong>Epistemic uncertainty</strong>: 탐사 전략, active learning[16][9][15] - <strong>Aleatoric uncertainty</strong>: 리스크 관리, 예측 거부[7] - <strong>Calibrated uncertainty</strong>: 신뢰할 수 있는 의사결정[11][10]</p>
+<p><a href="https://arxiv.org/abs/2210.02796">1</a> <a href="https://openreview.net/pdf?id=Z4Kexjh34vT">2</a> <a href="https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/39513708/02a09e34-d8a8-4a28-a8ee-7238d4313d55/HyperNetworks.pdf">3</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12354953/">4</a> <a href="https://openreview.net/forum?id=rDuqo9KTzh">5</a> <a href="https://openreview.net/forum?id=mQ72XRfYRZ">6</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0950705125008184">7</a> <a href="https://github.com/gmum/few-shot-hypernets-public">8</a> <a href="https://arxiv.org/abs/2209.05580">9</a> <a href="https://ieeexplore.ieee.org/document/10885944/">10</a> <a href="https://www.themoonlight.io/ko/review/bayesian-meta-learning-for-trustworthy-uncertainty-quantification">11</a> <a href="https://arxiv.org/html/2505.14803v1">12</a> <a href="https://dl.acm.org/doi/10.1145/3711896.3737140">13</a> <a href="https://www.nature.com/articles/s41534-025-01034-9">14</a> <a href="https://arxiv.org/html/2309.12038v2">15</a> <a href="https://arxiv.org/html/2403.06826v1">16</a> <a href="https://ieeexplore.ieee.org/document/10305157/">17</a> <a href="https://www.nature.com/articles/s41524-025-01572-y">18</a> <a href="https://meta-learn.github.io/2020/papers/38_paper.pdf">19</a> <a href="https://www.themoonlight.io/ko/review/generalization-bounds-via-meta-learned-model-representations-pac-bayes-and-sample-compression-hypernetworks">20</a> <a href="https://proceedings.mlr.press/v180/song22a/song22a.pdf">21</a> <a href="https://www.research-collection.ethz.ch/bitstreams/b5b21caf-40ad-47c0-9c0b-bde269e942f6/download">22</a> <a href="https://www.sciencedirect.com/science/article/pii/S240589632500093X">23</a> <a href="https://proceedings.neurips.cc/paper/2020/file/b9cfe8b6042cf759dc4c0cccb27a6737-Paper.pdf">24</a> <a href="https://arxiv.org/abs/2410.13577">25</a> <a href="https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123610392.pdf">26</a> <a href="https://arxiv.org/abs/2405.19931">27</a> <a href="https://dl.acm.org/doi/10.1145/3709026.3709116">28</a> <a href="https://proceedings.mlr.press/v230/okanik24a.html">29</a> <a href="https://arxiv.org/abs/2210.11737">30</a> <a href="https://dl.acm.org/doi/10.1007/s10489-024-06127-0">31</a> <a href="https://repository.rit.edu/context/theses/article/13173/viewcontent/DPandeyDissertation1_2025.pdf">32</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0266892025001262">33</a> <a href="https://publikationen.bibliothek.kit.edu/1000173441/154117629">34</a> <a href="https://seunghan96.github.io/assets/pdf/BNN/paper/30.Uncertainty%20quantification%20using%20Bayesian%20neural%20networks%20in%20classification_Application%20to%20ischemic%20stroke%20lesion%20segmentation%20(2018).pdf">35</a> <a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/2a4310c4fd24bd336aa2f64f93cb5d39-Paper-Conference.pdf">36</a> <a href="https://www.nature.com/articles/s41598-025-24093-6">37</a> <a href="https://proceedings.mlr.press/v162/xie22c/xie22c.pdf">38</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0925231221019068">39</a> <a href="https://indico.cern.ch/event/1208723/contributions/5230073/attachments/2600859/4521507/An%20Introduction%20to%20Bayesian%20Neural%20Network%20and%20Uncertainty%20Quantification%20in%20Deep%20Learning-Jacopo%20Talpini.pdf">40</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
