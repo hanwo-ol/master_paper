@@ -347,7 +347,7 @@
     "href": "posts/20251113_1.html",
     "title": "Meta Learning in Neural Networks — A Survey",
     "section": "",
-    "text": "@article{hospedales2021meta,\n  title={Meta-learning in neural networks: A survey},\n  author={Hospedales, Timothy and Antoniou, Antreas and Micaelli, Paul and Storkey, Amos},\n  journal={IEEE transactions on pattern analysis and machine intelligence},\n  volume={44},\n  number={9},\n  pages={5149--5169},\n  year={2021},\n  publisher={IEEE}\n}\n업데이트 내역\n\n\n\n2025-11-14\n태스크 분포 관점 업데이트\n\n\n\n2025-11-15\nBilevel optimization View 업데이트\n\n\n\n2025-11-16\n2.2-2.3 업데이트\n배고프군"
+    "text": "@article{hospedales2021meta,\n  title={Meta-learning in neural networks: A survey},\n  author={Hospedales, Timothy and Antoniou, Antreas and Micaelli, Paul and Storkey, Amos},\n  journal={IEEE transactions on pattern analysis and machine intelligence},\n  volume={44},\n  number={9},\n  pages={5149--5169},\n  year={2021},\n  publisher={IEEE}\n}\n업데이트 내역\n\n\n\n2025-11-14\n태스크 분포 관점 업데이트\n\n\n\n2025-11-15\nBilevel optimization View 업데이트\n\n\n\n2025-11-16\n2.2-2.3 업데이트\n배고프군\n\n\n2025-11-17\n4.1 업데이트"
   },
   {
     "objectID": "posts/20251113_1.html#메타러닝을-공식화-해보자",
