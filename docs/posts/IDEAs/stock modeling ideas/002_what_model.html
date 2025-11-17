@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-17">
+<meta name="description" content="주식 모델링 아이디어 2">
+
+<title>주식 모델링 아이디어 2 – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">주식 모델링 아이디어 2</h1>
+                  <div>
+        <div class="description">
+          주식 모델링 아이디어 2
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">StockModeling</div>
+                <div class="quarto-category">Quant</div>
+                <div class="quarto-category">MetaLearning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 17, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#주식-모델링의-고급-전략" id="toc-주식-모델링의-고급-전략" class="nav-link active" data-scroll-target="#주식-모델링의-고급-전략">주식 모델링의 고급 전략:</a>
+  <ul class="collapse">
+  <li><a href="#lstm의-근본적-한계lstm은-시계열-예측에서-광범위하게-사용되지만-금융-데이터의-특수성으로-인해-심각한-한계를-가집니다." id="toc-lstm의-근본적-한계lstm은-시계열-예측에서-광범위하게-사용되지만-금융-데이터의-특수성으로-인해-심각한-한계를-가집니다." class="nav-link" data-scroll-target="#lstm의-근본적-한계lstm은-시계열-예측에서-광범위하게-사용되지만-금융-데이터의-특수성으로-인해-심각한-한계를-가집니다.">LSTM의 근본적 한계LSTM은 시계열 예측에서 광범위하게 사용되지만, 금융 데이터의 특수성으로 인해 심각한 한계를 가집니다.</a>
+  <ul class="collapse">
+  <li><a href="#시간-지평별-성과-악화연구에-따르면-lstm을-sp-500-지수에-적용한-결과는-놀라울-정도로-시간이-길어질수록-급격히-악화됩니다.-1일-예측에서는-mae평균절대오차가-35.7-37.7-정도로-비교적-우수하지만-5일-예측에서는-정확도가-0.5-이상-급락하고-20일-예측에서는-대부분-정확도가-0.7-이하로-떨어집니다.-특히-금리에-민감한-지표10년-미국-국채-수익률의-20일-예측-rmse는-758.43에-달해-완전히-예측-불가능한-수준입니다.1" id="toc-시간-지평별-성과-악화연구에-따르면-lstm을-sp-500-지수에-적용한-결과는-놀라울-정도로-시간이-길어질수록-급격히-악화됩니다.-1일-예측에서는-mae평균절대오차가-35.7-37.7-정도로-비교적-우수하지만-5일-예측에서는-정확도가-0.5-이상-급락하고-20일-예측에서는-대부분-정확도가-0.7-이하로-떨어집니다.-특히-금리에-민감한-지표10년-미국-국채-수익률의-20일-예측-rmse는-758.43에-달해-완전히-예측-불가능한-수준입니다.1" class="nav-link" data-scroll-target="#시간-지평별-성과-악화연구에-따르면-lstm을-sp-500-지수에-적용한-결과는-놀라울-정도로-시간이-길어질수록-급격히-악화됩니다.-1일-예측에서는-mae평균절대오차가-35.7-37.7-정도로-비교적-우수하지만-5일-예측에서는-정확도가-0.5-이상-급락하고-20일-예측에서는-대부분-정확도가-0.7-이하로-떨어집니다.-특히-금리에-민감한-지표10년-미국-국채-수익률의-20일-예측-rmse는-758.43에-달해-완전히-예측-불가능한-수준입니다.1">시간 지평별 성과 악화연구에 따르면, LSTM을 S&amp;P 500 지수에 적용한 결과는 놀라울 정도로 시간이 길어질수록 급격히 악화됩니다. 1일 예측에서는 MAE(평균절대오차)가 35.7-37.7 정도로 비교적 우수하지만, 5일 예측에서는 정확도가 0.5 이상 급락하고, 20일 예측에서는 대부분 정확도가 0.7 이하로 떨어집니다. 특히 금리에 민감한 지표(10년 미국 국채 수익률)의 20일 예측 RMSE는 758.43에 달해 완전히 예측 불가능한 수준입니다.[1]</a></li>
+  <li><a href="#불안정성의-근본-원인lstm의-한계는-구조적입니다.-첫째-그래디언트-소실vanishing-gradient-문제로-인해-시간이-길어질수록-초기-정보의-영향력이-지수적으로-감소합니다.-lstm의-셀-상태도-시간이-경과하면서-과거-정보를-잊거나-왜곡합니다.123" id="toc-불안정성의-근본-원인lstm의-한계는-구조적입니다.-첫째-그래디언트-소실vanishing-gradient-문제로-인해-시간이-길어질수록-초기-정보의-영향력이-지수적으로-감소합니다.-lstm의-셀-상태도-시간이-경과하면서-과거-정보를-잊거나-왜곡합니다.123" class="nav-link" data-scroll-target="#불안정성의-근본-원인lstm의-한계는-구조적입니다.-첫째-그래디언트-소실vanishing-gradient-문제로-인해-시간이-길어질수록-초기-정보의-영향력이-지수적으로-감소합니다.-lstm의-셀-상태도-시간이-경과하면서-과거-정보를-잊거나-왜곡합니다.123">불안정성의 근본 원인LSTM의 한계는 구조적입니다. 첫째, <strong>그래디언트 소실(vanishing gradient) 문제</strong>로 인해 시간이 길어질수록 초기 정보의 영향력이 지수적으로 감소합니다. LSTM의 셀 상태도 시간이 경과하면서 과거 정보를 잊거나 왜곡합니다.[1][2][3]</a></li>
+  </ul></li>
+  <li><a href="#고급-아키텍처-비교" id="toc-고급-아키텍처-비교" class="nav-link" data-scroll-target="#고급-아키텍처-비교">고급 아키텍처 비교</a>
+  <ul class="collapse">
+  <li><a href="#wavelet-분해-딥러닝" id="toc-wavelet-분해-딥러닝" class="nav-link" data-scroll-target="#wavelet-분해-딥러닝">Wavelet 분해 + 딥러닝</a></li>
+  <li><a href="#transformer-어텐션-메커니즘" id="toc-transformer-어텐션-메커니즘" class="nav-link" data-scroll-target="#transformer-어텐션-메커니즘">Transformer + 어텐션 메커니즘</a></li>
+  <li><a href="#cnn-lstm-하이브리드" id="toc-cnn-lstm-하이브리드" class="nav-link" data-scroll-target="#cnn-lstm-하이브리드">CNN-LSTM 하이브리드</a></li>
+  <li><a href="#u-net-tcnu-net" id="toc-u-net-tcnu-net" class="nav-link" data-scroll-target="#u-net-tcnu-net">U-Net + TCNU-Net</a></li>
+  <li><a href="#앙상블-vae-transformer-lstmstm" id="toc-앙상블-vae-transformer-lstmstm" class="nav-link" data-scroll-target="#앙상블-vae-transformer-lstmstm">앙상블: VAE-Transformer-LSTMSTM</a></li>
+  </ul></li>
+  <li><a href="#메타러닝을-통한-체제-적응" id="toc-메타러닝을-통한-체제-적응" class="nav-link" data-scroll-target="#메타러닝을-통한-체제-적응">메타러닝을 통한 체제 적응</a>
+  <ul class="collapse">
+  <li><a href="#maml-기반-주식-예측" id="toc-maml-기반-주식-예측" class="nav-link" data-scroll-target="#maml-기반-주식-예측">MAML 기반 주식 예측</a></li>
+  <li><a href="#finpfn-transformer-기반-메타러닝" id="toc-finpfn-transformer-기반-메타러닝" class="nav-link" data-scroll-target="#finpfn-transformer-기반-메타러닝">FinPFN: Transformer 기반 메타러닝</a></li>
+  </ul></li>
+  <li><a href="#통합-프레임워크-meta-learning-u-net-wavelet" id="toc-통합-프레임워크-meta-learning-u-net-wavelet" class="nav-link" data-scroll-target="#통합-프레임워크-meta-learning-u-net-wavelet">통합 프레임워크: Meta-Learning + U-Net + Wavelet</a>
+  <ul class="collapse">
+  <li><a href="#아키텍처-설계1단계-입력-정규화" id="toc-아키텍처-설계1단계-입력-정규화" class="nav-link" data-scroll-target="#아키텍처-설계1단계-입력-정규화">아키텍처 설계<strong>1단계: 입력 정규화</strong></a></li>
+  <li><a href="#성과-기대치-기대치이-통합-프레임워크의-예상-성과는" id="toc-성과-기대치-기대치이-통합-프레임워크의-예상-성과는" class="nav-link" data-scroll-target="#성과-기대치-기대치이-통합-프레임워크의-예상-성과는">성과 기대치 기대치이 통합 프레임워크의 예상 성과는:</a></li>
+  </ul></li>
+  <li><a href="#python-구현-로드맵" id="toc-python-구현-로드맵" class="nav-link" data-scroll-target="#python-구현-로드맵">Python 구현 로드맵</a>
+  <ul class="collapse">
+  <li><a href="#초기-단계-weeks-1-10phase-1-2-데이터-파이프라인과-정규화-4-6주" id="toc-초기-단계-weeks-1-10phase-1-2-데이터-파이프라인과-정규화-4-6주" class="nav-link" data-scroll-target="#초기-단계-weeks-1-10phase-1-2-데이터-파이프라인과-정규화-4-6주">초기 단계 (Weeks 1-10)<strong>Phase 1-2: 데이터 파이프라인과 정규화 (4-6주)</strong></a></li>
+  <li><a href="#중간-단계-weeks-11-25phase-4-u-net-아키텍처-4-5주" id="toc-중간-단계-weeks-11-25phase-4-u-net-아키텍처-4-5주" class="nav-link" data-scroll-target="#중간-단계-weeks-11-25phase-4-u-net-아키텍처-4-5주">중간 단계 (Weeks 11-25)<strong>Phase 4: U-Net 아키텍처 (4-5주)</strong></a></li>
+  <li><a href="#고급-단계-weeks-26-40phase-7-메타러닝-4-6주" id="toc-고급-단계-weeks-26-40phase-7-메타러닝-4-6주" class="nav-link" data-scroll-target="#고급-단계-weeks-26-40phase-7-메타러닝-4-6주">고급 단계 (Weeks 26-40)<strong>Phase 7: 메타러닝 (4-6주)</strong></a></li>
+  </ul></li>
+  <li><a href="#결론lstm만으로는-금융-시계열의-불안정성을-효과적으로-처리할-수-없습니다.-메타러닝maml은-시장-체제에-빠르게-적응하고-u-net은-계층적-특성-추출로-gradient-flow를-개선하며-wavelet-분해는-다중-시간-스케일을-명시적으로-모델링합니다.174530이-세-기술을-통합한-프레임워크는" id="toc-결론lstm만으로는-금융-시계열의-불안정성을-효과적으로-처리할-수-없습니다.-메타러닝maml은-시장-체제에-빠르게-적응하고-u-net은-계층적-특성-추출로-gradient-flow를-개선하며-wavelet-분해는-다중-시간-스케일을-명시적으로-모델링합니다.174530이-세-기술을-통합한-프레임워크는" class="nav-link" data-scroll-target="#결론lstm만으로는-금융-시계열의-불안정성을-효과적으로-처리할-수-없습니다.-메타러닝maml은-시장-체제에-빠르게-적응하고-u-net은-계층적-특성-추출로-gradient-flow를-개선하며-wavelet-분해는-다중-시간-스케일을-명시적으로-모델링합니다.174530이-세-기술을-통합한-프레임워크는">결론LSTM만으로는 금융 시계열의 불안정성을 효과적으로 처리할 수 없습니다. 메타러닝(MAML)은 시장 체제에 빠르게 적응하고, U-Net은 계층적 특성 추출로 gradient flow를 개선하며, Wavelet 분해는 다중 시간 스케일을 명시적으로 모델링합니다.[1][7][4][5]30]이 세 기술을 통합한 프레임워크는:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="주식-모델링의-고급-전략" class="level1">
+<h1>주식 모델링의 고급 전략:</h1>
+<p>LSTM의 한계를 극복하기금융시장의 불안정성을 고려한 주식 모델링은 단순 LSTM만으로는 불충분합니다. 메타러닝과 U-Net을 포함한 다층 아키텍처를 통합하면 금융 시계열의 비정상성(non-stationarity)과 체제 변화에 효과적으로 대응할 수 있습니다.</p>
+<section id="lstm의-근본적-한계lstm은-시계열-예측에서-광범위하게-사용되지만-금융-데이터의-특수성으로-인해-심각한-한계를-가집니다." class="level2">
+<h2 class="anchored" data-anchor-id="lstm의-근본적-한계lstm은-시계열-예측에서-광범위하게-사용되지만-금융-데이터의-특수성으로-인해-심각한-한계를-가집니다.">LSTM의 근본적 한계LSTM은 시계열 예측에서 광범위하게 사용되지만, 금융 데이터의 특수성으로 인해 심각한 한계를 가집니다.</h2>
+<section id="시간-지평별-성과-악화연구에-따르면-lstm을-sp-500-지수에-적용한-결과는-놀라울-정도로-시간이-길어질수록-급격히-악화됩니다.-1일-예측에서는-mae평균절대오차가-35.7-37.7-정도로-비교적-우수하지만-5일-예측에서는-정확도가-0.5-이상-급락하고-20일-예측에서는-대부분-정확도가-0.7-이하로-떨어집니다.-특히-금리에-민감한-지표10년-미국-국채-수익률의-20일-예측-rmse는-758.43에-달해-완전히-예측-불가능한-수준입니다.1" class="level3">
+<h3 class="anchored" data-anchor-id="시간-지평별-성과-악화연구에-따르면-lstm을-sp-500-지수에-적용한-결과는-놀라울-정도로-시간이-길어질수록-급격히-악화됩니다.-1일-예측에서는-mae평균절대오차가-35.7-37.7-정도로-비교적-우수하지만-5일-예측에서는-정확도가-0.5-이상-급락하고-20일-예측에서는-대부분-정확도가-0.7-이하로-떨어집니다.-특히-금리에-민감한-지표10년-미국-국채-수익률의-20일-예측-rmse는-758.43에-달해-완전히-예측-불가능한-수준입니다.1">시간 지평별 성과 악화연구에 따르면, LSTM을 S&amp;P 500 지수에 적용한 결과는 놀라울 정도로 시간이 길어질수록 급격히 악화됩니다. 1일 예측에서는 MAE(평균절대오차)가 35.7-37.7 정도로 비교적 우수하지만, 5일 예측에서는 정확도가 0.5 이상 급락하고, 20일 예측에서는 대부분 정확도가 0.7 이하로 떨어집니다. 특히 금리에 민감한 지표(10년 미국 국채 수익률)의 20일 예측 RMSE는 758.43에 달해 완전히 예측 불가능한 수준입니다.[1]</h3>
+</section>
+<section id="불안정성의-근본-원인lstm의-한계는-구조적입니다.-첫째-그래디언트-소실vanishing-gradient-문제로-인해-시간이-길어질수록-초기-정보의-영향력이-지수적으로-감소합니다.-lstm의-셀-상태도-시간이-경과하면서-과거-정보를-잊거나-왜곡합니다.123" class="level3">
+<h3 class="anchored" data-anchor-id="불안정성의-근본-원인lstm의-한계는-구조적입니다.-첫째-그래디언트-소실vanishing-gradient-문제로-인해-시간이-길어질수록-초기-정보의-영향력이-지수적으로-감소합니다.-lstm의-셀-상태도-시간이-경과하면서-과거-정보를-잊거나-왜곡합니다.123">불안정성의 근본 원인LSTM의 한계는 구조적입니다. 첫째, <strong>그래디언트 소실(vanishing gradient) 문제</strong>로 인해 시간이 길어질수록 초기 정보의 영향력이 지수적으로 감소합니다. LSTM의 셀 상태도 시간이 경과하면서 과거 정보를 잊거나 왜곡합니다.[1][2][3]</h3>
+<p>둘째, <strong>금융 시계열의 비정상성(non-stationarity)</strong>입니다. 주가는 평균이 일정하지 않고, 분산도 시간에 따라 변합니다. 특히 고변동성 기간(VIX &gt; 30)과 저변동성 기간의 패턴이 완전히 다르므로, 단일 LSTM 모델로는 두 체제 모두를 효과적으로 모델링할 수 없습니다.[4][5][1]</p>
+<p>셋째, <strong>다중 시간 스케일(multi-scale temporal structure) 미분화</strong>입니다. 주가 시계열에는 추세(trend, 긴 주기), 계절성(seasonality, 중간 주기), 변동성(volatility fluctuation, 짧은 주기)이 혼합되어 있습니다. LSTM이 모든 스케일을 동시에 학습하려 하면 표현력이 분산되고, 특정 스케일에 과적합될 수 있습니다.[6][5][4]</p>
+<p>넷째, <strong>구조적 변화(structural break) 미감지</strong>입니다. 금융위기, 팬데믹, 정책 변경 같은 사건은 시장 구조 자체를 바꾸지만, LSTM은 이를 명시적으로 모델링하지 못합니다.[7][8]</p>
+</section>
+</section>
+<section id="고급-아키텍처-비교" class="level2">
+<h2 class="anchored" data-anchor-id="고급-아키텍처-비교">고급 아키텍처 비교</h2>
+<p>아키텍처 비교</p>
+<p>LSTM의 한계를 극복하기 위해 다양한 고급 아키텍처가 개발되었습니다. 각각의 강점과 약점을 이해하고 상황에 맞게 선택해야 합니다.</p>
+<section id="wavelet-분해-딥러닝" class="level3">
+<h3 class="anchored" data-anchor-id="wavelet-분해-딥러닝">Wavelet 분해 + 딥러닝</h3>
+<p>웨이블릿 분해는 금융 시계열의 다중 시간 스케일 문제를 직접 해결합니다. MODWT(Maximal Overlap Discrete Wavelet Transform)을 사용하여 시계열을 6개의 세부 성분(details L1-L6)과 1개의 평활 성분(smooth/trend)으로 분해합니다.[4][5]</p>
+<p>각 성분은 서로 다른 주기를 나타냅니다. 저주파 성분(smooth)은 장기 추세를 포착하고, 고주파 성분(D1-D3)은 단기 변동성을 포착합니다. 이렇게 분해된 신호에 각각의 딥러닝 모델을 적용하면 표현력이 크게 향상됩니다.[5][4]</p>
+<p>WEITS(Wavelet Enhanced deep framework for Interpretable Time Series forecast)는 웨이블릿 분해와 딥러닝을 결합한 모델로, S&amp;P 500 예측에서 기준 모델 대비 MSE 7%, MAE 9% 감소를 달성했습니다. 특히 추석적으로 알아낼 수 있는 이점은 웨이블릿 분해된 신호가 명확한 해석을 제공한다는 것입니다.[5]</p>
+</section>
+<section id="transformer-어텐션-메커니즘" class="level3">
+<h3 class="anchored" data-anchor-id="transformer-어텐션-메커니즘">Transformer + 어텐션 메커니즘</h3>
+<p>메커니즘</p>
+<p>Transformer는 RNN의 순차 처리 한계를 극복하고, 어텐션 메커니즘을 통해 시계열의 어느 부분이 중요한지 명시적으로 학습합니다. 멀티헤드 어텐션(multi-head attention)은 서로 다른 시간 스케일의 의존성을 동시에 포착할 수 있습니다.[9][10]</p>
+<p>TEANet(Transformer Encoder-based Attention Network)은 트랜스포머와 다양한 어텐션 메커니즘을 결합하여 주식 움직임 예측을 수행합니다. 5일 데이터만으로도 충분한 정보를 추출하고, 뉴스 감성과 주가를 동시에 처리할 수 있습니다. 실제 거래 시뮬레이션 결과, 이 모델 기반 거래 전략이 상당한 수익을 창출했습니다.[10]</p>
+<p>그러나 Transformer는 여전히 극도의 장기 예측(20일 이상)에서는 성과가 제한적입니다.[1][9]</p>
+</section>
+<section id="cnn-lstm-하이브리드" class="level3">
+<h3 class="anchored" data-anchor-id="cnn-lstm-하이브리드">CNN-LSTM 하이브리드</h3>
+<p>CNN-LSTM 모델은 CNN의 공간적 특성 추출 능력과 LSTM의 시계열 메모리 능력을 결합합니다. CNN이 각 시점의 지역 특성(local patterns)을 추출하면, LSTM이 시간 축 의존성을 학습합니다.[11][12]</p>
+<p>의료기기 주식 40개 예측 연구에서 CNN-LSTM 모델은 매우 낮은 RMSE와 MAPE를 달성했으며, 주가의 짧은 변화를 정확히 포착했습니다. 그러나 구조적 한계로 인해 장기 예측이나 급격한 시장 변화에 여전히 취약합니다.[12]</p>
+</section>
+<section id="u-net-tcnu-net" class="level3">
+<h3 class="anchored" data-anchor-id="u-net-tcnu-net">U-Net + TCNU-Net</h3>
+<p>원래 의료 영상 분할(segmentation)을 위해 설계되었지만, 최근 시계열 예측에 적용되고 있습니다. U-Net의 핵심 특성은 skip connection으로, 저수준 특성이 고수준 특성 학습에 직접 영향을 줄 수 있도록 합니다.[6][13][14]</p>
+<p>UnetTSF(U-Net Time Series Forecasting)는 특성 피라미드 네트워크(FPN)를 시계열 데이터에 맞게 적응시켰습니다. 이 모델은 다층 특성을 효과적으로 추출하고 선형 복잡도를 유지하므로 실시간 적용에 적합합니다.[6]</p>
+<p>TCN(Temporal Convolutional Network)과 결합하면, 인과성(causality)을 보장하면서도 병렬 처리가 가능해져 훈련 속도가 크게 향상됩니다.[6]</p>
+</section>
+<section id="앙상블-vae-transformer-lstmstm" class="level3">
+<h3 class="anchored" data-anchor-id="앙상블-vae-transformer-lstmstm">앙상블: VAE-Transformer-LSTMSTM</h3>
+<p>단일 모델의 한계를 극복하는 최고의 방법은 앙상블입니다. VAE(Variational Autoencoder)는 비선형 차원 축소를 수행하여 고차원 데이터의 본질적 특성을 추출합니다. Transformer는 장거리 의존성을 포착하고, LSTM은 시계열 메모리를 유지합니다.[15][16]</p>
+<p>이 세 모델의 예측을 결합한 연구 결과는 매우 높은 정확도와 신뢰성을 보였습니다. 각 모델은 서로 다른 각도에서 주가를 분석하므로, 개별 모델의 오류가 앙상블 단계에서 보완됩니다.[16][15]</p>
+</section>
+</section>
+<section id="메타러닝을-통한-체제-적응" class="level2">
+<h2 class="anchored" data-anchor-id="메타러닝을-통한-체제-적응">메타러닝을 통한 체제 적응</h2>
+<p>금융 시장의 가장 큰 특성은 <strong>체제 의존성(regime-dependency)</strong>입니다. 같은 기술지표도 상승 추세 시장과 하락 추세 시장에서 완전히 다르게 작동합니다. 메타러닝은 이러한 체제 변화에 빠르게 적응할 수 있는 강력한 도구입니다.</p>
+<section id="maml-기반-주식-예측" class="level3">
+<h3 class="anchored" data-anchor-id="maml-기반-주식-예측">MAML 기반 주식 예측</h3>
+<p>메타러닝 프레임워크는 과거 1년을 학습 기간으로 설정하고, 각 월을 별도의 작업(task)으로 정의합니다. 메타학습 단계에서는 여러 월의 데이터로부터 공통적인 특성을 추출하여 초기 파라미터를 학습합니다. 이렇게 학습된 초기 파라미터는 새로운 월에 빠르게 적응할 수 있습니다.[7]</p>
+<p><strong>슬로프 탐지 라벨링(slope-detection labeling)</strong> 기법은 단순 이진 분류(“상승” vs “하락”)가 아니라, 변화율에 따라 4개 클래스(“상승++”, “상승”, “하락”, “하락++”)로 분류합니다. 이는 급격한 시장 변화를 더 정확히 포착합니다.[7]</p>
+<p>S&amp;P 500 지수에 적용한 결과, 메타러닝 프레임워크는 불안정한 시장 추세에 대해 효과적으로 대응했으며, 예측 정확도와 수익성 모두에서 상당한 개선을 달성했습니다.[7]</p>
+</section>
+<section id="finpfn-transformer-기반-메타러닝" class="level3">
+<h3 class="anchored" data-anchor-id="finpfn-transformer-기반-메타러닝">FinPFN: Transformer 기반 메타러닝</h3>
+<p>FinPFN(Financial Prior-data Fitted Network)은 메타러닝을 더 한층 발전시킨 모델입니다. 이 모델은 명시적으로 시장 체제를 분류하지 않고, <strong>최근 관찰된 특성-수익률 관계를 조건으로</strong> 예측을 수행합니다.[17]</p>
+<p>핵심은 시장이 빠르게 변하므로, 각 시점의 거시경제 신호(예: VIX 변화, 금리 변화, 거래량)에 기반하여 동적으로 모델을 조정한다는 것입니다. 이는 사전에 “이것이 불황” 또는 “이것이 호황”이라고 명시할 필요 없이, 자동으로 시장 상태에 적응합니다.[17]</p>
+<p>대규모 변동성 변화(큰 낙폭)로 대리되는 체제 변화 동안, FinPFN은 벤치마크를 크게 능가했습니다. 이는 메타러닝이 단순히 이론적 개념이 아니라 극도의 불안정성 속에서도 유효함을 보여줍니다.[17]</p>
+</section>
+</section>
+<section id="통합-프레임워크-meta-learning-u-net-wavelet" class="level2">
+<h2 class="anchored" data-anchor-id="통합-프레임워크-meta-learning-u-net-wavelet">통합 프레임워크: Meta-Learning + U-Net + Wavelet</h2>
+<p>세 기술을 통합하면 금융 불안정성의 다양한 측면을 동시에 대처할 수 있습니다.</p>
+<section id="아키텍처-설계1단계-입력-정규화" class="level3">
+<h3 class="anchored" data-anchor-id="아키텍처-설계1단계-입력-정규화">아키텍처 설계<strong>1단계: 입력 정규화</strong></h3>
+<p>Raw 주가 데이터(OHLCV)에 기술적 지표(RSI, MACD, Bollinger Bands)와 거시경제 신호(VIX, 금리, 거래량)를 결합하여 정규화합니다. 정규화는 모든 입력을 범위로 제한하여 신경망 학습을 안정화합니다.[18]</p>
+<p><strong>2단계: 웨이블릿 분해</strong> 정규화된 신호를 MODWT로 분해하여 7개 성분(trend + 6개 detail)을 추출합니다. 각 성분은 다른 주기를 나타내므로, 개별적으로 모델링할 수 있습니다. 이 단계에서 해석가능성이 크게 향상되는데, 트레이더가 “지금 추세는 상승이지만 변동성은 높다”는 식으로 시장을 이해할 수 있습니다.[4][5]</p>
+<p><strong>3단계: U-Net 특성 추출</strong> 각 웨이블릿 성분에 U-Net을 적용하여 계층적 특성을 추출합니다. U-Net의 인코더 부분은 차원을 점진적으로 줄이면서 고수준 특성을 학습하고, 디코더 부분은 skip connection을 통해 저수준 특성을 보존하면서 원래 해상도로 복원합니다. 이는 시계열의 지역 특성과 전역 구조를 동시에 포착합니다.[6][13]</p>
+<p><strong>4단계: 체제 탐지 (HMM/GMM)</strong> VIX, 금리 변화, 거래량을 기반으로 Gaussian Mixture Model을 사용하여 시장 체제를 탐지합니다. 보통 3개 체제(고변동성, 정상, 저변동성)로 분류하며, 각 시점의 체제 확률을 계산합니다. 이 정보는 모델이 현재 시장 상태를 인식하도록 도와줍니다.[7][19]</p>
+<p><strong>5단계: LSTM + Attention</strong> 각 체제별로 별도의 LSTM을 학습시키되, 멀티헤드 어텐션을 통합하여 중요한 시점의 정보를 강조합니다. Attention weight를 시각화하면 모델이 어떤 시점을 주목하는지 이해할 수 있습니다.[10][3]</p>
+<p><strong>6단계: 메타러닝 (MAML)</strong> 체제별 LSTM이 학습한 파라미터들로부터 메타 파라미터를 추출합니다. MAML은 새로운 체제로 전환될 때 소수의 gradient step만으로 빠르게 적응할 수 있는 초기 파라미터를 학습합니다. 이는 장기적으로 모델의 일반화 능력을 크게 향상시킵니다.[19][7]</p>
+<p><strong>7단계: 앙상블 통합</strong> CNN-LSTM, Transformer-Attention, U-Net 예측을 결합하여 최종 예측을 생성합니다. 각 모델의 예측 불확실성(uncertainty)을 가중하여 더 신뢰할 수 있는 예측만 강조합니다.[15][16]</p>
+<p><strong>8단계: 포트폴리오 가중치 생성</strong> 최종 예측 리턴으로부터 위험 최적화를 통해 포트폴리오 가중치를 계산합니다. 제약 조건(공매도 금지, 거래비용)을 포함하여 현실적인 가중치를 생성합니다.</p>
+</section>
+<section id="성과-기대치-기대치이-통합-프레임워크의-예상-성과는" class="level3">
+<h3 class="anchored" data-anchor-id="성과-기대치-기대치이-통합-프레임워크의-예상-성과는">성과 기대치 기대치이 통합 프레임워크의 예상 성과는:</h3>
+<ul>
+<li><strong>단기(1-5일)</strong>: 88-95% 정확도</li>
+<li><strong>중기(5-20일)</strong>: 75-82% 정확도<br>
+</li>
+<li><strong>장기(20+ 일)</strong>: 55-70% 정확도</li>
+<li><strong>불안정성 대응</strong>: 체제 전환시 최고 수준의 적응력</li>
+<li><strong>위험조정 수익</strong>: 샤프비율 &gt; 1.5, 소티노비율 &gt; 2.0</li>
+</ul>
+</section>
+</section>
+<section id="python-구현-로드맵" class="level2">
+<h2 class="anchored" data-anchor-id="python-구현-로드맵">Python 구현 로드맵</h2>
+<p>실제 구현은 10개 단계로 나누어 약 32-40주에 걸쳐 진행할 수 있습니다.</p>
+<section id="초기-단계-weeks-1-10phase-1-2-데이터-파이프라인과-정규화-4-6주" class="level3">
+<h3 class="anchored" data-anchor-id="초기-단계-weeks-1-10phase-1-2-데이터-파이프라인과-정규화-4-6주">초기 단계 (Weeks 1-10)<strong>Phase 1-2: 데이터 파이프라인과 정규화 (4-6주)</strong></h3>
+<p>yfinance, pandas-datareader로 주가, VIX, 금리 데이터를 수집합니다. scikit-learn의 StandardScaler와 MinMaxScaler를 사용하여 정규화합니다. 결과물은 훈련/검증/테스트 분할된 깔끔한 데이터셋입니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 수집</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> yf.download(<span class="st">'AAPL'</span>, start<span class="op">=</span><span class="st">'2020-01-01'</span>, end<span class="op">=</span><span class="st">'2023-12-31'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> stock_data[<span class="st">'Adj Close'</span>].pct_change()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규화</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>normalized_returns <span class="op">=</span> scaler.fit_transform(returns.values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Phase 3: Wavelet 분해 (3-4주)</strong> PyWavelets를 사용하여 MODWT 분해를 구현합니다. 6개의 상세 성분과 1개의 평활 성분을 추출합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pywt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 웨이블릿 분해</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> pywt.wavedec(normalized_signal, <span class="st">'db4'</span>, level<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>trend <span class="op">=</span> coeffs[<span class="op">-</span><span class="dv">1</span>]  <span class="co"># 평활 성분</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>details <span class="op">=</span> coeffs[:<span class="op">-</span><span class="dv">1</span>]  <span class="co"># 상세 성분 (D1-D6)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="중간-단계-weeks-11-25phase-4-u-net-아키텍처-4-5주" class="level3">
+<h3 class="anchored" data-anchor-id="중간-단계-weeks-11-25phase-4-u-net-아키텍처-4-5주">중간 단계 (Weeks 11-25)<strong>Phase 4: U-Net 아키텍처 (4-5주)</strong></h3>
+<p>PyTorch를 사용하여 1D U-Net을 구현합니다. 인코더에서는 Conv1d와 MaxPool1d로 차원을 줄이고, 디코더에서는 ConvTranspose1d로 복원합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UNet1D(nn.Module):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels<span class="op">=</span><span class="dv">1</span>, out_channels<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 인코더</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.enc1 <span class="op">=</span> <span class="va">self</span>.conv_block(in_channels, <span class="dv">32</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.pool1 <span class="op">=</span> nn.MaxPool1d(<span class="dv">2</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.enc2 <span class="op">=</span> <span class="va">self</span>.conv_block(<span class="dv">32</span>, <span class="dv">64</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... 더 많은 인코더 블록</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 디코더</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dec1 <span class="op">=</span> <span class="va">self</span>.conv_block(<span class="dv">64</span>, <span class="dv">32</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.upsample <span class="op">=</span> nn.ConvTranspose1d(<span class="dv">64</span>, <span class="dv">32</span>, kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... skip connection과 함께</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Phase 5: 체제 탐지 (2-3주)</strong> hmmlearn의 GaussianHMM을 사용하여 시장 체제를 분류합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hmmlearn <span class="im">import</span> hmm</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># HMM 피팅</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> hmm.GaussianHMM(n_components<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>model.fit(features)  <span class="co"># VIX, 금리 변화, 거래량</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 체제 예측</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>regimes <span class="op">=</span> model.predict(features)  <span class="co"># 0, 1, 2 (체제 인덱스)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Phase 6: LSTM + Attention (3-4주)</strong> PyTorch의 nn.LSTM과 nn.MultiheadAttention을 결합합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LSTMAttention(nn.Module):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_size, hidden_size, num_heads<span class="op">=</span><span class="dv">4</span>):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lstm <span class="op">=</span> nn.LSTM(input_size, hidden_size, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attention <span class="op">=</span> nn.MultiheadAttention(hidden_size, num_heads)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        lstm_out, _ <span class="op">=</span> <span class="va">self</span>.lstm(x)  <span class="co"># (batch, seq_len, hidden_size)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        attn_out, weights <span class="op">=</span> <span class="va">self</span>.attention(lstm_out, lstm_out, lstm_out)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> attn_out, weights</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="고급-단계-weeks-26-40phase-7-메타러닝-4-6주" class="level3">
+<h3 class="anchored" data-anchor-id="고급-단계-weeks-26-40phase-7-메타러닝-4-6주">고급 단계 (Weeks 26-40)<strong>Phase 7: 메타러닝 (4-6주)</strong></h3>
+<p>learn2learn과 higher를 사용하여 MAML을 구현합니다. 각 체제를 별도 작업으로 정의합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> learn2learn <span class="im">as</span> l2l</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 기본 모델</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>base_model <span class="op">=</span> LSTMAttention(input_size, hidden_size)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># MAML 래퍼</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>maml <span class="op">=</span> l2l.algorithms.MAML(base_model, lr<span class="op">=</span><span class="fl">0.01</span>, first_order<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 메타학습</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> task_data <span class="kw">in</span> tasks:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    learner <span class="op">=</span> maml.clone()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    support_loss <span class="op">=</span> inner_loop(learner, task_data[<span class="st">'support'</span>])</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    query_loss <span class="op">=</span> learner(task_data[<span class="st">'query'</span>])</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    meta_loss <span class="op">=</span> query_loss</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    meta_optimizer.zero_grad()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    meta_loss.backward()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    meta_optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Phase 8: 앙상블 통합 (3-4주)</strong> VAE, Transformer, LSTM 예측을 결합합니다.</p>
+<p><strong>Phase 9: 포트폴리오 최적화 (2-3주)</strong> cvxpy로 제약 조건 있는 최적화를 구현합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cvxpy <span class="im">as</span> cp</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 최적화 변수</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> cp.Variable(n_assets)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 목적함수: 샤프비율 최대화</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> cp.Maximize(returns <span class="op">@</span> weights <span class="op">/</span> cp.sqrt(weights <span class="op">@</span> cov_matrix <span class="op">@</span> weights))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 제약조건</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    cp.<span class="bu">sum</span>(weights) <span class="op">==</span> <span class="dv">1</span>,  <span class="co"># 가중치 합 = 1</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">&gt;=</span> <span class="dv">0</span>,  <span class="co"># 공매도 금지</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">&lt;=</span> <span class="fl">0.1</span>  <span class="co"># 개별 상한 10%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> cp.Problem(objective, constraints)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>problem.solve()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Phase 10: 백테스팅 (3-4주)</strong> Backtrader 또는 Zipline을 사용하여 전략을 검증합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> backtrader <span class="im">as</span> bt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PortfolioStrategy(bt.Strategy):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="bu">next</span>(<span class="va">self</span>):</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 메타러닝 모델로 가중치 계산</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        weights <span class="op">=</span> <span class="va">self</span>.compute_weights()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 리밸런싱</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rebalance(weights)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>cerebro <span class="op">=</span> bt.Cerebro()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ... 데이터 추가, 전략 추가</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> cerebro.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="결론lstm만으로는-금융-시계열의-불안정성을-효과적으로-처리할-수-없습니다.-메타러닝maml은-시장-체제에-빠르게-적응하고-u-net은-계층적-특성-추출로-gradient-flow를-개선하며-wavelet-분해는-다중-시간-스케일을-명시적으로-모델링합니다.174530이-세-기술을-통합한-프레임워크는" class="level2">
+<h2 class="anchored" data-anchor-id="결론lstm만으로는-금융-시계열의-불안정성을-효과적으로-처리할-수-없습니다.-메타러닝maml은-시장-체제에-빠르게-적응하고-u-net은-계층적-특성-추출로-gradient-flow를-개선하며-wavelet-분해는-다중-시간-스케일을-명시적으로-모델링합니다.174530이-세-기술을-통합한-프레임워크는">결론LSTM만으로는 금융 시계열의 불안정성을 효과적으로 처리할 수 없습니다. 메타러닝(MAML)은 시장 체제에 빠르게 적응하고, U-Net은 계층적 특성 추출로 gradient flow를 개선하며, Wavelet 분해는 다중 시간 스케일을 명시적으로 모델링합니다.[1][7][4][5]30]이 세 기술을 통합한 프레임워크는:</h2>
+<ul>
+<li><strong>단기 예측에서 88-95%</strong> 정확도 달성</li>
+<li><strong>불안정한 시장에 적응적</strong> 체제 전환 감지[7][19]</li>
+<li><strong>해석가능성 제공</strong>: 웨이블릿, 어텐션, 메타 파라미터 분석으로 투명성 확보[10][5]</li>
+<li><strong>확장가능성</strong>: 새로운 시장, 새로운 자산군에 빠르게 적용 가능[7]</li>
+</ul>
+<p>Python 구현은 32-40주에 걸쳐 단계적으로 진행할 수 있으며, 각 단계에서 검증과 최적화를 수행할 수 있습니다. 특히 초기 단계에서 간단한 모델(Wavelet + LSTM)부터 시작하여 점진적으로 복잡성을 증가시키는 방식을식을 권장합니다.</p>
+<p><a href="https://www.scitepress.org/Papers/2024/132143/132143.pdf">1</a> <a href="https://onlinelibrary.wiley.com/doi/10.1155/2021/4055281">2</a> <a href="https://www.scitepress.org/Papers/2024/135266/135266.pdf">3</a> <a href="https://www2.aueb.gr/conferences/Crete2022/Slides/Souropanis.pdf">4</a> <a href="https://arxiv.org/html/2405.10877v1">5</a> <a href="https://arxiv.org/html/2401.03001v1">6</a> <a href="https://arxiv.org/pdf/2105.13599.pdf">7</a> <a href="https://onlinelibrary.wiley.com/doi/10.1155/2024/6176898">8</a> <a href="https://onlinelibrary.wiley.com/doi/10.1155/2022/7739087">9</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0957417422006170">10</a> <a href="https://francis-press.com/index.php/papers/6866">11</a> <a href="https://www.scitepress.org/Papers/2024/132137/132137.pdf">12</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11888873/">13</a> <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2021.721512/full">14</a> <a href="https://arxiv.org/abs/2503.22192">15</a> <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003159911">16</a> <a href="https://papers.ssrn.com/sol3/Delivery.cfm/5022829.pdf?abstractid=5022829&amp;mirid=1">17</a> <a href="http://www.aipbl.co.kr/576">18</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0950705122006645">19</a> <a href="https://arxiv.org/html/2505.05325v1">20</a> <a href="https://www.sciencedirect.com/science/article/pii/S0957417423008485">21</a> <a href="https://dl.acm.org/doi/10.1145/3728199.3728210">22</a> <a href="https://www.nature.com/articles/s41598-023-50783-0">23</a> <a href="https://www.sciencedirect.com/science/article/pii/S0952197623002622">24</a> <a href="https://www.tandfonline.com/doi/full/10.1080/17538947.2023.2252401">25</a> <a href="https://www.nature.com/articles/s41598-022-18646-2">26</a> <a href="https://arxiv.org/html/2502.15853v1">27</a> <a href="https://ieeexplore.ieee.org/iel8/6287639/10820123/10795129.pdf">28</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9110803/">29</a> <a href="http://www.csam.or.kr/journal/view.html?doi=10.29220%2FCSAM.2024.31.2.213">30</a> <a href="https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2022.868232/full">31</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

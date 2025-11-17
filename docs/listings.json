@@ -4,6 +4,8 @@
     "items": [
       "/posts/index.html",
       "/posts/20251117_1.html",
+      "/posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html",
+      "/posts/IDEAs/stock modeling ideas/002_what_model.html",
       "/posts/pytorch/NLLLoss.html",
       "/posts/20251116_1.html",
       "/posts/sub_1/20251116_1.html",
@@ -35,7 +37,9 @@
       "/posts/IDEAs/2025_11_13 Bayes&AD_2.html",
       "/posts/IDEAs/2025_11_13 Bayes&MetaLearning.html",
       "/posts/IDEAs/pp.html",
-      "/posts/IDEAs/2025_11_13 Bayes&AD.html"
+      "/posts/IDEAs/2025_11_13 Bayes&AD.html",
+      "/posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html",
+      "/posts/IDEAs/stock modeling ideas/002_what_model.html"
     ]
   }
 ]
