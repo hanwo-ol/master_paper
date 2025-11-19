@@ -1,8 +1,14 @@
 /.quarto/
 **/*.quarto_ipynb
 
+########################
 ex_prepare.md
 
+########################
 /sub_2/.env
 
 sub_2/AAA/
+
+########################
+/sub_2/data/yahoo/
+/sub_2/data/fred/
