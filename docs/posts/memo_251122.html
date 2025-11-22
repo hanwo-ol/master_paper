@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-21">
+<meta name="description" content="졸논용 실험">
 
-<title>Posts – Master Thesis Literature Review</title>
+<title>실험해야 할 목록 – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -70,35 +71,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -179,14 +151,38 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Posts</h1>
-                      </div>
+      <h1 class="title">실험해야 할 목록</h1>
+                  <div>
+        <div class="description">
+          졸논용 실험
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">MetaLearning</div>
+                <div class="quarto-category">Finance</div>
+                <div class="quarto-category">Quant</div>
+                <div class="quarto-category">Portfolio</div>
+                <div class="quarto-category">Review</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 21, 2025</p>
+      </div>
+    </div>
     
       
     </div>
@@ -195,8 +191,25 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-to-test-in-experiments-based-on-the-methodstheory-section" id="toc-what-to-test-in-experiments-based-on-the-methodstheory-section" class="nav-link active" data-scroll-target="#what-to-test-in-experiments-based-on-the-methodstheory-section">what to test in experiments, based on the methods/theory section</a>
+  <ul class="collapse">
+  <li><a href="#나중에-실험-섹션에서-반드시-다뤄야-할-내용-정리" id="toc-나중에-실험-섹션에서-반드시-다뤄야-할-내용-정리" class="nav-link" data-scroll-target="#나중에-실험-섹션에서-반드시-다뤄야-할-내용-정리">2. 나중에 실험 섹션에서 “반드시” 다뤄야 할 내용 정리</a>
+  <ul class="collapse">
+  <li><a href="#전체-파이프라인-수준" id="toc-전체-파이프라인-수준" class="nav-link" data-scroll-target="#전체-파이프라인-수준">2.1. 전체 파이프라인 수준</a></li>
+  <li><a href="#step-1-hrp-ordering-관련-실험-todo" id="toc-step-1-hrp-ordering-관련-실험-todo" class="nav-link" data-scroll-target="#step-1-hrp-ordering-관련-실험-todo">2.2. Step 1 (HRP Ordering) 관련 실험 TODO</a></li>
+  <li><a href="#step-2-u-net-attention-관련-실험-todo" id="toc-step-2-u-net-attention-관련-실험-todo" class="nav-link" data-scroll-target="#step-2-u-net-attention-관련-실험-todo">2.3. Step 2 (U-Net + Attention) 관련 실험 TODO</a></li>
+  <li><a href="#step-3-soft-task-weighted-maml-관련-실험-todo" id="toc-step-3-soft-task-weighted-maml-관련-실험-todo" class="nav-link" data-scroll-target="#step-3-soft-task-weighted-maml-관련-실험-todo">2.4. Step 3 (Soft Task-Weighted MAML) 관련 실험 TODO</a></li>
+  <li><a href="#step-4-shrinkage-turnover-control-관련-실험-todo" id="toc-step-4-shrinkage-turnover-control-관련-실험-todo" class="nav-link" data-scroll-target="#step-4-shrinkage-turnover-control-관련-실험-todo">2.5. Step 4 (Shrinkage + Turnover Control) 관련 실험 TODO</a></li>
+  </ul></li>
+  <li><a href="#요약-통계학과-관점-실험-todo-한-번에-정리" id="toc-요약-통계학과-관점-실험-todo-한-번에-정리" class="nav-link" data-scroll-target="#요약-통계학과-관점-실험-todo-한-번에-정리">3. 요약: 통계학과 관점 + 실험 TODO 한 번에 정리</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -205,491 +218,239 @@ window.Quarto = {
 
 
 
-<p>여기는 모든 포스트 목록입니다.</p>
+<section id="what-to-test-in-experiments-based-on-the-methodstheory-section" class="level1">
+<h1>what to test in experiments, based on the methods/theory section</h1>
+<section id="나중에-실험-섹션에서-반드시-다뤄야-할-내용-정리" class="level2">
+<h2 class="anchored" data-anchor-id="나중에-실험-섹션에서-반드시-다뤄야-할-내용-정리">2. 나중에 실험 섹션에서 “반드시” 다뤄야 할 내용 정리</h2>
+<p>이제 핵심: 이 Method/이론 파트에서 이미 사실처럼 이야기한 것 중, 실험 섹션에서 반드시 확인·검증해줘야 할 부분들을 스텝별로 모아서 적을게요.</p>
+<section id="전체-파이프라인-수준" class="level3">
+<h3 class="anchored" data-anchor-id="전체-파이프라인-수준">2.1. 전체 파이프라인 수준</h3>
+<ol type="1">
+<li><p><strong>Unified pipeline의 효과</strong></p>
+<ul>
+<li><p>“각 스텝은 개별로도 유용하지만, 상호작용이 핵심”이라고 했으므로:</p>
+<ul>
+<li><p>Baseline 비교:</p>
+<ul>
+<li>단순 MVO (sample covariance, no deep learning)</li>
+<li>Deep return model + naive risk model (no HRP, no shrinkage)</li>
+<li>HRP only + simple model</li>
+<li>U-Net only (no MAML, no shrinkage)</li>
+<li>MAML only vs no meta-learning</li>
+<li>Shrinkage only vs raw covariance</li>
+</ul></li>
+<li><p>최종 unified pipeline이 이들 대비 얼마나 성능·안정성을 개선하는지 (Sharpe, turnover, drawdown, etc.) 표로 보여줘야 함.</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Challenges 1–3 완화 여부</strong></p>
+<ul>
+<li>Challenge 1 (high dimension): conditioning, eigenvalue, weight stability.</li>
+<li>Challenge 2 (non-stationarity): regime별 성능, regime change 이후 적응 속도.</li>
+<li>Challenge 3 (regime uncertainty): posterior noise 혹은 misclassification 상황에서도 성능이 크게 깨지지 않는지.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="step-1-hrp-ordering-관련-실험-todo" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-hrp-ordering-관련-실험-todo">2.2. Step 1 (HRP Ordering) 관련 실험 TODO</h3>
+<p>이론/서술에서 주장한 것들:</p>
+<ul>
+<li>HRP ordering이 <strong>effective dimensionality 감소</strong>와 <strong>covariance conditioning 개선</strong>에 기여.</li>
+<li>HRP dendrogram의 cluster topology가 <strong>regime 간 비교적 stability</strong>를 가진다.</li>
+<li>이 구조로 인해 U-Net 학습이 <strong>sample efficient</strong>해진다.</li>
+</ul>
+<p>⇒ 실험에서 필요한 것:</p>
+<ol type="1">
+<li><p><strong>Covariance 구조 분석</strong></p>
+<ul>
+<li><p>HRP ordering 전/후 covariance matrix의</p>
+<ul>
+<li>최소 고유값 (_{}),</li>
+<li>condition number,</li>
+<li>off-diagonal sparsity/clusteredness (예: block-diagonal approximation error) 비교 그래프 or 표.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Regime 간 cluster topology의 안정성</strong></p>
+<ul>
+<li><p>각 regime(또는 rolling window) 별로 HRP dendrogram을 다시 만들고,</p></li>
+<li><p>tree distance 혹은 cophenetic correlation으로 topology 변화를 계량화:</p>
+<ul>
+<li>“In our data, average cophenetic correlation between regimes is X” 같은 결과.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Ablation: HRP vs 다른 ordering</strong></p>
+<ul>
+<li><p>Random ordering / sector-group-by ordering / HRP ordering 비교:</p>
+<ul>
+<li>동일 U-Net 구조에서 out-of-sample 성능 (Sharpe, IC 등) 비교.</li>
+</ul></li>
+<li><p>여기서 “sample efficiency”: train data length를 줄여가면서(예: 3y vs 5y vs 10y) 성능 유지 정도 비교.</p></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="step-2-u-net-attention-관련-실험-todo" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-u-net-attention-관련-실험-todo">2.3. Step 2 (U-Net + Attention) 관련 실험 TODO</h3>
+<p>서술에서 나온 주장들:</p>
+<ul>
+<li>HRP와 결합된 U-Net이 <strong>multi-scale</strong> + <strong>regime-robust</strong> feature를 학습한다.</li>
+<li>Skip connections가 LSTM/GRU보다 <strong>정보 손실이 적다</strong>는 heuristic (Proposition 참조).</li>
+<li>Self-attention bottle-neck이 글로벌 의존성 및 regime shift 대응에 중요하다.</li>
+</ul>
+<p>⇒ 실험에서 필요한 것:</p>
+<ol type="1">
+<li><p><strong>Architecture Ablation</strong></p>
+<ul>
+<li><p>HRP + U-Net vs HRP + simple CNN vs HRP + LSTM/GRU vs (optional) Transformer baseline:</p>
+<ul>
+<li>예측 성능 (IC / MSE / portfolio metrics) 비교.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Attention Ablation</strong></p>
+<ul>
+<li>U-Net without attention vs with attention;</li>
+<li>() gate를 0/1 근처로 고정했을 때 vs 학습했을 때 성능 비교.</li>
+</ul></li>
+<li><p><strong>정보 보존 관련 지표</strong></p>
+<ul>
+<li><p>아주 복잡한 이론적 지표가 아니어도,</p>
+<ul>
+<li>gradient norm propagation,</li>
+<li>feature variance preservation across layers, 같은 simple한 통계량을 통해 “정보가 더 잘 전달된다”는 정성적 evidence를 조금만 보여주면 Prop.~<span class="math inline">\(\ref{prop:info_heuristic}\)</span>와 연결되기 좋음.</li>
+</ul></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="step-3-soft-task-weighted-maml-관련-실험-todo" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-soft-task-weighted-maml-관련-실험-todo">2.4. Step 3 (Soft Task-Weighted MAML) 관련 실험 TODO</h3>
+<p>서술에서 사실처럼 나오는 것들:</p>
+<ul>
+<li>Regime 간 gradient alignment가 낮아서 pooled training이 suboptimal.</li>
+<li>MAML이 그런 상황에서 query-loss를 (O(1/K)) 수준으로 개선.</li>
+<li>Soft posterior weighting이 hard assignment보다 <strong>posterior noise에 robust</strong>하고, 업데이트가 1-Lipschitz.</li>
+<li>Meta-initialization이 “approximate Chebyshev center” 역할을 해서, few steps로 빠르게 적응한다.</li>
+</ul>
+<p>⇒ 실험에서 필요한 것:</p>
+<ol type="1">
+<li><p><strong>Gradient Alignment Empirical Check</strong></p>
+<ul>
+<li><p>실제로 Regime별 loss gradient를 추정해서:</p>
+<ul>
+<li>pairwise cosine similarity 분포 (mean, variance, histogram).</li>
+</ul></li>
+<li><p>이게 “low or negative alignment”라는 claim을 뒷받침해야 함.</p></li>
+</ul></li>
+<li><p><strong>Meta-learning vs Baselines</strong></p>
+<ul>
+<li><p>Pooled single model vs per-regime separate models vs MAML:</p>
+<ul>
+<li>각 regime 내/전환 구간에서 성능 (IC, Sharpe, etc.).</li>
+</ul></li>
+<li><p>특히 regime switch 이후 “몇 step 안에 회복되는지”를 time-series plot으로 보여주면 Theorem 설명과 잘 맞음.</p></li>
+</ul></li>
+<li><p><strong>Soft vs Hard weighting</strong></p>
+<ul>
+<li><p>동일 HMM posterior로:</p>
+<ul>
+<li>hard regime assignment (argmax) vs soft mixture (posterior weights) 비교.</li>
+</ul></li>
+<li><p>시나리오:</p>
+<ul>
+<li>posterior가 애매한 구간(0.5/0.5 근처)에서 portfolio turnover, realized PnL variance 비교 → soft가 더 smooth한지.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>K-step inner loop sensitivity</strong></p>
+<ul>
+<li><p>(K=0,1,2,3,…)에 대한 성능 곡선:</p>
+<ul>
+<li>실제로 “few steps에서 대부분의 gain”이 나는지 확인 (이론적 (1/K) trend와 qualitatively 맞는지).</li>
+</ul></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="step-4-shrinkage-turnover-control-관련-실험-todo" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-shrinkage-turnover-control-관련-실험-todo">2.5. Step 4 (Shrinkage + Turnover Control) 관련 실험 TODO</h3>
+<p>서술에서 사실처럼 이야기한 것:</p>
+<ul>
+<li><p>Ledoit–Wolf shrinkage가 (_{})을 올리고 dominance ratio를 줄여 weight 안정성을 크게 개선한다.</p></li>
+<li><p>Turnover penalty가</p>
+<ul>
+<li>transaction cost를 proxy하고,</li>
+<li>regime misclassification impact를 capped 한다.</li>
+</ul></li>
+</ul>
+<p>⇒ 실험에서 필요한 것:</p>
+<ol type="1">
+<li><p><strong>Risk model ablation</strong></p>
+<ul>
+<li><p>Sample covariance vs Ledoit–Wolf vs (optional) simpler targets (diagonal, factor model):</p>
+<ul>
+<li>weight stability, realized risk(variance), realized Sharpe 비교.</li>
+</ul></li>
+<li><p>특히 “same ()”를 쓰되, risk model만 바꿨을 때 차이를 보이면 Prop.~<span class="math inline">\(\ref{prop:covariance_sensitivity}\)</span>와 잘 맞음.</p></li>
+</ul></li>
+<li><p><strong>Turnover penalty sensitivity</strong></p>
+<ul>
+<li><p>(= 0, <em>{}, </em>{}, _{}) 값에 따른:</p>
+<ul>
+<li>turnover,</li>
+<li>net performance(After-cost Sharpe),</li>
+<li>weight change distribution, 등 플롯/표.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Regime misclassification 시나리오 실험</strong></p>
+<ul>
+<li><p>posterior에 인위적으로 noise를 더해서 misclassification을 증가시켰을 때,</p></li>
+<li><p>turnover penalty 유무에 따라 performance degradation이 어떻게 다른지 비교:</p>
+<ul>
+<li>이게 Theorem~<span class="math inline">\(\ref{thm:confusion_decomp}\)</span> + turnover term의 역할과 직접 연결됨.</li>
+</ul></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="요약-통계학과-관점-실험-todo-한-번에-정리" class="level2">
+<h2 class="anchored" data-anchor-id="요약-통계학과-관점-실험-todo-한-번에-정리">3. 요약: 통계학과 관점 + 실험 TODO 한 번에 정리</h2>
+<ul>
+<li><p><strong>통계학과 관점에서</strong></p>
+<ul>
+<li><p>큰 틀은 괜찮고, 특히 “deep model + shrinkage MVO”의 분리, HRP의 구조적 사용, meta-learning의 gradient alignment 관점은 충분히 통계적인 이야기임.</p></li>
+<li><p>다만,</p>
+<ul>
+<li>“rolling vs global standardization” 수식 일관성,</li>
+<li>HRP ordering의 효과를 “deterministic fact”처럼 쓰지 말고 “heuristic + empirical” 톤으로,</li>
+<li>MAML 관련 Theorem의 조건/결론을 Method에서 살짝만 더 정확히 요약,</li>
+<li>L1 penalty가 들어간 QP의 특성(비미분 convext 문제) 정도만 정리해주면, 통계학과에서도 크게 트집 잡기 어려운 수준이 될 것 같아요.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>실험 섹션에서 반드시 다룰 것들 (요약)</strong></p>
+<ol type="1">
+<li>파이프라인 전체 ablation: 각 스텝 제거/치환 시 성능과 안정성 비교.</li>
+<li>HRP: covariance conditioning 개선, cluster topology stability, HRP vs random/sector ordering 비교.</li>
+<li>U-Net + attention: architecture ablation (LSTM/Transformer/attention off), HRP 유무 비교, sample efficiency 표시.</li>
+<li>MAML: gradient alignment 측정, meta-learning vs pooled vs per-regime, soft vs hard posterior, K-step sensitivity.</li>
+<li>Shrinkage + turnover: different risk models, () sensitivity, regime misclassification 시 turnover penalty의 버퍼 역할.</li>
+</ol></li>
+</ul>
+<p>이 정도까지 커버하면, 이론 파트에서 한 말들이 “공갈”로 보이지 않고, 통계학과 리뷰어 입장에서도 “이 사람들 자기 주장에 대해 꽤 성실하게 검증했다”는 느낌을 줄 수 있을 거예요.</p>
+<p>다음 섹션 넘어가기 전에,</p>
+<ul>
+<li><ol type="1">
+<li>표기/톤(rolling, heuristic vs theorem)만 한 번 정리,</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>위 실험 TODO 리스트 기반으로 실제 실험 설계 skeleton 을 잡아두면 좋겠습니다.</li>
+</ol></li>
+</ul>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TWV0YUxlYXJuaW5nJTJDUmV2aWV3JTJDSHlwZXJuZXR3b3Jrcw==" data-listing-date-sort="1763218800000" data-listing-file-modified-sort="1763280679487" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2769">
-<div class="thumbnail"><a href="../posts/20251116_1.html" class="no-external">
-
-<p class="card-img-top"><img src="..\sources\20251116_1_figure1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251116_1.html" class="no-external">Hypernetworks</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251116_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251116_1.html" class="no-external">
-<div class="listing-date">
-Nov 16, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TWV0YUxlYXJuaW5nJTJDU3VydmV5JTJDUmV2aWV3" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763451715074" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="50" data-listing-word-count-sort="9838">
-<div class="thumbnail"><a href="../posts/20251113_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251113_1.html" class="no-external">Meta Learning in Neural Networks — A Survey</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251113_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251113_1.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYSUyQ01vRSUyQ1ZBRQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041981616" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="757">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">Mixture of Experts But VAE - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_3_MoVAEs.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="TWV0YUxlYXJuaW5nJTJDTUFNTCUyQ1Jldmlldw==" data-listing-date-sort="1763046000000" data-listing-file-modified-sort="1763294135488" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2318">
-<div class="thumbnail"><a href="../posts/20251114_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251114_1.html" class="no-external">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251114_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251114_1.html" class="no-external">
-<div class="listing-date">
-Nov 14, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="UHl0b3JjaCUyQ0xvc3NGdW5jdGlvbg==" data-listing-date-sort="1763305200000" data-listing-file-modified-sort="1763340686609" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="846">
-<div class="thumbnail"><a href="../posts/pytorch/NLLLoss.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/pytorch/NLLLoss.html" class="no-external">NLL Loss - pytorch</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/pytorch/NLLLoss.html" class="no-external">
-<p>NLL Loss</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/pytorch/NLLLoss.html" class="no-external">
-<div class="listing-date">
-Nov 17, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDUGFwZXI=" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041889041" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3908">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">Paper Lists - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_4_papers.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="QmF5ZXNpYW4lMkNNZXRhTGVhcm5pbmclMkNJZGVhJTJDUGFwZXI=" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041812955" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3409">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">Paper Lists - Bayesian+MetaLearning</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+MetaLearning</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning_2_papers.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="TWV0YUxlYXJuaW5nJTJDU3VydmV5JTJDUmV2aWV3" data-listing-date-sort="1763305200000" data-listing-file-modified-sort="1763369155240" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27" data-listing-word-count-sort="5229">
-<div class="thumbnail"><a href="../posts/20251117_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251117_1.html" class="no-external">Parameter Initialization - from survey paper</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251117_1.html" class="no-external">
-<p>초록 탐구</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251117_1.html" class="no-external">
-<div class="listing-date">
-Nov 17, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="TWV0YUxlYXJuaW5nJTJDU3VydmV5JTJDUmV2aWV3" data-listing-date-sort="1763132400000" data-listing-file-modified-sort="1763198949836" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1337">
-<div class="thumbnail"><a href="../posts/20251115_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/20251115_1.html" class="no-external">Successive model-agnostic meta-learning for few-shot fault time series prognosis</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/20251115_1.html" class="no-external">
-<p>메타 러닝 관련 논문 요약 및 주요 내용</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/20251115_1.html" class="no-external">
-<div class="listing-date">
-Nov 15, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="UGxhbiUyQ1UtTmV0" data-listing-date-sort="1763478000000" data-listing-file-modified-sort="1763527596483" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1473">
-<div class="thumbnail"><a href="../posts/ACUNET_REVIEW/review계획.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/ACUNET_REVIEW/review계획.html" class="no-external">paper review plan</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/ACUNET_REVIEW/review계획.html" class="no-external">
-<p>AC U-Net REVIEW</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/ACUNET_REVIEW/review계획.html" class="no-external">
-<div class="listing-date">
-Nov 19, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="TWV0YUxlYXJuaW5n" data-listing-date-sort="1763218800000" data-listing-file-modified-sort="1763296246115" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2497">
-<div class="thumbnail"><a href="../posts/sub_1/20251116_1.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/sub_1/20251116_1.html" class="no-external">test 20251116</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/sub_1/20251116_1.html" class="no-external">
-<p>미니 실험</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/sub_1/20251116_1.html" class="no-external">
-<div class="listing-date">
-Nov 16, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="TWV0YUxlYXJuaW5nJTJDRmluYW5jZSUyQ1F1YW50JTJDUG9ydGZvbGlvJTJDUmV2aWV3" data-listing-date-sort="1763478000000" data-listing-file-modified-sort="1763548287520" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1441">
-<div class="thumbnail"><a href="../posts/Introduction_check.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/Introduction_check.html" class="no-external">논문 작성 Introduction</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/Introduction_check.html" class="no-external">
-포트폴리오 최적화에서는
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/Introduction_check.html" class="no-external">
-<div class="listing-date">
-Nov 19, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYSUyQ01vRSUyQ1ZBRQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763042002485" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="2000">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">석사 학위 논문 연구 계획서 - Bayesian+AnomalyDetection</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD_2.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="13" data-categories="QmF5ZXNpYW4lMkNNZXRhTGVhcm5pbmclMkNJZGVh" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041825235" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2416">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">석사 학위 논문 연구 계획서 - Bayesian+MetaLearning</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+MetaLearning</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;MetaLearning.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="14" data-categories="TWV0YUxlYXJuaW5nJTJDRmluYW5jZSUyQ1F1YW50JTJDUG9ydGZvbGlvJTJDUmV2aWV3" data-listing-date-sort="1763650800000" data-listing-file-modified-sort="1763804868035" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1131">
-<div class="thumbnail"><a href="../posts/memo_251122.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/memo_251122.html" class="no-external">실험해야 할 목록</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/memo_251122.html" class="no-external">
-<p>졸논용 실험</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/memo_251122.html" class="no-external">
-<div class="listing-date">
-Nov 21, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="15" data-categories="SW50cm9kdWNl" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763373061678" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail"><a href="../posts/IDEAs/pp.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/pp.html" class="no-external">이력</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/pp.html" class="no-external">
-<p>김한울 이력서</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/pp.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="16" data-categories="QmF5ZXNpYW4lMkNBbm9tYWx5RGV0ZWN0aW9uJTJDSWRlYQ==" data-listing-date-sort="1762959600000" data-listing-file-modified-sort="1763041706605" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="912">
-<div class="thumbnail"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">이상치 탐지 with Uncertainty?</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-<p>졸업 논문 주제 구체화 - Bayesian+AnomalyDetection</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/2025_11_13 Bayes&amp;AD.html" class="no-external">
-<div class="listing-date">
-Nov 13, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="17" data-categories="U3RvY2tNb2RlbGluZyUyQ1F1YW50JTJDTWV0YUxlYXJuaW5n" data-listing-date-sort="1763305200000" data-listing-file-modified-sort="1763376631996" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2333">
-<div class="thumbnail"><a href="../posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html" class="no-external">주식 모델링 아이디어 1</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html" class="no-external">
-<p>주식 모델링 아이디어 1</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html" class="no-external">
-<div class="listing-date">
-Nov 17, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="18" data-categories="U3RvY2tNb2RlbGluZyUyQ1F1YW50JTJDTWV0YUxlYXJuaW5n" data-listing-date-sort="1763305200000" data-listing-file-modified-sort="1763373150255" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1698">
-<div class="thumbnail"><a href="../posts/IDEAs/stock modeling ideas/002_what_model.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../posts/IDEAs/stock modeling ideas/002_what_model.html" class="no-external">주식 모델링 아이디어 2</a>
-</h3>
-<div class="delink listing-description"><a href="../posts/IDEAs/stock modeling ideas/002_what_model.html" class="no-external">
-<p>주식 모델링 아이디어 2</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../posts/IDEAs/stock modeling ideas/002_what_model.html" class="no-external">
-<div class="listing-date">
-Nov 17, 2025
-</div>
-<div class="listing-author">
-김한울
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -1,9 +1,35 @@
 [
   {
+    "listing": "/posts/index.html",
+    "items": [
+      "/posts/20251116_1.html",
+      "/posts/20251113_1.html",
+      "/posts/IDEAs/2025_11_13 Bayes&AD_3_MoVAEs.html",
+      "/posts/20251114_1.html",
+      "/posts/pytorch/NLLLoss.html",
+      "/posts/IDEAs/2025_11_13 Bayes&AD_4_papers.html",
+      "/posts/IDEAs/2025_11_13 Bayes&MetaLearning_2_papers.html",
+      "/posts/20251117_1.html",
+      "/posts/20251115_1.html",
+      "/posts/ACUNET_REVIEW/review계획.html",
+      "/posts/sub_1/20251116_1.html",
+      "/posts/Introduction_check.html",
+      "/posts/IDEAs/2025_11_13 Bayes&AD_2.html",
+      "/posts/IDEAs/2025_11_13 Bayes&MetaLearning.html",
+      "/posts/memo_251122.html",
+      "/posts/IDEAs/pp.html",
+      "/posts/IDEAs/2025_11_13 Bayes&AD.html",
+      "/posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html",
+      "/posts/IDEAs/stock modeling ideas/002_what_model.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/index.html",
+      "/posts/memo_251122.html",
       "/posts/ACUNET_REVIEW/review계획.html",
+      "/posts/Introduction_check.html",
       "/posts/20251117_1.html",
       "/posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html",
       "/posts/IDEAs/stock modeling ideas/002_what_model.html",
@@ -20,28 +46,6 @@
       "/posts/IDEAs/2025_11_13 Bayes&MetaLearning.html",
       "/posts/IDEAs/2025_11_13 Bayes&MetaLearning_2_papers.html",
       "/posts/IDEAs/pp.html"
-    ]
-  },
-  {
-    "listing": "/posts/index.html",
-    "items": [
-      "/posts/20251116_1.html",
-      "/posts/20251113_1.html",
-      "/posts/IDEAs/2025_11_13 Bayes&AD_3_MoVAEs.html",
-      "/posts/20251114_1.html",
-      "/posts/pytorch/NLLLoss.html",
-      "/posts/IDEAs/2025_11_13 Bayes&AD_4_papers.html",
-      "/posts/IDEAs/2025_11_13 Bayes&MetaLearning_2_papers.html",
-      "/posts/20251117_1.html",
-      "/posts/20251115_1.html",
-      "/posts/ACUNET_REVIEW/review계획.html",
-      "/posts/sub_1/20251116_1.html",
-      "/posts/IDEAs/2025_11_13 Bayes&AD_2.html",
-      "/posts/IDEAs/2025_11_13 Bayes&MetaLearning.html",
-      "/posts/IDEAs/pp.html",
-      "/posts/IDEAs/2025_11_13 Bayes&AD.html",
-      "/posts/IDEAs/stock modeling ideas/001_portfolio_develop_strategy.html",
-      "/posts/IDEAs/stock modeling ideas/002_what_model.html"
     ]
   }
 ]
