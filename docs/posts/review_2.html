@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-22">
+<meta name="description" content="참고문헌 : A well-conditioned estimator for large-dimensional covariance matrices">
+
+<title>A well-conditioned estimator for large-dimensional covariance matrices – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A well-conditioned estimator for large-dimensional covariance matrices</h1>
+                  <div>
+        <div class="description">
+          참고문헌 : A well-conditioned estimator for large-dimensional covariance matrices
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Covariance Matrix Estimation</div>
+                <div class="quarto-category">Shrinkage Estimation</div>
+                <div class="quarto-category">High-dimensional Statistics</div>
+                <div class="quarto-category">Portfolio Optimization</div>
+                <div class="quarto-category">Statistical Inference</div>
+                <div class="quarto-category">Review</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 22, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#대규모-공분산-행렬의-우수한-조건-추정량" id="toc-대규모-공분산-행렬의-우수한-조건-추정량" class="nav-link active" data-scroll-target="#대규모-공분산-행렬의-우수한-조건-추정량">대규모 공분산 행렬의 우수한 조건 추정량</a>
+  <ul class="collapse">
+  <li><a href="#논문의-핵심-내용" id="toc-논문의-핵심-내용" class="nav-link" data-scroll-target="#논문의-핵심-내용">논문의 핵심 내용</a></li>
+  <li><a href="#주요-문제점" id="toc-주요-문제점" class="nav-link" data-scroll-target="#주요-문제점">주요 문제점</a></li>
+  <li><a href="#제안된-해결책" id="toc-제안된-해결책" class="nav-link" data-scroll-target="#제안된-해결책">제안된 해결책</a></li>
+  <li><a href="#주요-특징" id="toc-주요-특징" class="nav-link" data-scroll-target="#주요-특징">주요 특징</a></li>
+  <li><a href="#이론적-프레임워크" id="toc-이론적-프레임워크" class="nav-link" data-scroll-target="#이론적-프레임워크">이론적 프레임워크</a></li>
+  <li><a href="#네-가지-해석" id="toc-네-가지-해석" class="nav-link" data-scroll-target="#네-가지-해석">네 가지 해석</a></li>
+  <li><a href="#실증적-성능" id="toc-실증적-성능" class="nav-link" data-scroll-target="#실증적-성능">실증적 성능</a></li>
+  <li><a href="#실용적-의의" id="toc-실용적-의의" class="nav-link" data-scroll-target="#실용적-의의">실용적 의의</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul></li>
+  <li><a href="#메인-수식들-전개" id="toc-메인-수식들-전개" class="nav-link" data-scroll-target="#메인-수식들-전개">메인 수식들 전개</a>
+  <ul class="collapse">
+  <li><a href="#최적-선형축소-optimal-linear-shrinkage" id="toc-최적-선형축소-optimal-linear-shrinkage" class="nav-link" data-scroll-target="#최적-선형축소-optimal-linear-shrinkage">1. 최적 선형축소 (Optimal Linear Shrinkage)</a>
+  <ul class="collapse">
+  <li><a href="#기본-설정" id="toc-기본-설정" class="nav-link" data-scroll-target="#기본-설정">기본 설정</a></li>
+  <li><a href="#lemma-2.1-기본-관계식" id="toc-lemma-2.1-기본-관계식" class="nav-link" data-scroll-target="#lemma-2.1-기본-관계식">Lemma 2.1: 기본 관계식</a></li>
+  <li><a href="#theorem-2.1-최적-선형조합" id="toc-theorem-2.1-최적-선형조합" class="nav-link" data-scroll-target="#theorem-2.1-최적-선형조합">Theorem 2.1: 최적 선형조합</a></li>
+  </ul></li>
+  <li><a href="#편향-분산-분해" id="toc-편향-분산-분해" class="nav-link" data-scroll-target="#편향-분산-분해">2. 편향-분산 분해</a></li>
+  <li><a href="#일반-점근general-asymptotics-분석" id="toc-일반-점근general-asymptotics-분석" class="nav-link" data-scroll-target="#일반-점근general-asymptotics-분석">3. 일반 점근(General Asymptotics) 분석</a>
+  <ul class="collapse">
+  <li><a href="#가정" id="toc-가정" class="nav-link" data-scroll-target="#가정">가정</a></li>
+  <li><a href="#theorem-3.1-표본-공분산-행렬의-오차" id="toc-theorem-3.1-표본-공분산-행렬의-오차" class="nav-link" data-scroll-target="#theorem-3.1-표본-공분산-행렬의-오차">Theorem 3.1: 표본 공분산 행렬의 오차</a></li>
+  </ul></li>
+  <li><a href="#적응적-축소-강도-추정" id="toc-적응적-축소-강도-추정" class="nav-link" data-scroll-target="#적응적-축소-강도-추정">4. 적응적 축소 강도 추정</a>
+  <ul class="collapse">
+  <li><a href="#선형축소-목표-추정" id="toc-선형축소-목표-추정" class="nav-link" data-scroll-target="#선형축소-목표-추정">선형축소 목표 추정</a></li>
+  <li><a href="#분산-성분-추정" id="toc-분산-성분-추정" class="nav-link" data-scroll-target="#분산-성분-추정">분산 성분 추정</a></li>
+  <li><a href="#오차-성분-추정" id="toc-오차-성분-추정" class="nav-link" data-scroll-target="#오차-성분-추정">오차 성분 추정</a></li>
+  <li><a href="#분산-성분-재계산" id="toc-분산-성분-재계산" class="nav-link" data-scroll-target="#분산-성분-재계산">분산 성분 (재계산)</a></li>
+  </ul></li>
+  <li><a href="#적응적-축소-추정량-실제-구현" id="toc-적응적-축소-추정량-실제-구현" class="nav-link" data-scroll-target="#적응적-축소-추정량-실제-구현">5. 적응적 축소 추정량 (실제 구현)</a>
+  <ul class="collapse">
+  <li><a href="#최종-추정량" id="toc-최종-추정량" class="nav-link" data-scroll-target="#최종-추정량">최종 추정량</a></li>
+  <li><a href="#theorem-3.2-점근-등가성" id="toc-theorem-3.2-점근-등가성" class="nav-link" data-scroll-target="#theorem-3.2-점근-등가성">Theorem 3.2: 점근 등가성</a></li>
+  </ul></li>
+  <li><a href="#고유값-축소-공식" id="toc-고유값-축소-공식" class="nav-link" data-scroll-target="#고유값-축소-공식">6. 고유값 축소 공식</a></li>
+  <li><a href="#조건수-성질" id="toc-조건수-성질" class="nav-link" data-scroll-target="#조건수-성질">7. 조건수 성질</a>
+  <ul class="collapse">
+  <li><a href="#theorem-3.5-조건수-경계" id="toc-theorem-3.5-조건수-경계" class="nav-link" data-scroll-target="#theorem-3.5-조건수-경계">Theorem 3.5: 조건수 경계</a></li>
+  </ul></li>
+  <li><a href="#최적성-정리" id="toc-최적성-정리" class="nav-link" data-scroll-target="#최적성-정리">8. 최적성 정리</a>
+  <ul class="collapse">
+  <li><a href="#theorem-3.4-균일-최소-위험-성질" id="toc-theorem-3.4-균일-최소-위험-성질" class="nav-link" data-scroll-target="#theorem-3.4-균일-최소-위험-성질">Theorem 3.4: 균일 최소 위험 성질</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#논문의-약점-및-개선-포인트" id="toc-논문의-약점-및-개선-포인트" class="nav-link" data-scroll-target="#논문의-약점-및-개선-포인트">논문의 약점 및 개선 포인트</a>
+  <ul class="collapse">
+  <li><a href="#ledoit-wolf-2004-선형축소의-주요-한계점" id="toc-ledoit-wolf-2004-선형축소의-주요-한계점" class="nav-link" data-scroll-target="#ledoit-wolf-2004-선형축소의-주요-한계점">Ledoit-Wolf (2004) 선형축소의 주요 한계점</a>
+  <ul class="collapse">
+  <li><a href="#선형-구조의-제약" id="toc-선형-구조의-제약" class="nav-link" data-scroll-target="#선형-구조의-제약">1. <strong>선형 구조의 제약</strong></a></li>
+  <li><a href="#축소-목표의-단순성" id="toc-축소-목표의-단순성" class="nav-link" data-scroll-target="#축소-목표의-단순성">2. <strong>축소 목표의 단순성</strong></a></li>
+  <li><a href="#미지의-평균-문제" id="toc-미지의-평균-문제" class="nav-link" data-scroll-target="#미지의-평균-문제">3. <strong>미지의 평균 문제</strong></a></li>
+  <li><a href="#희소성-구조-무시" id="toc-희소성-구조-무시" class="nav-link" data-scroll-target="#희소성-구조-무시">4. <strong>희소성 구조 무시</strong></a></li>
+  <li><a href="#계산-복잡도" id="toc-계산-복잡도" class="nav-link" data-scroll-target="#계산-복잡도">5. <strong>계산 복잡도</strong></a></li>
+  <li><a href="#역행렬-추정의-비최적성" id="toc-역행렬-추정의-비최적성" class="nav-link" data-scroll-target="#역행렬-추정의-비최적성">6. <strong>역행렬 추정의 비최적성</strong></a></li>
+  </ul></li>
+  <li><a href="#최신-문헌2024-2025의-개선점" id="toc-최신-문헌2024-2025의-개선점" class="nav-link" data-scroll-target="#최신-문헌2024-2025의-개선점">최신 문헌(2024-2025)의 개선점</a>
+  <ul class="collapse">
+  <li><a href="#비선형-축소nonlinear-shrinkage" id="toc-비선형-축소nonlinear-shrinkage" class="nav-link" data-scroll-target="#비선형-축소nonlinear-shrinkage">1. <strong>비선형 축소(Nonlinear Shrinkage)</strong></a></li>
+  <li><a href="#대각-목표-축소diagonal-target-shrinkage" id="toc-대각-목표-축소diagonal-target-shrinkage" class="nav-link" data-scroll-target="#대각-목표-축소diagonal-target-shrinkage">2. <strong>대각 목표 축소(Diagonal Target Shrinkage)</strong></a></li>
+  <li><a href="#factor-model-기반-접근" id="toc-factor-model-기반-접근" class="nav-link" data-scroll-target="#factor-model-기반-접근">3. <strong>Factor Model 기반 접근</strong></a></li>
+  <li><a href="#정밀도-행렬-직접-추정" id="toc-정밀도-행렬-직접-추정" class="nav-link" data-scroll-target="#정밀도-행렬-직접-추정">4. <strong>정밀도 행렬 직접 추정</strong></a></li>
+  <li><a href="#딥러닝-기반-공분산-추정" id="toc-딥러닝-기반-공분산-추정" class="nav-link" data-scroll-target="#딥러닝-기반-공분산-추정">5. <strong>딥러닝 기반 공분산 추정</strong></a></li>
+  <li><a href="#이중-축소double-shrinkage" id="toc-이중-축소double-shrinkage" class="nav-link" data-scroll-target="#이중-축소double-shrinkage">6. <strong>이중 축소(Double Shrinkage)</strong></a></li>
+  <li><a href="#구조화된-목표structured-targets" id="toc-구조화된-목표structured-targets" class="nav-link" data-scroll-target="#구조화된-목표structured-targets">7. <strong>구조화된 목표(Structured Targets)</strong></a></li>
+  </ul></li>
+  <li><a href="#최신-문헌에서도-지속되는-한계점" id="toc-최신-문헌에서도-지속되는-한계점" class="nav-link" data-scroll-target="#최신-문헌에서도-지속되는-한계점">최신 문헌에서도 지속되는 한계점</a>
+  <ul class="collapse">
+  <li><a href="#고차원에서의-일관성-부족" id="toc-고차원에서의-일관성-부족" class="nav-link" data-scroll-target="#고차원에서의-일관성-부족">1. <strong>고차원에서의 일관성 부족</strong></a></li>
+  <li><a href="#희소성-가정의-검증-불가능성" id="toc-희소성-가정의-검증-불가능성" class="nav-link" data-scroll-target="#희소성-가정의-검증-불가능성">2. <strong>희소성 가정의 검증 불가능성</strong></a></li>
+  <li><a href="#중꼬리-분포에-대한-취약성" id="toc-중꼬리-분포에-대한-취약성" class="nav-link" data-scroll-target="#중꼬리-분포에-대한-취약성">3. <strong>중꼬리 분포에 대한 취약성</strong></a></li>
+  <li><a href="#고유벡터-추정의-어려움" id="toc-고유벡터-추정의-어려움" class="nav-link" data-scroll-target="#고유벡터-추정의-어려움">4. <strong>고유벡터 추정의 어려움</strong></a></li>
+  <li><a href="#조율-매개변수-선택의-민감성" id="toc-조율-매개변수-선택의-민감성" class="nav-link" data-scroll-target="#조율-매개변수-선택의-민감성">5. <strong>조율 매개변수 선택의 민감성</strong></a></li>
+  <li><a href="#해석-가능성-vs-성능의-트레이드오프" id="toc-해석-가능성-vs-성능의-트레이드오프" class="nav-link" data-scroll-target="#해석-가능성-vs-성능의-트레이드오프">6. <strong>해석 가능성 vs 성능의 트레이드오프</strong></a></li>
+  <li><a href="#동적-공분산-구조" id="toc-동적-공분산-구조" class="nav-link" data-scroll-target="#동적-공분산-구조">7. <strong>동적 공분산 구조</strong></a></li>
+  <li><a href="#p-gg-n-극한-상황" id="toc-p-gg-n-극한-상황" class="nav-link" data-scroll-target="#p-gg-n-극한-상황">8. <strong><span class="math display">\[p \gg n\]</span> 극한 상황</strong></a></li>
+  <li><a href="#시간적-의존성" id="toc-시간적-의존성" class="nav-link" data-scroll-target="#시간적-의존성">9. <strong>시간적 의존성</strong></a></li>
+  </ul></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">요약</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="대규모-공분산-행렬의-우수한-조건-추정량" class="level1">
+<h1>대규모 공분산 행렬의 우수한 조건 추정량</h1>
+<section id="논문의-핵심-내용" class="level2">
+<h2 class="anchored" data-anchor-id="논문의-핵심-내용">논문의 핵심 내용</h2>
+<p>이 논문은 <strong>Olivier Ledoit</strong>와 <strong>Michael Wolf</strong>가 Journal of Multivariate Analysis(2004)에 발표한 논문으로, 변수의 개수가 표본 크기에 비해 클 때 공분산 행렬을 추정하는 새로운 방법을 제시합니다.</p>
+</section>
+<section id="주요-문제점" class="level2">
+<h2 class="anchored" data-anchor-id="주요-문제점">주요 문제점</h2>
+<p>표본 공분산 행렬(sample covariance matrix)은 대규모 차원의 문제에서 여러 단점을 갖습니다:</p>
+<ul>
+<li><strong>비가역성</strong>: 변수의 개수 <span class="math inline">\(p\)</span>가 관측값 개수 <span class="math inline">\(n\)</span>보다 크면 표본 공분산 행렬이 가역 불가능</li>
+<li><strong>나쁜 조건수</strong>: 비율 <span class="math inline">\(p/n\)</span>이 무시할 수 없는 수준이면 행렬이 수치적으로 악조건(ill-conditioned)이 되어 역행렬 계산 시 추정 오차가 극대화됨</li>
+<li><strong>부정확성</strong>: 포트폴리오 선택, 일반최소제곱(GLS) 회귀, 일반적 적률법(GMM) 등의 응용에서 성능이 저하됨</li>
+</ul>
+</section>
+<section id="제안된-해결책" class="level2">
+<h2 class="anchored" data-anchor-id="제안된-해결책">제안된 해결책</h2>
+<p>논문은 <strong>선형축소(linear shrinkage)</strong> 추정량을 제시합니다: 최적의 축소 추정량 <span class="math inline">\(\hat{S}^*\)</span>는 표본 공분산 행렬 <span class="math inline">\(S\)</span>와 단위행렬 <span class="math inline">\(I\)</span>의 가중 평균입니다:</p>
+<p><span class="math display">\[
+\hat{S}^* = \frac{b^2}{d^2}mI + \frac{a^2}{d^2}S
+\]</span></p>
+<p>여기서: - <span class="math inline">\(m = \langle S, I \rangle\)</span>: 축소 목표(shrinkage target) - <span class="math inline">\(a^2 = \|S - mI\|^2\)</span>: 표본 고유값의 분산 - <span class="math inline">\(b^2 = E[\|S - \Sigma\|^2]\)</span>: 표본 공분산 행렬의 오차 - <span class="math inline">\(d^2 = a^2 + b^2\)</span>: 총 분산</p>
+</section>
+<section id="주요-특징" class="level2">
+<h2 class="anchored" data-anchor-id="주요-특징">주요 특징</h2>
+<p><strong>분포-비의존성</strong>: 이 추정량은 특정 확률분포를 가정하지 않으며 명시적 공식으로 계산이 간단합니다.</p>
+<p><strong>점근 최적성</strong>: 관측값 개수와 변수 개수가 모두 무한대로 갈 때, 본 논문에서 제시된 선형축소 추정량은 <strong>일반 점근(general asymptotics)</strong> 하에서 이차손실함수(quadratic loss function)에 대해 점근적으로 균일 최소위험(uniformly minimum quadratic risk)을 달성합니다.</p>
+<p><strong>우수한 조건성</strong>: 제안된 추정량은 항상 가역 가능하며 진정한 공분산 행렬보다도 더 우수한 조건수를 가질 수 있습니다.</p>
+</section>
+<section id="이론적-프레임워크" class="level2">
+<h2 class="anchored" data-anchor-id="이론적-프레임워크">이론적 프레임워크</h2>
+<p>논문은 <strong>일반 점근</strong> 분석을 도입합니다. 표준 점근(standard asymptotics)과 달리 변수의 개수 <span class="math inline">\(p_n\)</span>도 표본 크기 <span class="math inline">\(n\)</span>과 함께 무한대로 수렴할 수 있으며, 유일한 제약은 비율 <span class="math inline">\(p_n/n\)</span>이 유계라는 것입니다:</p>
+<p><strong>가정 1</strong>: <span class="math inline">\(p_n/n \leq K_1\)</span> (어떤 상수 <span class="math inline">\(K_1\)</span>에 대해)</p>
+<p>이 프레임워크는 현실의 많은 상황, 특히 변수의 개수와 표본 크기가 비슷한 수준일 때 더 적절합니다.</p>
+</section>
+<section id="네-가지-해석" class="level2">
+<h2 class="anchored" data-anchor-id="네-가지-해석">네 가지 해석</h2>
+<p>논문은 최적 선형축소를 다양한 관점에서 해석합니다:</p>
+<ol type="1">
+<li><strong>기하학적 해석</strong>: 힐베르트 공간에서의 정사영으로 해석</li>
+<li><strong>편향-분산 분해</strong>: 추정 오차의 편향(bias)과 분산(variance) 간의 최적 트레이드오프</li>
+<li><strong>베이지안 해석</strong>: 사전정보(prior information)와 표본정보(sample information)의 결합</li>
+<li><strong>고유값 분산</strong>: 표본 고유값이 참 고유값보다 더 분산되어 있다는 특성</li>
+</ol>
+</section>
+<section id="실증적-성능" class="level2">
+<h2 class="anchored" data-anchor-id="실증적-성능">실증적 성능</h2>
+<p>몬테카를로 시뮬레이션 결과:</p>
+<ul>
+<li>제안 추정량은 모든 시뮬레이션 상황에서 표본 공분산 행렬을 개선</li>
+<li>20개 이상의 변수와 관측값이 있을 때 점근 결과가 유한 표본에서도 잘 작동</li>
+<li>기존의 Stein-Haff 및 최소최대(minimax) 추정량과 비교해서도 경쟁력 있는 성능</li>
+</ul>
+</section>
+<section id="실용적-의의" class="level2">
+<h2 class="anchored" data-anchor-id="실용적-의의">실용적 의의</h2>
+<p>이 논문의 결과는 다양한 분야에서 적용됩니다:</p>
+<ul>
+<li><strong>포트폴리오 최적화</strong>: 대량의 자산으로부터 평균-분산 효율적 포트폴리오 선택</li>
+<li><strong>회귀 분석</strong>: 대규모 횡단면 자료에서의 일반최소제곱 추정</li>
+<li><strong>적률법</strong>: 많은 제약조건을 가진 일반적 적률법의 가중행렬 선택</li>
+</ul>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p>이 논문은 <strong>대규모 공분산 행렬 추정의 고전적 성과</strong>로, 단순하면서도 이론적으로 엄밀하며 실증적으로 우수한 축소 추정량을 제시했습니다. 특히 <span class="math inline">\(p &gt; n\)</span>인 상황에서도 항상 가역 가능한 추정량을 제공하는 것이 주요 기여입니다.</p>
+<hr>
+</section>
+</section>
+<section id="메인-수식들-전개" class="level1">
+<h1>메인 수식들 전개</h1>
+<section id="최적-선형축소-optimal-linear-shrinkage" class="level2">
+<h2 class="anchored" data-anchor-id="최적-선형축소-optimal-linear-shrinkage">1. 최적 선형축소 (Optimal Linear Shrinkage)</h2>
+<section id="기본-설정" class="level3">
+<h3 class="anchored" data-anchor-id="기본-설정">기본 설정</h3>
+<p><strong>축소 추정량의 일반 형태:</strong></p>
+<p><span class="math display">\[
+\hat{S}^* = \rho_1 I + \rho_2 S
+\]</span></p>
+<p>여기서 <span class="math inline">\(\rho_1, \rho_2\)</span>는 선형계수, <span class="math inline">\(I\)</span>는 단위행렬, <span class="math inline">\(S\)</span>는 표본 공분산 행렬입니다.</p>
+<p><strong>핵심 스칼라 함수들:</strong></p>
+<p><span class="math display">\[
+m = \langle S, I \rangle = \frac{\text{tr}(S)}{p}
+\]</span></p>
+<p><span class="math display">\[
+a^2 = \|S - mI\|^2
+\]</span></p>
+<p><span class="math display">\[
+b^2 = E[\|S - \Sigma\|^2]
+\]</span></p>
+<p><span class="math display">\[
+d^2 = E[\|S - mI\|^2] = a^2 + b^2
+\]</span></p>
+<p>여기서 Frobenius 노름은 <span class="math inline">\(\|A\| = \sqrt{\text{tr}(AA^t)/p}\)</span>로 정의됩니다.</p>
+</section>
+<section id="lemma-2.1-기본-관계식" class="level3">
+<h3 class="anchored" data-anchor-id="lemma-2.1-기본-관계식">Lemma 2.1: 기본 관계식</h3>
+<p><span class="math display">\[
+a^2 + b^2 = d^2
+\]</span></p>
+<p><strong>증명:</strong> <span class="math display">\[
+E[\|S - mI\|^2] = E[\|(S - \Sigma) + (\Sigma - mI)\|^2]
+\]</span></p>
+<p><span class="math display">\[
+= E[\|S - \Sigma\|^2] + E[\|\Sigma - mI\|^2] + 2E[\langle S - \Sigma, \Sigma - mI \rangle]
+\]</span></p>
+<p><span class="math display">\[
+= E[\|S - \Sigma\|^2] + \|\Sigma - mI\|^2 + 2\langle E[S - \Sigma], \Sigma - mI \rangle
+\]</span></p>
+<p><span class="math inline">\(E[\Sigma] = \Sigma\)</span>이므로 세 번째 항은 0이 됩니다.</p>
+</section>
+<section id="theorem-2.1-최적-선형조합" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-2.1-최적-선형조합">Theorem 2.1: 최적 선형조합</h3>
+<p>최적화 문제:</p>
+<p><span class="math display">\[
+\min_{\rho_1, \rho_2} E[\|S^* - \Sigma\|^2] \quad \text{s.t.} \quad S^* = \rho_1 I + \rho_2 S
+\]</span></p>
+<p><strong>최적해:</strong></p>
+<p><span class="math display">\[
+S^*_{\text{opt}} = \frac{b^2}{d^2} mI + \frac{a^2}{d^2} S
+\]</span></p>
+<p><strong>최소 기댓값 손실:</strong></p>
+<p><span class="math display">\[
+E[\|S^*_{\text{opt}} - \Sigma\|^2] = \frac{a^2 b^2}{d^2}
+\]</span></p>
+<p><strong>축소 강도(Shrinkage Intensity):</strong></p>
+<p><span class="math display">\[
+\lambda^* = \frac{b^2}{d^2}
+\]</span></p>
+<p><strong>평균 손실 개선율 (PRIAL):</strong></p>
+<p><span class="math display">\[
+\text{PRIAL} = \frac{E[\|S - \Sigma\|^2] - E[\|S^*_{\text{opt}} - \Sigma\|^2]}{E[\|S - \Sigma\|^2]} = \frac{b^2}{d^2}
+\]</span></p>
+<p>축소 강도가 작으면 표본 공분산 행렬이 정확하다는 의미이고, 축소 강도가 크면 표본 공분산 행렬의 오차가 크다는 의미입니다.</p>
+</section>
+</section>
+<section id="편향-분산-분해" class="level2">
+<h2 class="anchored" data-anchor-id="편향-분산-분해">2. 편향-분산 분해</h2>
+<p><span class="math display">\[
+E[\|S^* - \Sigma\|^2] = E[\|S^* - E[S^*]\|^2] + \|E[S^*] - \Sigma\|^2
+\]</span></p>
+<p>첫 번째 항: <strong>분산(Variance)</strong> 두 번째 항: <strong>제곱 편향(Squared Bias)</strong></p>
+<p>축소 목표 <span class="math display">\[mI\]</span>의 경우: - 분산 = 0 (비확률) - 편향 = <span class="math display">\[\|mI - \Sigma\|^2\]</span> (모두 편향)</p>
+<p>표본 공분산 행렬 <span class="math display">\[S\]</span>의 경우: - 분산 = <span class="math display">\[b^2\]</span> (모두 분산) - 편향 = 0 (불편추정)</p>
+</section>
+<section id="일반-점근general-asymptotics-분석" class="level2">
+<h2 class="anchored" data-anchor-id="일반-점근general-asymptotics-분석">3. 일반 점근(General Asymptotics) 분석</h2>
+<section id="가정" class="level3">
+<h3 class="anchored" data-anchor-id="가정">가정</h3>
+<p><strong>가정 1: 비율 경계</strong></p>
+<p><span class="math display">\[
+\frac{p_n}{n} \leq K_1
+\]</span></p>
+<p>변수의 개수 <span class="math display">\[p_n\]</span>이 표본 크기 <span class="math display">\[n\]</span>과 함께 무한대로 증가할 수 있습니다.</p>
+<p><strong>가정 2: 8차 모멘트 경계</strong></p>
+<p><span class="math display">\[
+\frac{1}{p_n}\sum_{i=1}^{p_n} E[(y^n_{i1})^8] \leq K_2
+\]</span></p>
+</section>
+<section id="theorem-3.1-표본-공분산-행렬의-오차" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3.1-표본-공분산-행렬의-오차">Theorem 3.1: 표본 공분산 행렬의 오차</h3>
+<p><span class="math display">\[
+\lim_{n \to \infty} \left(E[\|S_n - \Sigma_n\|^2_n] - \frac{p_n}{n}(m^2_n + \gamma^2_n)\right) = 0
+\]</span></p>
+<p>여기서 <span class="math display">\[\gamma^2_n = \text{Var}\left[\frac{1}{p_n}\sum_{i=1}^{p_n}(y^n_{i1})^2\right]\]</span>입니다.</p>
+<p><strong>중요한 결론:</strong></p>
+<p>표본 공분산 행렬의 오차는 <span class="math display">\[O(p_n/n)\]</span> 수준입니다. 따라서 일반점근 하에서 표본 공분산 행렬은 일반적으로 <strong>일치성이 없습니다</strong>(inconsistent).</p>
+</section>
+</section>
+<section id="적응적-축소-강도-추정" class="level2">
+<h2 class="anchored" data-anchor-id="적응적-축소-강도-추정">4. 적응적 축소 강도 추정</h2>
+<section id="선형축소-목표-추정" class="level3">
+<h3 class="anchored" data-anchor-id="선형축소-목표-추정">선형축소 목표 추정</h3>
+<p><span class="math display">\[
+\hat{m}_n = \langle S_n, I_n \rangle_n
+\]</span></p>
+<p><strong>Lemma 3.2:</strong> <span class="math display">\[\hat{m}_n - m_n \xrightarrow{q.m.} 0\]</span></p>
+</section>
+<section id="분산-성분-추정" class="level3">
+<h3 class="anchored" data-anchor-id="분산-성분-추정">분산 성분 추정</h3>
+<p><span class="math display">\[
+\hat{d}^2_n = \|S_n - \hat{m}_n I_n\|^2_n
+\]</span></p>
+<p><strong>Lemma 3.3:</strong> <span class="math display">\[\hat{d}^2_n - d^2_n \xrightarrow{q.m.} 0\]</span></p>
+</section>
+<section id="오차-성분-추정" class="level3">
+<h3 class="anchored" data-anchor-id="오차-성분-추정">오차 성분 추정</h3>
+<p><span class="math display">\[
+\hat{b}^2_n = \frac{1}{n^2}\sum_{k=1}^{n}\|x_{-k}x^t_{-k} - S_n\|^2_n
+\]</span></p>
+<p>제약 추정량:</p>
+<p><span class="math display">\[
+b^2_n = \min(\hat{b}^2_n, d^2_n)
+\]</span></p>
+<p><strong>Lemma 3.4:</strong> <span class="math display">\[b^2_n - b^2_n \xrightarrow{q.m.} 0\]</span></p>
+</section>
+<section id="분산-성분-재계산" class="level3">
+<h3 class="anchored" data-anchor-id="분산-성분-재계산">분산 성분 (재계산)</h3>
+<p><span class="math display">\[
+\hat{a}^2_n = \hat{d}^2_n - b^2_n
+\]</span></p>
+<p><strong>Lemma 3.5:</strong> <span class="math display">\[\hat{a}^2_n - a^2_n \xrightarrow{q.m.} 0\]</span></p>
+</section>
+</section>
+<section id="적응적-축소-추정량-실제-구현" class="level2">
+<h2 class="anchored" data-anchor-id="적응적-축소-추정량-실제-구현">5. 적응적 축소 추정량 (실제 구현)</h2>
+<section id="최종-추정량" class="level3">
+<h3 class="anchored" data-anchor-id="최종-추정량">최종 추정량</h3>
+<p><span class="math display">\[
+\hat{S}^*_n = \frac{b^2_n}{d^2_n}\hat{m}_n I_n + \frac{\hat{a}^2_n}{d^2_n} S_n
+\]</span></p>
+<p>여기서: - <span class="math display">\[\hat{m}_n\]</span>: 축소 목표의 추정값 - <span class="math display">\[\hat{a}^2_n\]</span>: 표본 공분산 행렬의 분산 성분 - <span class="math display">\[b^2_n\]</span>: 표본 공분산 행렬의 오차 성분 - <span class="math display">\[\hat{d}^2_n = \hat{a}^2_n + b^2_n\]</span>: 총 분산</p>
+</section>
+<section id="theorem-3.2-점근-등가성" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3.2-점근-등가성">Theorem 3.2: 점근 등가성</h3>
+<p><span class="math display">\[
+\|\hat{S}^*_n - S^*_n\|_n \xrightarrow{q.m.} 0
+\]</span></p>
+<p>따라서:</p>
+<p><span class="math display">\[
+E[\|\hat{S}^*_n - \Sigma_n\|^2_n] - E[\|S^*_n - \Sigma_n\|^2_n] \to 0
+\]</span></p>
+<p>실제 추정량이 이론적 최적값과 같은 점근성을 가집니다.</p>
+</section>
+</section>
+<section id="고유값-축소-공식" class="level2">
+<h2 class="anchored" data-anchor-id="고유값-축소-공식">6. 고유값 축소 공식</h2>
+<p>최적 선형축소의 다른 표현:</p>
+<p><span class="math display">\[
+\forall i = 1, \ldots, p: \quad \lambda^*_i = \frac{b^2}{d^2}m + \frac{a^2}{d^2}\lambda_i
+\]</span></p>
+<p>여기서 <span class="math display">\[\lambda^*_i\]</span>는 최적 축소 추정량의 고유값입니다.</p>
+<p>표본 고유값이 참 고유값보다 더 분산되어 있다는 성질:</p>
+<p><span class="math display">\[
+\frac{1}{p}E\left[\sum_{i=1}^{p}(\lambda_i - m)^2\right] = \frac{1}{p}\sum_{i=1}^{p}(\lambda_i - m)^2 + E[\|S - \Sigma\|^2]
+\]</span></p>
+</section>
+<section id="조건수-성질" class="level2">
+<h2 class="anchored" data-anchor-id="조건수-성질">7. 조건수 성질</h2>
+<section id="theorem-3.5-조건수-경계" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3.5-조건수-경계">Theorem 3.5: 조건수 경계</h3>
+<p>조건수(Condition Number):</p>
+<p><span class="math display">\[
+\kappa(A) = \frac{\lambda_{\max}(A)}{\lambda_{\min}(A)}
+\]</span></p>
+<p><span class="math display">\[\Sigma_n\]</span>의 조건수가 유계이고 표본화된 변수들이 횡단면 iid라면:</p>
+<p><span class="math display">\[
+\kappa(\hat{S}^*_n) = O_p(1)
+\]</span></p>
+<p>즉, 추정량의 조건수는 확률적으로 유계입니다.</p>
+<p>특별히, 고유값 중 영에 가까운 것이 있어서 <span class="math display">\[\Sigma_n\]</span>이 좋지 않은 조건수를 가지지만 <span class="math display">\[p_n/n\]</span>이 무시할 수 없을 때, <span class="math display">\[\hat{S}^*_n\]</span>은 <span class="math display">\[\Sigma_n\]</span>보다 더 우수한 조건수를 가질 수 있습니다.</p>
+</section>
+</section>
+<section id="최적성-정리" class="level2">
+<h2 class="anchored" data-anchor-id="최적성-정리">8. 최적성 정리</h2>
+<section id="theorem-3.4-균일-최소-위험-성질" class="level3">
+<h3 class="anchored" data-anchor-id="theorem-3.4-균일-최소-위험-성질">Theorem 3.4: 균일 최소 위험 성질</h3>
+<p>모든 <span class="math display">\[I_n\]</span>과 <span class="math display">\[S_n\]</span>의 선형조합 <span class="math display">\[\tilde{S}_n\]</span>에 대해:</p>
+<p><span class="math display">\[
+\liminf_{N \to \infty} \sum_{n \geq N} (E[\|\tilde{S}_n - \Sigma_n\|^2_n] - E[\|\hat{S}^*_n - \Sigma_n\|^2_n]) \geq 0
+\]</span></p>
+<p>더불어, <span class="math display">\[\hat{S}^*_n\]</span>만큼 좋은 성능을 가지는 추정량은 극한에서 <span class="math display">\[\hat{S}^*_n\]</span>과 동일합니다:</p>
+<p><span class="math display">\[
+\lim_n (E[\|\tilde{S}_n - \Sigma_n\|^2_n] - E[\|\hat{S}^*_n - \Sigma_n\|^2_n]) = 0 \Rightarrow \|\tilde{S}_n - \hat{S}^*_n\|_n \xrightarrow{q.m.} 0
+\]</span></p>
+<p>따라서 <span class="math display">\[\hat{S}^*_n\]</span>은 선형축소 클래스 내에서 <strong>점근적 균일 최소 위험(asymptotically uniformly minimum quadratic risk)</strong> 추정량입니다.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="논문의-약점-및-개선-포인트" class="level1">
+<h1>논문의 약점 및 개선 포인트</h1>
+<section id="ledoit-wolf-2004-선형축소의-주요-한계점" class="level2">
+<h2 class="anchored" data-anchor-id="ledoit-wolf-2004-선형축소의-주요-한계점">Ledoit-Wolf (2004) 선형축소의 주요 한계점</h2>
+<section id="선형-구조의-제약" class="level3">
+<h3 class="anchored" data-anchor-id="선형-구조의-제약">1. <strong>선형 구조의 제약</strong></h3>
+<p>Ledoit-Wolf의 원래 방법론은 <strong>선형축소(linear shrinkage)</strong> 프레임워크에 국한되어 있습니다. 축소 추정량이 다음과 같은 형태로 제한됩니다:[1]</p>
+<p><span class="math display">\[
+\hat{S}^* = \lambda mI + (1-\lambda) S
+\]</span></p>
+<p>이는 모든 고유값에 동일한 축소 강도를 적용하므로, 각 고유값의 특성에 맞춘 개별적인 조정이 불가능합니다.[2]</p>
+</section>
+<section id="축소-목표의-단순성" class="level3">
+<h3 class="anchored" data-anchor-id="축소-목표의-단순성">2. <strong>축소 목표의 단순성</strong></h3>
+<p>원래 논문은 <strong>단위행렬의 스칼라 배수</strong> <span class="math display">\[mI\]</span>를 축소 목표로 사용합니다. 이는:[3]</p>
+<ul>
+<li>분산이 크게 다른 변수들이 있을 때 비효율적입니다.[4][5]</li>
+<li>예를 들어, GDP와 어업 산출량은 분산이 백배 이상 차이날 수 있는데, 평균 분산을 목표로 하면 어업 산출량의 분산은 과대추정되고 GDP의 분산은 과소추정됩니다.[4]</li>
+</ul>
+</section>
+<section id="미지의-평균-문제" class="level3">
+<h3 class="anchored" data-anchor-id="미지의-평균-문제">3. <strong>미지의 평균 문제</strong></h3>
+<p>Ledoit-Wolf (2004)는 <strong>평균이 알려진 경우</strong>를 주로 다루었으며, 평균이 미지인 경우에 대한 엄밀한 증명이 부족했습니다. 실무에서는 평균을 추정해야 하므로 이는 중요한 제약입니다.[6]</p>
+</section>
+<section id="희소성-구조-무시" class="level3">
+<h3 class="anchored" data-anchor-id="희소성-구조-무시">4. <strong>희소성 구조 무시</strong></h3>
+<p>선형축소는 공분산 행렬의 <strong>희소성(sparsity)</strong> 구조를 활용하지 못합니다. 많은 실제 문제에서 공분산 행렬은 희소하거나 근사적으로 희소한데, 이를 직접적으로 모델링하지 않습니다.[7][1]</p>
+</section>
+<section id="계산-복잡도" class="level3">
+<h3 class="anchored" data-anchor-id="계산-복잡도">5. <strong>계산 복잡도</strong></h3>
+<p>차원이 <span class="math display">\[p &gt; 1000\]</span>을 넘어서면 계산이 느려지는 문제가 있습니다. 특히 고차원 환경에서는 실시간 적용이 어렵습니다.[1]</p>
+</section>
+<section id="역행렬-추정의-비최적성" class="level3">
+<h3 class="anchored" data-anchor-id="역행렬-추정의-비최적성">6. <strong>역행렬 추정의 비최적성</strong></h3>
+<p>공분산 행렬 <span class="math display">\[\hat{S}^*\]</span>가 최적이라도, 그 역행렬 <span class="math display">\[(\hat{S}^*)^{-1}\]</span>은 진정한 정밀도 행렬(precision matrix) <span class="math display">\[\Sigma^{-1}\]</span>의 최적 추정량이 아닙니다. 공분산 행렬의 추정 오차가 역행렬 계산 시 증폭될 수 있습니다.[7][1]</p>
+</section>
+</section>
+<section id="최신-문헌2024-2025의-개선점" class="level2">
+<h2 class="anchored" data-anchor-id="최신-문헌2024-2025의-개선점">최신 문헌(2024-2025)의 개선점</h2>
+<section id="비선형-축소nonlinear-shrinkage" class="level3">
+<h3 class="anchored" data-anchor-id="비선형-축소nonlinear-shrinkage">1. <strong>비선형 축소(Nonlinear Shrinkage)</strong></h3>
+<p><strong>주요 발전:</strong> Ledoit와 Wolf는 이후 <strong>비선형축소</strong> 방법을 개발했습니다.[8][2]</p>
+<p><span class="math display">\[
+\hat{\Sigma}_{\text{NL}} = U \hat{\Lambda}_{\text{NL}} U^T
+\]</span></p>
+<p>여기서 <span class="math display">\[U\]</span>는 표본 공분산 행렬의 고유벡터이고, <span class="math display">\[\hat{\Lambda}_{\text{NL}}\]</span>은 비선형 변환된 고유값 행렬입니다.[2]</p>
+<p><strong>핵심 개선:</strong> - 각 고유값에 <strong>개별적인 축소 강도</strong>를 적용합니다.[2] - 포트폴리오 선택 문제에서 선형축소를 능가하는 성능을 보입니다.[2] - 자산 수가 표본 크기와 비슷할 때 점근적으로 최적입니다.[2]</p>
+<p><strong>최신 연구(2024):</strong> - <strong>Quadratic-Inverse Shrinkage (QIS)</strong>: 계산 효율성을 크게 향상시킨 비선형축소의 새로운 구현 방법[9] - <strong>Exponentially-weighted 비선형축소</strong>: 시계열 데이터에 적용 가능한 가중 표본 공분산에 대한 비선형축소 공식[8]</p>
+</section>
+<section id="대각-목표-축소diagonal-target-shrinkage" class="level3">
+<h3 class="anchored" data-anchor-id="대각-목표-축소diagonal-target-shrinkage">2. <strong>대각 목표 축소(Diagonal Target Shrinkage)</strong></h3>
+<p><strong>2023-2024년 개선:</strong> 축소 목표를 평균 분산 <span class="math display">\[mI\]</span> 대신 <strong>대각 원소를 직접 목표</strong>로 하는 방법이 제안되었습니다.[5][4]</p>
+<p><span class="math display">\[
+T = \text{diag}(s_{11}, s_{22}, \ldots, s_{pp})
+\]</span></p>
+<p><strong>성능 향상:</strong> - 분산이 크게 다른 변수들에 대해 Mean Squared Error를 크게 감소시킵니다.[4] - 희소한(sparse) 진정한 공분산 행렬에서 개선이 더 큽니다.[4] - 공분산 행렬의 역행렬에 대한 MSE도 감소합니다.[4]</p>
+</section>
+<section id="factor-model-기반-접근" class="level3">
+<h3 class="anchored" data-anchor-id="factor-model-기반-접근">3. <strong>Factor Model 기반 접근</strong></h3>
+<p><strong>2024-2025년 트렌드:</strong> 저계수 인수 구조(low-rank factor structure)와 축소를 결합하는 방법이 각광받고 있습니다.[10][11]</p>
+<p><strong>Sparse Approximate Factor (SAF) 방법 (2025):</strong>[10]</p>
+<p><span class="math display">\[
+\Sigma = BB^T + D
+\]</span></p>
+<p>여기서 <span class="math display">\[B\]</span>는 인수 적재 행렬, <span class="math display">\[D\]</span>는 특이 오차의 공분산입니다.</p>
+<p><strong>개선점:</strong> - <span class="math display">\[L_1\]</span> 정규화를 사용해 <strong>약한 인수(weak factors)</strong>를 허용합니다.[10] - 인수 적재와 특이 오차 공분산 모두에 희소성을 부과합니다.[10] - Frobenius 노름에서 다른 방법들보다 우수한 성능을 보입니다.[10] - 포트폴리오 외표본(out-of-sample) Sharpe Ratio가 크게 향상됩니다.[10]</p>
+</section>
+<section id="정밀도-행렬-직접-추정" class="level3">
+<h3 class="anchored" data-anchor-id="정밀도-행렬-직접-추정">4. <strong>정밀도 행렬 직접 추정</strong></h3>
+<p><strong>Graphical LASSO 및 개선 방법들:</strong></p>
+<p><strong>원래 문제:</strong> Graphical LASSO는 <span class="math display">\[L_1\]</span> 패널티를 사용해 정밀도 행렬을 직접 추정하지만, 표본 공분산 행렬의 조건수 문제를 상속합니다.[7]</p>
+<p><strong>2024-2025 개선:</strong></p>
+<p><strong>k-root Graphical LASSO (r-glasso):</strong>[7] - 표본 공분산 행렬의 <span class="math display">\[k\]</span>제곱근을 사용합니다. - 고유값의 분산을 감소시켜 안정성을 높입니다.[7] - 원래 glasso보다 KL 손실과 MSE를 감소시킵니다.[7] - 계산 비용은 거의 동일합니다.[7]</p>
+<p><strong>Robust Sparse Precision Matrix (2025):</strong>[12] - <strong>중꼬리 분포(heavy-tailed distributions)</strong>에 강건합니다. - Spatial-Sign 기반 추정 방법을 사용합니다.[12] - SCLIME와 SGLASSO 두 가지 절차를 제안합니다.[12]</p>
+</section>
+<section id="딥러닝-기반-공분산-추정" class="level3">
+<h3 class="anchored" data-anchor-id="딥러닝-기반-공분산-추정">5. <strong>딥러닝 기반 공분산 추정</strong></h3>
+<p><strong>2025년 최첨단:</strong></p>
+<p><strong>Deep Learning Framework for Medium-Term Covariance Forecasting:</strong>[13] - 3D Convolutional Neural Networks, Bidirectional LSTM, Multi-head Attention을 결합합니다.[13] - 복잡한 시공간 의존성을 포착합니다.[13] - <strong>성능:</strong> 고전적 벤치마크(축소, GARCH) 대비 Euclidean/Frobenius 거리를 <strong>최대 20% 감소</strong>시킵니다.[13] - 다양한 시장 상황에서 강건합니다.[13]</p>
+<p><strong>Self-Supervised Covariance Estimation (2025):</strong>[14] - 이질적 회귀(heteroscedastic regression)에서 공분산 추정을 다룹니다.[14] - 2-Wasserstein 거리 기반 상한을 사용합니다.[14] - 이웃 기반 휴리스틱으로 의사 라벨(pseudo labels)을 생성합니다.[14]</p>
+</section>
+<section id="이중-축소double-shrinkage" class="level3">
+<h3 class="anchored" data-anchor-id="이중-축소double-shrinkage">6. <strong>이중 축소(Double Shrinkage)</strong></h3>
+<p><strong>2024년 제안:</strong>[15]</p>
+<p><span class="math display">\[
+\hat{w}_{\text{DS}} = \lambda_w w_{\text{target}} + (1-\lambda_w)(\Sigma_{\text{ridge}} + \lambda_r I)^{-1} \mathbf{1}
+\]</span></p>
+<p><strong>개선점:</strong> - 공분산 행렬(Tikhonov 정규화)과 포트폴리오 가중치 모두에 축소를 적용합니다.[15] - 외표본 분산, Sharpe Ratio, 회전율(turnover)에서 비선형축소를 능가합니다.[15] - 가장 안정적인 포트폴리오 가중치를 유지합니다.[15]</p>
+</section>
+<section id="구조화된-목표structured-targets" class="level3">
+<h3 class="anchored" data-anchor-id="구조화된-목표structured-targets">7. <strong>구조화된 목표(Structured Targets)</strong></h3>
+<p><strong>Toeplitz 구조 목표 (2022-2024):</strong>[16] - 복소 Gaussian 분포 데이터에 대해 Toeplitz 구조 목표를 사용합니다.[16] - MSE 기준 하에서 최적 조율 매개변수의 닫힌 형식을 유도합니다.[16] - 배열 신호 처리(array signal processing)에 적용됩니다.[16]</p>
+</section>
+</section>
+<section id="최신-문헌에서도-지속되는-한계점" class="level2">
+<h2 class="anchored" data-anchor-id="최신-문헌에서도-지속되는-한계점">최신 문헌에서도 지속되는 한계점</h2>
+<section id="고차원에서의-일관성-부족" class="level3">
+<h3 class="anchored" data-anchor-id="고차원에서의-일관성-부족">1. <strong>고차원에서의 일관성 부족</strong></h3>
+<p>비선형축소를 포함한 대부분의 방법들은 <span class="math display">\[p/n \to c &gt; 0\]</span>인 점근 프레임워크 하에서 작동하지만, <strong>진정한 공분산 행렬에 대한 일관성(consistency)</strong>은 일반적으로 달성되지 않습니다.[17][1]</p>
+<p><span class="math display">\[
+\|\hat{\Sigma} - \Sigma\|_F \not\to 0 \quad \text{as} \quad n, p \to \infty
+\]</span></p>
+</section>
+<section id="희소성-가정의-검증-불가능성" class="level3">
+<h3 class="anchored" data-anchor-id="희소성-가정의-검증-불가능성">2. <strong>희소성 가정의 검증 불가능성</strong></h3>
+<p>많은 현대적 방법들(Graphical LASSO, POET 등)은 <strong>공분산 행렬이 희소하다는 강한 가정</strong>을 필요로 합니다. 이러한 가정은 실무에서 검증 불가능하며, 잘못된 가정은 심각한 편향을 초래할 수 있습니다.[17][1]</p>
+</section>
+<section id="중꼬리-분포에-대한-취약성" class="level3">
+<h3 class="anchored" data-anchor-id="중꼬리-분포에-대한-취약성">3. <strong>중꼬리 분포에 대한 취약성</strong></h3>
+<p>대부분의 이론적 결과는 <strong>정규분포 또는 유한한 4차 모멘트</strong>를 가정합니다. 금융 데이터처럼 중꼬리를 가진 분포에서는 성능이 저하될 수 있습니다.[3][12]</p>
+<p><strong>부분적 해결:</strong> 2025년 Robust Sparse Precision Matrix 방법이 제안되었지만, 여전히 연구가 진행 중입니다.[12]</p>
+</section>
+<section id="고유벡터-추정의-어려움" class="level3">
+<h3 class="anchored" data-anchor-id="고유벡터-추정의-어려움">4. <strong>고유벡터 추정의 어려움</strong></h3>
+<p>모든 축소 방법의 <strong>근본적 한계</strong>: 고차원에서 고유벡터를 정확히 추정하는 것은 본질적으로 어렵습니다.[9]</p>
+<p><span class="math display">\[
+\|U_{\text{sample}} - U_{\text{true}}\| \quad \text{여전히 큼}
+\]</span></p>
+<p>비선형축소는 고유벡터를 표본 공분산 행렬의 것을 그대로 사용하므로, 이 한계를 극복하지 못합니다.[9]</p>
+</section>
+<section id="조율-매개변수-선택의-민감성" class="level3">
+<h3 class="anchored" data-anchor-id="조율-매개변수-선택의-민감성">5. <strong>조율 매개변수 선택의 민감성</strong></h3>
+<p><strong>딥러닝 및 복합 방법들</strong>: 많은 하이퍼파라미터를 필요로 하며, 이들의 선택에 결과가 민감합니다.[14][13]</p>
+<ul>
+<li>교차 검증이 필요하지만 계산 비용이 높습니다.</li>
+<li>시장 상황이 급변할 때 재조율이 필요할 수 있습니다.[13]</li>
+</ul>
+</section>
+<section id="해석-가능성-vs-성능의-트레이드오프" class="level3">
+<h3 class="anchored" data-anchor-id="해석-가능성-vs-성능의-트레이드오프">6. <strong>해석 가능성 vs 성능의 트레이드오프</strong></h3>
+<p><strong>딥러닝 방법들(2025)</strong>: 성능은 우수하지만 <strong>블랙박스</strong>입니다.[14][13]</p>
+<ul>
+<li>Ledoit-Wolf의 장점인 명시적 공식과 해석 가능성을 잃습니다.</li>
+<li>규제가 엄격한 금융 분야에서는 적용이 제한적일 수 있습니다.</li>
+</ul>
+</section>
+<section id="동적-공분산-구조" class="level3">
+<h3 class="anchored" data-anchor-id="동적-공분산-구조">7. <strong>동적 공분산 구조</strong></h3>
+<p>대부분의 방법들은 <strong>정적 공분산 가정</strong>을 사용합니다. 중기 예측이나 체제 전환(regime switching)을 다루는 것은 여전히 어렵습니다.[13]</p>
+<p><strong>부분적 해결:</strong> 2025년 딥러닝 프레임워크가 중기 예측을 다루지만, 여전히 계산 비용과 복잡성 문제가 있습니다.[13]</p>
+</section>
+<section id="p-gg-n-극한-상황" class="level3">
+<h3 class="anchored" data-anchor-id="p-gg-n-극한-상황">8. <strong><span class="math display">\[p \gg n\]</span> 극한 상황</strong></h3>
+<p><span class="math display">\[p/n \to \infty\]</span>인 극한 상황에서는 대부분의 방법들이 여전히 이론적 보장을 제공하지 못합니다. 초고차원 문제에서는:[17]</p>
+<ul>
+<li>추가적인 구조 가정(희소성, 저계수 등)이 필수적입니다.[17]</li>
+<li>가정 위반 시 성능이 급격히 저하됩니다.</li>
+</ul>
+</section>
+<section id="시간적-의존성" class="level3">
+<h3 class="anchored" data-anchor-id="시간적-의존성">9. <strong>시간적 의존성</strong></h3>
+<p>시계열 데이터에서 <strong>시간적 상관관계</strong>를 적절히 모델링하는 것은 여전히 도전과제입니다.[8]</p>
+<ul>
+<li>Exponentially-weighted 방법이 제안되었지만, 가중치 선택이 여전히 문제입니다.[8]</li>
+<li>장기 메모리나 비선형 동역학은 잘 다뤄지지 않습니다.</li>
+</ul>
+</section>
+</section>
+<section id="요약" class="level2">
+<h2 class="anchored" data-anchor-id="요약">요약</h2>
+<p>Ledoit-Wolf (2004)의 선형축소는 <strong>단순성과 이론적 엄밀성</strong>이라는 강점을 가지지만, 선형 구조, 단순한 축소 목표, 희소성 무시 등의 한계가 있습니다. 최신 문헌(2024-2025)은 비선형축소, 대각 목표, 인수 모델 결합, 딥러닝, 이중 축소 등 다양한 방향으로 개선을 이루었습니다. 그러나 고차원 일관성, 중꼬리 분포 강건성, 고유벡터 추정, 해석 가능성, 동적 구조 모델링 등의 근본적 한계는 여전히 활발한 연구 주제로 남아 있습니다.[1][3][9][17][8][15][4][2][10][13]</p>
+<p><a href="http://www.ledoit.net/Review_Paper_2020_JFEc.pdf">1</a> <a href="https://academic.oup.com/rfs/article-abstract/30/12/4349/3863121">2</a> <a href="https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/39513708/39525532-dd39-4299-96cf-84ab378f93d2/A-well-conditioned-estimator-for-large-dimensional-covariance-matrices.pdf">3</a> <a href="https://www.elibrary.imf.org/view/journals/001/2023/257/article-A001-en.xml">4</a> <a href="https://www.imf.org/en/publications/wp/issues/2023/12/08/high-dimensional-covariance-matrix-estimation-shrinkage-toward-a-diagonal-target-542025">5</a> <a href="https://arxiv.org/abs/2304.07045">6</a> <a href="https://e-archivo.uc3m.es/bitstreams/b064e53b-bd9d-49cd-ad33-c0bb1bc5a9c6/download">7</a> <a href="https://arxiv.org/abs/2410.14420">8</a> <a href="https://towardsdatascience.com/nonlinear-shrinkage-an-introduction-825316dda5b8/">9</a> <a href="https://academic.oup.com/jfec/advance-article/doi/10.1093/jjfinec/nbae017/7725018">10</a> <a href="https://palomar.home.ece.ust.hk/papers/2022/ZhouYingPalomar-TSP2022.pdf">11</a> <a href="https://arxiv.org/abs/2503.03575">12</a> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5138330">13</a> <a href="https://arxiv.org/abs/2502.10587">14</a> <a href="https://jmlr.org/papers/v25/22-1337.html">15</a> <a href="https://www.nature.com/articles/s41598-022-21889-8">16</a> <a href="https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-10/issue-1/Estimating-structured-high-dimensional-covariance-and-precision-matrices--Optimal/10.1214/15-EJS1081.full">17</a> <a href="https://scikit-learn.org/0.18/auto_examples/covariance/plot_covariance_estimation.html">18</a> <a href="https://github.com/scikit-learn/scikit-learn/issues/3508">19</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4604032/">20</a> <a href="https://papers.nips.cc/paper/3409-covariance-estimation-for-high-dimensional-data-vectors-using-the-sparse-matrix-transform">21</a> <a href="https://karmapolice.tistory.com/5">22</a> <a href="https://papers.ssrn.com/sol3/Delivery.cfm/3551224.pdf?abstractid=3551224">23</a> <a href="https://www.sciencedirect.com/science/article/pii/S1053811922003536">24</a> <a href="https://academic.oup.com/mnras/article/537/1/21/7945221">25</a> <a href="http://ieeexplore.ieee.org/document/7257093/">26</a> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=433840">27</a> <a href="https://arxiv.org/html/2507.01545v1">28</a> <a href="https://arxiv.org/abs/2508.18299">29</a> <a href="https://www.youtube.com/watch?v=heXLyuCTP1Y">30</a> <a href="https://pure.tudelft.nl/ws/portalfiles/portal/237518540/Statistica_Neerlandica_-_2024_-_Bodnar_-_Nonlinear_shrinkage_test_on_a_large_dimensional_covariance_matrix.pdf">31</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0927539824000240">32</a> <a href="https://dergipark.org.tr/en/download/article-file/2252632">33</a> <a href="https://dl.acm.org/doi/10.1007/978-3-032-03918-7_18">34</a> <a href="https://arxiv.org/pdf/2011.00435.pdf">35</a> <a href="https://www.authorea.com/users/914547/articles/1287637-direction-of-arrival-estimation-using-deep-learning-with-covariance-matrix-reconstruction-under-limited-snapshots">36</a> <a href="https://ieeexplore.ieee.org/abstract/document/10919973">37</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0047259X25000909">38</a> <a href="https://www.sciencedirect.com/science/article/pii/S0960148125008389">39</a> <a href="https://www.nature.com/articles/s41598-025-08712-w">40</a> <a href="https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/ell2.70373">41</a> <a href="https://xwdeng80.github.io/Tang_JNP_2021.pdf">42</a> <a href="https://courses.maths.ox.ac.uk/course/view.php?id=5592">43</a> <a href="https://arxiv.org/pdf/2502.12374.pdf">44</a> <a href="https://dl.acm.org/doi/10.1145/3570991.3571017">45</a> <a href="https://proceedings.mlr.press/v247/puchkin24a.html">46</a> <a href="https://www.semanticscholar.org/paper/Random-matrix-improved-covariance-estimation-for-a-Tiomoko-Bouchard/4995f1330d488f4d4b033d47c2544d9019df0afb">47</a> <a href="https://link.aps.org/doi/10.1103/PhysRevE.111.014151">48</a> <a href="https://academic.oup.com/mnras/article/460/2/1567/2608977">49</a> <a href="https://ideas.repec.org/a/eee/phsmap/v657y2025ics0378437124007349.html">50</a> <a href="https://www.sciencedirect.com/science/article/pii/S0377221725002127">51</a> <a href="https://www.sciencedirect.com/science/article/pii/S0047259X14002607">52</a> <a href="https://arxiv.org/abs/2508.11358">53</a> <a href="https://www.worldscientific.com/doi/full/10.1142/S0219691325500237">54</a> <a href="https://econweb.rutgers.edu/yl1114/papers/survey/onarXiv.pdf">55</a> <a href="https://www.jmlr.org/papers/volume24/21-0699/21-0699.pdf">56</a> <a href="https://dl.acm.org/doi/10.1145/3627673.3679820">57</a> <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/mma.9785">58</a> <a href="https://projecteuclid.org/journals/statistical-science/volume-36/issue-2/Robust-High-Dimensional-Factor-Models-with-Applications-to-Statistical-Machine/10.1214/20-STS785.pdf">59</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
