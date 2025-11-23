@@ -1,0 +1,87 @@
+2025-11-23 13:31:27,859 - INFO - FRED API 연결 성공
+2025-11-23 13:31:27,859 - INFO - Data Collector 초기화: 2005-01-01 ~ 2025-11-23
+2025-11-23 13:31:35,008 - INFO - ================================================================================
+2025-11-23 13:31:35,008 - INFO - 전체 데이터 수집 시작
+2025-11-23 13:31:35,008 - INFO - ================================================================================
+2025-11-23 13:31:35,008 - INFO - S&P 500 티커 리스트 다운로드 시작...
+2025-11-23 13:31:35,245 - ERROR - 티커 리스트 다운로드 실패: HTTP Error 403: Forbidden
+2025-11-23 13:33:52,830 - INFO - FRED API 연결 성공
+2025-11-23 13:33:52,830 - INFO - Data Collector 초기화: 2005-01-01 ~ 2025-11-23
+2025-11-23 13:33:54,836 - INFO - ================================================================================
+2025-11-23 13:33:54,836 - INFO - 전체 데이터 수집 시작
+2025-11-23 13:33:54,836 - INFO - ================================================================================
+2025-11-23 13:33:54,837 - INFO - S&P 500 티커 리스트 다운로드 시작...
+2025-11-23 13:33:55,497 - WARNING - Wikipedia에서 티커 리스트 다운로드 실패: 'Symbol'
+2025-11-23 13:33:55,497 - INFO - 대체 방법 시도: yfinance 사용...
+2025-11-23 13:33:55,497 - INFO - 대체 리스트 사용: 100개 주요 종목
+2025-11-23 13:33:55,497 - INFO - 테스트 모드: 10개 종목만 수집
+2025-11-23 13:33:55,497 - INFO - Macroeconomic 데이터 다운로드 시작...
+2025-11-23 13:33:55,497 - INFO -   - VIX 다운로드 중...
+2025-11-23 13:33:58,815 - INFO -   - 10Y Treasury Yield 다운로드 중...
+2025-11-23 13:33:59,641 - INFO -   - 2Y Treasury Yield (FRED) 다운로드 중...
+2025-11-23 13:34:00,511 - INFO -   - USD Index 다운로드 중...
+2025-11-23 13:34:01,166 - INFO -   - Credit Spread (FRED) 다운로드 중...
+2025-11-23 13:34:02,308 - INFO -   - CPI YoY (FRED) 다운로드 중...
+2025-11-23 13:34:02,613 - INFO - 
+  [Macro Data 품질 체크]
+2025-11-23 13:34:02,622 - INFO - 
+Macro 데이터 수집 완료: 5257 rows, 7 columns
+2025-11-23 13:34:02,663 - INFO - AAPL: Feature tensor 구축 시작...
+2025-11-23 13:34:03,247 - INFO - AAPL: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:03,304 - INFO - AAPL: Technical indicators 계산 완료
+2025-11-23 13:34:04,273 - INFO - AAPL: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:04,273 - ERROR - AAPL: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:04,275 - INFO - MSFT: Feature tensor 구축 시작...
+2025-11-23 13:34:04,683 - INFO - MSFT: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:04,738 - INFO - MSFT: Technical indicators 계산 완료
+2025-11-23 13:34:05,121 - INFO - MSFT: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:05,121 - ERROR - MSFT: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:05,121 - INFO - GOOGL: Feature tensor 구축 시작...
+2025-11-23 13:34:05,402 - INFO - GOOGL: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:05,453 - INFO - GOOGL: Technical indicators 계산 완료
+2025-11-23 13:34:05,844 - INFO - GOOGL: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:05,844 - ERROR - GOOGL: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:05,844 - INFO - AMZN: Feature tensor 구축 시작...
+2025-11-23 13:34:06,192 - INFO - AMZN: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:06,245 - INFO - AMZN: Technical indicators 계산 완료
+2025-11-23 13:34:06,630 - INFO - AMZN: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:06,636 - ERROR - AMZN: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:06,636 - INFO - NVDA: Feature tensor 구축 시작...
+2025-11-23 13:34:07,011 - INFO - NVDA: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:07,076 - INFO - NVDA: Technical indicators 계산 완료
+2025-11-23 13:34:07,480 - INFO - NVDA: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:07,482 - ERROR - NVDA: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:07,482 - INFO - META: Feature tensor 구축 시작...
+2025-11-23 13:34:07,752 - INFO - META: 3399개 데이터 포인트 수집 완료
+2025-11-23 13:34:07,788 - INFO - META: Technical indicators 계산 완료
+2025-11-23 13:34:08,183 - INFO - META: Feature tensor 구축 완료 - (3399, 33), 32 features
+2025-11-23 13:34:08,183 - ERROR - META: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:08,183 - INFO - TSLA: Feature tensor 구축 시작...
+2025-11-23 13:34:08,511 - INFO - TSLA: 3876개 데이터 포인트 수집 완료
+2025-11-23 13:34:08,557 - INFO - TSLA: Technical indicators 계산 완료
+2025-11-23 13:34:08,953 - INFO - TSLA: Feature tensor 구축 완료 - (3876, 33), 32 features
+2025-11-23 13:34:08,954 - ERROR - TSLA: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:08,954 - INFO - BRK-B: Feature tensor 구축 시작...
+2025-11-23 13:34:09,198 - INFO - BRK-B: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:09,251 - INFO - BRK-B: Technical indicators 계산 완료
+2025-11-23 13:34:09,646 - INFO - BRK-B: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:09,646 - ERROR - BRK-B: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:09,647 - INFO - UNH: Feature tensor 구축 시작...
+2025-11-23 13:34:09,991 - INFO - UNH: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:10,038 - INFO - UNH: Technical indicators 계산 완료
+2025-11-23 13:34:10,417 - INFO - UNH: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:10,432 - ERROR - UNH: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:10,432 - INFO - JNJ: Feature tensor 구축 시작...
+2025-11-23 13:34:10,847 - INFO - JNJ: 5257개 데이터 포인트 수집 완료
+2025-11-23 13:34:10,888 - INFO - JNJ: Technical indicators 계산 완료
+2025-11-23 13:34:11,292 - INFO - JNJ: Feature tensor 구축 완료 - (5257, 33), 32 features
+2025-11-23 13:34:11,292 - ERROR - JNJ: 예상치 못한 오류 - Cannot join tz-naive with tz-aware DatetimeIndex
+2025-11-23 13:34:11,292 - INFO - ================================================================================
+2025-11-23 13:34:11,292 - INFO - 데이터 수집 완료: 성공 0, 실패 10
+2025-11-23 13:34:11,292 - INFO - 실패한 티커: AAPL, MSFT, GOOGL, AMZN, NVDA, META, TSLA, BRK-B, UNH, JNJ
+2025-11-23 13:34:11,292 - INFO - ================================================================================
+2025-11-23 13:34:11,292 - INFO - ================================================================================
+2025-11-23 13:34:11,292 - INFO - Feature 유효성 검증 시작
+2025-11-23 13:34:11,292 - INFO - ================================================================================
+2025-11-23 13:34:11,292 - INFO - 
+총 0개 종목 검증 완료

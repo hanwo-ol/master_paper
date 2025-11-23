@@ -1,0 +1,42 @@
+# config/feature_config.yaml
+
+paths:
+  ohlcv: "data/equity_ohlcv_2005_2025.parquet"
+  macro: "data/macro_fred_2005_2025.parquet"
+  features: "data/equity_features_2005_2025.parquet"
+
+date_range:
+  start: "2005-01-01"
+  end: "2025-12-31"
+
+macro:
+  use_fred: true
+  fred_series:
+    - id: "DFF"
+      name: "fed_funds_rate"
+    - id: "T10Y3M"
+      name: "term_spread_10y_3m"
+    - id: "BAA10YM"
+      name: "credit_spread_baa10y"
+  freq: "B"        # business-day resampling
+  method: "ffill"  # forward-fill between macro releases
+
+features:
+  returns:
+    log:
+      horizons: [1, 5, 21]   # past log-returns
+  realized_vol:
+    windows: [21, 63]        # rolling std of daily log returns
+  higher_moments:
+    skew_windows: [63]
+    kurt_windows: [63]
+  dollar_volume:
+    windows: [21]
+  labels:
+    fwd_log_return:
+      horizons: [5, 21]      # prediction targets
+
+options:
+  min_history_days: 252
+  drop_na: true
+  winsorize_quantile: 0.01  # 1% 양쪽 윈저라이즈 (optional, build_features에서는 아직 미적용; 후처리에서 사용 가능)

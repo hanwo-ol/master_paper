@@ -1,0 +1,26 @@
+{
+  "paths": {
+    "ohlcv": "data/equity_ohlcv_2005_2025.parquet",
+    "features": "data/equity_features_2005_2025.parquet",
+    "macro": "data/macro_fred_2005_2025.parquet",
+    "train_features": "data/features_train.parquet",
+    "val_features": "data/features_val.parquet",
+    "test_features": "data/features_test.parquet",
+    "scaler": "data/feature_scaler.pkl"
+  },
+  "dates": {
+    "train_start": "2005-01-01",
+    "val_start": "2017-01-01",
+    "test_start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "universe": {
+    "top_n_by_dollar_vol": 200,
+    "min_history_days": 252
+  },
+  "preprocessing": {
+    "drop_na": true,
+    "winsorize": 0.01,
+    "standardize": "global" 
+  }
+}

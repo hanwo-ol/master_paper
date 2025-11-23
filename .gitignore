@@ -12,3 +12,8 @@ sub_2/AAA/
 ########################
 /sub_2/data/yahoo/
 /sub_2/data/fred/
+sub_2/data
+sub_2/processed_data/
+sub_2/sp500_data/
+
+sub_2/train_statistics.json
