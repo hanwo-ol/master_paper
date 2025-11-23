@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-23">
+<meta name="description" content="AC U-Net upgrade">
+
+<title>paper upgrade plan -draft – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">paper upgrade plan -draft</h1>
+                  <div>
+        <div class="description">
+          AC U-Net upgrade
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Plan</div>
+                <div class="quarto-category">U-Net</div>
+                <div class="quarto-category">Idea</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 23, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#연구-제안서-시공간-태양광-일사량-예측을-위한-상황-인지형-통합-메타러닝-프레임워크" id="toc-연구-제안서-시공간-태양광-일사량-예측을-위한-상황-인지형-통합-메타러닝-프레임워크" class="nav-link active" data-scroll-target="#연구-제안서-시공간-태양광-일사량-예측을-위한-상황-인지형-통합-메타러닝-프레임워크">연구 제안서: 시공간 태양광 일사량 예측을 위한 상황 인지형 통합 메타러닝 프레임워크</a>
+  <ul class="collapse">
+  <li><a href="#서론-및-배경-introduction" id="toc-서론-및-배경-introduction" class="nav-link" data-scroll-target="#서론-및-배경-introduction">1. 서론 및 배경 (Introduction)</a></li>
+  <li><a href="#문제-정의-및-노테이션-problem-definition-notation" id="toc-문제-정의-및-노테이션-problem-definition-notation" class="nav-link" data-scroll-target="#문제-정의-및-노테이션-problem-definition-notation">2. 문제 정의 및 노테이션 (Problem Definition &amp; Notation)</a>
+  <ul class="collapse">
+  <li><a href="#기본-설정" id="toc-기본-설정" class="nav-link" data-scroll-target="#기본-설정">2.1 기본 설정</a></li>
+  <li><a href="#태스크task-정의" id="toc-태스크task-정의" class="nav-link" data-scroll-target="#태스크task-정의">2.2 태스크(Task) 정의</a></li>
+  </ul></li>
+  <li><a href="#제안-방법론-통합-메타러닝-프레임워크-proposed-methodology" id="toc-제안-방법론-통합-메타러닝-프레임워크-proposed-methodology" class="nav-link" data-scroll-target="#제안-방법론-통합-메타러닝-프레임워크-proposed-methodology">3. 제안 방법론: 통합 메타러닝 프레임워크 (Proposed Methodology)</a>
+  <ul class="collapse">
+  <li><a href="#구성-요소-components" id="toc-구성-요소-components" class="nav-link" data-scroll-target="#구성-요소-components">3.1 구성 요소 (Components)</a></li>
+  <li><a href="#통합-최적화-과정-unified-optimization" id="toc-통합-최적화-과정-unified-optimization" class="nav-link" data-scroll-target="#통합-최적화-과정-unified-optimization">3.2 통합 최적화 과정 (Unified Optimization)</a></li>
+  </ul></li>
+  <li><a href="#기대-효과-및-결론-expected-contribution" id="toc-기대-효과-및-결론-expected-contribution" class="nav-link" data-scroll-target="#기대-효과-및-결론-expected-contribution">4. 기대 효과 및 결론 (Expected Contribution)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="연구-제안서-시공간-태양광-일사량-예측을-위한-상황-인지형-통합-메타러닝-프레임워크" class="level1">
+<h1>연구 제안서: 시공간 태양광 일사량 예측을 위한 상황 인지형 통합 메타러닝 프레임워크</h1>
+<p><strong>(Context-Aware Unified Meta-Learning Framework for Spatiotemporal Solar Irradiance Forecasting)</strong></p>
+<section id="서론-및-배경-introduction" class="level2">
+<h2 class="anchored" data-anchor-id="서론-및-배경-introduction">1. 서론 및 배경 (Introduction)</h2>
+<p>기존의 AC U-Net 모델은 결정론적(deterministic) 접근과 고정된 손실 함수를 사용하여, 급변하는 기상 상황이나 계절적 변동성에 유연하게 대처하는 데 한계가 있었다. 특히, 동일한 구름 형태라도 계절과 기상 상황에 따라 일사량에 미치는 영향이 다르다는 점은 모델이 단순한 패턴 인식을 넘어 <strong>‘상황에 따른 적응(Adaptation)’</strong> 능력을 갖춰야 함을 시사한다.</p>
+<p>본 연구에서는 이를 해결하기 위해 <strong>Diffusion Probabilistic Model</strong>을 기반으로 하여 다중 시점을 동시에 예측하는 <strong>Multi2Multi</strong> 구조로 전환하고, 서베이 논문[1]의 분류 체계에 기반한 4가지 메타러닝 전략을 하나의 프레임워크로 통합한 <strong>‘상황 인지형 적응 학습 시스템’</strong>을 제안한다.</p>
+</section>
+<section id="문제-정의-및-노테이션-problem-definition-notation" class="level2">
+<h2 class="anchored" data-anchor-id="문제-정의-및-노테이션-problem-definition-notation">2. 문제 정의 및 노테이션 (Problem Definition &amp; Notation)</h2>
+<section id="기본-설정" class="level3">
+<h3 class="anchored" data-anchor-id="기본-설정">2.1 기본 설정</h3>
+<ul>
+<li><strong>입력 시퀀스 (<span class="math inline">\(\mathbf{X}\)</span>)</strong>: 과거 <span class="math inline">\(T_{in}\)</span> 시점의 위성 영상 및 보조 데이터. <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{T_{in} \times C \times H \times W}\)</span>.</li>
+<li><strong>출력 시퀀스 (<span class="math inline">\(\mathbf{Y}\)</span>)</strong>: 미래 <span class="math inline">\(T_{out}\)</span> 시점의 일사량 맵. <span class="math inline">\(\mathbf{Y} \in \mathbb{R}^{T_{out} \times 1 \times H \times W}\)</span>.</li>
+<li><strong>기반 모델 (<span class="math inline">\(f_\theta\)</span>)</strong>: 파라미터 <span class="math inline">\(\theta\)</span>를 갖는 Diffusion 기반의 조건부 생성 모델. <span class="math inline">\(p_\theta(\mathbf{Y}|\mathbf{X})\)</span>.</li>
+</ul>
+</section>
+<section id="태스크task-정의" class="level3">
+<h3 class="anchored" data-anchor-id="태스크task-정의">2.2 태스크(Task) 정의</h3>
+<p>메타러닝을 위해 전체 데이터셋을 개별적인 ‘기상 이벤트’ 단위의 태스크로 정의한다. * <strong>태스크 <span class="math inline">\(\mathcal{T}_i\)</span></strong>: 특정 시점 <span class="math inline">\(t\)</span>를 기준으로 샘플링된 기상 이벤트. * <strong>데이터셋 구성</strong>: 각 태스크 <span class="math inline">\(\mathcal{T}_i\)</span>는 적응을 위한 서포트 셋(Support Set)과 평가를 위한 쿼리 셋(Query Set)으로 구성된다. * <span class="math inline">\(\mathcal{D}_{\text{sup}}^{(i)} = \{(\mathbf{X}_j, \mathbf{Y}_j)\}_{j=1}^{K}\)</span>: 해당 기상 이벤트의 초기 관측 데이터 (적응용). * <span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)} = \{(\mathbf{X}_k, \mathbf{Y}_k)\}_{k=1}^{Q}\)</span>: 해당 기상 이벤트의 미래 예측 데이터 (평가용). * <strong>태스크 분포 <span class="math inline">\(p(\mathcal{T})\)</span></strong>: 가능한 모든 기상 조건(맑음, 흐림, 태풍, 장마 등)의 분포.</p>
+</section>
+</section>
+<section id="제안-방법론-통합-메타러닝-프레임워크-proposed-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="제안-방법론-통합-메타러닝-프레임워크-proposed-methodology">3. 제안 방법론: 통합 메타러닝 프레임워크 (Proposed Methodology)</h2>
+<p>우리는 다음 4가지 메타 지식(Meta-Knowledge) 집합 <span class="math inline">\(\Omega = \{\omega_{\text{init}}, \omega_{\text{opt}}, \omega_{\text{loss}}, \omega_{\text{curr}}\}\)</span>을 동시에 최적화하는 이중 루프(Bi-level) 최적화 문제를 정의한다.</p>
+<section id="구성-요소-components" class="level3">
+<h3 class="anchored" data-anchor-id="구성-요소-components">3.1 구성 요소 (Components)</h3>
+<section id="strategy-1-상황-적응형-초기-조건-meta-initialization" class="level4">
+<h4 class="anchored" data-anchor-id="strategy-1-상황-적응형-초기-조건-meta-initialization"><strong>Strategy 1: 상황 적응형 초기 조건 (Meta-Initialization)</strong></h4>
+<ul>
+<li><strong>Taxonomy</strong>: Meta-Representation (Parameter Initialization)</li>
+<li><strong>정의</strong>: 모든 태스크에 대해 빠르게 적응할 수 있는 최적의 초기 파라미터 <span class="math inline">\(\omega_{\text{init}}\)</span>.</li>
+<li><strong>수식</strong>: 내부 루프의 시작점 <span class="math inline">\(\theta_0 = \omega_{\text{init}}\)</span>.</li>
+</ul>
+</section>
+<section id="strategy-5-적응형-메타-최적화기-meta-optimizer" class="level4">
+<h4 class="anchored" data-anchor-id="strategy-5-적응형-메타-최적화기-meta-optimizer"><strong>Strategy 5: 적응형 메타-최적화기 (Meta-Optimizer)</strong></h4>
+<ul>
+<li><strong>Taxonomy</strong>: Meta-Representation (Optimizer)</li>
+<li><strong>정의</strong>: 고정된 SGD나 Adam 대신, 현재의 파라미터 상태와 경사도(Gradient)를 입력받아 최적의 업데이트 벡터를 출력하는 신경망 <span class="math inline">\(M_{\omega_{\text{opt}}}\)</span>.</li>
+<li><strong>수식</strong>: 내부 루프 업데이트 규칙. <span class="math display">\[ \theta_{k+1} = \theta_k - M_{\omega_{\text{opt}}}(\nabla_{\theta_k} \mathcal{L}_{\text{inner}}, \theta_k) \]</span> 이는 날씨 변화율(Gradient의 크기 및 방향)에 따라 학습률을 동적으로 조절하는 효과를 갖는다.</li>
+</ul>
+</section>
+<section id="strategy-2-동적-손실-함수-dynamic-loss-function" class="level4">
+<h4 class="anchored" data-anchor-id="strategy-2-동적-손실-함수-dynamic-loss-function"><strong>Strategy 2: 동적 손실 함수 (Dynamic Loss Function)</strong></h4>
+<ul>
+<li><strong>Taxonomy</strong>: Meta-Representation (Losses)</li>
+<li><strong>정의</strong>: 기상 상황(Context)에 따라 픽셀 정확도(<span class="math inline">\(\mathcal{L}_{L1}\)</span>)와 구조적 유사성(<span class="math inline">\(\mathcal{L}_{SSIM}\)</span>)의 가중치 <span class="math inline">\(\lambda\)</span>를 조절하는 네트워크 <span class="math inline">\(h_{\omega_{\text{loss}}}\)</span>.</li>
+<li><strong>수식</strong>: 내부 루프 손실 함수. <span class="math display">\[ \mathcal{L}_{\text{inner}}(\theta; \mathcal{D}_{\text{sup}}^{(i)}) = \lambda_i \cdot \mathcal{L}_{SSIM} + (1-\lambda_i) \cdot \mathcal{L}_{L1} \]</span> <span class="math display">\[ \text{where } \lambda_i = h_{\omega_{\text{loss}}}(\text{Encoder}(\mathbf{X} \in \mathcal{D}_{\text{sup}}^{(i)})) \]</span></li>
+</ul>
+</section>
+<section id="strategy-4-불확실성-기반-커리큘럼-meta-curriculum" class="level4">
+<h4 class="anchored" data-anchor-id="strategy-4-불확실성-기반-커리큘럼-meta-curriculum"><strong>Strategy 4: 불확실성 기반 커리큘럼 (Meta-Curriculum)</strong></h4>
+<ul>
+<li><strong>Taxonomy</strong>: Meta-Objective (Episode Design)</li>
+<li><strong>정의</strong>: 모델의 예측 불확실성(Uncertainty)이 높은 ’어려운 태스크’를 우선적으로 샘플링하는 확률 분포 <span class="math inline">\(q_{\omega_{\text{curr}}}(\mathcal{T})\)</span>.</li>
+<li><strong>수식</strong>: 외부 루프에서의 태스크 샘플링 가중치. 난이도 <span class="math inline">\(H(\mathcal{T}_i)\)</span>에 비례하여 샘플링 확률을 조정.</li>
+</ul>
+</section>
+</section>
+<section id="통합-최적화-과정-unified-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="통합-최적화-과정-unified-optimization">3.2 통합 최적화 과정 (Unified Optimization)</h3>
+<p>전체 프레임워크는 내부 루프(Inner Loop)와 외부 루프(Outer Loop)로 구성된다.</p>
+<p><strong>[Step 1: Inner Loop - Task Adaptation]</strong> 태스크 <span class="math inline">\(\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})\)</span>가 주어졌을 때, 초기 파라미터 <span class="math inline">\(\omega_{\text{init}}\)</span>에서 시작하여 <span class="math inline">\(K\)</span>번의 적응 단계를 거친다. 이때 메타-최적화기(<span class="math inline">\(M\)</span>)와 동적 손실 함수(<span class="math inline">\(h\)</span>)를 사용한다.</p>
+<p><span class="math display">\[ \theta_0^{(i)} = \omega_{\text{init}} \]</span> <span class="math display">\[ \theta_{k+1}^{(i)} = \theta_k^{(i)} - M_{\omega_{\text{opt}}} \left( \nabla_{\theta} \mathcal{L}_{\text{inner}}(\theta_k^{(i)}; \mathcal{D}_{\text{sup}}^{(i)}, \omega_{\text{loss}}), \theta_k^{(i)} \right) \]</span> <span class="math display">\[ \text{Result: Adapted Parameter } \theta_{K}^{(i)} \]</span></p>
+<p><strong>[Step 2: Outer Loop - Meta Update]</strong> 적응된 파라미터 <span class="math inline">\(\theta_{K}^{(i)}\)</span>를 사용하여 쿼리 셋 <span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)}\)</span>에 대한 일반화 성능을 평가하고, 메타 파라미터 <span class="math inline">\(\Omega\)</span>를 업데이트한다. 외부 루프의 손실 함수 <span class="math inline">\(\mathcal{L}_{\text{outer}}\)</span>는 객관적인 평가를 위해 고정된 지표(예: MSE)를 사용한다.</p>
+<p><span class="math display">\[ \min_{\Omega} \mathbb{E}_{\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})} \left[ \mathcal{L}_{\text{outer}}(\theta_{K}^{(i)}; \mathcal{D}_{\text{qry}}^{(i)}) \right] \]</span></p>
+</section>
+</section>
+<section id="기대-효과-및-결론-expected-contribution" class="level2">
+<h2 class="anchored" data-anchor-id="기대-효과-및-결론-expected-contribution">4. 기대 효과 및 결론 (Expected Contribution)</h2>
+<p>본 제안서는 서베이 논문의 Taxonomy를 기반으로 4가지 핵심 전략을 통합하였다.</p>
+<ol type="1">
+<li><strong>Multi2Multi Diffusion</strong>: 시점 간 일관성을 유지하며 불확실성을 확률적으로 모델링한다.</li>
+<li><strong>Meta-Initialization &amp; Optimizer</strong>: 급변하는 기상 상황(Gradient가 큰 상황)과 안정적인 상황을 구분하여 학습 속도를 조절함으로써 <strong>적응성(Adaptability)</strong>을 극대화한다.</li>
+<li><strong>Dynamic Loss</strong>: 구름의 형태가 중요한 상황과 픽셀 값이 중요한 상황을 스스로 판단하여 <strong>목적 함수를 유연하게 변경</strong>한다.</li>
+<li><strong>Curriculum</strong>: 예측이 어려운 태스크를 집중 학습하여 모델의 <strong>강건성(Robustness)</strong>을 확보한다.</li>
+</ol>
+<p>이 통합 프레임워크는 기존의 정적인 딥러닝 모델이 갖는 한계를 극복하고, 기상학적 특성을 데이터로부터 스스로 학습하는 차세대 태양광 예측 모델이 될 것이다.</p>
+<hr>
+<p><strong>참고 문헌</strong> [1] T. Hospedales, A. Antoniou, P. Micaelli, and A. Storkey, “Meta-Learning in Neural Networks: A Survey,” IEEE Transactions on Pattern Analysis and Machine Intelligence, 2021.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
