@@ -1,0 +1,41 @@
+experiment:
+  name: "K4_tau060_Nall_featurewise"
+  seed: 42
+  device: "cuda:0"
+
+data:
+  data_dir: "./processed_data"
+  regime_k: 4          # K
+  purity_tau: 0.60     # τ
+  min_asset_ratio: 0.6 # episode에서 커버해야 하는 최소 자산 비율
+  normalization: "feature-wise"  # 'feature-wise' | 'per-asset' | 'cross-sectional'
+  ticker_subset: null  # ["AAPL", "MSFT", ...]  or null (전체 자산 사용)
+
+  # 나중에 N-asset 실험용으로 쓰고 싶으면 예를 들어:
+  # ticker_subset_mode: "N100"        # 또는 "N10", "N50", "N200" ...
+  # ticker_subsets_path: "./processed_data/ticker_subsets.json"
+
+dataloader:
+  batch_size: 1        # meta-learning이면 거의 1
+  num_workers: 0
+  pin_memory: true
+  shuffle_train: true
+
+model:
+  # U-Net + Attention 관련 설정 (예시, 이 파일에서는 안 쓰여도 OK)
+  in_channels: 32
+  base_channels: 64
+  depth: 4
+  use_attention: true
+
+meta_learning:
+  algo: "maml"       # or "reptile"
+  inner_lr: 1e-2
+  outer_lr: 1e-3
+  inner_steps: 5
+
+training:
+  max_epochs: 100
+  log_interval: 50
+  val_interval: 1
+  save_dir: "./runs"

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="김한울">
-<meta name="dcterms.date" content="2025-11-23">
+<meta name="dcterms.date" content="2025-11-24">
 <meta name="description" content="AC U-Net upgrade">
 
-<title>paper upgrade plan -draft – Master Thesis Literature Review</title>
+<title>paper upgrade plan -draft 2 – Master Thesis Literature Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -151,7 +151,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">paper upgrade plan -draft</h1>
+      <h1 class="title">paper upgrade plan -draft 2</h1>
                   <div>
         <div class="description">
           AC U-Net upgrade
@@ -178,7 +178,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 23, 2025</p>
+        <p class="date">November 24, 2025</p>
       </div>
     </div>
     
@@ -225,7 +225,8 @@ window.Quarto = {
 <section id="서론-및-배경-introduction" class="level2">
 <h2 class="anchored" data-anchor-id="서론-및-배경-introduction">1. 서론 및 배경 (Introduction)</h2>
 <p>기존의 AC U-Net 모델은 결정론적(deterministic) 접근과 고정된 손실 함수를 사용하여, 급변하는 기상 상황이나 계절적 변동성에 유연하게 대처하는 데 한계가 있었다. 특히, 동일한 구름 형태라도 계절과 기상 상황에 따라 일사량에 미치는 영향이 다르다는 점은 모델이 단순한 패턴 인식을 넘어 <strong>‘상황에 따른 적응(Adaptation)’</strong> 능력을 갖춰야 함을 시사한다.</p>
-<p>본 연구에서는 이를 해결하기 위해 <strong>Diffusion Probabilistic Model</strong>을 기반으로 하여 다중 시점을 동시에 예측하는 <strong>Multi2Multi</strong> 구조로 전환하고, 서베이 논문[1]의 분류 체계에 기반한 4가지 메타러닝 전략을 하나의 프레임워크로 통합한 <strong>‘상황 인지형 적응 학습 시스템’</strong>을 제안한다.</p>
+<p>최근 기상 예측 분야에서는 결정론적 예측의 한계를 극복하기 위해 <strong>Diffusion Probabilistic Model</strong>을 도입하여 불확실성을 정량화하고 예측의 신뢰도를 높이는 연구가 활발하다[1][2]. 또한, 메타러닝 분야에서는 학습 가능한 최적화기(Meta-Optimizer)[5][6]와 동적 손실 함수(Dynamic Loss)[9][10]를 통해 모델의 일반화 성능을 극대화하는 방법론이 주목받고 있다.</p>
+<p>본 연구에서는 이러한 최신 연구 동향을 반영하여, <strong>Diffusion 기반의 Multi2Multi 확률적 예측 모델</strong>을 구축하고, 서베이 논문[1]의 분류 체계에 기반한 4가지 메타러닝 전략을 하나의 프레임워크로 통합한 <strong>‘상황 인지형 적응 학습 시스템’</strong>을 제안한다.</p>
 </section>
 <section id="문제-정의-및-노테이션-problem-definition-notation" class="level2">
 <h2 class="anchored" data-anchor-id="문제-정의-및-노테이션-problem-definition-notation">2. 문제 정의 및 노테이션 (Problem Definition &amp; Notation)</h2>
@@ -234,21 +235,15 @@ window.Quarto = {
 <ul>
 <li><strong>입력 시퀀스 (<span class="math inline">\(\mathbf{X}\)</span>)</strong>: 과거 <span class="math inline">\(T_{in}\)</span> 시점의 위성 영상 및 보조 데이터. <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{T_{in} \times C \times H \times W}\)</span>.</li>
 <li><strong>출력 시퀀스 (<span class="math inline">\(\mathbf{Y}\)</span>)</strong>: 미래 <span class="math inline">\(T_{out}\)</span> 시점의 일사량 맵. <span class="math inline">\(\mathbf{Y} \in \mathbb{R}^{T_{out} \times 1 \times H \times W}\)</span>.</li>
-<li><strong>기반 모델 (<span class="math inline">\(f_\theta\)</span>)</strong>: 파라미터 <span class="math inline">\(\theta\)</span>를 갖는 Diffusion 기반의 조건부 생성 모델. <span class="math inline">\(p_\theta(\mathbf{Y}|\mathbf{X})\)</span>.</li>
+<li><strong>기반 모델 (<span class="math inline">\(f_\theta\)</span>)</strong>: 파라미터 <span class="math inline">\(\theta\)</span>를 갖는 Diffusion 기반의 조건부 생성 모델. <span class="math inline">\(p_\theta(\mathbf{Y}|\mathbf{X})\)</span>.
+<ul>
+<li><strong>Noise Scheduling</strong>: 장시간 예측 시 발생하는 temporal drift를 억제하기 위해 <strong>Segmented Noise Scheduling</strong>[4]을 적용한다.</li>
+</ul></li>
 </ul>
 </section>
 <section id="태스크task-정의" class="level3">
 <h3 class="anchored" data-anchor-id="태스크task-정의">2.2 태스크(Task) 정의</h3>
-<p>메타러닝을 위해 전체 데이터셋을 개별적인 ‘기상 이벤트’ 단위의 태스크로 정의한다.</p>
-<ul>
-<li><strong>태스크 <span class="math inline">\(\mathcal{T}_i\)</span></strong>: 특정 시점 <span class="math inline">\(t\)</span>를 기준으로 샘플링된 기상 이벤트.</li>
-<li><strong>데이터셋 구성</strong>: 각 태스크 <span class="math inline">\(\mathcal{T}_i\)</span>는 적응을 위한 서포트 셋(Support Set)과 평가를 위한 쿼리 셋(Query Set)으로 구성된다.
-<ul>
-<li><span class="math inline">\(\mathcal{D}_{\text{sup}}^{(i)} = \{(\mathbf{X}_j, \mathbf{Y}_j)\}_{j=1}^{K}\)</span>: 해당 기상 이벤트의 초기 관측 데이터 (적응용).</li>
-<li><span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)} = \{(\mathbf{X}_k, \mathbf{Y}_k)\}_{k=1}^{Q}\)</span>: 해당 기상 이벤트의 미래 예측 데이터 (평가용).</li>
-</ul></li>
-<li><strong>태스크 분포 <span class="math inline">\(p(\mathcal{T})\)</span></strong>: 가능한 모든 기상 조건(맑음, 흐림, 태풍, 장마 등)의 분포.</li>
-</ul>
+<p>메타러닝을 위해 전체 데이터셋을 개별적인 ‘기상 이벤트’ 단위의 태스크로 정의한다. * <strong>태스크 <span class="math inline">\(\mathcal{T}_i\)</span></strong>: 특정 시점 <span class="math inline">\(t\)</span>를 기준으로 샘플링된 기상 이벤트. * <strong>데이터셋 구성</strong>: 각 태스크 <span class="math inline">\(\mathcal{T}_i\)</span>는 적응을 위한 서포트 셋(Support Set)과 평가를 위한 쿼리 셋(Query Set)으로 구성된다. * <span class="math inline">\(\mathcal{D}_{\text{sup}}^{(i)} = \{(\mathbf{X}_j, \mathbf{Y}_j)\}_{j=1}^{K}\)</span>: 해당 기상 이벤트의 초기 관측 데이터 (적응용). * <span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)} = \{(\mathbf{X}_k, \mathbf{Y}_k)\}_{k=1}^{Q}\)</span>: 해당 기상 이벤트의 미래 예측 데이터 (평가용). * <strong>태스크 분포 <span class="math inline">\(p(\mathcal{T})\)</span></strong>: 가능한 모든 기상 조건(맑음, 흐림, 태풍, 장마 등)의 분포.</p>
 </section>
 </section>
 <section id="제안-방법론-통합-메타러닝-프레임워크-proposed-methodology" class="level2">
@@ -262,6 +257,7 @@ window.Quarto = {
 <li><strong>Taxonomy</strong>: Meta-Representation (Parameter Initialization)</li>
 <li><strong>정의</strong>: 모든 태스크에 대해 빠르게 적응할 수 있는 최적의 초기 파라미터 <span class="math inline">\(\omega_{\text{init}}\)</span>.</li>
 <li><strong>수식</strong>: 내부 루프의 시작점 <span class="math inline">\(\theta_0 = \omega_{\text{init}}\)</span>.</li>
+<li><strong>최신 동향 반영</strong>: MAML 기반 초기화는 급변하는 기상 상황과 같은 미지 태스크(Out-of-Distribution)에 대한 적응력을 높이는 데 효과적임이 검증되었다[18].</li>
 </ul>
 </section>
 <section id="strategy-5-적응형-메타-최적화기-meta-optimizer" class="level4">
@@ -269,7 +265,9 @@ window.Quarto = {
 <ul>
 <li><strong>Taxonomy</strong>: Meta-Representation (Optimizer)</li>
 <li><strong>정의</strong>: 고정된 SGD나 Adam 대신, 현재의 파라미터 상태와 경사도(Gradient)를 입력받아 최적의 업데이트 벡터를 출력하는 신경망 <span class="math inline">\(M_{\omega_{\text{opt}}}\)</span>.</li>
-<li><strong>수식</strong>: 내부 루프 업데이트 규칙. <span class="math display">\[ \theta_{k+1} = \theta_k - M_{\omega_{\text{opt}}}(\nabla_{\theta_k} \mathcal{L}_{\text{inner}}, \theta_k) \]</span> 이는 날씨 변화율(Gradient의 크기 및 방향)에 따라 학습률을 동적으로 조절하는 효과를 갖는다.</li>
+<li><strong>아키텍처</strong>: 시간적 의존성이 강한 기상 데이터의 특성을 고려하여 <strong>LSTM 기반 아키텍처</strong>를 채택한다[5].</li>
+<li><strong>수식</strong>: 내부 루프 업데이트 규칙. <span class="math display">\[ \theta_{k+1} = \theta_k - M_{\omega_{\text{opt}}}(\nabla_{\theta_k} \mathcal{L}_{\text{inner}}, \theta_k, \|\nabla_{\theta_k} \mathcal{L}_{\text{inner}}\|) \]</span> 입력으로 그래디언트의 크기(<span class="math inline">\(\|\nabla\|\)</span>)를 추가하여 기상 변화율에 따른 학습률 동적 조절 능력을 강화한다.</li>
+<li><strong>안정성 확보</strong>: 출력값에 클리핑(<span class="math inline">\([0, 2\alpha_{\max}]\)</span>)을 적용하여 Bi-level 최적화의 안정성을 보장한다[21].</li>
 </ul>
 </section>
 <section id="strategy-2-동적-손실-함수-dynamic-loss-function" class="level4">
@@ -278,6 +276,7 @@ window.Quarto = {
 <li><strong>Taxonomy</strong>: Meta-Representation (Losses)</li>
 <li><strong>정의</strong>: 기상 상황(Context)에 따라 픽셀 정확도(<span class="math inline">\(\mathcal{L}_{L1}\)</span>)와 구조적 유사성(<span class="math inline">\(\mathcal{L}_{SSIM}\)</span>)의 가중치 <span class="math inline">\(\lambda\)</span>를 조절하는 네트워크 <span class="math inline">\(h_{\omega_{\text{loss}}}\)</span>.</li>
 <li><strong>수식</strong>: 내부 루프 손실 함수. <span class="math display">\[ \mathcal{L}_{\text{inner}}(\theta; \mathcal{D}_{\text{sup}}^{(i)}) = \lambda_i \cdot \mathcal{L}_{SSIM} + (1-\lambda_i) \cdot \mathcal{L}_{L1} \]</span> <span class="math display">\[ \text{where } \lambda_i = h_{\omega_{\text{loss}}}(\text{Encoder}(\mathbf{X} \in \mathcal{D}_{\text{sup}}^{(i)})) \]</span></li>
+<li><strong>최신 동향 반영</strong>: 온라인 방식으로 손실 함수를 업데이트하여 다양한 기상 조건에서 일관된 성능 향상을 도모한다[9]. 흐린 날씨에는 SSIM 가중치를, 맑은 날씨에는 L1 가중치를 높이는 방향으로 자동 학습될 것이다.</li>
 </ul>
 </section>
 <section id="strategy-4-불확실성-기반-커리큘럼-meta-curriculum" class="level4">
@@ -285,31 +284,32 @@ window.Quarto = {
 <ul>
 <li><strong>Taxonomy</strong>: Meta-Objective (Episode Design)</li>
 <li><strong>정의</strong>: 모델의 예측 불확실성(Uncertainty)이 높은 ’어려운 태스크’를 우선적으로 샘플링하는 확률 분포 <span class="math inline">\(q_{\omega_{\text{curr}}}(\mathcal{T})\)</span>.</li>
-<li><strong>수식</strong>: 외부 루프에서의 태스크 샘플링 가중치. 난이도 <span class="math inline">\(H(\mathcal{T}_i)\)</span>에 비례하여 샘플링 확률을 조정.</li>
+<li><strong>난이도 측정</strong>: Diffusion 모델의 예측 분산을 활용하여 난이도를 정의한다[17]. <span class="math display">\[ H(\mathcal{T}_i) = \mathbb{E}[\text{Var}(p_\theta(\mathbf{Y}|\mathbf{X}))] \]</span></li>
+<li><strong>수식</strong>: 외부 루프에서의 태스크 샘플링 확률. 온도 파라미터 <span class="math inline">\(\tau\)</span>를 도입하여 탐색-활용 균형을 조절한다[15]. <span class="math display">\[ q_{\omega_{\text{curr}}}(\mathcal{T}_i) \propto \exp(H(\mathcal{T}_i) / \tau) \]</span></li>
 </ul>
 </section>
 </section>
 <section id="통합-최적화-과정-unified-optimization" class="level3">
 <h3 class="anchored" data-anchor-id="통합-최적화-과정-unified-optimization">3.2 통합 최적화 과정 (Unified Optimization)</h3>
-<p>전체 프레임워크는 내부 루프(Inner Loop)와 외부 루프(Outer Loop)로 구성된다.</p>
-<p><strong>[Step 1: Inner Loop - Task Adaptation]</strong> 태스크 <span class="math inline">\(\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})\)</span>가 주어졌을 때, 초기 파라미터 <span class="math inline">\(\omega_{\text{init}}\)</span>에서 시작하여 <span class="math inline">\(K\)</span>번의 적응 단계를 거친다. 이때 메타-최적화기(<span class="math inline">\(M\)</span>)와 동적 손실 함수(<span class="math inline">\(h\)</span>)를 사용한다.</p>
+<p>전체 프레임워크는 내부 루프(Inner Loop)와 외부 루프(Outer Loop)로 구성된다. 계산 효율성을 위해 2차 미분 계산 시 <strong>FOMAML(First-Order MAML)</strong> 근사 또는 <strong>Hessian-vector product</strong>를 사용한다[7].</p>
+<p><strong>[Step 1: Inner Loop - Task Adaptation]</strong> 태스크 <span class="math inline">\(\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})\)</span>가 주어졌을 때, 초기 파라미터 <span class="math inline">\(\omega_{\text{init}}\)</span>에서 시작하여 <span class="math inline">\(K\)</span>번의 적응 단계를 거친다.</p>
 <p><span class="math display">\[ \theta_0^{(i)} = \omega_{\text{init}} \]</span> <span class="math display">\[ \theta_{k+1}^{(i)} = \theta_k^{(i)} - M_{\omega_{\text{opt}}} \left( \nabla_{\theta} \mathcal{L}_{\text{inner}}(\theta_k^{(i)}; \mathcal{D}_{\text{sup}}^{(i)}, \omega_{\text{loss}}), \theta_k^{(i)} \right) \]</span> <span class="math display">\[ \text{Result: Adapted Parameter } \theta_{K}^{(i)} \]</span></p>
-<p><strong>[Step 2: Outer Loop - Meta Update]</strong> 적응된 파라미터 <span class="math inline">\(\theta_{K}^{(i)}\)</span>를 사용하여 쿼리 셋 <span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)}\)</span>에 대한 일반화 성능을 평가하고, 메타 파라미터 <span class="math inline">\(\Omega\)</span>를 업데이트한다. 외부 루프의 손실 함수 <span class="math inline">\(\mathcal{L}_{\text{outer}}\)</span>는 객관적인 평가를 위해 고정된 지표(예: MSE)를 사용한다.</p>
+<p><strong>[Step 2: Outer Loop - Meta Update]</strong> 적응된 파라미터 <span class="math inline">\(\theta_{K}^{(i)}\)</span>를 사용하여 쿼리 셋 <span class="math inline">\(\mathcal{D}_{\text{qry}}^{(i)}\)</span>에 대한 일반화 성능을 평가하고, 메타 파라미터 <span class="math inline">\(\Omega\)</span>를 업데이트한다.</p>
 <p><span class="math display">\[ \min_{\Omega} \mathbb{E}_{\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})} \left[ \mathcal{L}_{\text{outer}}(\theta_{K}^{(i)}; \mathcal{D}_{\text{qry}}^{(i)}) \right] \]</span></p>
 </section>
 </section>
 <section id="기대-효과-및-결론-expected-contribution" class="level2">
 <h2 class="anchored" data-anchor-id="기대-효과-및-결론-expected-contribution">4. 기대 효과 및 결론 (Expected Contribution)</h2>
-<p>본 제안서는 서베이 논문의 Taxonomy를 기반으로 4가지 핵심 전략을 통합하였다.</p>
+<p>본 제안서는 최신 메타러닝 및 기상 예측 연구 동향을 반영하여 4가지 핵심 전략을 통합하였다.</p>
 <ol type="1">
-<li><strong>Multi2Multi Diffusion</strong>: 시점 간 일관성을 유지하며 불확실성을 확률적으로 모델링한다.</li>
-<li><strong>Meta-Initialization &amp; Optimizer</strong>: 급변하는 기상 상황(Gradient가 큰 상황)과 안정적인 상황을 구분하여 학습 속도를 조절함으로써 <strong>적응성(Adaptability)</strong>을 극대화한다.</li>
+<li><strong>Multi2Multi Diffusion</strong>: 시점 간 일관성을 유지하며 불확실성을 확률적으로 모델링하여 결정론적 예측의 한계를 극복한다.</li>
+<li><strong>Meta-Initialization &amp; Optimizer</strong>: 급변하는 기상 상황과 안정적인 상황을 구분하여 학습 속도를 조절함으로써 <strong>적응성(Adaptability)</strong>을 극대화한다.</li>
 <li><strong>Dynamic Loss</strong>: 구름의 형태가 중요한 상황과 픽셀 값이 중요한 상황을 스스로 판단하여 <strong>목적 함수를 유연하게 변경</strong>한다.</li>
 <li><strong>Curriculum</strong>: 예측이 어려운 태스크를 집중 학습하여 모델의 <strong>강건성(Robustness)</strong>을 확보한다.</li>
 </ol>
 <p>이 통합 프레임워크는 기존의 정적인 딥러닝 모델이 갖는 한계를 극복하고, 기상학적 특성을 데이터로부터 스스로 학습하는 차세대 태양광 예측 모델이 될 것이다.</p>
 <hr>
-<p><strong>참고 문헌</strong> [1] T. Hospedales, A. Antoniou, P. Micaelli, and A. Storkey, “Meta-Learning in Neural Networks: A Survey,” IEEE Transactions on Pattern Analysis and Machine Intelligence, 2021.</p>
+<p><strong>참고 문헌</strong> [1] T. Hospedales, A. Antoniou, P. Micaelli, and A. Storkey, “Meta-Learning in Neural Networks: A Survey,” IEEE Transactions on Pattern Analysis and Machine Intelligence, 2021. [2] Transformer-Modulated Diffusion Model (TMDM), ICLR 2024. [3] Diffusion-based Decoupled Framework (D³U), 2025. [4] Segmented Noise Scheduling for Long-term Forecasting, arXiv 2025. [5] Meta-Learned Optimizers: A Systematic Review, 2025. [6] Maximal Update Parametrization (μLO), arXiv 2024. [7] Enhancing MAML via Gradient Similarity Loss, 2019. [8] Meta-Learning Adaptive Loss Functions, ICLR 2024. [9] Dynamic Loss for Robust Learning, arXiv 2023. [10] Uniform Sampling over Episode Difficulty, NeurIPS 2021. [11] Meta Episodic Learning with Dynamic Task Sampling, arXiv 2024. [12] MAML-en-LLM, arXiv 2024. [13] Bi-level Optimization Stability, arXiv 2024. [14] Conditional Diffusion for Weather Forecasting (CoDiCast), IJCAI 2025. [15] Probabilistic Weather Forecasting with Diffusion (GenCast), Nature 2024. [16] 3D U-Net for Sub-Seasonal Forecasting, 2025. [17] CloudCast U-Net, arXiv 2024.</p>
 
 
 </section>
