@@ -421,7 +421,7 @@ class BatchPreprocessor:
     def save_results(self, k, daily_summary, episodes_data, kmeans, scaler, purity_threshold):
         """K별 결과 저장"""
         
-        output_dir = os.path.join(self.output_base_dir, f'K{k}')
+        output_dir = os.path.join(self.output_base_dir, f'K{k}_tau{purity_threshold:.2f}')
         os.makedirs(output_dir, exist_ok=True)
         
         print(f"\n{'='*80}")
@@ -512,140 +512,92 @@ class BatchPreprocessor:
         )
         
         # 3. 결과 저장
-        output_dir = self.save_results(k, daily_summary_with_regime, episodes_data, kmeans, scaler, purity_threshold)
-        
+        output_dir = self.save_results(
+            k,
+            daily_summary_with_regime,
+            episodes_data,
+            kmeans,
+            scaler,
+            purity_threshold
+        )
+
         return output_dir
     
-    def batch_process(self, k_values=[4, 5, 6], purity_threshold=0.70):
-        """배치 처리: K=4,5,6에 대해 각각 실행"""
+    def batch_process(self, k_values=[3,4,5,6], purity_values=[0.50,0.55,0.60,0.65,0.75,0.80]):
         print("="*80)
         print("배치 전처리 시작 (Train-Only Regime Clustering)")
         print("="*80)
         print(f"\n처리할 K 값: {k_values}")
-        print(f"Purity threshold: {purity_threshold}")
-        print("\n핵심 개선:")
-        print("  ✅ Train-only regime clustering (미래 정보 누출 방지)")
-        print("  ✅ 통일된 split 날짜 (imputation, regime, episode)")
-        print("  ✅ Missing indicators 추가")
-        
+        print(f"Purity grid: {purity_values}")
+
         # 데이터 준비
         self.load_and_prepare_data()
-        
-        # Imputation (train-only)
         self.impute_with_train_only()
-        
-        # Market summary 계산 (한 번만)
         self.compute_market_summary()
-        
-        # K별 처리
+
         results = {}
+
+        # 🔥 K-τ 전체 그리드 실행
         for k in k_values:
-            try:
-                output_dir = self.process_k_value(k, purity_threshold)
-                results[k] = {
-                    'status': 'success',
-                    'output_dir': output_dir
-                }
-            except Exception as e:
-                print(f"\n❌ K={k} 처리 실패: {e}")
-                import traceback
-                traceback.print_exc()
-                results[k] = {
-                    'status': 'failed',
-                    'error': str(e)
-                }
-        
-        # 전체 요약
-        print("\n" + "="*80)
-        print("배치 처리 완료")
-        print("="*80)
-        
-        for k, result in results.items():
-            if result['status'] == 'success':
-                print(f"✓ K={k}: {result['output_dir']}")
-            else:
-                print(f"❌ K={k}: {result['error']}")
-        
-        # 비교 리포트
-        self.create_comparison_report(k_values, results)
-        
+            for tau in purity_values:
+                try:
+                    print(f"\n---- Running K={k}, τ={tau} ----")
+                    output_dir = self.process_k_value(k, purity_threshold=tau)
+
+                    results[(k, tau)] = {
+                        'status': 'success',
+                        'output_dir': output_dir
+                    }
+
+                except Exception as e:
+                    print(f"\n❌ K={k}, τ={tau} 처리 실패: {e}")
+                    results[(k, tau)] = {
+                        'status': 'failed',
+                        'error': str(e)
+                    }
+
+        # K-τ 비교 보고서 생성
+        self.create_comparison_report(k_values, purity_values, results)
         return results
+
     
-    def create_comparison_report(self, k_values, results):
-        """K별 비교 리포트"""
-        print("\n" + "="*80)
-        print("K별 비교 리포트")
-        print("="*80)
-        
-        comparison = []
-        
+    def create_comparison_report(self, k_values, purity_values, results):
+
+        rows = []
         for k in k_values:
-            if results[k]['status'] != 'success':
-                continue
-            
-            metadata_path = os.path.join(results[k]['output_dir'], f'metadata_K{k}.json')
-            with open(metadata_path, 'r') as f:
-                metadata = json.load(f)
-            
-            comparison.append({
-                'K': k,
-                'Train Episodes': metadata['episodes']['n_train'],
-                'Val Episodes': metadata['episodes']['n_val'],
-                'Test Episodes': metadata['episodes']['n_test'],
-                'Total Episodes': (metadata['episodes']['n_train'] + 
-                                  metadata['episodes']['n_val'] + 
-                                  metadata['episodes']['n_test']),
-                'Train Skipped %': (metadata['episodes']['train_skipped'] / 
-                                   (metadata['episodes']['n_train'] + metadata['episodes']['train_skipped']) * 100),
-                'Val Skipped %': (metadata['episodes']['val_skipped'] / 
-                                 (metadata['episodes']['n_val'] + metadata['episodes']['val_skipped']) * 100),
-                'Test Skipped %': (metadata['episodes']['test_skipped'] / 
-                                  (metadata['episodes']['n_test'] + metadata['episodes']['test_skipped']) * 100)
-            })
-        
-        comparison_df = pd.DataFrame(comparison)
-        
-        print("\n")
-        print(comparison_df.to_string(index=False))
-        
-        # 저장
-        comparison_path = os.path.join(self.output_base_dir, 'K_comparison.csv')
-        comparison_df.to_csv(comparison_path, index=False)
-        print(f"\n✓ 비교 리포트 저장: {comparison_path}")
-        
-        return comparison_df
+            for tau in purity_values:
+                key = (k, tau)
+                if key not in results or results[key]['status'] != 'success':
+                    continue
+
+                meta_path = os.path.join(
+                    results[key]['output_dir'], 
+                    f'metadata_K{k}.json'
+                )
+                meta = json.load(open(meta_path))
+
+                rows.append({
+                    'K': k,
+                    'tau': tau,
+                    'Train Episodes': meta['episodes']['n_train'],
+                    'Val Episodes': meta['episodes']['n_val'],
+                    'Test Episodes': meta['episodes']['n_test'],
+                })
+
+        df = pd.DataFrame(rows)
+        df.to_csv(os.path.join(self.output_base_dir, 'K_tau_comparison.csv'), index=False)
+        print(df)
+        return df
 
 
-# 실행
+
 if __name__ == "__main__":
-    print("S&P 500 Batch Preprocessing (Train-Only Version)")
-    print("="*80)
-    
-    preprocessor = BatchPreprocessor(
+    processor = BatchPreprocessor(
         panel_path='./sp500_data/sp500_panel.csv',
         output_base_dir='./processed_data'
     )
-    
-    # K=4,5,6 배치 처리
-    results = preprocessor.batch_process(
-        k_values=[4, 5, 6],
-        purity_threshold=0.70
+
+    results = processor.batch_process(
+        k_values=[3,4,5,6],
+        purity_values=[0.50, 0.55, 0.60, 0.65, 0.75, 0.80]
     )
-    
-    print("\n" + "="*80)
-    print("전체 처리 완료!")
-    print("="*80)
-    print("\n핵심 개선사항:")
-    print("  ✅ Train 구간 데이터로만 K-means 학습")
-    print("  ✅ Val/Test는 학습된 모델로 regime 예측")
-    print("  ✅ Imputation/Regime/Episode 모두 동일한 split 날짜 사용")
-    print("  ✅ 미래 정보 누출 완전 차단")
-    
-    print("\n생성 파일:")
-    print("  processed_data/K4/, K5/, K6/")
-    print("    - sp500_panel_K*.csv")
-    print("    - market_regimes_K*.csv")
-    print("    - episodes_K*.json")
-    print("    - kmeans_model_K*.pkl  ← 학습된 모델 저장")
-    print("    - metadata_K*.json")
-    print("  processed_data/K_comparison.csv")
