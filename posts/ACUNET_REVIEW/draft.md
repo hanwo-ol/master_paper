@@ -20,12 +20,14 @@ author: "김한울"
 ## 2. 문제 정의 및 노테이션 (Problem Definition & Notation)
 
 ### 2.1 기본 설정
+
 *   **입력 시퀀스 ($\mathbf{X}$)**: 과거 $T_{in}$ 시점의 위성 영상 및 보조 데이터. $\mathbf{X} \in \mathbb{R}^{T_{in} \times C \times H \times W}$.
 *   **출력 시퀀스 ($\mathbf{Y}$)**: 미래 $T_{out}$ 시점의 일사량 맵. $\mathbf{Y} \in \mathbb{R}^{T_{out} \times 1 \times H \times W}$.
 *   **기반 모델 ($f_\theta$)**: 파라미터 $\theta$를 갖는 Diffusion 기반의 조건부 생성 모델. $p_\theta(\mathbf{Y}|\mathbf{X})$.
 
 ### 2.2 태스크(Task) 정의
 메타러닝을 위해 전체 데이터셋을 개별적인 '기상 이벤트' 단위의 태스크로 정의한다.
+
 *   **태스크 $\mathcal{T}_i$**: 특정 시점 $t$를 기준으로 샘플링된 기상 이벤트.
 *   **데이터셋 구성**: 각 태스크 $\mathcal{T}_i$는 적응을 위한 서포트 셋(Support Set)과 평가를 위한 쿼리 셋(Query Set)으로 구성된다.
     *   $\mathcal{D}_{\text{sup}}^{(i)} = \{(\mathbf{X}_j, \mathbf{Y}_j)\}_{j=1}^{K}$: 해당 기상 이벤트의 초기 관측 데이터 (적응용).
@@ -39,11 +41,13 @@ author: "김한울"
 ### 3.1 구성 요소 (Components)
 
 #### **Strategy 1: 상황 적응형 초기 조건 (Meta-Initialization)**
+
 *   **Taxonomy**: Meta-Representation (Parameter Initialization)
 *   **정의**: 모든 태스크에 대해 빠르게 적응할 수 있는 최적의 초기 파라미터 $\omega_{\text{init}}$.
 *   **수식**: 내부 루프의 시작점 $\theta_0 = \omega_{\text{init}}$.
 
 #### **Strategy 5: 적응형 메타-최적화기 (Meta-Optimizer)**
+
 *   **Taxonomy**: Meta-Representation (Optimizer)
 *   **정의**: 고정된 SGD나 Adam 대신, 현재의 파라미터 상태와 경사도(Gradient)를 입력받아 최적의 업데이트 벡터를 출력하는 신경망 $M_{\omega_{\text{opt}}}$.
 *   **수식**: 내부 루프 업데이트 규칙.
@@ -51,6 +55,7 @@ author: "김한울"
     이는 날씨 변화율(Gradient의 크기 및 방향)에 따라 학습률을 동적으로 조절하는 효과를 갖는다.
 
 #### **Strategy 2: 동적 손실 함수 (Dynamic Loss Function)**
+
 *   **Taxonomy**: Meta-Representation (Losses)
 *   **정의**: 기상 상황(Context)에 따라 픽셀 정확도($\mathcal{L}_{L1}$)와 구조적 유사성($\mathcal{L}_{SSIM}$)의 가중치 $\lambda$를 조절하는 네트워크 $h_{\omega_{\text{loss}}}$.
 *   **수식**: 내부 루프 손실 함수.
@@ -58,6 +63,7 @@ author: "김한울"
     $$ \text{where } \lambda_i = h_{\omega_{\text{loss}}}(\text{Encoder}(\mathbf{X} \in \mathcal{D}_{\text{sup}}^{(i)})) $$
 
 #### **Strategy 4: 불확실성 기반 커리큘럼 (Meta-Curriculum)**
+
 *   **Taxonomy**: Meta-Objective (Episode Design)
 *   **정의**: 모델의 예측 불확실성(Uncertainty)이 높은 '어려운 태스크'를 우선적으로 샘플링하는 확률 분포 $q_{\omega_{\text{curr}}}(\mathcal{T})$.
 *   **수식**: 외부 루프에서의 태스크 샘플링 가중치. 난이도 $H(\mathcal{T}_i)$에 비례하여 샘플링 확률을 조정.
