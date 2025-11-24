@@ -1,41 +1,117 @@
-experiment:
-  name: "K4_tau060_Nall_featurewise"
-  seed: 42
-  device: "cuda:0"
+# configs/sp500_k4_tau060_min060.yaml
+
+experiment_name: "sp500_k4_tau060_min060_v1"
+seed: 42
+
+device:
+  default: "cuda"    # "cuda" or "cpu"
+  deterministic: true
 
 data:
-  data_dir: "./processed_data"
-  regime_k: 4          # K
-  purity_tau: 0.60     # τ
-  min_asset_ratio: 0.6 # episode에서 커버해야 하는 최소 자산 비율
-  normalization: "feature-wise"  # 'feature-wise' | 'per-asset' | 'cross-sectional'
-  ticker_subset: null  # ["AAPL", "MSFT", ...]  or null (전체 자산 사용)
+  root_dir: "./processed_data"
+  panel_path: "./processed_data/K4_tau0.60/sp500_panel_K4.csv"
+  episodes_path: "./processed_data/K4_tau0.60/episodes_K4.json"
 
-  # 나중에 N-asset 실험용으로 쓰고 싶으면 예를 들어:
-  # ticker_subset_mode: "N100"        # 또는 "N10", "N50", "N200" ...
-  # ticker_subsets_path: "./processed_data/ticker_subsets.json"
+  K: 4
+  tau: 0.60
+  min_asset_ratio: 0.60
 
-dataloader:
-  batch_size: 1        # meta-learning이면 거의 1
-  num_workers: 0
+  support_len: 60
+  query_len: 60
+
+  normalize: "featurewise"   # ["featurewise", "global", "none"]
+  return_col: "ret_1d"       # 실제 컬럼명에 맞게 수정
+  feature_cols: null         # null이면 dataloader에서 자동 결정
+
+  # dataloader 관련
+  batch_size: 8
+  num_workers: 4
   pin_memory: true
-  shuffle_train: true
+  drop_last: true
+  shuffle: true
+
+hrp:
+  enabled: false              # 지금은 HRP 안 쓰고, 나중에 true로
+  mode: "ordering"            # ["ordering", "baseline", "both"]
+  linkage: "single"           # clustercorr linkage
+  risk_measure: "std"         # ["std", "semivariance", ...]
+  min_cluster_size: 2
+  rebalance_freq: "monthly"   # baseline 포트폴리오 용도
+  # 필요하면, 나중에:
+  # precomputed_order_path: "./processed_data/K4_tau0.60/hrp_order.npy"
 
 model:
-  # U-Net + Attention 관련 설정 (예시, 이 파일에서는 안 쓰여도 OK)
-  in_channels: 32
-  base_channels: 64
-  depth: 4
-  use_attention: true
+  name: "TimeSeriesUNet"
 
-meta_learning:
-  algo: "maml"       # or "reptile"
-  inner_lr: 1e-2
-  outer_lr: 1e-3
-  inner_steps: 5
+  # input_dim 은 dataloader에서 infer해서 runtime에 override
+  input_dim: null
+
+  # U-Net 구조
+  base_channels: 64           # 첫 블록 채널 수
+  channel_multiplier: [1, 2, 4]   # downsample마다 배수
+  kernel_size: 3
+  num_blocks_per_stage: 2
+  dropout: 0.1
+  use_layer_norm: true
+
+  # regime embedding
+  num_regimes: 4              # K와 동일하게 맞추기
+  regime_embed_dim: 32
+  regime_mlp_hidden: 64
+  use_film: true              # FiLM으로 conditioning할지 여부
+
+  # 출력 스케일 관련
+  output_activation: "none"   # ["none", "tanh", "sigmoid"]
+
+meta:
+  algorithm: "soft_weighted_maml"
+
+  inner_lr: 0.001
+  meta_lr: 0.0001
+
+  num_inner_steps: 5
+  first_order: true            # FOMAML 여부
+  loss_type: "mse"             # 우선은 MSE, 나중에 Sharpe 기반으로 확장
+
+  # soft task-weighting
+  weight_temperature: 1.0      # α
+  weight_mode: "exp_neg_loss"  # ["exp_neg_loss", "softmax_loss", "uniform"]
+
+  # gradient clipping
+  grad_clip_norm: 1.0
 
 training:
   max_epochs: 100
-  log_interval: 50
-  val_interval: 1
-  save_dir: "./runs"
+  log_interval: 50      # step 단위 logging
+  val_interval: 1       # epoch 단위 validation
+  save_interval: 5
+
+  amp: true             # mixed precision 사용 여부
+  checkpoint_dir: "./checkpoints/sp500_k4_tau060_min060"
+  resume: null          # 체크포인트 경로 or null
+
+evaluation:
+  # 메타 학습 후 에피소드 평가용
+  num_eval_episodes: 256
+  eval_batch_size: 8
+
+  # Sharpe/turnover 등 계산에 사용할 정보
+  risk_free_rate_annual: 0.0
+  trading_days_per_year: 252
+
+portfolio:
+  # 최종 shrinkage MVO decision layer 설정 (Step 4랑 연결)
+  risk_aversion: 5.0
+  transaction_cost_bps: 5       # κ = 5 bps
+  max_weight: 0.05              # 개별 종목 캡
+  short_allowed: false
+
+  shrinkage:
+    method: "ledoit_wolf"       # ["none", "ledoit_wolf", ...]
+    delta: 0.5                  # 이건 나중에 Theorem 2 결과랑 맞춰 조정
+
+logging:
+  project: "meta_portfolio"
+  run_name: "sp500_k4_tau060_min060_v1"
+  use_wandb: false              # wandb 안 쓰면 false
+  log_dir: "./logs/sp500_k4_tau060_min060"

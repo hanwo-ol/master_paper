@@ -22,6 +22,7 @@ author: "김한울"
 ## 2. 문제 정의 및 노테이션 (Problem Definition & Notation)
 
 ### 2.1 기본 설정
+
 *   **입력 시퀀스 ($\mathbf{X}$)**: 과거 $T_{in}$ 시점의 위성 영상 및 보조 데이터. $\mathbf{X} \in \mathbb{R}^{T_{in} \times C \times H \times W}$.
 *   **출력 시퀀스 ($\mathbf{Y}$)**: 미래 $T_{out}$ 시점의 일사량 맵. $\mathbf{Y} \in \mathbb{R}^{T_{out} \times 1 \times H \times W}$.
 *   **기반 모델 ($f_\theta$)**: 파라미터 $\theta$를 갖는 Diffusion 기반의 조건부 생성 모델. $p_\theta(\mathbf{Y}|\mathbf{X})$.
@@ -29,6 +30,7 @@ author: "김한울"
 
 ### 2.2 태스크(Task) 정의
 메타러닝을 위해 전체 데이터셋을 개별적인 '기상 이벤트' 단위의 태스크로 정의한다.
+
 *   **태스크 $\mathcal{T}_i$**: 특정 시점 $t$를 기준으로 샘플링된 기상 이벤트.
 *   **데이터셋 구성**: 각 태스크 $\mathcal{T}_i$는 적응을 위한 서포트 셋(Support Set)과 평가를 위한 쿼리 셋(Query Set)으로 구성된다.
     *   $\mathcal{D}_{\text{sup}}^{(i)} = \{(\mathbf{X}_j, \mathbf{Y}_j)\}_{j=1}^{K}$: 해당 기상 이벤트의 초기 관측 데이터 (적응용).
@@ -42,12 +44,14 @@ author: "김한울"
 ### 3.1 구성 요소 (Components)
 
 #### **Strategy 1: 상황 적응형 초기 조건 (Meta-Initialization)**
+
 *   **Taxonomy**: Meta-Representation (Parameter Initialization)
 *   **정의**: 모든 태스크에 대해 빠르게 적응할 수 있는 최적의 초기 파라미터 $\omega_{\text{init}}$.
 *   **수식**: 내부 루프의 시작점 $\theta_0 = \omega_{\text{init}}$.
 *   **최신 동향 반영**: MAML 기반 초기화는 급변하는 기상 상황과 같은 미지 태스크(Out-of-Distribution)에 대한 적응력을 높이는 데 효과적임이 검증되었다[18].
 
 #### **Strategy 5: 적응형 메타-최적화기 (Meta-Optimizer)**
+
 *   **Taxonomy**: Meta-Representation (Optimizer)
 *   **정의**: 고정된 SGD나 Adam 대신, 현재의 파라미터 상태와 경사도(Gradient)를 입력받아 최적의 업데이트 벡터를 출력하는 신경망 $M_{\omega_{\text{opt}}}$.
 *   **아키텍처**: 시간적 의존성이 강한 기상 데이터의 특성을 고려하여 **LSTM 기반 아키텍처**를 채택한다[5].
@@ -57,6 +61,7 @@ author: "김한울"
 *   **안정성 확보**: 출력값에 클리핑($[0, 2\alpha_{\max}]$)을 적용하여 Bi-level 최적화의 안정성을 보장한다[21].
 
 #### **Strategy 2: 동적 손실 함수 (Dynamic Loss Function)**
+
 *   **Taxonomy**: Meta-Representation (Losses)
 *   **정의**: 기상 상황(Context)에 따라 픽셀 정확도($\mathcal{L}_{L1}$)와 구조적 유사성($\mathcal{L}_{SSIM}$)의 가중치 $\lambda$를 조절하는 네트워크 $h_{\omega_{\text{loss}}}$.
 *   **수식**: 내부 루프 손실 함수.
@@ -65,6 +70,7 @@ author: "김한울"
 *   **최신 동향 반영**: 온라인 방식으로 손실 함수를 업데이트하여 다양한 기상 조건에서 일관된 성능 향상을 도모한다[9]. 흐린 날씨에는 SSIM 가중치를, 맑은 날씨에는 L1 가중치를 높이는 방향으로 자동 학습될 것이다.
 
 #### **Strategy 4: 불확실성 기반 커리큘럼 (Meta-Curriculum)**
+
 *   **Taxonomy**: Meta-Objective (Episode Design)
 *   **정의**: 모델의 예측 불확실성(Uncertainty)이 높은 '어려운 태스크'를 우선적으로 샘플링하는 확률 분포 $q_{\omega_{\text{curr}}}(\mathcal{T})$.
 *   **난이도 측정**: Diffusion 모델의 예측 분산을 활용하여 난이도를 정의한다[17].
@@ -77,6 +83,7 @@ author: "김한울"
 전체 프레임워크는 내부 루프(Inner Loop)와 외부 루프(Outer Loop)로 구성된다. 계산 효율성을 위해 2차 미분 계산 시 **FOMAML(First-Order MAML)** 근사 또는 **Hessian-vector product**를 사용한다[7].
 
 **[Step 1: Inner Loop - Task Adaptation]**
+
 태스크 $\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})$가 주어졌을 때, 초기 파라미터 $\omega_{\text{init}}$에서 시작하여 $K$번의 적응 단계를 거친다.
 
 $$ \theta_0^{(i)} = \omega_{\text{init}} $$
@@ -84,6 +91,7 @@ $$ \theta_{k+1}^{(i)} = \theta_k^{(i)} - M_{\omega_{\text{opt}}} \left( \nabla_{
 $$ \text{Result: Adapted Parameter } \theta_{K}^{(i)} $$
 
 **[Step 2: Outer Loop - Meta Update]**
+
 적응된 파라미터 $\theta_{K}^{(i)}$를 사용하여 쿼리 셋 $\mathcal{D}_{\text{qry}}^{(i)}$에 대한 일반화 성능을 평가하고, 메타 파라미터 $\Omega$를 업데이트한다.
 
 $$ \min_{\Omega} \mathbb{E}_{\mathcal{T}_i \sim q_{\omega_{\text{curr}}}(\mathcal{T})} \left[ \mathcal{L}_{\text{outer}}(\theta_{K}^{(i)}; \mathcal{D}_{\text{qry}}^{(i)}) \right] $$
