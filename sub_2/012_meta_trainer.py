@@ -25,11 +25,11 @@ class MetaTrainer:
         
         self.model = AssetUNet(n_features=self.train_ds.n_features, n_assets=self.train_ds.n_assets).to(self.device)
         
-        # Weight Decay 추가
+        # [수정] Weight Decay 추가 (Regularization)
         self.meta_optimizer = optim.Adam(self.model.parameters(), lr=meta_lr, weight_decay=1e-5)
         
-        # [수정] verbose=True 제거
-        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.meta_optimizer, mode='min', factor=0.5, patience=3)
+        # [수정] Learning Rate Scheduler 추가
+        self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.meta_optimizer, mode='min', factor=0.5, patience=3, verbose=True)
         
         self.criterion = nn.MSELoss()
         self.save_dir = f'./checkpoints/K{k}_tau{tau:.2f}'
@@ -128,8 +128,6 @@ class MetaTrainer:
 
     def run_training(self, epochs=20):
         print(f"Starting Meta-Training (K={self.k}, Tau={self.tau})...")
-        print(f"LR: Meta={self.meta_lr}, Inner={self.inner_lr}")
-        
         train_loader = DataLoader(self.train_ds, batch_size=4, shuffle=True)
         
         best_val_loss = float('inf')
@@ -153,13 +151,10 @@ class MetaTrainer:
             # Scheduler Step
             self.scheduler.step(avg_val_loss)
             
-            # [추가] 현재 LR 출력
-            current_lr = self.meta_optimizer.param_groups[0]['lr']
-            
             history['train_loss'].append(avg_train_loss)
             history['val_loss'].append(avg_val_loss)
             
-            print(f"Epoch {epoch+1}: Train Loss={avg_train_loss:.6f}, Val Loss={avg_val_loss:.6f}, LR={current_lr:.2e}")
+            print(f"Epoch {epoch+1}: Train Loss={avg_train_loss:.6f}, Val Loss={avg_val_loss:.6f}")
             
             if avg_val_loss < best_val_loss:
                 best_val_loss = avg_val_loss
