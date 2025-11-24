@@ -56,38 +56,55 @@ class MetaTrainer:
         return fast_model
 
     def train_step(self, batch):
-        """
-        Meta-Training Step (Outer Loop)
-        """
-        meta_loss = 0
-        batch_size = batch['support_x'].size(0)
-        
-        self.meta_optimizer.zero_grad()
-        
-        for i in range(batch_size):
-            # 1. Task Data 준비
-            sup_x = batch['support_x'][i].to(self.device)
-            sup_y = batch['support_y'][i, -1, :].to(self.device) # Last step target
-            qry_x = batch['query_x'][i].to(self.device)
-            qry_y = batch['query_y'][i, -1, :].to(self.device)
+            """
+            Meta-Training Step (Outer Loop) - FOMAML Implementation
+            """
+            meta_loss = 0
+            batch_size = batch['support_x'].size(0)
             
-            # 2. Inner Loop (Adaptation)
-            fast_model = self.inner_loop(self.model, sup_x.unsqueeze(0), sup_y.unsqueeze(0))
+            self.meta_optimizer.zero_grad()
             
-            # 3. Query Loss 계산
-            fast_model.eval()
-            qry_pred = fast_model(qry_x.unsqueeze(0))
-            loss = self.criterion(qry_pred, qry_y.unsqueeze(0))
+            # [중요] 배치 내의 모든 Task에 대한 Gradient를 누적해야 함
+            total_grads = {n: torch.zeros_like(p) for n, p in self.model.named_parameters()}
             
-            loss.backward() # Accumulate gradients
-            meta_loss += loss.item()
+            for i in range(batch_size):
+                # 1. Task Data 준비
+                sup_x = batch['support_x'][i].to(self.device)
+                sup_y = batch['support_y'][i, -1, :].to(self.device)
+                qry_x = batch['query_x'][i].to(self.device)
+                qry_y = batch['query_y'][i, -1, :].to(self.device)
+                
+                # 2. Inner Loop (Adaptation)
+                # fast_model은 self.model과 연결이 끊긴(Detached) 복사본
+                fast_model = self.inner_loop(self.model, sup_x.unsqueeze(0), sup_y.unsqueeze(0))
+                
+                # 3. Query Loss 계산
+                fast_model.eval()
+                qry_pred = fast_model(qry_x.unsqueeze(0))
+                loss = self.criterion(qry_pred, qry_y.unsqueeze(0))
+                
+                # 4. Gradient 계산 (w.r.t fast_model parameters)
+                fast_model.zero_grad()
+                loss.backward()
+                
+                # [핵심 수정] FOMAML: Fast Model의 Gradient를 가져와서 누적
+                for n, p in fast_model.named_parameters():
+                    if p.grad is not None:
+                        total_grads[n] += p.grad.data / batch_size # Average over batch
+                
+                meta_loss += loss.item()
+                
+            # 5. Meta Update
+            # 누적된 Gradient를 원본 모델(self.model)에 주입
+            for n, p in self.model.named_parameters():
+                if n in total_grads:
+                    p.grad = total_grads[n]
             
-        # 4. Meta Update
-        # Gradient Clipping
-        torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-        self.meta_optimizer.step()
-        
-        return meta_loss / batch_size
+            # Gradient Clipping & Step
+            torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+            self.meta_optimizer.step()
+            
+            return meta_loss / batch_size
 
     def validate(self):
         """Validation (Meta-Testing on Val Set)"""
