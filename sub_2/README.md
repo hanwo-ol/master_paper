@@ -45,7 +45,7 @@
 3.  **Conformal Prediction (Uncertainty Quantification):**
     *   **아이디어:** "내일 수익률은 0.1%일 것이다"가 아니라, **"내일 수익률은 90% 확률로 [-0.5%, 0.7%] 구간에 있을 것이다"**라고 예측.
     *   **방법:** Meta-Model의 예측 오차를 이용하여 **Conformal Prediction** 신뢰구간(Confidence Interval) 생성.
-    *   **수식:** $C(X_{t+1}) = [\hat{y}_{t+1} - q, \hat{y}_{t+1} + q]$, 여기서 $q$는 Calibration Set 오차의 $(1-\alpha)$ 분위수.
+    *   **수식:** $C(X_{t+1}) = [\hat{y}_{t+1} - q, \hat{y} _{t+1} + q]$, 여기서 $q$는 Calibration Set 오차의 $(1-\alpha)$ 분위수.
     *   **인사이트:** 모델의 불확실성을 정량화하여, 리스크 관리 시스템과 연동할 수 있음을 보여줌.
 
 #### 💰 금융학 & 퀀트 (Quantitative Finance) 관점
