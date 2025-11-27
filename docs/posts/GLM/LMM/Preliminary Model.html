@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-24">
+<meta name="description" content="20251124 GLM class notes">
+
+<title>Linear Mixed Model - Preliminary Model – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.qmd"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Linear Mixed Model - Preliminary Model</h1>
+                  <div>
+        <div class="description">
+          20251124 GLM class notes
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">lecture</div>
+                <div class="quarto-category">glm</div>
+                <div class="quarto-category">lmm</div>
+                <div class="quarto-category">LinearMixedModel</div>
+                <div class="quarto-category">PreliminaryModel</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 24, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#linear-mixed-model의-preliminary-model" id="toc-linear-mixed-model의-preliminary-model" class="nav-link active" data-scroll-target="#linear-mixed-model의-preliminary-model">Linear Mixed Model의 Preliminary Model</a>
+  <ul class="collapse">
+  <li><a href="#개요" id="toc-개요" class="nav-link" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주변-모형marginal-model-개념" id="toc-주변-모형marginal-model-개념" class="nav-link" data-scroll-target="#주변-모형marginal-model-개념">1. 주변 모형(Marginal Model) 개념</a></li>
+  <li><a href="#기호법notation" id="toc-기호법notation" class="nav-link" data-scroll-target="#기호법notation">2. 기호법(Notation)</a></li>
+  <li><a href="#주변-우도함수marginal-likelihood-function" id="toc-주변-우도함수marginal-likelihood-function" class="nav-link" data-scroll-target="#주변-우도함수marginal-likelihood-function">3. 주변 우도함수(Marginal Likelihood Function)</a></li>
+  <li><a href="#고정효과-추정" id="toc-고정효과-추정" class="nav-link" data-scroll-target="#고정효과-추정">4. 고정효과 추정</a></li>
+  <li><a href="#분산-성분-추정-방법" id="toc-분산-성분-추정-방법" class="nav-link" data-scroll-target="#분산-성분-추정-방법">5. 분산 성분 추정 방법</a></li>
+  <li><a href="#mle와-reml의-비교-간단한-예시" id="toc-mle와-reml의-비교-간단한-예시" class="nav-link" data-scroll-target="#mle와-reml의-비교-간단한-예시">6. MLE와 REML의 비교: 간단한 예시</a></li>
+  <li><a href="#실제-적용의-의미" id="toc-실제-적용의-의미" class="nav-link" data-scroll-target="#실제-적용의-의미">7. 실제 적용의 의미</a></li>
+  <li><a href="#preliminary-model과-후속-내용의-연결" id="toc-preliminary-model과-후속-내용의-연결" class="nav-link" data-scroll-target="#preliminary-model과-후속-내용의-연결">8. Preliminary Model과 후속 내용의 연결</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">요약</a></li>
+  </ul></li>
+  <li><a href="#고정효과-추정-gls-공식의-상세-전개" id="toc-고정효과-추정-gls-공식의-상세-전개" class="nav-link" data-scroll-target="#고정효과-추정-gls-공식의-상세-전개">고정효과 추정: GLS 공식의 상세 전개</a>
+  <ul class="collapse">
+  <li><a href="#우도함수-설정-및-미분" id="toc-우도함수-설정-및-미분" class="nav-link" data-scroll-target="#우도함수-설정-및-미분">1. 우도함수 설정 및 미분</a></li>
+  <li><a href="#정규-방정식에서-gls-추정량까지" id="toc-정규-방정식에서-gls-추정량까지" class="nav-link" data-scroll-target="#정규-방정식에서-gls-추정량까지">2. 정규 방정식에서 GLS 추정량까지</a></li>
+  <li><a href="#gls-추정량의-성질" id="toc-gls-추정량의-성질" class="nav-link" data-scroll-target="#gls-추정량의-성질">3. GLS 추정량의 성질</a></li>
+  <li><a href="#gls와-ols최소제곱법의-비교" id="toc-gls와-ols최소제곱법의-비교" class="nav-link" data-scroll-target="#gls와-ols최소제곱법의-비교">4. GLS와 OLS(최소제곱법)의 비교</a></li>
+  <li><a href="#수치-예제-간단한-2개체-사례" id="toc-수치-예제-간단한-2개체-사례" class="nav-link" data-scroll-target="#수치-예제-간단한-2개체-사례">5. 수치 예제: 간단한 2개체 사례</a></li>
+  <li><a href="#boldsymbolalpha가-미지수인-경우-반복-알고리즘" id="toc-boldsymbolalpha가-미지수인-경우-반복-알고리즘" class="nav-link" data-scroll-target="#boldsymbolalpha가-미지수인-경우-반복-알고리즘">6. <span class="math display">\[\boldsymbol{\alpha}\]</span>가 미지수인 경우: 반복 알고리즘</a></li>
+  <li><a href="#의미-해석" id="toc-의미-해석" class="nav-link" data-scroll-target="#의미-해석">7. 의미 해석</a></li>
+  <li><a href="#요약-1" id="toc-요약-1" class="nav-link" data-scroll-target="#요약-1">요약</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="linear-mixed-model의-preliminary-model" class="level2">
+<h2 class="anchored" data-anchor-id="linear-mixed-model의-preliminary-model">Linear Mixed Model의 Preliminary Model</h2>
+<section id="개요" class="level3">
+<h3 class="anchored" data-anchor-id="개요">개요</h3>
+<p>Preliminary Model은 선형혼합모형(Linear Mixed Model, LMM)의 기초가 되는 <strong>주변 모형(Marginal Model)</strong> 관점을 다룹니다. 이 섹션은 고정효과 추정과 분산 성분 추정의 이론적 기초를 제공하며, 후속 내용인 최대우도추정(MLE)과 제한최대우도추정(REML)으로 연결됩니다.</p>
+<hr>
+</section>
+<section id="주변-모형marginal-model-개념" class="level3">
+<h3 class="anchored" data-anchor-id="주변-모형marginal-model-개념">1. 주변 모형(Marginal Model) 개념</h3>
+<section id="기본-아이디어" class="level4">
+<h4 class="anchored" data-anchor-id="기본-아이디어">기본 아이디어</h4>
+<p>선형혼합모형은 다음과 같이 표현됩니다:</p>
+<p><strong>Stage 1 (개체 내 변이)</strong> <span class="math display">\[
+\mathbf{Y}_i = \mathbf{X}_i \boldsymbol{\beta} + \mathbf{Z}_i \mathbf{b}_i + \boldsymbol{\epsilon}_i
+\]</span></p>
+<p>여기서: - <span class="math display">\[\mathbf{Y}_i\]</span>: <span class="math display">\[i\]</span>번째 개체의 반응벡터 (<span class="math display">\[n_i \times 1\]</span>) - <span class="math display">\[\mathbf{X}_i\]</span>: <span class="math display">\[i\]</span>번째 개체의 고정효과 설계행렬 (<span class="math display">\[n_i \times p\]</span>) - <span class="math display">\[\boldsymbol{\beta}\]</span>: 고정효과 계수벡터 (<span class="math display">\[p \times 1\]</span>) - <span class="math display">\[\mathbf{Z}_i\]</span>: <span class="math display">\[i\]</span>번째 개체의 랜덤효과 설계행렬 (<span class="math display">\[n_i \times q\]</span>) - <span class="math display">\[\mathbf{b}_i\]</span>: 개체 특이적 랜덤효과 (<span class="math display">\[q \times 1\]</span>), <span class="math display">\[\mathbf{b}_i \sim N(\mathbf{0}, \mathbf{G})\]</span> - <span class="math display">\[\boldsymbol{\epsilon}_i\]</span>: 측정오차 (<span class="math display">\[n_i \times 1\]</span>), <span class="math display">\[\boldsymbol{\epsilon}_i \sim N(\mathbf{0}, \mathbf{R}_i)\]</span></p>
+</section>
+<section id="주변-모형-유도" class="level4">
+<h4 class="anchored" data-anchor-id="주변-모형-유도">주변 모형 유도</h4>
+<p>랜덤효과 <span class="math display">\[\mathbf{b}_i\]</span>를 적분으로 제거하면(마지널화), 다음의 <strong>주변 모형</strong>을 얻습니다:</p>
+<p><span class="math display">\[
+E[\mathbf{Y}_i] = \mathbf{X}_i \boldsymbol{\beta}
+\]</span></p>
+<p><span class="math display">\[
+\text{Var}[\mathbf{Y}_i] = \mathbf{V}_i = \mathbf{Z}_i \mathbf{G} \mathbf{Z}_i^T + \mathbf{R}_i
+\]</span></p>
+<p>따라서 <span class="math display">\[\mathbf{Y}_i \sim N(\mathbf{X}_i \boldsymbol{\beta}, \mathbf{V}_i)\]</span></p>
+<p><strong>중요한 특징</strong>: 주변 모형은 랜덤효과의 존재를 <strong>명시적으로 가정하지 않습니다</strong>. 대신 공분산 구조 <span class="math display">\[\mathbf{V}_i\]</span>로 개체 간 관측값의 상관성과 개체 내 이질성을 모델링합니다.</p>
+<hr>
+</section>
+</section>
+<section id="기호법notation" class="level3">
+<h3 class="anchored" data-anchor-id="기호법notation">2. 기호법(Notation)</h3>
+<section id="매개변수-정의" class="level4">
+<h4 class="anchored" data-anchor-id="매개변수-정의">매개변수 정의</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>기호</th>
+<th>의미</th>
+<th>차원</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[\boldsymbol{\beta}\]</span></td>
+<td>고정효과 계수 벡터</td>
+<td><span class="math display">\[p \times 1\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[\boldsymbol{\alpha}\]</span></td>
+<td>분산 성분 벡터 (모든 <span class="math display">\[\mathbf{G}\]</span>와 <span class="math display">\[\mathbf{R}\]</span>의 원소)</td>
+<td>변수</td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[\boldsymbol{\theta}\]</span></td>
+<td>주변 모형의 전체 매개변수 벡터 = <span class="math display">\[[\boldsymbol{\beta}^T, \boldsymbol{\alpha}^T]^T\]</span></td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[\mathbf{V}_i\]</span></td>
+<td><span class="math display">\[i\]</span>번째 개체의 공분산 행렬 = <span class="math display">\[\mathbf{Z}_i \mathbf{G} \mathbf{Z}_i^T + \mathbf{R}_i\]</span></td>
+<td><span class="math display">\[n_i \times n_i\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[\mathbf{W}_i\]</span></td>
+<td>가중 행렬 = <span class="math display">\[\mathbf{V}_i^{-1}\]</span></td>
+<td><span class="math display">\[n_i \times n_i\]</span></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="주변-우도함수marginal-likelihood-function" class="level3">
+<h3 class="anchored" data-anchor-id="주변-우도함수marginal-likelihood-function">3. 주변 우도함수(Marginal Likelihood Function)</h3>
+<section id="전체-우도-함수" class="level4">
+<h4 class="anchored" data-anchor-id="전체-우도-함수">전체 우도 함수</h4>
+<p><span class="math display">\[N\]</span>명의 개체로부터 수집된 데이터에 대한 주변 우도함수는:</p>
+<p><span class="math display">\[
+L(\boldsymbol{\theta}) = \prod_{i=1}^{N} (2\pi)^{-n_i/2} |\mathbf{V}_i|^{-1/2} \exp\left\{-\frac{1}{2}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1} (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})\right\}
+\]</span></p>
+<p>로그 우도함수(Log-likelihood):</p>
+<p><span class="math display">\[
+\log L(\boldsymbol{\theta}) = -\frac{1}{2}\sum_{i=1}^{N}\left[n_i \log(2\pi) + \log|\mathbf{V}_i| + (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1} (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})\right]
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="고정효과-추정" class="level3">
+<h3 class="anchored" data-anchor-id="고정효과-추정">4. 고정효과 추정</h3>
+<section id="boldsymbolalpha가-알려진-경우" class="level4">
+<h4 class="anchored" data-anchor-id="boldsymbolalpha가-알려진-경우"><span class="math display">\[\boldsymbol{\alpha}\]</span>가 알려진 경우</h4>
+<p>분산 성분 <span class="math display">\[\boldsymbol{\alpha}\]</span>를 알고 있다고 가정하면, 로그 우도함수를 <span class="math display">\[\boldsymbol{\beta}\]</span>에 대해 최대화할 때:</p>
+<p><span class="math display">\[
+\frac{\partial \log L}{\partial \boldsymbol{\beta}} = \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta}) = \mathbf{0}
+\]</span></p>
+<p>이를 풀면, <strong>일반화 최소제곱(Generalized Least Squares, GLS) 추정량</strong>을 얻습니다:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha}) = \left(\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{X}_i\right)^{-1} \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{Y}_i
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{W}_i = \mathbf{V}_i^{-1}\]</span>는 <strong>가중행렬</strong>입니다.</p>
+<p><strong>의미</strong>: 각 개체별 공분산 구조를 반영한 가중치 <span class="math display">\[\mathbf{W}_i\]</span>를 사용하여 고정효과를 추정합니다. 측정오차가 큰 관측값일수록 가중치가 작아집니다.</p>
+</section>
+<section id="boldsymbolalpha가-미지수인-경우" class="level4">
+<h4 class="anchored" data-anchor-id="boldsymbolalpha가-미지수인-경우"><span class="math display">\[\boldsymbol{\alpha}\]</span>가 미지수인 경우</h4>
+<p>실제로 분산 성분은 미지수이므로, <span class="math display">\[\boldsymbol{\alpha}\]</span>의 추정량 <span class="math display">\[\hat{\boldsymbol{\alpha}}\]</span>로 대체합니다:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}} = \hat{\boldsymbol{\beta}}(\hat{\boldsymbol{\alpha}})
+\]</span></p>
+<p>이것이 <strong>일반화 최소제곱의 시행적 적용(Iterative Generalized Least Squares)</strong>입니다.</p>
+<hr>
+</section>
+</section>
+<section id="분산-성분-추정-방법" class="level3">
+<h3 class="anchored" data-anchor-id="분산-성분-추정-방법">5. 분산 성분 추정 방법</h3>
+<section id="최대우도추정maximum-likelihood-estimation-mle" class="level4">
+<h4 class="anchored" data-anchor-id="최대우도추정maximum-likelihood-estimation-mle">5.1 최대우도추정(Maximum Likelihood Estimation, MLE)</h4>
+<p><strong>원리</strong>: 분산 성분 <span class="math display">\[\boldsymbol{\alpha}\]</span>는 프로파일 우도함수(profile likelihood)를 최대화하여 추정합니다.</p>
+<p><strong>절차</strong>: 1. <span class="math display">\[\boldsymbol{\alpha}\]</span>의 초기값을 설정 2. 각 <span class="math display">\[\boldsymbol{\alpha}\]</span> 값에 대해 <span class="math display">\[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})\]</span>를 계산 3. 프로파일 우도 <span class="math display">\[L_{ML}(\boldsymbol{\alpha}, \hat{\boldsymbol{\beta}}(\boldsymbol{\alpha}))\]</span>를 최대화하는 <span class="math display">\[\boldsymbol{\alpha}\]</span>를 찾음 4. 최종 추정량: <span class="math display">\[\hat{\boldsymbol{\alpha}}_{ML}\]</span>, <span class="math display">\[\hat{\boldsymbol{\beta}}_{ML} = \hat{\boldsymbol{\beta}}(\hat{\boldsymbol{\alpha}}_{ML})\]</span></p>
+<p><strong>문제점</strong>: MLE는 고정효과 매개변수의 수를 추정할 때 자유도 손실을 고려하지 않아, 분산 성분을 <strong>과소 추정(biased downward)</strong>하는 경향이 있습니다.</p>
+</section>
+<section id="제한최대우도추정restricted-maximum-likelihood-estimation-reml" class="level4">
+<h4 class="anchored" data-anchor-id="제한최대우도추정restricted-maximum-likelihood-estimation-reml">5.2 제한최대우도추정(Restricted Maximum Likelihood Estimation, REML)</h4>
+<p><strong>동기</strong>: MLE의 편향 문제를 해결하기 위해 개발되었습니다.</p>
+<p><strong>핵심 아이디어</strong>: 고정효과 <span class="math display">\[\boldsymbol{\beta}\]</span>에 대한 정보를 제거한 <strong>오차 대비(error contrasts)</strong>를 사용합니다.</p>
+<p><strong>수학적 구성</strong>:</p>
+<p>데이터 <span class="math display">\[\mathbf{Y}\]</span>를 다음과 같이 변환합니다:</p>
+<p><span class="math display">\[
+\mathbf{U} = \mathbf{A}^T \mathbf{Y}
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{A}\]</span>는 <span class="math display">\[N \times (N-p)\]</span> 행렬로서 다음을 만족합니다: - <span class="math display">\[\mathbf{A}^T \mathbf{A} = \mathbf{I}_{N-p}\]</span> (직교성) - <span class="math display">\[\mathbf{A}^T \mathbf{X} = \mathbf{0}\]</span> (<span class="math display">\[\mathbf{X}\]</span>와 직교)</p>
+<p>변환 후:</p>
+<p><span class="math display">\[
+E[\mathbf{U}] = \mathbf{A}^T \mathbf{Z} \mathbf{b} + \mathbf{A}^T \boldsymbol{\epsilon}
+\]</span></p>
+<p><span class="math display">\[\mathbf{X}\]</span>가 제거되어 <span class="math display">\[\boldsymbol{\beta}\]</span>에 의존하지 않습니다.</p>
+<p><strong>REML 우도함수</strong>:</p>
+<p><span class="math display">\[
+L_{REML}(\boldsymbol{\alpha}) = (2\pi)^{-(N-p)/2} |\mathbf{A}^T \mathbf{V} \mathbf{A}|^{-1/2} \exp\left\{-\frac{1}{2} \mathbf{U}^T (\mathbf{A}^T \mathbf{V} \mathbf{A})^{-1} \mathbf{U}\right\}
+\]</span></p>
+<p>또는 동등하게:</p>
+<p><span class="math display">\[
+L_{REML}(\boldsymbol{\alpha}) \propto |\mathbf{V}|^{-1/2} |\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}|^{1/2} \exp\left\{-\frac{1}{2} (\mathbf{Y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T \mathbf{V}^{-1} (\mathbf{Y} - \mathbf{X}\hat{\boldsymbol{\beta}})\right\}
+\]</span></p>
+<p><strong>장점</strong>: - 분산 성분의 <strong>불편추정량(unbiased estimate)</strong> 제공 - 고정효과의 추정에 필요한 자유도를 자동으로 반영 - 반복측정 데이터 분석에서 표준 방법</p>
+<p><strong>비고</strong>: REML은 분산 성분 추정에만 사용되며, 추정된 분산 성분은 고정효과 추정에 다시 사용됩니다(<span class="math display">\[\hat{\boldsymbol{\beta}}_{REML} = \hat{\boldsymbol{\beta}}(\hat{\boldsymbol{\alpha}}_{REML})\]</span>).</p>
+<hr>
+</section>
+</section>
+<section id="mle와-reml의-비교-간단한-예시" class="level3">
+<h3 class="anchored" data-anchor-id="mle와-reml의-비교-간단한-예시">6. MLE와 REML의 비교: 간단한 예시</h3>
+<section id="예시-정규분포에서-분산-추정" class="level4">
+<h4 class="anchored" data-anchor-id="예시-정규분포에서-분산-추정">예시: 정규분포에서 분산 추정</h4>
+<p><span class="math display">\[N\]</span>개 독립 관측치 <span class="math display">\[Y_1, \ldots, Y_N \sim N(\mu, \sigma^2)\]</span>에서:</p>
+<p><strong>경우 1: <span class="math display">\[\mu\]</span>가 알려진 경우</strong></p>
+<p><span class="math display">\[
+\hat{\sigma}^2_{MLE} = \frac{1}{N}\sum_{i=1}^{N}(Y_i - \mu)^2
+\]</span></p>
+<p><span class="math display">\[E[\hat{\sigma}^2_{MLE}] = \sigma^2\]</span> ✓ 불편</p>
+<p><strong>경우 2: <span class="math display">\[\mu\]</span>가 미지수인 경우</strong></p>
+<p><span class="math display">\[
+\hat{\sigma}^2_{MLE} = \frac{1}{N}\sum_{i=1}^{N}(Y_i - \bar{Y})^2
+\]</span></p>
+<p><span class="math display">\[E[\hat{\sigma}^2_{MLE}] = \frac{N-1}{N}\sigma^2\]</span> ✗ 편향 (과소추정)</p>
+<p><strong>REML 추정량</strong>:</p>
+<p><span class="math display">\[
+\hat{\sigma}^2_{REML} = \frac{1}{N-1}\sum_{i=1}^{N}(Y_i - \bar{Y})^2
+\]</span></p>
+<p><span class="math display">\[E[\hat{\sigma}^2_{REML}] = \sigma^2\]</span> ✓ 불편</p>
+<p>이 간단한 예시는 Preliminary Model 섹션에서 제시되는 핵심 논리를 보여줍니다.</p>
+<hr>
+</section>
+</section>
+<section id="실제-적용의-의미" class="level3">
+<h3 class="anchored" data-anchor-id="실제-적용의-의미">7. 실제 적용의 의미</h3>
+<section id="왜-주변-모형인가" class="level4">
+<h4 class="anchored" data-anchor-id="왜-주변-모형인가">왜 주변 모형인가?</h4>
+<p>주변 모형 관점의 장점:</p>
+<ol type="1">
+<li><p><strong>모델 불확정성 해소</strong>: 랜덤효과 구조가 명확하지 않은 경우에도, 공분산 구조 <span class="math display">\[\mathbf{V}_i\]</span>를 직접 모델링하여 분석 가능</p></li>
+<li><p><strong>인구 평균 해석(Population Averaging)</strong>: 고정효과 <span class="math display">\[\boldsymbol{\beta}\]</span>는 모집단 평균 효과를 나타내므로 임상 해석이 직관적</p></li>
+<li><p><strong>불균형 데이터 처리</strong>: 각 개체별로 다른 수의 측정값을 가져도 <span class="math display">\[\mathbf{V}_i\]</span>로 자동 처리</p></li>
+</ol>
+</section>
+<section id="고정효과-vs-분산-성분-추정의-구분" class="level4">
+<h4 class="anchored" data-anchor-id="고정효과-vs-분산-성분-추정의-구분">고정효과 vs 분산 성분 추정의 구분</h4>
+<ul>
+<li><strong>고정효과</strong> <span class="math display">\[\boldsymbol{\beta}\]</span>: 분산 성분이 알려졌을 때 GLS로 추정 → 효율적이고 편향 없음</li>
+<li><strong>분산 성분</strong> <span class="math display">\[\boldsymbol{\alpha}\]</span>: REML로 추정 → 자유도 손실 반영, 불편 추정량 제공</li>
+</ul>
+<p>이 이원적 추정 구조(two-stage estimation)가 LMM의 핵심입니다.</p>
+<hr>
+</section>
+</section>
+<section id="preliminary-model과-후속-내용의-연결" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary-model과-후속-내용의-연결">8. Preliminary Model과 후속 내용의 연결</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>내용</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Preliminary Model</strong></td>
+<td>주변 모형 정의, MLE와 REML 소개</td>
+<td>이론적 기초 구축</td>
+</tr>
+<tr class="even">
+<td><strong>Parameter Estimation</strong></td>
+<td>MLE와 REML의 상세 유도</td>
+<td>실제 추정 알고리즘</td>
+</tr>
+<tr class="odd">
+<td><strong>Analysis with LMM</strong></td>
+<td>주변 vs 랜덤효과 모형 선택</td>
+<td>실무 적용 기준</td>
+</tr>
+<tr class="even">
+<td><strong>Marginal &amp; Random Effect Model</strong></td>
+<td>두 모형의 관계와 차이</td>
+<td>해석 방법</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="요약" class="level3">
+<h3 class="anchored" data-anchor-id="요약">요약</h3>
+<p><strong>Preliminary Model 섹션의 핵심 메시지</strong>:</p>
+<ol type="1">
+<li><p>선형혼합모형은 <strong>주변 모형</strong> 관점에서 이해되며, 공분산 구조 <span class="math display">\[\mathbf{V}_i = \mathbf{Z}_i \mathbf{G} \mathbf{Z}_i^T + \mathbf{R}_i\]</span>로 개체 간 상관성을 모델링합니다.</p></li>
+<li><p>고정효과는 분산 성분을 알 때 <strong>GLS</strong>로, 모를 때 <strong>반복적 GLS</strong>로 추정합니다.</p></li>
+<li><p>분산 성분은 <strong>MLE</strong>(편향)와 <strong>REML</strong>(불편)로 추정할 수 있으며, 실무에서는 REML을 선호합니다.</p></li>
+<li><p>이러한 두 단계 추정 구조가 불균형 데이터와 결측치가 있는 반복측정 설계에서 유연성을 제공합니다.</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="고정효과-추정-gls-공식의-상세-전개" class="level2">
+<h2 class="anchored" data-anchor-id="고정효과-추정-gls-공식의-상세-전개">고정효과 추정: GLS 공식의 상세 전개</h2>
+<p>이 섹션은 <strong>정규 방정식(normal equation)에서 GLS 추정량까지의 완전한 수학적 전개</strong>를 단계별로 설명합니다.[1]</p>
+<hr>
+<section id="우도함수-설정-및-미분" class="level3">
+<h3 class="anchored" data-anchor-id="우도함수-설정-및-미분">1. 우도함수 설정 및 미분</h3>
+<section id="주변-모형의-로그-우도함수-복습" class="level4">
+<h4 class="anchored" data-anchor-id="주변-모형의-로그-우도함수-복습">주변 모형의 로그 우도함수 (복습)</h4>
+<p>선형혼합모형에서 <span class="math display">\[i\]</span>번째 개체의 데이터는 다음을 따릅니다:</p>
+<p><span class="math display">\[
+\mathbf{Y}_i \sim N(\mathbf{X}_i \boldsymbol{\beta}, \mathbf{V}_i)
+\]</span></p>
+<p>여기서: - <span class="math display">\[\mathbf{Y}_i\]</span>: <span class="math display">\[n_i \times 1\]</span> 반응벡터 - <span class="math display">\[\mathbf{X}_i\]</span>: <span class="math display">\[n_i \times p\]</span> 설계행렬 - <span class="math display">\[\boldsymbol{\beta}\]</span>: <span class="math display">\[p \times 1\]</span> 고정효과 계수 (모든 개체에 동일) - <span class="math display">\[\mathbf{V}_i = \mathbf{Z}_i \mathbf{G} \mathbf{Z}_i^T + \mathbf{R}_i\]</span>: <span class="math display">\[n_i \times n_i\]</span> 공분산행렬</p>
+<p><strong>전체 데이터에 대한 로그 우도함수</strong> (분산 성분 <span class="math display">\[\boldsymbol{\alpha}\]</span>는 알려졌다고 가정):</p>
+<p><span class="math display">\[
+\ell(\boldsymbol{\beta}) = \sum_{i=1}^{N} \ell_i(\boldsymbol{\beta})
+\]</span></p>
+<p>여기서 각 개체별 로그 우도는:</p>
+<p><span class="math display">\[
+\ell_i(\boldsymbol{\beta}) = -\frac{1}{2}\left[n_i \log(2\pi) + \log|\mathbf{V}_i| + (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})\right]
+\]</span></p>
+<p><span class="math display">\[\boldsymbol{\beta}\]</span>를 포함하지 않는 항들을 제거하면:</p>
+<p><span class="math display">\[
+\ell(\boldsymbol{\beta}) \propto -\frac{1}{2}\sum_{i=1}^{N} (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})
+\]</span></p>
+<hr>
+</section>
+<section id="정규-방정식-유도" class="level4">
+<h4 class="anchored" data-anchor-id="정규-방정식-유도">정규 방정식 유도</h4>
+<p><span class="math display">\[\boldsymbol{\beta}\]</span>에 대한 로그 우도함수의 <strong>1차 미분</strong> (정규 방정식):</p>
+<p><span class="math display">\[
+\frac{\partial \ell(\boldsymbol{\beta})}{\partial \boldsymbol{\beta}} = -\frac{1}{2}\sum_{i=1}^{N} \frac{\partial}{\partial \boldsymbol{\beta}} (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})
+\]</span></p>
+<p><strong>연쇄 법칙 적용</strong>:</p>
+<p>임의의 벡터 <span class="math display">\[\mathbf{u}(\boldsymbol{\beta})\]</span>와 대칭행렬 <span class="math display">\[\mathbf{A}\]</span>에 대해:</p>
+<p><span class="math display">\[
+\frac{\partial}{\partial \boldsymbol{\beta}} [\mathbf{u}(\boldsymbol{\beta})]^T \mathbf{A} \mathbf{u}(\boldsymbol{\beta}) = 2 \left[\frac{\partial \mathbf{u}^T}{\partial \boldsymbol{\beta}}\right] \mathbf{A} \mathbf{u}(\boldsymbol{\beta})
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{u} = \mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta}\]</span>이고, <span class="math display">\[\frac{\partial \mathbf{u}}{\partial \boldsymbol{\beta}} = -\mathbf{X}_i\]</span>입니다.</p>
+<p>따라서:</p>
+<p><span class="math display">\[
+\frac{\partial}{\partial \boldsymbol{\beta}} (\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta}) = 2(-\mathbf{X}_i)^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})
+\]</span></p>
+<p><span class="math display">\[
+= -2\mathbf{X}_i^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})
+\]</span></p>
+<p><strong>정규 방정식</strong> (1차 미분을 0으로 설정):</p>
+<p><span class="math display">\[
+\frac{\partial \ell}{\partial \boldsymbol{\beta}} = -\frac{1}{2}\sum_{i=1}^{N} \left[-2\mathbf{X}_i^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta})\right] = \mathbf{0}
+\]</span></p>
+<p>정리하면:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i \boldsymbol{\beta}) = \mathbf{0}
+\]</span></p>
+<p>또는 다르게 표현하면:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{Y}_i = \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{X}_i \boldsymbol{\beta}
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="정규-방정식에서-gls-추정량까지" class="level3">
+<h3 class="anchored" data-anchor-id="정규-방정식에서-gls-추정량까지">2. 정규 방정식에서 GLS 추정량까지</h3>
+<section id="정규-방정식의-행렬-형태로-정리" class="level4">
+<h4 class="anchored" data-anchor-id="정규-방정식의-행렬-형태로-정리">정규 방정식의 행렬 형태로 정리</h4>
+<p><span class="math display">\[
+\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{X}_i \boldsymbol{\beta} = \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{Y}_i
+\]</span></p>
+<p><strong>가중 행렬</strong> <span class="math display">\[\mathbf{W}_i = \mathbf{V}_i^{-1}\]</span>를 정의하면:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{X}_i \boldsymbol{\beta} = \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{Y}_i
+\]</span></p>
+</section>
+<section id="gls-추정량-도출" class="level4">
+<h4 class="anchored" data-anchor-id="gls-추정량-도출">GLS 추정량 도출</h4>
+<p>양변에서 <span class="math display">\[\left[\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{X}_i\right]\]</span>의 역행렬을 곱합니다:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha}) = \left(\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{X}_i\right)^{-1} \sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{W}_i \mathbf{Y}_i
+\]</span></p>
+<p><strong>행렬 표현</strong>:</p>
+<p>전체 데이터를 <span class="math display">\[\mathbf{Y} = (\mathbf{Y}_1^T, \ldots, \mathbf{Y}_N^T)^T\]</span>, <span class="math display">\[\mathbf{X} = (\mathbf{X}_1^T, \ldots, \mathbf{X}_N^T)^T\]</span>로 블록 행렬로 나타내면:</p>
+<p><span class="math display">\[
+\mathbf{V} = \begin{pmatrix} \mathbf{V}_1 &amp; \mathbf{0} &amp; \cdots &amp; \mathbf{0} \\ \mathbf{0} &amp; \mathbf{V}_2 &amp; \cdots &amp; \mathbf{0} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \mathbf{0} &amp; \mathbf{0} &amp; \cdots &amp; \mathbf{V}_N \end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[\mathbf{W} = \mathbf{V}^{-1}\]</span>는 블록 대각 행렬이므로:</p>
+<p><span class="math display">\[
+\mathbf{W} = \begin{pmatrix} \mathbf{W}_1 &amp; \mathbf{0} &amp; \cdots &amp; \mathbf{0} \\ \mathbf{0} &amp; \mathbf{W}_2 &amp; \cdots &amp; \mathbf{0} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \mathbf{0} &amp; \mathbf{0} &amp; \cdots &amp; \mathbf{W}_N \end{pmatrix}
+\]</span></p>
+<p>따라서:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha}) = (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} \mathbf{Y}
+\]</span></p>
+<p>이것이 <strong>일반화 최소제곱(Generalized Least Squares, GLS)</strong> 추정량의 표준 형태입니다.</p>
+<hr>
+</section>
+</section>
+<section id="gls-추정량의-성질" class="level3">
+<h3 class="anchored" data-anchor-id="gls-추정량의-성질">3. GLS 추정량의 성질</h3>
+<section id="불편성unbiasedness" class="level4">
+<h4 class="anchored" data-anchor-id="불편성unbiasedness">3.1 불편성(Unbiasedness)</h4>
+<p><span class="math display">\[\boldsymbol{\alpha}\]</span>가 알려져 있을 때, <span class="math display">\[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})\]</span>는 <span class="math display">\[\boldsymbol{\beta}\]</span>의 <strong>불편추정량</strong>입니다.</p>
+<p><strong>증명</strong>:</p>
+<p><span class="math display">\[
+E[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})] = E\left[(\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} \mathbf{Y}\right]
+\]</span></p>
+<p><span class="math display">\[\mathbf{X}\]</span>는 확정적(deterministic)이므로:</p>
+<p><span class="math display">\[
+= (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} E[\mathbf{Y}]
+\]</span></p>
+<p><span class="math display">\[E[\mathbf{Y}] = \mathbf{X} \boldsymbol{\beta}\]</span>를 이용하면:</p>
+<p><span class="math display">\[
+= (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} \mathbf{X} \boldsymbol{\beta} = \boldsymbol{\beta}
+\]</span></p>
+<p>따라서 <span class="math display">\[\hat{\boldsymbol{\beta}}\]</span>는 불편추정량입니다. ✓</p>
+</section>
+<section id="공분산-행렬covariance-matrix" class="level4">
+<h4 class="anchored" data-anchor-id="공분산-행렬covariance-matrix">3.2 공분산 행렬(Covariance Matrix)</h4>
+<p><span class="math display">\[
+\text{Var}[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})] = (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} \text{Var}[\mathbf{Y}] \mathbf{W} \mathbf{X} (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1}
+\]</span></p>
+<p><span class="math display">\[\text{Var}[\mathbf{Y}] = \mathbf{V}\]</span>이고 <span class="math display">\[\mathbf{W} = \mathbf{V}^{-1}\]</span>이므로:</p>
+<p><span class="math display">\[
+\text{Var}[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})] = (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W} \mathbf{V} \mathbf{W} \mathbf{X} (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1}
+\]</span></p>
+<p><span class="math display">\[\mathbf{W}\mathbf{V}\mathbf{W} = \mathbf{W}\]</span>이므로 (왜냐하면 <span class="math display">\[\mathbf{W} = \mathbf{V}^{-1}\]</span>):</p>
+<p><span class="math display">\[
+\text{Var}[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})] = (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1}
+\]</span></p>
+<p>더 명시적으로:</p>
+<p><span class="math display">\[
+\text{Var}[\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha})] = \left(\sum_{i=1}^{N} \mathbf{X}_i^T \mathbf{V}_i^{-1} \mathbf{X}_i\right)^{-1}
+\]</span></p>
+</section>
+<section id="최적성optimality-gauss-markov-정리" class="level4">
+<h4 class="anchored" data-anchor-id="최적성optimality-gauss-markov-정리">3.3 최적성(Optimality): Gauss-Markov 정리</h4>
+<p><strong>정리</strong>: <span class="math display">\[\mathbf{Y}\]</span>가 선형 모형 <span class="math display">\[\mathbf{Y} \sim N(\mathbf{X}\boldsymbol{\beta}, \mathbf{V})\]</span>를 따를 때, GLS 추정량 <span class="math display">\[\hat{\boldsymbol{\beta}}\]</span>는 모든 선형 불편추정량 중에서 <strong>가장 작은 분산</strong>을 가집니다(BLUE: Best Linear Unbiased Estimator).</p>
+<hr>
+</section>
+</section>
+<section id="gls와-ols최소제곱법의-비교" class="level3">
+<h3 class="anchored" data-anchor-id="gls와-ols최소제곱법의-비교">4. GLS와 OLS(최소제곱법)의 비교</h3>
+<section id="ols-일반적인-선형-회귀" class="level4">
+<h4 class="anchored" data-anchor-id="ols-일반적인-선형-회귀">OLS (일반적인 선형 회귀)</h4>
+<p>OLS는 공분산 구조가 <span class="math display">\[\mathbf{V}_i = \sigma^2 \mathbf{I}_{n_i}\]</span> (관측값들이 독립이고 동일 분산)인 특수한 경우입니다.</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}_{OLS} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{Y}
+\]</span></p>
+</section>
+<section id="gls와의-관계" class="level4">
+<h4 class="anchored" data-anchor-id="gls와의-관계">GLS와의 관계</h4>
+<p>GLS는 OLS를 <strong>일반화</strong>합니다:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}_{GLS} = (\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{V}^{-1} \mathbf{Y}
+\]</span></p>
+<p><strong>변환 해석</strong>: GLS는 다음의 변환 선형 모형에 OLS를 적용하는 것과 동등합니다.</p>
+<p><span class="math display">\[\mathbf{V}_i^{-1/2}\]</span>를 사용하여 데이터를 화이트닝(whitening)하면:</p>
+<p><span class="math display">\[
+\mathbf{V}_i^{-1/2}\mathbf{Y}_i = \mathbf{V}_i^{-1/2}\mathbf{X}_i \boldsymbol{\beta} + \mathbf{V}_i^{-1/2}\boldsymbol{\epsilon}_i
+\]</span></p>
+<p>변환된 데이터는 <span class="math display">\[\text{Var}[\mathbf{V}_i^{-1/2}\boldsymbol{\epsilon}_i] = \mathbf{I}_{n_i}\]</span>를 만족하므로 (독립), 변환 데이터에 OLS를 적용하면 GLS와 동일한 결과를 얻습니다.</p>
+<hr>
+</section>
+</section>
+<section id="수치-예제-간단한-2개체-사례" class="level3">
+<h3 class="anchored" data-anchor-id="수치-예제-간단한-2개체-사례">5. 수치 예제: 간단한 2개체 사례</h3>
+<section id="데이터-설정" class="level4">
+<h4 class="anchored" data-anchor-id="데이터-설정">데이터 설정</h4>
+<p>각 개체에서 2개 시점에서 측정:</p>
+<ul>
+<li><p>개체 1: <span class="math display">\[\mathbf{Y}_1 = (y_{11}, y_{12})^T\]</span>, <span class="math display">\[\mathbf{X}_1 = \begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 1 \end{pmatrix}\]</span></p></li>
+<li><p>개체 2: <span class="math display">\[\mathbf{Y}_2 = (y_{21}, y_{22})^T\]</span>, <span class="math display">\[\mathbf{X}_2 = \begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 1 \end{pmatrix}\]</span></p></li>
+</ul>
+<p><strong>고정효과</strong>: <span class="math display">\[\boldsymbol{\beta} = (\beta_0, \beta_1)^T\]</span> (절편과 시간 효과)</p>
+<p><strong>공분산 구조</strong> (교환 가능, exchangeable):</p>
+<p><span class="math display">\[
+\mathbf{V}_i = \begin{pmatrix} \sigma^2 &amp; \rho\sigma^2 \\ \rho\sigma^2 &amp; \sigma^2 \end{pmatrix}, \quad i=1,2
+\]</span></p>
+</section>
+<section id="gls-계산" class="level4">
+<h4 class="anchored" data-anchor-id="gls-계산">GLS 계산</h4>
+<p><strong>역행렬</strong>:</p>
+<p><span class="math display">\[
+\mathbf{V}_i^{-1} = \frac{1}{\sigma^2(1-\rho^2)} \begin{pmatrix} 1 &amp; -\rho \\ -\rho &amp; 1 \end{pmatrix}
+\]</span></p>
+<p><strong>고정 공분산</strong> <span class="math display">\[\sigma^2 = 1\]</span>, <span class="math display">\[\rho = 0.5\]</span>라 가정:</p>
+<p><span class="math display">\[
+\mathbf{V}_i^{-1} = \frac{1}{0.75} \begin{pmatrix} 1 &amp; -0.5 \\ -0.5 &amp; 1 \end{pmatrix} = \begin{pmatrix} 1.33 &amp; -0.67 \\ -0.67 &amp; 1.33 \end{pmatrix}
+\]</span></p>
+<p><strong>GLS 행렬 연산</strong> (계산 생략):</p>
+<p><span class="math display">\[
+\sum_{i=1}^{2} \mathbf{X}_i^T \mathbf{V}_i^{-1} \mathbf{X}_i = \begin{pmatrix} 2.67 &amp; 0.67 \\ 0.67 &amp; 2.67 \end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}_{GLS} = \begin{pmatrix} 2.67 &amp; 0.67 \\ 0.67 &amp; 2.67 \end{pmatrix}^{-1} \left(\sum_{i=1}^{2} \mathbf{X}_i^T \mathbf{V}_i^{-1} \mathbf{Y}_i\right)
+\]</span></p>
+<p>이는 측정 간 상관성을 고려한 최적 추정값을 제공합니다.</p>
+<hr>
+</section>
+</section>
+<section id="boldsymbolalpha가-미지수인-경우-반복-알고리즘" class="level3">
+<h3 class="anchored" data-anchor-id="boldsymbolalpha가-미지수인-경우-반복-알고리즘">6. <span class="math display">\[\boldsymbol{\alpha}\]</span>가 미지수인 경우: 반복 알고리즘</h3>
+<p>실무에서 분산 성분 <span class="math display">\[\boldsymbol{\alpha}\]</span>는 알려지지 않으므로, <strong>다음의 반복 절차</strong>를 거칩니다:[1]</p>
+<section id="알고리즘-시행적-gls-iterative-gls" class="level4">
+<h4 class="anchored" data-anchor-id="알고리즘-시행적-gls-iterative-gls">알고리즘: 시행적 GLS (Iterative GLS)</h4>
+<p><strong>초기화</strong>: 초기 추정량 <span class="math display">\[\hat{\boldsymbol{\alpha}}^{(0)}\]</span> 설정 (예: 표본 분산으로부터)</p>
+<p><strong>반복 <span class="math display">\[k = 0, 1, 2, \ldots\]</span></strong>:</p>
+<ol type="1">
+<li><p><strong>Step 1</strong>: 현재 분산 추정량 <span class="math display">\[\hat{\boldsymbol{\alpha}}^{(k)}\]</span>를 이용해 <span class="math display">\[\hat{\mathbf{V}}_i^{(k)}\]</span> 구성</p></li>
+<li><p><strong>Step 2</strong>: GLS를 적용하여 고정효과 추정:</p></li>
+</ol>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}^{(k+1)} = \left(\sum_{i=1}^{N} \mathbf{X}_i^T (\hat{\mathbf{V}}_i^{(k)})^{-1} \mathbf{X}_i\right)^{-1} \sum_{i=1}^{N} \mathbf{X}_i^T (\hat{\mathbf{V}}_i^{(k)})^{-1} \mathbf{Y}_i
+\]</span></p>
+<ol start="3" type="1">
+<li><strong>Step 3</strong>: 업데이트된 고정효과를 이용해 잔차 계산:</li>
+</ol>
+<p><span class="math display">\[
+\hat{\boldsymbol{\epsilon}}_i^{(k+1)} = \mathbf{Y}_i - \mathbf{X}_i \hat{\boldsymbol{\beta}}^{(k+1)}
+\]</span></p>
+<ol start="4" type="1">
+<li><strong>Step 4</strong>: 분산 성분 재추정:</li>
+</ol>
+<p><span class="math display">\[
+\hat{\boldsymbol{\alpha}}^{(k+1)} = \text{update}(\hat{\boldsymbol{\alpha}}^{(k)}, \hat{\boldsymbol{\epsilon}}^{(k+1)})
+\]</span></p>
+<p>(구체적인 업데이트 규칙은 MLE, REML 등에 따라 다름)</p>
+<ol start="5" type="1">
+<li><strong>수렴 판정</strong>: <span class="math display">\[\|\hat{\boldsymbol{\beta}}^{(k+1)} - \hat{\boldsymbol{\beta}}^{(k)}\| &lt; \epsilon\]</span> 또는 <span class="math display">\[\|\hat{\boldsymbol{\alpha}}^{(k+1)} - \hat{\boldsymbol{\alpha}}^{(k)}\| &lt; \epsilon\]</span>이면 수렴으로 판정, 중단. 아니면 Step 1로 돌아감.</li>
+</ol>
+<p><strong>최종 추정량</strong>:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}} = \hat{\boldsymbol{\beta}}^{(K+1)}, \quad \hat{\boldsymbol{\alpha}} = \hat{\boldsymbol{\alpha}}^{(K+1)}
+\]</span></p>
+<p>(여기서 <span class="math display">\[K\]</span>는 수렴 반복 횟수)</p>
+<hr>
+</section>
+</section>
+<section id="의미-해석" class="level3">
+<h3 class="anchored" data-anchor-id="의미-해석">7. 의미 해석</h3>
+<section id="가중-최소제곱의-관점" class="level4">
+<h4 class="anchored" data-anchor-id="가중-최소제곱의-관점">가중 최소제곱의 관점</h4>
+<p>GLS는 <strong>가중 최소제곱 (Weighted Least Squares)</strong>으로 해석할 수 있습니다:</p>
+<ul>
+<li><strong>측정 정밀도가 높은</strong> 관측값 (<span class="math display">\[\mathbf{V}_i\]</span>의 분산이 작음): 가중치 <span class="math display">\[w_{ij}\]</span> 크다 → 추정에 더 많은 영향</li>
+<li><strong>측정 정밀도가 낮은</strong> 관측값 (<span class="math display">\[\mathbf{V}_i\]</span>의 분산이 큼): 가중치 <span class="math display">\[w_{ij}\]</span> 작다 → 추정에 적은 영향</li>
+</ul>
+</section>
+<section id="개체-내-상관성-반영" class="level4">
+<h4 class="anchored" data-anchor-id="개체-내-상관성-반영">개체 내 상관성 반영</h4>
+<p><span class="math display">\[\mathbf{V}_i\]</span>가 대각 행렬이 아니면 (즉, <span class="math display">\[\rho \neq 0\]</span>이면):</p>
+<ul>
+<li>같은 개체 내 반복측정들 간의 상관성이 자동으로 모델에 반영됨</li>
+<li>OLS처럼 독립성을 가정하지 않으므로 더 효율적인 추정 가능</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="요약-1" class="level3">
+<h3 class="anchored" data-anchor-id="요약-1">요약</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 29%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>식</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>정규방정식</strong></td>
+<td><span class="math display">\[\sum_i \mathbf{X}_i^T \mathbf{V}_i^{-1}(\mathbf{Y}_i - \mathbf{X}_i\boldsymbol{\beta}) = \mathbf{0}\]</span></td>
+<td>우도함수의 1차 미분 = 0</td>
+</tr>
+<tr class="even">
+<td><strong>GLS 추정량</strong></td>
+<td><span class="math display">\[\hat{\boldsymbol{\beta}} = (\sum_i \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{X}_i)^{-1} \sum_i \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{Y}_i\]</span></td>
+<td>고정효과 MLE</td>
+</tr>
+<tr class="odd">
+<td><strong>분산</strong></td>
+<td><span class="math display">\[\text{Var}[\hat{\boldsymbol{\beta}}] = (\sum_i \mathbf{X}_i^T \mathbf{V}_i^{-1}\mathbf{X}_i)^{-1}\]</span></td>
+<td>신뢰도 평가</td>
+</tr>
+<tr class="even">
+<td><strong>반복 알고리즘</strong></td>
+<td><span class="math display">\[\hat{\boldsymbol{\beta}}^{(k+1)} = f(\hat{\boldsymbol{\alpha}}^{(k)})\]</span></td>
+<td><span class="math display">\[\boldsymbol{\alpha}\]</span> 미지수시 사용</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

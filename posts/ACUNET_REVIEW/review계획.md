@@ -6,15 +6,15 @@ categories: [Plan, U-Net]
 author: "김한울"
 ---
 
+#### 현 상황 브리핑: 20251128 오전 1130 업데이트
 
-# 현 상황 브리핑: 20251119 오전 1300 업데이트
-
-+ Transformer기반 모델 확인(Sota아니어도 됨, Baseline급으로)
-
-#### 현 상황 브리핑: 20251119 오전 1130 업데이트
-
-+ CONVLSTM 정상구동 확인 완료
-+ HRNet 디버깅 중
++ CONVLSTM, HRNet 실험 종료
+|Time |   AC U-Net(2021~2023)|	HRNet(2021~2023)|	convLSTM(2021~2023)|	persistence(2021~2023)|
+|-|-|-|-|-|
+|30min|	Avg MSE: 0.0250, Avg MAE: 0.0918, Avg PSNR: 23.2807, Avg SSIM: 0.6220	|Avg MSE: 0.0263, Avg MAE: 0.0961, Avg PSNR: 22.9603, Avg SSIM: 0.5941	|Avg MSE: 0.0413, Avg MAE: 0.1359, Avg PSNR: 20.7277, Avg SSIM: 0.5630	|Avg MSE: 0.055239, Avg MAE: 0.160877, Avg PSNR: 19.426170, Avg SSIM: 0.532850|
+|60min|	Avg MSE: 0.0340, Avg MAE: 0.1159, Avg PSNR: 21.7726, Avg SSIM: 0.5853	|Avg MSE: 0.0364, Avg MAE: 0.1177, Avg PSNR: 21.5087, Avg SSIM: 0.5824	|Avg MSE: 0.0650, Avg MAE: 0.881, Avg PSNR: 18.5247, Avg SSIM: 0.5264	|Avg MSE: 0.096099, Avg MAE: 0.227503, Avg PSNR: 17.061392, Avg SSIM: 0.490449|
+|90min|	Avg MSE: 0.0425, Avg MAE: 0.1328, Avg PSNR: 20.8066, Avg SSIM: 0.5781	|Avg MSE: 0.0465, Avg MAE: 0.1373, Avg PSNR: 20.4542, Avg SSIM: 0.5574	|Avg MSE: 0.0890, Avg MAE: 0.2357, Avg PSNR: 17.0752, Avg SSIM: 0.5112	|Avg MSE: 0.138833, Avg MAE: 0.281394, Avg PSNR: 15.606358, Avg SSIM: 0.464086|
+|120min|	Avg MSE: 0.0510, Avg MAE: 0.1467, Avg PSNR: 20.0159, Avg SSIM: 0.5721	|Avg MSE: 0.0570, Avg MAE: 0.1572, Avg PSNR: 19.5984, Avg SSIM: 0.5743	|Avg MSE: 0.1189, Avg MAE: 0.2829, Avg PSNR: 15.9275, Avg SSIM: 0.5078	|Avg MSE: 0.179079, Avg MAE: 0.324589, Avg PSNR: 14.614386, Avg SSIM: 0.445177|
 
 
 # 검토 결과

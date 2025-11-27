@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2025-11-24">
+<meta name="description" content="20251124 GLM class notes 3">
+
+<title>Linear Mixed Model - Preliminary Model Further Read – Master Thesis Literature Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.qmd"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Linear Mixed Model - Preliminary Model Further Read</h1>
+                  <div>
+        <div class="description">
+          20251124 GLM class notes 3
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">lecture</div>
+                <div class="quarto-category">glm</div>
+                <div class="quarto-category">lmm</div>
+                <div class="quarto-category">LinearMixedModel</div>
+                <div class="quarto-category">PreliminaryModel</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 24, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reml에-대한-심층-고찰-및-수식-전개" id="toc-reml에-대한-심층-고찰-및-수식-전개" class="nav-link active" data-scroll-target="#reml에-대한-심층-고찰-및-수식-전개">REML에 대한 심층 고찰 및 수식 전개</a>
+  <ul class="collapse">
+  <li><a href="#목차" id="toc-목차" class="nav-link" data-scroll-target="#목차">목차</a></li>
+  </ul></li>
+  <li><a href="#reml의-여러-유도-경로" id="toc-reml의-여러-유도-경로" class="nav-link" data-scroll-target="#reml의-여러-유도-경로">1. REML의 여러 유도 경로</a>
+  <ul class="collapse">
+  <li><a href="#경로-1-선형-변환과-오차-대비-error-contrasts" id="toc-경로-1-선형-변환과-오차-대비-error-contrasts" class="nav-link" data-scroll-target="#경로-1-선형-변환과-오차-대비-error-contrasts">1.1 경로 1: 선형 변환과 오차 대비 (Error Contrasts)</a></li>
+  <li><a href="#경로-2-마진화marginalization---베이지안-해석" id="toc-경로-2-마진화marginalization---베이지안-해석" class="nav-link" data-scroll-target="#경로-2-마진화marginalization---베이지안-해석">1.2 경로 2: 마진화(Marginalization) - 베이지안 해석</a></li>
+  <li><a href="#경로-3-조건부-우도-conditional-likelihood" id="toc-경로-3-조건부-우도-conditional-likelihood" class="nav-link" data-scroll-target="#경로-3-조건부-우도-conditional-likelihood">1.3 경로 3: 조건부 우도 (Conditional Likelihood)</a></li>
+  </ul></li>
+  <li><a href="#bayesian-관점에서의-reml" id="toc-bayesian-관점에서의-reml" class="nav-link" data-scroll-target="#bayesian-관점에서의-reml">2. Bayesian 관점에서의 REML</a>
+  <ul class="collapse">
+  <li><a href="#harville-1974의-연결" id="toc-harville-1974의-연결" class="nav-link" data-scroll-target="#harville-1974의-연결">2.1 Harville (1974)의 연결</a></li>
+  <li><a href="#laplace-근사와의-연결" id="toc-laplace-근사와의-연결" class="nav-link" data-scroll-target="#laplace-근사와의-연결">2.2 Laplace 근사와의 연결</a></li>
+  </ul></li>
+  <li><a href="#fisher-정보-행렬과-점근-성질" id="toc-fisher-정보-행렬과-점근-성질" class="nav-link" data-scroll-target="#fisher-정보-행렬과-점근-성질">3. Fisher 정보 행렬과 점근 성질</a>
+  <ul class="collapse">
+  <li><a href="#fisher-정보-행렬-fisher-information-matrix-fim" id="toc-fisher-정보-행렬-fisher-information-matrix-fim" class="nav-link" data-scroll-target="#fisher-정보-행렬-fisher-information-matrix-fim">3.1 Fisher 정보 행렬 (Fisher Information Matrix, FIM)</a></li>
+  <li><a href="#점근-성질-asymptotic-properties" id="toc-점근-성질-asymptotic-properties" class="nav-link" data-scroll-target="#점근-성질-asymptotic-properties">3.2 점근 성질 (Asymptotic Properties)</a></li>
+  </ul></li>
+  <li><a href="#변환-불변성-transformation-invariance" id="toc-변환-불변성-transformation-invariance" class="nav-link" data-scroll-target="#변환-불변성-transformation-invariance">4. 변환 불변성 (Transformation Invariance)</a>
+  <ul class="collapse">
+  <li><a href="#성질" id="toc-성질" class="nav-link" data-scroll-target="#성질">4.1 성질</a></li>
+  </ul></li>
+  <li><a href="#reml-vs-ml-편향-보정의-수학적-구조" id="toc-reml-vs-ml-편향-보정의-수학적-구조" class="nav-link" data-scroll-target="#reml-vs-ml-편향-보정의-수학적-구조">5. REML vs ML: 편향 보정의 수학적 구조</a>
+  <ul class="collapse">
+  <li><a href="#편향의-근원" id="toc-편향의-근원" class="nav-link" data-scroll-target="#편향의-근원">5.1 편향의 근원</a></li>
+  <li><a href="#reml의-보정-메커니즘" id="toc-reml의-보정-메커니즘" class="nav-link" data-scroll-target="#reml의-보정-메커니즘">5.2 REML의 보정 메커니즘</a></li>
+  <li><a href="#자유도-보정의-행렬-표현" id="toc-자유도-보정의-행렬-표현" class="nav-link" data-scroll-target="#자유도-보정의-행렬-표현">5.3 자유도 보정의 행렬 표현</a></li>
+  </ul></li>
+  <li><a href="#일반화된-reml-glmms로의-확장" id="toc-일반화된-reml-glmms로의-확장" class="nav-link" data-scroll-target="#일반화된-reml-glmms로의-확장">6. 일반화된 REML: GLMMs로의 확장</a>
+  <ul class="collapse">
+  <li><a href="#문제점" id="toc-문제점" class="nav-link" data-scroll-target="#문제점">6.1 문제점</a></li>
+  <li><a href="#glmm에서의-reml-확장-방법들" id="toc-glmm에서의-reml-확장-방법들" class="nav-link" data-scroll-target="#glmm에서의-reml-확장-방법들">6.2 GLMM에서의 REML 확장 방법들</a></li>
+  <li><a href="#통일된-결과" id="toc-통일된-결과" class="nav-link" data-scroll-target="#통일된-결과">6.3 통일된 결과</a></li>
+  </ul></li>
+  <li><a href="#reml의-한계와-주의사항" id="toc-reml의-한계와-주의사항" class="nav-link" data-scroll-target="#reml의-한계와-주의사항">7. REML의 한계와 주의사항</a>
+  <ul class="collapse">
+  <li><a href="#모형-비교의-제약" id="toc-모형-비교의-제약" class="nav-link" data-scroll-target="#모형-비교의-제약">7.1 모형 비교의 제약</a></li>
+  <li><a href="#편향-분산-트레이드오프" id="toc-편향-분산-트레이드오프" class="nav-link" data-scroll-target="#편향-분산-트레이드오프">7.2 편향-분산 트레이드오프</a></li>
+  </ul></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">요약</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="reml에-대한-심층-고찰-및-수식-전개" class="level2">
+<h2 class="anchored" data-anchor-id="reml에-대한-심층-고찰-및-수식-전개">REML에 대한 심층 고찰 및 수식 전개</h2>
+<section id="목차" class="level3">
+<h3 class="anchored" data-anchor-id="목차">목차</h3>
+<ol type="1">
+<li>REML의 여러 유도 경로</li>
+<li>Bayesian 관점에서의 REML</li>
+<li>Fisher 정보 행렬과 점근 성질</li>
+<li>변환 불변성(Transformation Invariance)</li>
+<li>REML vs ML: 편향 보정의 수학적 구조</li>
+<li>일반화된 REML (GLMMs로의 확장)</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="reml의-여러-유도-경로" class="level2">
+<h2 class="anchored" data-anchor-id="reml의-여러-유도-경로">1. REML의 여러 유도 경로</h2>
+<p>REML은 <strong>여러 관점에서 유도</strong>할 수 있으며, 각 관점은 동일한 추정량을 제공합니다.[1][2][3]</p>
+<section id="경로-1-선형-변환과-오차-대비-error-contrasts" class="level3">
+<h3 class="anchored" data-anchor-id="경로-1-선형-변환과-오차-대비-error-contrasts">1.1 경로 1: 선형 변환과 오차 대비 (Error Contrasts)</h3>
+<p>이미 앞에서 다룬 <strong>기본 경로</strong>입니다.</p>
+<section id="핵심-아이디어" class="level4">
+<h4 class="anchored" data-anchor-id="핵심-아이디어">핵심 아이디어</h4>
+<p>고정효과 <span class="math display">\[\boldsymbol{\beta}\]</span>에 직교하는 선형 변환 <span class="math display">\[\mathbf{K}\]</span>를 구성:</p>
+<p><span class="math display">\[
+\mathbf{K}^T \mathbf{X} = \mathbf{0}, \quad \mathbf{K}^T \mathbf{K} = \mathbf{I}_{n-p}
+\]</span></p>
+<p>변환 데이터:</p>
+<p><span class="math display">\[
+\mathbf{U} = \mathbf{K}^T \mathbf{Y}
+\]</span></p>
+<p><span class="math display">\[
+E[\mathbf{U}] = \mathbf{K}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{0}
+\]</span></p>
+<p><span class="math display">\[
+\text{Var}[\mathbf{U}] = \mathbf{K}^T \mathbf{V} \mathbf{K}
+\]</span></p>
+<p>REML 우도:</p>
+<p><span class="math display">\[
+L_{REML}(\boldsymbol{\alpha}) = (2\pi)^{-(n-p)/2} |\mathbf{K}^T \mathbf{V} \mathbf{K}|^{-1/2} \exp\left\{-\frac{1}{2}\mathbf{U}^T (\mathbf{K}^T \mathbf{V} \mathbf{K})^{-1} \mathbf{U}\right\}
+\]</span></p>
+</section>
+</section>
+<section id="경로-2-마진화marginalization---베이지안-해석" class="level3">
+<h3 class="anchored" data-anchor-id="경로-2-마진화marginalization---베이지안-해석">1.2 경로 2: 마진화(Marginalization) - 베이지안 해석</h3>
+<section id="고정효과에-대한-사전분포-설정" class="level4">
+<h4 class="anchored" data-anchor-id="고정효과에-대한-사전분포-설정">고정효과에 대한 사전분포 설정</h4>
+<p>고정효과 <span class="math display">\[\boldsymbol{\beta}\]</span>에 대해 <strong>균일 비정보적 사전분포(uniform improper prior)</strong>를 부여:</p>
+<p><span class="math display">\[
+p(\boldsymbol{\beta}) \propto 1
+\]</span></p>
+</section>
+<section id="주변화integrating-out-boldsymbolbeta" class="level4">
+<h4 class="anchored" data-anchor-id="주변화integrating-out-boldsymbolbeta">주변화(Integrating out <span class="math display">\[\boldsymbol{\beta}\]</span>)</h4>
+<p>전체 우도:</p>
+<p><span class="math display">\[
+p(\mathbf{Y} | \boldsymbol{\beta}, \boldsymbol{\alpha}) = (2\pi)^{-n/2} |\mathbf{V}|^{-1/2} \exp\left\{-\frac{1}{2}(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T \mathbf{V}^{-1}(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})\right\}
+\]</span></p>
+<p><span class="math display">\[\boldsymbol{\beta}\]</span>에 대해 적분:</p>
+<p><span class="math display">\[
+p(\mathbf{Y} | \boldsymbol{\alpha}) = \int p(\mathbf{Y} | \boldsymbol{\beta}, \boldsymbol{\alpha}) p(\boldsymbol{\beta}) \, d\boldsymbol{\beta}
+\]</span></p>
+</section>
+<section id="적분-계산-gaussian-적분-공식" class="level4">
+<h4 class="anchored" data-anchor-id="적분-계산-gaussian-적분-공식">적분 계산 (Gaussian 적분 공식)</h4>
+<p>일반 Gaussian 적분 공식:</p>
+<p><span class="math display">\[
+\int \exp\left\{-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \mathbf{A} (\mathbf{x} - \boldsymbol{\mu})\right\} d\mathbf{x} = (2\pi)^{k/2} |\mathbf{A}|^{-1/2}
+\]</span></p>
+<p>우도 함수를 <span class="math display">\[\boldsymbol{\beta}\]</span>에 대한 이차형식으로 정리:</p>
+<p><span class="math display">\[
+(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T \mathbf{V}^{-1}(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}) = (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})^T (\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}) (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}}) + \mathbf{r}^T \mathbf{V}^{-1} \mathbf{r}
+\]</span></p>
+<p>여기서: - <span class="math display">\[\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{V}^{-1} \mathbf{Y}\]</span>: GLS 추정량 - <span class="math display">\[\mathbf{r} = \mathbf{Y} - \mathbf{X}\hat{\boldsymbol{\beta}}\]</span>: 잔차</p>
+<p><strong>증명</strong> (이차형식 완성):</p>
+<p><span class="math display">\[
+(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T \mathbf{V}^{-1}(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})
+\]</span></p>
+<p><span class="math display">\[
+= \mathbf{Y}^T \mathbf{V}^{-1} \mathbf{Y} - 2\boldsymbol{\beta}^T \mathbf{X}^T \mathbf{V}^{-1} \mathbf{Y} + \boldsymbol{\beta}^T \mathbf{X}^T \mathbf{V}^{-1} \mathbf{X} \boldsymbol{\beta}
+\]</span></p>
+<p><span class="math display">\[\mathbf{H} = \mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}\]</span>로 표기하고, 이차형식 완성:</p>
+<p><span class="math display">\[
+= (\boldsymbol{\beta} - \mathbf{H}^{-1}\mathbf{X}^T \mathbf{V}^{-1}\mathbf{Y})^T \mathbf{H} (\boldsymbol{\beta} - \mathbf{H}^{-1}\mathbf{X}^T \mathbf{V}^{-1}\mathbf{Y}) + \mathbf{Y}^T \mathbf{V}^{-1}\mathbf{Y} - \mathbf{Y}^T \mathbf{V}^{-1}\mathbf{X} \mathbf{H}^{-1} \mathbf{X}^T \mathbf{V}^{-1}\mathbf{Y}
+\]</span></p>
+<p><span class="math display">\[
+= (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})^T \mathbf{H} (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}}) + \mathbf{Y}^T (\mathbf{V}^{-1} - \mathbf{V}^{-1}\mathbf{X}\mathbf{H}^{-1}\mathbf{X}^T\mathbf{V}^{-1})\mathbf{Y}
+\]</span></p>
+<p>마지막 항은 투영 행렬을 이용하여 다음과 같이 쓸 수 있습니다:</p>
+<p><span class="math display">\[
+\mathbf{V}^{-1} - \mathbf{V}^{-1}\mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1} = \mathbf{V}^{-1}\mathbf{M}
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{M} = \mathbf{I} - \mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1}\]</span>는 잔차 형성 행렬(residual-forming matrix)입니다.</p>
+<p>따라서:</p>
+<p><span class="math display">\[
+\mathbf{r}^T \mathbf{V}^{-1} \mathbf{r} = \mathbf{Y}^T \mathbf{V}^{-1}\mathbf{M}\mathbf{Y}
+\]</span></p>
+</section>
+<section id="적분-실행" class="level4">
+<h4 class="anchored" data-anchor-id="적분-실행">적분 실행</h4>
+<p><span class="math display">\[
+p(\mathbf{Y} | \boldsymbol{\alpha}) = (2\pi)^{-n/2} |\mathbf{V}|^{-1/2} \exp\left\{-\frac{1}{2}\mathbf{r}^T \mathbf{V}^{-1} \mathbf{r}\right\} \int \exp\left\{-\frac{1}{2}(\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})^T \mathbf{H} (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})\right\} d\boldsymbol{\beta}
+\]</span></p>
+<p>적분 부분:</p>
+<p><span class="math display">\[
+\int \exp\left\{-\frac{1}{2}(\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})^T \mathbf{H} (\boldsymbol{\beta} - \hat{\boldsymbol{\beta}})\right\} d\boldsymbol{\beta} = (2\pi)^{p/2} |\mathbf{H}|^{-1/2}
+\]</span></p>
+<p>최종 REML 우도:</p>
+<p><span class="math display">\[
+p(\mathbf{Y} | \boldsymbol{\alpha}) = (2\pi)^{-(n-p)/2} |\mathbf{V}|^{-1/2} |\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}|^{-1/2} \exp\left\{-\frac{1}{2}\mathbf{r}^T \mathbf{V}^{-1} \mathbf{r}\right\}
+\]</span></p>
+<p>로그 REML:</p>
+<p><span class="math display">\[
+\ell_{REML}(\boldsymbol{\alpha}) = -\frac{1}{2}\left[(n-p)\log(2\pi) + \log|\mathbf{V}| + \log|\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}| + \mathbf{r}^T \mathbf{V}^{-1} \mathbf{r}\right]
+\]</span></p>
+<p><strong>결론</strong>: REML은 고정효과에 대한 균일 사전분포를 가정한 <strong>주변 우도(marginal likelihood)</strong>입니다.[4][5]</p>
+</section>
+</section>
+<section id="경로-3-조건부-우도-conditional-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="경로-3-조건부-우도-conditional-likelihood">1.3 경로 3: 조건부 우도 (Conditional Likelihood)</h3>
+<section id="sufficient-statistic-관점" class="level4">
+<h4 class="anchored" data-anchor-id="sufficient-statistic-관점">Sufficient Statistic 관점</h4>
+<p><span class="math display">\[\mathbf{t} = \mathbf{X}^T \mathbf{V}^{-1} \mathbf{Y}\]</span>는 고정효과 <span class="math display">\[\boldsymbol{\beta}\]</span>에 대한 <strong>충분통계량(sufficient statistic)</strong>입니다.[6]</p>
+<p>REML은 충분통계량 <span class="math display">\[\mathbf{t}\]</span>가 주어졌을 때 <span class="math display">\[\mathbf{Y}\]</span>의 <strong>조건부 우도(conditional likelihood)</strong>로 해석됩니다:</p>
+<p><span class="math display">\[
+L_{REML}(\boldsymbol{\alpha}) = p(\mathbf{Y} | \mathbf{t}, \boldsymbol{\alpha})
+\]</span></p>
+</section>
+<section id="조건부-분포-유도" class="level4">
+<h4 class="anchored" data-anchor-id="조건부-분포-유도">조건부 분포 유도</h4>
+<p><span class="math display">\[
+p(\mathbf{Y} | \mathbf{t}, \boldsymbol{\alpha}) = \frac{p(\mathbf{Y}, \mathbf{t} | \boldsymbol{\alpha})}{p(\mathbf{t} | \boldsymbol{\alpha})} = \frac{p(\mathbf{Y} | \boldsymbol{\alpha})}{p(\mathbf{t} | \boldsymbol{\alpha})}
+\]</span></p>
+<p>(<span class="math display">\[\mathbf{t}\]</span>는 <span class="math display">\[\mathbf{Y}\]</span>의 함수이므로 <span class="math display">\[p(\mathbf{Y}, \mathbf{t}) = p(\mathbf{Y})\]</span>)</p>
+<p>충분통계량 <span class="math display">\[\mathbf{t}\]</span>의 분포:</p>
+<p><span class="math display">\[
+\mathbf{t} = \mathbf{X}^T \mathbf{V}^{-1} \mathbf{Y} \sim N(\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X} \boldsymbol{\beta}, \mathbf{X}^T \mathbf{V}^{-1} \mathbf{X})
+\]</span></p>
+<p>조건부 우도는 경로 2의 주변 우도와 <strong>동일</strong>합니다.[6]</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="bayesian-관점에서의-reml" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-관점에서의-reml">2. Bayesian 관점에서의 REML</h2>
+<section id="harville-1974의-연결" class="level3">
+<h3 class="anchored" data-anchor-id="harville-1974의-연결">2.1 Harville (1974)의 연결</h3>
+<p>Harville (1974)은 REML이 <strong>특정 사전분포를 가정한 Bayesian 추론</strong>과 동등함을 보였습니다.[5][4]</p>
+<section id="사전분포-설정" class="level4">
+<h4 class="anchored" data-anchor-id="사전분포-설정">사전분포 설정</h4>
+<ul>
+<li><strong>고정효과</strong>: <span class="math display">\[p(\boldsymbol{\beta}) \propto 1\]</span> (균일 비정보적)</li>
+<li><strong>분산 성분</strong>: <span class="math display">\[p(\boldsymbol{\alpha}) \propto 1\]</span> (균일 비정보적)</li>
+</ul>
+</section>
+<section id="사후분포-모드posterior-mode" class="level4">
+<h4 class="anchored" data-anchor-id="사후분포-모드posterior-mode">사후분포 모드(Posterior Mode)</h4>
+<p>사후분포:</p>
+<p><span class="math display">\[
+p(\boldsymbol{\beta}, \boldsymbol{\alpha} | \mathbf{Y}) \propto p(\mathbf{Y} | \boldsymbol{\beta}, \boldsymbol{\alpha}) p(\boldsymbol{\beta}) p(\boldsymbol{\alpha})
+\]</span></p>
+<p><span class="math display">\[\boldsymbol{\beta}\]</span>를 적분으로 제거:</p>
+<p><span class="math display">\[
+p(\boldsymbol{\alpha} | \mathbf{Y}) = \int p(\boldsymbol{\beta}, \boldsymbol{\alpha} | \mathbf{Y}) d\boldsymbol{\beta} \propto p(\mathbf{Y} | \boldsymbol{\alpha})
+\]</span></p>
+<p>이는 <strong>REML 우도</strong>와 동일합니다.</p>
+<p>따라서:</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\alpha}}_{REML} = \arg\max_{\boldsymbol{\alpha}} p(\boldsymbol{\alpha} | \mathbf{Y})
+\]</span></p>
+<p>REML 추정량은 분산 성분의 <strong>사후 모드(posterior mode) 또는 MAP (Maximum A Posteriori) 추정량</strong>입니다.[5]</p>
+</section>
+</section>
+<section id="laplace-근사와의-연결" class="level3">
+<h3 class="anchored" data-anchor-id="laplace-근사와의-연결">2.2 Laplace 근사와의 연결</h3>
+<p>REML 우도는 전체 우도에 대한 <strong>Laplace 근사(Laplace approximation)</strong>로도 해석됩니다.[5]</p>
+<p>Laplace 근사는 적분을 최빈값(mode) 주변의 이차 근사로 계산하는 방법입니다:</p>
+<p><span class="math display">\[
+\int e^{f(x)} dx \approx e^{f(x^*)} \sqrt{\frac{2\pi}{-f''(x^*)}}
+\]</span></p>
+<p>여기서 <span class="math display">\[x^*\]</span>는 <span class="math display">\[f(x)\]</span>의 최빈값입니다.</p>
+<p>REML 우도의 <span class="math display">\[\log|\mathbf{X}^T \mathbf{V}^{-1} \mathbf{X}|^{-1/2}\]</span> 항이 정확히 Laplace 근사의 <strong>곡률 보정 항(curvature correction)</strong>에 해당합니다.</p>
+<hr>
+</section>
+</section>
+<section id="fisher-정보-행렬과-점근-성질" class="level2">
+<h2 class="anchored" data-anchor-id="fisher-정보-행렬과-점근-성질">3. Fisher 정보 행렬과 점근 성질</h2>
+<section id="fisher-정보-행렬-fisher-information-matrix-fim" class="level3">
+<h3 class="anchored" data-anchor-id="fisher-정보-행렬-fisher-information-matrix-fim">3.1 Fisher 정보 행렬 (Fisher Information Matrix, FIM)</h3>
+<section id="정의" class="level4">
+<h4 class="anchored" data-anchor-id="정의">정의</h4>
+<p>Fisher 정보 행렬은 로그 우도의 <strong>2차 미분의 기댓값의 음수</strong>입니다:</p>
+<p><span class="math display">\[
+\mathcal{I}(\boldsymbol{\theta}) = -E\left[\frac{\partial^2 \ell(\boldsymbol{\theta})}{\partial \boldsymbol{\theta} \partial \boldsymbol{\theta}^T}\right]
+\]</span></p>
+<p>또는 점수 함수(score function)의 외적:</p>
+<p><span class="math display">\[
+\mathcal{I}(\boldsymbol{\theta}) = E\left[\frac{\partial \ell(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \frac{\partial \ell(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}^T\right]
+\]</span></p>
+</section>
+<section id="reml의-fisher-정보-행렬" class="level4">
+<h4 class="anchored" data-anchor-id="reml의-fisher-정보-행렬">REML의 Fisher 정보 행렬</h4>
+<p>REML 점수 함수:</p>
+<p><span class="math display">\[
+\mathbf{s}_{REML}(\boldsymbol{\alpha}) = \frac{\partial \ell_{REML}(\boldsymbol{\alpha})}{\partial \boldsymbol{\alpha}}
+\]</span></p>
+<p>각 분산 성분 <span class="math display">\[\alpha_k\]</span>에 대해:</p>
+<p><span class="math display">\[
+\frac{\partial \ell_{REML}}{\partial \alpha_k} = -\frac{1}{2}\text{tr}\left[\mathbf{P} \frac{\partial \mathbf{V}}{\partial \alpha_k}\right] + \frac{1}{2}\mathbf{r}^T \mathbf{V}^{-1} \frac{\partial \mathbf{V}}{\partial \alpha_k} \mathbf{V}^{-1} \mathbf{r}
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{P}\]</span>는 <strong>조정 투영 행렬(adjusted projection matrix)</strong>:</p>
+<p><span class="math display">\[
+\mathbf{P} = \mathbf{V}^{-1} - \mathbf{V}^{-1}\mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1}
+\]</span></p>
+<p><strong>Fisher 정보 행렬</strong> (REML):</p>
+<p><span class="math display">\[
+\mathcal{I}_{REML}(\boldsymbol{\alpha})_{k,\ell} = \frac{1}{2}\text{tr}\left[\mathbf{P} \frac{\partial \mathbf{V}}{\partial \alpha_k} \mathbf{P} \frac{\partial \mathbf{V}}{\partial \alpha_\ell}\right]
+\]</span></p>
+<p><strong>ML의 Fisher 정보 행렬</strong> (비교):</p>
+<p><span class="math display">\[
+\mathcal{I}_{ML}(\boldsymbol{\alpha})_{k,\ell} = \frac{1}{2}\text{tr}\left[\mathbf{V}^{-1} \frac{\partial \mathbf{V}}{\partial \alpha_k} \mathbf{V}^{-1} \frac{\partial \mathbf{V}}{\partial \alpha_\ell}\right]
+\]</span></p>
+<p><strong>차이</strong>: REML은 <span class="math display">\[\mathbf{V}^{-1}\]</span> 대신 <span class="math display">\[\mathbf{P}\]</span>를 사용하여 <strong>고정효과 추정의 불확실성</strong>을 반영합니다.[7][8]</p>
+</section>
+</section>
+<section id="점근-성질-asymptotic-properties" class="level3">
+<h3 class="anchored" data-anchor-id="점근-성질-asymptotic-properties">3.2 점근 성질 (Asymptotic Properties)</h3>
+<section id="일관성consistency" class="level4">
+<h4 class="anchored" data-anchor-id="일관성consistency">일관성(Consistency)</h4>
+<p>모형이 다음을 만족하면 REML 추정량은 <strong>일치 추정량(consistent estimator)</strong>입니다:[9][10]</p>
+<ol type="1">
+<li><strong>점근적 식별가능성(Asymptotically Identifiable)</strong>: 서로 다른 <span class="math display">\[\boldsymbol{\alpha}\]</span> 값이 서로 다른 공분산 구조를 생성</li>
+<li><strong>무한 정보량(Infinitely Informative)</strong>: Fisher 정보 행렬이 <span class="math display">\[n \to \infty\]</span>일 때 무한대로 발산</li>
+</ol>
+<p><span class="math display">\[
+\hat{\boldsymbol{\alpha}}_{REML} \xrightarrow{p} \boldsymbol{\alpha}_0 \quad \text{as } n \to \infty
+\]</span></p>
+</section>
+<section id="점근-정규성asymptotic-normality" class="level4">
+<h4 class="anchored" data-anchor-id="점근-정규성asymptotic-normality">점근 정규성(Asymptotic Normality)</h4>
+<p>모형이 점근적으로 <strong>비퇴화(non-degenerate)</strong>이면 REML 추정량은 점근적으로 정규분포를 따릅니다:[11][10][9]</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\boldsymbol{\alpha}}_{REML} - \boldsymbol{\alpha}_0) \xrightarrow{d} N(\mathbf{0}, \mathcal{I}_{REML}^{-1}(\boldsymbol{\alpha}_0))
+\]</span></p>
+<p><strong>공분산 행렬</strong>:</p>
+<p><span class="math display">\[
+\text{Var}[\hat{\boldsymbol{\alpha}}_{REML}] \approx \mathcal{I}_{REML}^{-1}(\hat{\boldsymbol{\alpha}}_{REML})
+\]</span></p>
+<p>이는 <strong>Cramér-Rao 하한(Cramér-Rao Lower Bound)</strong>에 점근적으로 도달합니다.[12][11]</p>
+</section>
+<section id="mle와의-비교" class="level4">
+<h4 class="anchored" data-anchor-id="mle와의-비교">MLE와의 비교</h4>
+<ul>
+<li><strong>MLE</strong>: 점근적으로 불편이지만, 유한 표본에서 편향</li>
+<li><strong>REML</strong>: 유한 표본에서 불편 (분산 성분), 점근적으로 MLE와 동등[10][9]</li>
+</ul>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\boldsymbol{\alpha}}_{REML} - \hat{\boldsymbol{\alpha}}_{ML}) \xrightarrow{p} \mathbf{0}
+\]</span></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="변환-불변성-transformation-invariance" class="level2">
+<h2 class="anchored" data-anchor-id="변환-불변성-transformation-invariance">4. 변환 불변성 (Transformation Invariance)</h2>
+<section id="성질" class="level3">
+<h3 class="anchored" data-anchor-id="성질">4.1 성질</h3>
+<p>REML은 고정효과의 <strong>선형 재매개변수화(linear reparameterization)</strong>에 대해 불변입니다.[3]</p>
+<section id="수학적-표현" class="level4">
+<h4 class="anchored" data-anchor-id="수학적-표현">수학적 표현</h4>
+<p>고정효과를 다음과 같이 변환:</p>
+<p><span class="math display">\[
+\boldsymbol{\gamma} = \mathbf{C}\boldsymbol{\beta}, \quad \mathbf{C}: r \times p \text{ 풀랭크}
+\]</span></p>
+<p>새로운 설계 행렬:</p>
+<p><span class="math display">\[
+\mathbf{X}^* = \mathbf{X}\mathbf{C}^{-1}
+\]</span></p>
+<p><strong>주장</strong>: REML 추정량 <span class="math display">\[\hat{\boldsymbol{\alpha}}_{REML}\]</span>는 <span class="math display">\[\mathbf{C}\]</span>의 선택에 무관합니다.</p>
+</section>
+<section id="증명-스케치" class="level4">
+<h4 class="anchored" data-anchor-id="증명-스케치">증명 스케치</h4>
+<p>REML 우도는 잔차 <span class="math display">\[\mathbf{r} = \mathbf{Y} - \mathbf{X}\hat{\boldsymbol{\beta}}\]</span>에만 의존합니다.</p>
+<p><span class="math display">\[\mathbf{r}\]</span>는 <span class="math display">\[\mathbf{X}\]</span>의 열 공간으로의 투영의 <strong>직교 여공간(orthogonal complement)</strong>이므로:</p>
+<p><span class="math display">\[
+\mathbf{r} = (\mathbf{I} - \mathbf{P}_\mathbf{X})\mathbf{Y}
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{P}_\mathbf{X} = \mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1}\]</span>.</p>
+<p><span class="math display">\[\mathbf{X}^*\]</span>도 동일한 열 공간을 span하므로:</p>
+<p><span class="math display">\[
+\mathbf{P}_{\mathbf{X}^*} = \mathbf{P}_\mathbf{X}
+\]</span></p>
+<p>따라서 잔차와 REML 우도는 불변입니다. ✓</p>
+<p><strong>실용적 의미</strong>: 고정효과 모형의 매개변수화 방식(예: 제약 조건, 더미 코딩)이 분산 성분 추정에 영향을 주지 않습니다.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="reml-vs-ml-편향-보정의-수학적-구조" class="level2">
+<h2 class="anchored" data-anchor-id="reml-vs-ml-편향-보정의-수학적-구조">5. REML vs ML: 편향 보정의 수학적 구조</h2>
+<section id="편향의-근원" class="level3">
+<h3 class="anchored" data-anchor-id="편향의-근원">5.1 편향의 근원</h3>
+<section id="자유도-손실" class="level4">
+<h4 class="anchored" data-anchor-id="자유도-손실">자유도 손실</h4>
+<p>ML은 고정효과 추정에 사용된 <span class="math display">\[p\]</span>개 자유도를 고려하지 않고, 전체 <span class="math display">\[n\]</span>개 관측값을 기준으로 분산을 추정합니다.</p>
+<p>단순 선형 회귀 예제:</p>
+<p><span class="math display">\[
+\text{RSS} = \sum_{i=1}^{n}(Y_i - \hat{Y}_i)^2 \sim \sigma^2 \chi^2_{n-p}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\sigma}^2_{ML} = \frac{\text{RSS}}{n} \quad \Rightarrow \quad E[\hat{\sigma}^2_{ML}] = \frac{n-p}{n}\sigma^2
+\]</span></p>
+<p><strong>편향</strong>:</p>
+<p><span class="math display">\[
+\text{Bias}[\hat{\sigma}^2_{ML}] = -\frac{p}{n}\sigma^2
+\]</span></p>
+</section>
+</section>
+<section id="reml의-보정-메커니즘" class="level3">
+<h3 class="anchored" data-anchor-id="reml의-보정-메커니즘">5.2 REML의 보정 메커니즘</h3>
+<p>REML은 <span class="math display">\[n-p\]</span>개의 독립적인 오차 대비를 사용하여 분산을 추정:</p>
+<p><span class="math display">\[
+\hat{\sigma}^2_{REML} = \frac{\text{RSS}}{n-p}
+\]</span></p>
+<p><span class="math display">\[
+E[\hat{\sigma}^2_{REML}] = \sigma^2 \quad \text{(불편)}
+\]</span></p>
+<section id="일반화-다변량-경우" class="level4">
+<h4 class="anchored" data-anchor-id="일반화-다변량-경우">일반화: 다변량 경우</h4>
+<p>분산 성분 <span class="math display">\[\boldsymbol{\alpha}\]</span>에 대해:</p>
+<p><strong>MLE 점수 함수</strong>:</p>
+<p><span class="math display">\[
+\mathbf{s}_{ML}(\boldsymbol{\alpha}) = -\frac{1}{2}\text{tr}\left[\mathbf{V}^{-1}\frac{\partial \mathbf{V}}{\partial \boldsymbol{\alpha}}\right] + \frac{1}{2}\mathbf{e}^T \mathbf{V}^{-1}\frac{\partial \mathbf{V}}{\partial \boldsymbol{\alpha}}\mathbf{V}^{-1}\mathbf{e}
+\]</span></p>
+<p>여기서 <span class="math display">\[\mathbf{e} = \mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\]</span>.</p>
+<p><strong>REML 점수 함수</strong> (보정):</p>
+<p><span class="math display">\[
+\mathbf{s}_{REML}(\boldsymbol{\alpha}) = -\frac{1}{2}\text{tr}\left[\mathbf{P}\frac{\partial \mathbf{V}}{\partial \boldsymbol{\alpha}}\right] + \frac{1}{2}\mathbf{r}^T \mathbf{V}^{-1}\frac{\partial \mathbf{V}}{\partial \boldsymbol{\alpha}}\mathbf{V}^{-1}\mathbf{r}
+\]</span></p>
+<p><strong>차이</strong>: 첫 번째 항에서 <span class="math display">\[\mathbf{V}^{-1}\]</span> 대신 <span class="math display">\[\mathbf{P} = \mathbf{V}^{-1} - \mathbf{V}^{-1}\mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1}\]</span>를 사용.</p>
+<p>이는 <strong>고정효과에 의한 차원 축소</strong>를 정확히 반영합니다.[2][13]</p>
+</section>
+</section>
+<section id="자유도-보정의-행렬-표현" class="level3">
+<h3 class="anchored" data-anchor-id="자유도-보정의-행렬-표현">5.3 자유도 보정의 행렬 표현</h3>
+<section id="유효-자유도-effective-degrees-of-freedom" class="level4">
+<h4 class="anchored" data-anchor-id="유효-자유도-effective-degrees-of-freedom">유효 자유도 (Effective Degrees of Freedom)</h4>
+<p>REML의 로그 행렬식 항:</p>
+<p><span class="math display">\[
+\log|\mathbf{V}| + \log|\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X}|
+\]</span></p>
+<p>이는 다음과 같이 해석됩니다:</p>
+<p><span class="math display">\[
+\log|\mathbf{V}| + \log|\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X}| = \log|\mathbf{V}| + \log\left|\frac{\partial^2 \ell_{ML}}{\partial \boldsymbol{\beta} \partial \boldsymbol{\beta}^T}\right|
+\]</span></p>
+<p>두 번째 항은 고정효과에 대한 <strong>Fisher 정보의 행렬식</strong>으로, 고정효과 추정의 불확실성을 나타냅니다.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="일반화된-reml-glmms로의-확장" class="level2">
+<h2 class="anchored" data-anchor-id="일반화된-reml-glmms로의-확장">6. 일반화된 REML: GLMMs로의 확장</h2>
+<section id="문제점" class="level3">
+<h3 class="anchored" data-anchor-id="문제점">6.1 문제점</h3>
+<p>선형혼합모형(LMM)에서 REML의 성공에도 불구하고, <strong>일반화 선형혼합모형(GLMM)</strong>으로의 확장은 자명하지 않습니다.[14][11]</p>
+<section id="왜-어려운가" class="level4">
+<h4 class="anchored" data-anchor-id="왜-어려운가">왜 어려운가?</h4>
+<ul>
+<li><strong>비정규 반응변수</strong>: 이항, 포아송 등</li>
+<li><strong>링크 함수</strong>: 비선형 변환</li>
+<li><strong>적분 불가능</strong>: 주변 우도가 닫힌 형태(closed form)로 표현되지 않음</li>
+</ul>
+</section>
+</section>
+<section id="glmm에서의-reml-확장-방법들" class="level3">
+<h3 class="anchored" data-anchor-id="glmm에서의-reml-확장-방법들">6.2 GLMM에서의 REML 확장 방법들</h3>
+<p>문헌에서 제안된 네 가지 주요 접근법:[14][11]</p>
+<section id="방법-1-근사-선형화-approximate-linearization" class="level4">
+<h4 class="anchored" data-anchor-id="방법-1-근사-선형화-approximate-linearization">방법 1: 근사 선형화 (Approximate Linearization)</h4>
+<p><strong>아이디어</strong>: 반응변수를 <strong>작업 변수(working variate)</strong>로 선형화한 후 REML 적용.</p>
+<p>Schall (1991)의 방법:</p>
+<p><span class="math display">\[
+\mathbf{z} = \boldsymbol{\eta} + \mathbf{D}^{-1}(\mathbf{y} - \boldsymbol{\mu})
+\]</span></p>
+<p>여기서: - <span class="math display">\[\boldsymbol{\eta} = g(\boldsymbol{\mu})\]</span>: 링크 함수 - <span class="math display">\[\mathbf{D} = \text{diag}(g'(\mu_i))\]</span>: Jacobian</p>
+<p>근사 선형 모형:</p>
+<p><span class="math display">\[
+\mathbf{z} \approx \mathbf{X}\boldsymbol{\beta} + \mathbf{Z}\mathbf{b} + \boldsymbol{\epsilon}
+\]</span></p>
+<p>이에 대해 REML 적용.</p>
+</section>
+<section id="방법-2-적분-우도-integrated-likelihood" class="level4">
+<h4 class="anchored" data-anchor-id="방법-2-적분-우도-integrated-likelihood">방법 2: 적분 우도 (Integrated Likelihood)</h4>
+<p>Laplace 근사나 적응적 Gauss-Hermite 구적법을 사용하여 랜덤효과를 적분:</p>
+<p><span class="math display">\[
+L(\boldsymbol{\beta}, \boldsymbol{\alpha}) = \int p(\mathbf{y} | \mathbf{b}, \boldsymbol{\beta}) p(\mathbf{b} | \boldsymbol{\alpha}) d\mathbf{b}
+\]</span></p>
+<p>이후 고정효과를 적분 제거하여 REML 우도 구성.</p>
+</section>
+<section id="방법-3-수정-프로파일-우도-modified-profile-likelihood" class="level4">
+<h4 class="anchored" data-anchor-id="방법-3-수정-프로파일-우도-modified-profile-likelihood">방법 3: 수정 프로파일 우도 (Modified Profile Likelihood)</h4>
+<p>프로파일 우도에 <strong>편향 보정 항</strong>을 추가:</p>
+<p><span class="math display">\[
+\ell_{MPL}(\boldsymbol{\alpha}) = \ell_{ML}(\hat{\boldsymbol{\beta}}(\boldsymbol{\alpha}), \boldsymbol{\alpha}) - \frac{1}{2}\log|\mathcal{I}_{\boldsymbol{\beta}\boldsymbol{\beta}}(\hat{\boldsymbol{\beta}}, \boldsymbol{\alpha})|
+\]</span></p>
+<p>이는 LMM의 REML과 유사한 구조입니다.</p>
+</section>
+<section id="방법-4-점수-함수의-직접-편향-보정-direct-bias-correction" class="level4">
+<h4 class="anchored" data-anchor-id="방법-4-점수-함수의-직접-편향-보정-direct-bias-correction">방법 4: 점수 함수의 직접 편향 보정 (Direct Bias Correction)</h4>
+<p>ML 점수 함수에 <strong>편향 보정 항</strong>을 직접 추가:</p>
+<p><span class="math display">\[
+\mathbf{s}_{REML}(\boldsymbol{\alpha}) = \mathbf{s}_{ML}(\boldsymbol{\alpha}) + \text{correction term}
+\]</span></p>
+</section>
+</section>
+<section id="통일된-결과" class="level3">
+<h3 class="anchored" data-anchor-id="통일된-결과">6.3 통일된 결과</h3>
+<p>놀랍게도, 이 네 가지 접근법은 종종 <strong>동일하거나 매우 유사한 추정량</strong>을 제공합니다.[11][14]</p>
+<hr>
+</section>
+</section>
+<section id="reml의-한계와-주의사항" class="level2">
+<h2 class="anchored" data-anchor-id="reml의-한계와-주의사항">7. REML의 한계와 주의사항</h2>
+<section id="모형-비교의-제약" class="level3">
+<h3 class="anchored" data-anchor-id="모형-비교의-제약">7.1 모형 비교의 제약</h3>
+<p>REML은 <strong>고정효과가 동일한 모형</strong>끼리만 비교 가능합니다.[15][16]</p>
+<section id="왜" class="level4">
+<h4 class="anchored" data-anchor-id="왜">왜?</h4>
+<p>REML 우도는 <strong>잔차</strong>에 기반하므로:</p>
+<p><span class="math display">\[
+\mathbf{r}_1 = (\mathbf{I} - \mathbf{P}_{\mathbf{X}_1})\mathbf{Y}, \quad \mathbf{r}_2 = (\mathbf{I} - \mathbf{P}_{\mathbf{X}_2})\mathbf{Y}
+\]</span></p>
+<p><span class="math display">\[\mathbf{X}_1 \neq \mathbf{X}_2\]</span>이면 <span class="math display">\[\mathbf{r}_1\]</span>과 <span class="math display">\[\mathbf{r}_2\]</span>는 <strong>서로 다른 데이터</strong>입니다.</p>
+<p><strong>해결책</strong>: 고정효과가 다른 모형을 비교할 때는 <strong>ML 사용</strong>.[16][15]</p>
+</section>
+</section>
+<section id="편향-분산-트레이드오프" class="level3">
+<h3 class="anchored" data-anchor-id="편향-분산-트레이드오프">7.2 편향-분산 트레이드오프</h3>
+<p>REML은 분산 성분에 대해 불편이지만, 고정효과 추정량은 <strong>약간 편향</strong>될 수 있습니다 (왜냐하면 분산 성분 추정의 불확실성 때문).[17]</p>
+<hr>
+</section>
+</section>
+<section id="요약" class="level2">
+<h2 class="anchored" data-anchor-id="요약">요약</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 43%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>관점</th>
+<th>핵심 아이디어</th>
+<th>수학적 표현</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>오차 대비</strong></td>
+<td>고정효과에 직교하는 선형 변환</td>
+<td><span class="math display">\[\mathbf{K}^T\mathbf{X} = \mathbf{0}\]</span>, <span class="math display">\[\mathbf{U} = \mathbf{K}^T\mathbf{Y}\]</span></td>
+</tr>
+<tr class="even">
+<td><strong>주변화</strong></td>
+<td>고정효과를 적분으로 제거</td>
+<td><span class="math display">\[p(\mathbf{Y}\|\boldsymbol{\alpha}) = \int p(\mathbf{Y}\|\boldsymbol{\beta},\boldsymbol{\alpha})d\boldsymbol{\beta}\]</span></td>
+</tr>
+<tr class="odd">
+<td><strong>조건부 우도</strong></td>
+<td>충분통계량 주어진 조건부 분포</td>
+<td><span class="math display">\[L_{REML} = p(\mathbf{Y}\|\mathbf{t})\]</span></td>
+</tr>
+<tr class="even">
+<td><strong>Bayesian</strong></td>
+<td>균일 사전분포의 사후 모드</td>
+<td><span class="math display">\[\hat{\boldsymbol{\alpha}} = \arg\max p(\boldsymbol{\alpha}\|\mathbf{Y})\]</span></td>
+</tr>
+<tr class="odd">
+<td><strong>편향 보정</strong></td>
+<td>자유도 손실 반영</td>
+<td><span class="math display">\[\frac{1}{n-p}\]</span> vs <span class="math display">\[\frac{1}{n}\]</span></td>
+</tr>
+<tr class="even">
+<td><strong>Fisher 정보</strong></td>
+<td>고정효과 불확실성 반영</td>
+<td><span class="math display">\[\mathbf{P} = \mathbf{V}^{-1} - \mathbf{V}^{-1}\mathbf{X}(\mathbf{X}^T\mathbf{V}^{-1}\mathbf{X})^{-1}\mathbf{X}^T\mathbf{V}^{-1}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>REML의 본질</strong>: 고정효과 추정의 불확실성을 고려하여 분산 성분을 불편 추정하는 체계적인 방법론이며, 여러 수학적 경로를 통해 동일한 결과에 도달합니다.</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0022030293775694">1</a> <a href="https://psoerensen.github.io/qgnotes/REML.pdf">2</a> <a href="https://en.wikipedia.org/wiki/Restricted_maximum_likelihood">3</a> <a href="https://www.mathworks.com/help/stats/estimating-parameters-in-linear-mixed-effects-models.html">4</a> <a href="https://pubmed.ncbi.nlm.nih.gov/19598183/">5</a> <a href="https://gksmyth.github.io/pubs/CondREML-Interface11Jul1994.pdf">6</a> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8550113/">7</a> <a href="https://computo-journal.org/published-202311-delattre-fim/">8</a> <a href="https://projecteuclid.org/journals/annals-of-statistics/volume-24/issue-1/REML-estimation-asymptotic-behavior-and-related-topics/10.1214/aos/1033066209.full">9</a> <a href="https://www.sciencedirect.com/science/article/pii/S0047259X83710341">10</a> <a href="https://arxiv.org/html/2402.12719v1">11</a> <a href="https://www3.stat.sinica.edu.tw/statistica/j8n3/j8n314/j8n314.htm">12</a> <a href="http://users.stat.umn.edu/~gary/classes/5303/handouts/REML.pdf">13</a> <a href="https://arxiv.org/abs/2402.12719">14</a> <a href="http://blackwell.math.yorku.ca/MATH4939/files/Mixed_Models/REML_vs_ML.pdf">15</a> <a href="https://community.jmp.com/t5/Discussions/How-to-switch-from-REML-to-ML-for-Model-Comparison/td-p/752963?code=ko-KR">16</a> <a href="https://blog.naver.com/j_nia22/220884213936">17</a> <a href="https://blog.naver.com/jaebum8888/220747546227">18</a> <a href="https://www.reddit.com/r/AskStatistics/comments/fm06z6/restricted_vs_full_maximum_likelihood_estimation/">19</a> <a href="https://www.stat.cmu.edu/technometrics/70-79/VOL-18-01/v1801031.pdf">20</a> <a href="https://docs.tibco.com/data-science/GUID-EB3C85FF-96E4-49EB-BB07-DF8CA12CAD84.html">21</a> <a href="https://xiuming.info/docs/tutorials/reml.pdf">22</a> <a href="https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/restricted-maximum-likelihood">23</a> <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118762387.app3">24</a> <a href="https://www.tandfonline.com/doi/abs/10.1080/00401706.1984.10487921">25</a> <a href="https://projecteuclid.org/journals/annals-of-statistics/volume-24/issue-1/REML-estimation-asymptotic-behavior-and-related-topics/10.1214/aos/1033066209.pdf">26</a> <a href="https://www.sciencedirect.com/science/article/abs/pii/S1871141311003945">27</a> <a href="https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=JAKO200416049040311&amp;dbt=NART">28</a> <a href="https://lirias.kuleuven.be/retrieve/606854">29</a> <a href="https://www.stats.ox.ac.uk/~ripley/LME4.pdf">30</a> <a href="https://newprairiepress.org/cgi/viewcontent.cgi?article=1243&amp;context=agstatconference">31</a> <a href="https://openresearch-repository.anu.edu.au/items/eabf5f74-2c73-4cce-a0f0-73bac79384f5">32</a> <a href="https://www.stats.net.au/Maths_REML_manual.pdf">33</a> <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-842X.1994.tb00636.x">34</a> <a href="https://www.jstatsoft.org/article/view/v087c01/1267">35</a> <a href="https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=NART113951120">36</a> <a href="https://www.jstor.org/stable/pdf/2242618.pdf">37</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
