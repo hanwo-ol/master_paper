@@ -1,12 +1,4 @@
-네, 전처리 파이프라인을 엄밀하게 재구축했으므로, 이에 맞춰 **실험 현황표(Experiment Status Table)**와 **실험 세부 리스트**를 새롭게 정리해 드리겠습니다.
-
-모든 실험은 **Stage 1 (Base Processing)** → **Stage 2 (Episode Generation)** → **Model Training** → **Analysis** 순서로 진행되어야 합니다.
-
----
-
 ### **최종 실험 현황표 (Experiment Status Table)**
-
-현재 상태는 모두 **[대기 (Pending)]** 로 초기화되었습니다. 진행하면서 이 표를 업데이트하시면 됩니다.
 
 | 단계 | ID | 실험명 | 의존성 (선행 작업) | 주요 스크립트 | 상태 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -38,10 +30,6 @@
 | | S3 | Sector-Neutral Alpha | E2.1 | (New Script) | ⬜ |
 
 ---
-
-### **실험 목록 상세 가이드 (Step-by-Step Guide)**
-
-실험은 반드시 아래 순서대로 진행해야 데이터 의존성 문제가 발생하지 않습니다.
 
 #### **Step 0: 데이터 준비 (Phase 0)**
 가장 먼저 엄밀한 전처리를 수행합니다.
