@@ -6,7 +6,9 @@
 
 *   **Time & Assets**: $t \in \{1, \dots, T\}$는 시간, $n \in \{1, \dots, N\}$은 자산을 나타낸다.
 *   **Data Split**: 전체 시간 집합 $\mathcal{T}$를 상호 배타적인 세 구간으로 엄격히 분할한다.
-    $$ \mathcal{T} = \mathcal{T}_{\text{train}} \cup \mathcal{T}_{\text{val}} \cup \mathcal{T}_{\text{test}}, \quad \text{where } \sup(\mathcal{T}_{\text{train}}) < \inf(\mathcal{T}_{\text{val}}) $$
+
+$$ \mathcal{T} = \mathcal{T}_{\text{train}} \cup \mathcal{T}_{\text{val}} \cup \mathcal{T}_{\text{test}}, \quad \text{where } \sup(\mathcal{T}_{\text{train}}) < \inf(\mathcal{T}_{\text{val}}) $$
+
 *   **Raw Data**: $\mathbf{X}^{\text{raw}} \in \mathbb{R}^{T \times N \times F}$는 입력 피처, $\mathbf{Y}^{\text{raw}} \in \mathbb{R}^{T \times N}$은 일별 수익률이다.
 
 ---
@@ -21,9 +23,11 @@
 $$
 \Theta_{\text{imp}} = \text{Median}\left( \{ \mathbf{X}^{\text{raw}}_{t,n} \mid t \in \mathcal{T}_{\text{train}} \} \right) \quad (\text{Imputation})
 $$
+
 $$
 \boldsymbol{\mu}_f, \boldsymbol{\sigma}_f = \text{Mean/Std}\left( \{ \mathbf{X}^{\text{raw}}_{t,n,f} \mid t \in \mathcal{T}_{\text{train}} \} \right) \quad (\text{Feature Scaling})
 $$
+
 $$
 \mu_y, \sigma_y = \text{Mean/Std}\left( \{ \mathbf{Y}^{\text{raw}}_{t,n} \mid t \in \mathcal{T}_{\text{train}} \} \right) \quad (\text{Target Scaling})
 $$
@@ -41,6 +45,7 @@ $$
 
 **1.3. Market State Aggregation (시장 상태 요약)**
 레짐 식별을 위해 횡단면(Cross-sectional) 정보를 집계하여 시장 상태 벡터 $\mathbf{m}_t \in \mathbb{R}^D$를 생성한다.
+
 $$
 \mathbf{m}_t = \left[ \frac{1}{N}\sum_n \mathbf{Y}^{\text{raw}}_{t,n}, \quad \text{Std}_n(\mathbf{Y}^{\text{raw}}_{t,n}), \quad \text{VIX}_t, \dots \right]^\top
 $$
@@ -57,7 +62,9 @@ $$
 $$
 C^* = \arg\min_{C} \sum_{t \in \mathcal{T}_{\text{train}}} \sum_{k=1}^K \mathbb{1}(C(\mathbf{m}_t) = k) \cdot \| \mathbf{m}_t - \mathbf{c}_k \|^2
 $$
+
 전체 기간에 대한 레짐은 학습된 함수 $C^*$를 적용하여 얻는다.
+
 $$
 s_t = C^*(\mathbf{m}_t) \in \{1, \dots, K\}, \quad \forall t \in \mathcal{T}
 $$
@@ -68,8 +75,10 @@ $$
 Support 기간 $W^{\text{sup}} = [t, t+L-1]$과 Query 기간 $W^{\text{qry}} = [t+L, t+2L-1]$에 대하여, 다음 조건을 만족하는 구간만을 에피소드로 채택한다.
 
 1.  **Regime Consistency & Purity**:
-    $$ \text{Mode}(s_{t'} \mid t' \in W^{\text{sup}}) = \text{Mode}(s_{t'} \mid t' \in W^{\text{qry}}) = k $$
-    $$ \frac{1}{L} \sum_{t' \in W^{\text{sup}}} \mathbb{1}(s_{t'} = k) \ge \tau \quad \land \quad \frac{1}{L} \sum_{t' \in W^{\text{qry}}} \mathbb{1}(s_{t'} = k) \ge \tau $$
+
+$$ \text{Mode}(s_{t'} \mid t' \in W^{\text{sup}}) = \text{Mode}(s_{t'} \mid t' \in W^{\text{qry}}) = k $$
+
+$$ \frac{1}{L} \sum_{t' \in W^{\text{sup}}} \mathbb{1}(s_{t'} = k) \ge \tau \quad \land \quad \frac{1}{L} \sum_{t' \in W^{\text{qry}}} \mathbb{1}(s_{t'} = k) \ge \tau $$
 
 2.  **Data Integrity**: 구간 내 데이터가 유니버스 $\mathcal{U}$에 속하는 자산들로 구성됨.
 
@@ -79,12 +88,3 @@ $$
 \mathcal{E}(\Omega) = \{ (t_{\text{start}}^{(i)}, k^{(i)}) \}_{i=1}^{M}
 $$
 
----
-
-### **논문에서의 강조점**
-
-1.  **엄밀성 (Rigor)**: 모든 통계적 파라미터($\mu, \sigma, C^*$)가 $\mathcal{T}_{\text{train}}$에서만 유도되었으므로, **Look-ahead Bias가 수학적으로 불가능함**을 보였습니다.
-2.  **효율성 (Efficiency)**: $\mathbf{Z}$와 $\tilde{Y}$는 한 번만 계산되어 고정(Frozen)되고, 다양한 실험 조건($\Omega$)에 따라 가벼운 인덱스 집합 $\mathcal{E}$만 재생성되므로 실험 속도가 극대화됨을 수식으로 표현했습니다.
-3.  **이원화된 타겟 (Dual Target)**: 학습 최적화를 위한 $\tilde{Y}$ (Scaled)와 투자 성과 평가를 위한 $\mathbf{Y}^{\text{raw}}$ (Raw)를 명시적으로 분리하여 정의했습니다.
-
-이 노테이션을 논문의 Method 섹션이나 Appendix의 Experimental Setup 파트에 포함시키면, 실험 설계의 견고함을 심사위원들에게 강력하게 어필할 수 있습니다.
