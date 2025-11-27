@@ -9,6 +9,7 @@ author: "김한울"
 #### 현 상황 브리핑: 20251128 오전 1130 업데이트
 
 + CONVLSTM, HRNet 실험 종료
+
 |Time |   AC U-Net(2021~2023)|	HRNet(2021~2023)|	convLSTM(2021~2023)|	persistence(2021~2023)|
 |-|-|-|-|-|
 |30min|	Avg MSE: 0.0250, Avg MAE: 0.0918, Avg PSNR: 23.2807, Avg SSIM: 0.6220	|Avg MSE: 0.0263, Avg MAE: 0.0961, Avg PSNR: 22.9603, Avg SSIM: 0.5941	|Avg MSE: 0.0413, Avg MAE: 0.1359, Avg PSNR: 20.7277, Avg SSIM: 0.5630	|Avg MSE: 0.055239, Avg MAE: 0.160877, Avg PSNR: 19.426170, Avg SSIM: 0.532850|
