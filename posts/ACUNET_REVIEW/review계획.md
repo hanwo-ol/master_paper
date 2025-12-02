@@ -133,7 +133,7 @@ This paper proposes AC U-Net, an enhanced U-Net architecture incorporating spati
 | **30 min** | MSE | **0.0250** | 0.0263 | 0.0413 | 0.0552 |
 | | SSIM | **0.6220** | 0.5941 | 0.5630 | 0.5329 |
 | **120 min** | MSE | **0.0510** | 0.0570 | 0.1189 | 0.1791 |
-| | SSIM | **0.5721** | 0.5743 | 0.5078 | 0.4452 |
+| | SSIM | 0.5721 | **0.5743** | 0.5078 | 0.4452 |
 
 
 2. The ablation focuses mainly on contextual feature combinations (FGLCM and FSE). However, a more detailed analysis isolating the impact of FiLM, CBAM, and spatiotemporal attentioative Diffusion Networks (as hinted in the conclusion) would strengthen the validation of the proposed method’s superiority.
@@ -161,17 +161,17 @@ n modules would help attribute performance gains more clearly to architectural i
 
 > We appreciate your constructive feedback regarding the selection of baseline models. We acknowledge that comparing only with Persistence and standard U-Net was insufficient to fully demonstrate the superiority of our proposed method. To address this rigor issue directly, **we have conducted additional comparative experiments using ConvLSTM and HRNet**, rather than simply discussing their exclusion.
 > The new experimental results, obtained from the 2021–2023 test set, have been added to the revised manuscript. The results confirm that AC U-Net provides the most accurate forecasts:
-> 1.  **AC U-Net vs. HRNet:** HRNet showed strong performance, ranking second best. However, AC U-Net consistently achieved lower error rates. Specifically, at the 120-minute lead time, AC U-Net recorded an MSE of **0.0510**, which is superior to HRNet's **0.0570**. This suggests that injecting global context (seasonal and texture features) via our proposed FiLM layer provides a distinct advantage over HRNet's multi-scale fusion approach for solar irradiance forecasting.
-> 2.  **AC U-Net vs. ConvLSTM:** ConvLSTM showed limitations in preserving structural details and long-term accuracy, recording significantly higher MSE (0.1189 at 120 min) and lower PSNR/SSIM scores compared to AC U-Net.
+> 1.  **AC U-Net vs. HRNet:** HRNet showed strong performance, ranking second best. However, AC U-Net consistently achieved lower error rates. Specifically, at the 120-minute lead time, AC U-Net recorded an MSE of **0.0510**, which is superior to HRNet's **0.0570**. This suggests that injecting global context (seasonal and texture features) via our proposed FiLM layer provides a distinct advantage over HRNet's multi-scale fusion approach for solar irradiance forecasting.     
+> 2.  **AC U-Net vs. ConvLSTM:** ConvLSTM showed limitations in preserving structural details and long-term accuracy, recording significantly higher MSE (0.1189 at 120 min) and lower PSNR/SSIM scores compared to AC U-Net.     
 > We have updated the **"Experimental Results"** section to include these comparisons, providing a more rigorous validation of our model's effectiveness against established spatiotemporal forecasting baselines.
 
 2: Issue of Blurry Predictions: The authors state in the introduction that a key problem with existing models (e.g., ConvLSTM) is the generation of "over-smoothed outputs" or "blurry images." However, the qualitative results (Fig. 2) show that the proposed AC U-Net also produces clearly smoothed and blurry predictions in complex scenarios (e.g., Jan 22nd and July 25th), especially as the forecast horizon increases. A significant amount of high-frequency texture detail is lost. While the authors acknowledge this in their analysis, the introduction and conclusion seem to imply that the new model has resolved this issue. This appears to be an overstatement. The authors should provide a more objective assessment of the model's true performance regarding the "blurriness problem."
 
 > We sincerely thank the reviewer for this insightful observation. We fully agree that stating our model has "resolved" the blurriness problem was an overstatement. As correctly pointed out, while AC U-Net improves structural fidelity compared to baselines, it still exhibits smoothing effects, particularly in complex scenarios and at longer forecast horizons due to the inherent uncertainty of future cloud dynamics and the nature of the regression loss functions employed.
 > To address this, we have made the following revisions to the manuscript:
-> 1.  **Revised Claims:** We have toned down the language in the **Introduction** and **Conclusion**. Instead of claiming to have "solved" the issue, we now state that our method *"mitigates over-smoothing and improves the preservation of structural details compared to standard baselines."*
-> 2.  **Objective Assessment:** In the **"Qualitative Analysis"** section, we have added a candid discussion acknowledging that high-frequency texture details are still lost in challenging cases (e.g., Jan 22nd and July 25th). We explicitly mention that while the MS-SSIM loss helps maintain structural coherence, recovering fine-grained textures remains a challenging open problem.
-> 3.  **Limitations Section:** We have expanded the **Conclusion (or Discussion)** to include a limitation regarding the "blurriness problem," suggesting that future work incorporating Diffusion Probabilistic Models could further address this issue by generating more realistic high-frequency details.
+> 1.  **Revised Claims:** We have toned down the language in the **Introduction** and **Conclusion**. Instead of claiming to have "solved" the issue, we now state that our method *"mitigates over-smoothing and improves the preservation of structural details compared to standard baselines."*      
+> 2.  **Objective Assessment:** In the **"Qualitative Analysis"** section, we have added a candid discussion acknowledging that high-frequency texture details are still lost in challenging cases (e.g., Jan 22nd and July 25th). We explicitly mention that while the MS-SSIM loss helps maintain structural coherence, recovering fine-grained textures remains a challenging open problem.      
+> 3.  **Limitations Section:** We have expanded the **Conclusion (or Discussion)** to include a limitation regarding the "blurriness problem," suggesting that future work incorporating Diffusion Probabilistic Models could further address this issue by generating more realistic high-frequency details.     
 
 #### Minor Comments:
 
