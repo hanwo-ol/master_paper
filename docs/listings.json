@@ -4,6 +4,7 @@
     "items": [
       "/posts/review_2.html",
       "/posts/20251116_1.html",
+      "/posts/about.html",
       "/posts/GLM/LMM/Parameter Estimation.html",
       "/posts/GLM/LMM/Preliminary Model.html",
       "/posts/GLM/LMM/Parameter Estimation read.html",
@@ -36,6 +37,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/about.html",
       "/posts/index.html",
       "/posts/ACUNET_REVIEW/draft2.html",
       "/posts/GLM/LMM/Parameter Estimation read.html",

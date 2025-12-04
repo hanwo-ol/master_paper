@@ -139,6 +139,11 @@ This paper proposes AC U-Net, an enhanced U-Net architecture incorporating spati
 2. The ablation focuses mainly on contextual feature combinations (FGLCM and FSE). However, a more detailed analysis isolating the impact of FiLM, CBAM, and spatiotemporal attentioative Diffusion Networks (as hinted in the conclusion) would strengthen the validation of the proposed method’s superiority.
 n modules would help attribute performance gains more clearly to architectural innovations.
 
+> A: We appreciate the reviewer’s suggestion. 
+We would like to clarify that the current AC U-Net does not include any diffusion-based modules; diffusion models are only mentioned in the Conclusion section as a potential direction for future work (Lines XX–YY). 
+In this revision, we therefore focus our ablation study on the two main architectural contributions of the proposed model, namely FiLM-based contextual modulation and the CBAM attention module. 
+Table Z now includes (i) a CBAM-only variant, (ii) a FiLM-only variant, and (iii) the full AC U-Net with both modules, which allows us to disentangle their individual and combined contributions beyond the contextual features \(F_{GLCM}\) and \(F_{SE}\).
+
 3. The study is geographically restricted to the Korean Peninsula, which may limit global applicability. The authors should discuss potential generalization issues or validate the model on data from other regions or satellite sources (e.g., Himawari, GOES).
 
 4. The authors are encouraged to include recent attention-based U-Net variants such as "DSIA U-Net: Deep Shallow Interaction with Attention Mechanism U-Net for Remote Sensing Satellite Images" and "AER U-Net: Attention-Enhanced Multi-Scale Residual U-Net Structure for Water Body Segmentation Using Sentinel-2 Satellite Images" in the Related Work section. These models demonstrate effective strategies for integrating multi-scale attention and contextual feature interactions, which are conceptually aligned with the proposed AC U-Net. Citing and briefly comparing these works (around the discussion of attention-enhanced U-Net methods, Section II, lines 10–20) would better position this study within the broader evolution of attention-driven U-Net architectures and strengthen the motivation for introducing the spatiotemporal attention and FiLM-based feature modulation.
@@ -177,6 +182,31 @@ n modules would help attribute performance gains more clearly to architectural i
 
 1: Ambiguous Definition of Input Features: When describing the Power Feature and Sobel Power Feature, the paper states the time lag (Δtref) is "set by the time lag between It and Yt+j". This definition is vague. How is this time lag specifically defined? How is it set according to the prediction step j?
 
+> **Response:**
+> We sincerely thank the reviewer for pointing out this ambiguity. We agree that the previous term $\Delta t_{ref}$ was confusing and did not clearly convey how the input features relate to the forecast horizon.
+> To clarify, our model employs a **horizon-specific training strategy**. For each target lead time $j \in \{1, 2, 3, 4\}$ (corresponding to 30, 60, 90, and 120 minutes), we construct a specific input tensor where the motion features are calculated using a time lag identical to the forecast horizon.
+For example, when predicting the irradiance map at $t+j$, the Power Feature ($P_t^{(j)}$) and Sobel Feature ($S_t^{(j)}$) are computed as the squared difference between the current image $I_t$ and the past image $I_{t-j}$. This design ensures that the model is explicitly conditioned on the **rate of change** over a duration that matches the prediction window.
+
+> **Action Taken:**
+> In the revised manuscript, we have removed the vague term $\Delta t_{ref}$ and mathematically redefined the inputs using the discrete time step index $j$ and the sampling interval $\Delta = 30$ min. The **Prediction Procedure** and **Inputs** sections (Section III-B and III-C) have been rewritten as follows to ensure mathematical rigor:
+ 
+> **B. Prediction Procedure**
+> We predict four future irradiance maps at 30-min intervals. For each lead step $j\in\{1,2,3,4\}$, we train a horizon-specific AC U-Net $f_{\theta_j}$ and compute
+> \begin{equation}
+> \hat{Y}_{t+j} = f_{\theta_j}\!\left(\mathbf{X}_t^{(j)}, F_{GLCM}, F_{SE}\right),
+> \end{equation}
+> where $F_{GLCM}$ is extracted from the current map $I_t$ and $F_{SE}$ encodes the timestamp.
+>
+> **C. Inputs**
+> Let $I_t$ denote the irradiance map at discrete time step $t$ with sampling interval $\Delta=30$ min (lead time $=j\Delta$). For each $j$, we form a 7-channel input tensor
+> \begin{equation}
+> \mathbf{X}_t^{(j)} = [I_{t-4}, I_{t-3}, I_{t-2}, I_{t-1}, I_t, P_t^{(j)}, S_t^{(j)}],
+> \end{equation}
+> where the 5-frame stack provides short-term context, while the motion cues are aligned with the horizon:
+> \begin{equation}
+> P_t^{(j)} = (I_t - I_{t-j})^2,\quad
+> S_t^{(j)} = (\mathrm{Sobel}(I_t) - \mathrm{Sobel}(I_{t-j}))^2.
+> \end{equation}
 
 
 2: In Fig. 3, the authors identify that high-error regions are concentrated over Jeju and Tsushima islands, attributing this to "terrain-driven micro-climates." This is a good finding. However, the term "micro-climate" alone is somewhat insufficient. It is recommended that the authors add a brief sentence explaining why the model struggles to capture these micro-climates (e.g., is it due to a lack of static topographical/elevation data as input?)
