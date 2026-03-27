@@ -27,7 +27,10 @@
 - 모듈별 코드파일 분리를 통해 수정 및 개선이 용이해야 한다.
 - 추가되는 기능에 따라 기존 기능을 삭제하지 말고, config를 통해 변경점을 비교할 수 있게 설계해야 한다.
 
-# 논문 파악 7 질문
+# 논문 파악 7 + 6 질문
+
+<details>
+<summary> 파악 </summary>
 (1) what is new in the work
 
 (2) why is the work important
@@ -41,7 +44,24 @@
 (6) what data are used
 
 (7) what are the limitations
+</details>
 
+<details>
+<summary> 비판 </summary>
+  
+(1) 연구 질문(Research Question)이 명확하게 설정되어 있는가?
+
+(2) 이론적 프레임워크가 제대로 구축되어 있는가, 아니면 단순 기술 나열인가?
+
+(3) 연구 방법론이 학술적으로 타당한가 (실험 설계, 표본 크기, 통제 변수 등)
+
+(4) 선행연구 검토가 비판적 분석인가, 단순 요약인가
+
+(5) 논증 구조 — 주장→근거→반론→재반론의 흐름이 있는가
+
+(6) 결론이 연구 질문에 대한 답변으로 귀결되는가
+
+</details>
 
 # 접기 구현
 <details>
