@@ -41,3 +41,13 @@
 (6) what data are used
 
 (7) what are the limitations
+
+
+# 접기 구현
+<details>
+<summary>보기</summary>
+
+
+ㅇㅇㅇ
+
+</details>
