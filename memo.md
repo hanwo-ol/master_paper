@@ -51,3 +51,14 @@
 ㅇㅇㅇ
 
 </details>
+
+``` txt
+
+<details>
+<summary>보기</summary>
+
+
+ㅇㅇㅇ
+
+</details>
+```
