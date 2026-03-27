@@ -26,3 +26,18 @@
 - main에는 구동부 및 argparse외에는 정의하지 않아야 한다.
 - 모듈별 코드파일 분리를 통해 수정 및 개선이 용이해야 한다.
 - 추가되는 기능에 따라 기존 기능을 삭제하지 말고, config를 통해 변경점을 비교할 수 있게 설계해야 한다.
+
+# 논문 파악 7 질문
+(1) what is new in the work
+
+(2) why is the work important
+
+(3) what is the literature gap
+
+(4) how is the gap filled
+
+(5) what is achieved with the new method
+
+(6) what data are used
+
+(7) what are the limitations
