@@ -72,11 +72,16 @@ $$\hat{Y}_{final} = \hat{Y}_{model} \cdot \sqrt{\text{var}(X, \text{axis}=1) + \
 - **개념:** 시계열 분해(Decomposition) 기법과 일차 선형 레이어(Linear Layer)의 결합형 구조입니다.
 - **아키텍처 흐름:**
   1. 입력 시퀀스를 이동 평균 필터(Moving Average)를 통해 저주파 성분인 추세(Trend, $X_{Trend}$)와 고주파 성분인 잔차(Seasonal, $X_{Seasonal}$)로 분해합니다.
-     $$X_{Trend} = \text{AvgPool1D}(X, \text{kernel\_size})$$
+     
+     $$X_{Trend} = \text{AvgPool1D}(X, \text{kernel size})$$
+     
      $$X_{Seasonal} = X - X_{Trend}$$
-  2. 분해된 두 성분에 대해 개별 선형 레이어 $\mathbf{W}_{Trend}$와 $\mathbf{W}_{Seasonal}$을 적용하여 독립적으로 예측 지평선 크기로 사영합니다.
+     
+  2. 분해된 두 성분에 대해 개별 선형 레이어 $\mathbf{W} _{Trend}$와 $\mathbf{W} _{Seasonal}$을 적용하여 독립적으로 예측 지평선 크기로 사영합니다.
   3. 두 사영 결과를 합산하여 최종 결과를 산출합니다.
-     $$\hat{Y} = \mathbf{W}_{Trend} X_{Trend} + \mathbf{W}_{Seasonal} X_{Seasonal}$$
+  
+     $$\hat{Y} = \mathbf{W} _{Trend} X _{Trend} + \mathbf{W} _{Seasonal} X _{Seasonal}$$
+
 - **특징:** 채널 독립성(Channel Independence) 방식을 채택하여 변수 간 혼선 없이 개별 시계열 트렌드만 일률 매핑하므로 극도로 경량화되어 있습니다.
 
 ### 3.2. N-BEATS
