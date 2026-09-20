@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-07-04">
+
+<title>Master Thesis Literature Review - 보행 내 시간적 변화(Intra-Trial Gait Evolution) 분석 결과</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">보행 내 시간적 변화(Intra-Trial Gait Evolution) 분석 결과</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">vesti_memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 4, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#보행-내-시간적-변화intra-trial-gait-evolution-분석-결과" id="toc-보행-내-시간적-변화intra-trial-gait-evolution-분석-결과" class="nav-link active" data-scroll-target="#보행-내-시간적-변화intra-trial-gait-evolution-분석-결과">보행 내 시간적 변화(Intra-Trial Gait Evolution) 분석 결과</a>
+  <ul class="collapse">
+  <li><a href="#분석-개요" id="toc-분석-개요" class="nav-link" data-scroll-target="#분석-개요">1. 분석 개요</a></li>
+  <li><a href="#원시-데이터trc-기반-변수-도출의-수학적-정의" id="toc-원시-데이터trc-기반-변수-도출의-수학적-정의" class="nav-link" data-scroll-target="#원시-데이터trc-기반-변수-도출의-수학적-정의">2. 원시 데이터(TRC) 기반 변수 도출의 수학적 정의</a>
+  <ul class="collapse">
+  <li><a href="#보행-기준축-및-지면-추정" id="toc-보행-기준축-및-지면-추정" class="nav-link" data-scroll-target="#보행-기준축-및-지면-추정">2-1. 보행 기준축 및 지면 추정</a></li>
+  <li><a href="#보행-이벤트event-검출" id="toc-보행-이벤트event-검출" class="nav-link" data-scroll-target="#보행-이벤트event-검출">2-2. 보행 이벤트(Event) 검출</a></li>
+  <li><a href="#파생-변수stride-metrics-정의" id="toc-파생-변수stride-metrics-정의" class="nav-link" data-scroll-target="#파생-변수stride-metrics-정의">2-3. 파생 변수(Stride Metrics) 정의</a></li>
+  <li><a href="#구간-변화율intra-trial-delta-delta-정의" id="toc-구간-변화율intra-trial-delta-delta-정의" class="nav-link" data-scroll-target="#구간-변화율intra-trial-delta-delta-정의">2-4. 구간 변화율(Intra-Trial Delta, <span class="math inline">\(\Delta\)</span>) 정의</a></li>
+  </ul></li>
+  <li><a href="#주요-통계-결과" id="toc-주요-통계-결과" class="nav-link" data-scroll-target="#주요-통계-결과">2. 주요 통계 결과</a>
+  <ul class="collapse">
+  <li><a href="#차-검정-mann-whitney-u-welchs-t-fdr-보정" id="toc-차-검정-mann-whitney-u-welchs-t-fdr-보정" class="nav-link" data-scroll-target="#차-검정-mann-whitney-u-welchs-t-fdr-보정">1차 검정: Mann-Whitney U &amp; Welch’s t (FDR 보정)</a></li>
+  <li><a href="#차-검정-ols-다변량-보정-및-monte-carlo-1000회-리샘플링" id="toc-차-검정-ols-다변량-보정-및-monte-carlo-1000회-리샘플링" class="nav-link" data-scroll-target="#차-검정-ols-다변량-보정-및-monte-carlo-1000회-리샘플링">2차 검정: OLS 다변량 보정 및 Monte Carlo 1,000회 리샘플링</a></li>
+  </ul></li>
+  <li><a href="#결과-해석-및-한계점" id="toc-결과-해석-및-한계점" class="nav-link" data-scroll-target="#결과-해석-및-한계점">3. 결과 해석 및 한계점</a>
+  <ul class="collapse">
+  <li><a href="#δtoe_clearance-결과의-방법론적-인공물artifact-가능성" id="toc-δtoe_clearance-결과의-방법론적-인공물artifact-가능성" class="nav-link" data-scroll-target="#δtoe_clearance-결과의-방법론적-인공물artifact-가능성">Δtoe_clearance 결과의 방법론적 인공물(Artifact) 가능성</a></li>
+  </ul></li>
+  <li><a href="#향후-연구-방향-next-steps" id="toc-향후-연구-방향-next-steps" class="nav-link" data-scroll-target="#향후-연구-방향-next-steps">4. 향후 연구 방향 (Next Steps)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="보행-내-시간적-변화intra-trial-gait-evolution-분석-결과" class="level1">
+<h1>보행 내 시간적 변화(Intra-Trial Gait Evolution) 분석 결과</h1>
+<p>본 문서는 보행 시행 내(Early vs.&nbsp;Late strides) 시공간 지표 변화율(Δ) 분석의 결과를 요약하고 해석합니다.</p>
+<section id="분석-개요" class="level2">
+<h2 class="anchored" data-anchor-id="분석-개요">1. 분석 개요</h2>
+<ul>
+<li><strong>분석 대상</strong>: 총 97명 (HC 20명, PD 77명) - stride 수 6개 이상(조건 충족)인 피험자의 대표 trial 사용</li>
+<li><strong>분석 변수</strong>: Δstride_length, Δstep_width, Δswing_time, Δtoe_clearance</li>
+<li><strong>검정 방법</strong>:
+<ul>
+<li>1차: Mann-Whitney U 검정 + FDR (Benjamini-Hochberg 다중비교 보정)</li>
+<li>2차: OLS 다변량 보정 (연령, 성별 통제) + Monte Carlo 리샘플링 1,000회</li>
+</ul></li>
+</ul>
+</section>
+<section id="원시-데이터trc-기반-변수-도출의-수학적-정의" class="level2">
+<h2 class="anchored" data-anchor-id="원시-데이터trc-기반-변수-도출의-수학적-정의">2. 원시 데이터(TRC) 기반 변수 도출의 수학적 정의</h2>
+<p>본 분석에서 사용된 모든 시공간 지표는 3D 원시 마커 좌표 시계열 <span class="math inline">\(P(t) = [X(t), Y(t), Z(t)]^T\)</span>로부터 추출되었습니다. 주요 기준점(Landmark)은 양측 발뒤꿈치(<span class="math inline">\(L_{calc}, R_{calc}\)</span>), 양측 발끝(<span class="math inline">\(L_{toe}, R_{toe}\)</span>), 그리고 골반 중심(<span class="math inline">\(P_{pelvis}\)</span>)입니다.</p>
+<section id="보행-기준축-및-지면-추정" class="level3">
+<h3 class="anchored" data-anchor-id="보행-기준축-및-지면-추정">2-1. 보행 기준축 및 지면 추정</h3>
+<ul>
+<li><strong>보행 전진축(<span class="math inline">\(\vec{u}_{fwd}\)</span>)</strong>: 시행(Trial) 전체에 걸친 골반 중심 <span class="math inline">\(P_{pelvis}(t)\)</span>의 주 이동 방향 벡터.</li>
+<li><strong>보행 측면축(<span class="math inline">\(\vec{u}_{lat}\)</span>)</strong>: 전진축과 수직축(<span class="math inline">\(Y\)</span>)에 직교하는 측방향 벡터.</li>
+<li><strong>지면 수직 좌표(<span class="math inline">\(Y_{floor}\)</span>)</strong>: 입각기(Stance phase, 발의 이동 속도 <span class="math inline">\(&lt; 0.15\)</span> m/s)에 있는 <span class="math inline">\(Y_{calc}\)</span> 및 <span class="math inline">\(Y_{toe}\)</span> 전체 데이터의 하위 5번째 백분위수(5th percentile).</li>
+</ul>
+<p>모든 3D 마커 좌표 <span class="math inline">\(P(t)\)</span>는 전진축과 측면축으로 투영되어 스칼라 시계열 <span class="math inline">\(p_{fwd}(t) = P(t) \cdot \vec{u}_{fwd}\)</span>, <span class="math inline">\(p_{lat}(t) = P(t) \cdot \vec{u}_{lat}\)</span> 로 변환됩니다.</p>
+</section>
+<section id="보행-이벤트event-검출" class="level3">
+<h3 class="anchored" data-anchor-id="보행-이벤트event-검출">2-2. 보행 이벤트(Event) 검출</h3>
+<p>발뒤꿈치 마커의 전진축 좌표와 골반 전진축 좌표의 상대 거리 <span class="math inline">\(D_{calc}(t) = calc_{fwd}(t) - pelvis_{fwd}(t)\)</span> 를 이용하여 이벤트를 정의합니다. - <strong>Heel Strike (<span class="math inline">\(HS_i\)</span>)</strong>: <span class="math inline">\(D_{calc}(t)\)</span>의 극댓값(Local maxima)이 발생하는 시점 <span class="math inline">\(t\)</span>. - <strong>Toe Off (<span class="math inline">\(TO_i\)</span>)</strong>: <span class="math inline">\(D_{calc}(t)\)</span>의 극솟값(Local minima)이 발생하는 시점 <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="파생-변수stride-metrics-정의" class="level3">
+<h3 class="anchored" data-anchor-id="파생-변수stride-metrics-정의">2-3. 파생 변수(Stride Metrics) 정의</h3>
+<p>어떤 발(Side <span class="math inline">\(S \in \{L, R\}\)</span>)의 연속된 두 Heel Strike 시점 <span class="math inline">\(HS_k\)</span>와 <span class="math inline">\(HS_{k+2}\)</span> 사이의 구간을 하나의 <strong>Stride <span class="math inline">\(k\)</span></strong>로 정의합니다. 이 구간 내에 포함된 교호 보행 Step(반대쪽 발의 <span class="math inline">\(HS\)</span> 포함)들에 대하여 다음 지표들을 산출합니다.</p>
+<ol type="1">
+<li><strong>보폭 길이 (Stride Length, <span class="math inline">\(StrL_k\)</span>)</strong> 구간 내에서 발생한 Step 길이들의 평균. <span class="math display">\[StepLength_i = \left| calc_{fwd, S_{i+1}}(HS_{i+1}) - calc_{fwd, S_i}(HS_i) \right|\]</span></li>
+<li><strong>보폭 너비 (Step Width, <span class="math inline">\(SW_k\)</span>)</strong> 구간 내에서 발생한 Step 너비들의 평균. <span class="math display">\[StepWidth_i = \left| calc_{lat, S_{i+1}}(HS_{i+1}) - calc_{lat, S_i}(HS_i) \right|\]</span></li>
+<li><strong>유각기 시간 (Swing Time, <span class="math inline">\(SwT_k\)</span>)</strong> 구간 내에 포함된 발의 Swing(<span class="math inline">\(TO \rightarrow HS\)</span>) 지속 시간. <span class="math display">\[SwingTime_j = HS_j - TO_j\]</span></li>
+<li><strong>발끝 높이 (Toe Clearance, <span class="math inline">\(TC_k\)</span>)</strong> Swing 구간(전체 유각기의 20%~80% 사이) 중 발끝 수직 좌표(<span class="math inline">\(Y_{toe}\)</span>)와 지면(<span class="math inline">\(Y_{floor}\)</span>) 간의 최소 거리. <span class="math display">\[ToeClearance_j = \min_{t \in [TO_j + 0.2\Delta, \, HS_j - 0.2\Delta]} \left( toe_{Y}(t) - Y_{floor} \right)\]</span></li>
+</ol>
+</section>
+<section id="구간-변화율intra-trial-delta-delta-정의" class="level3">
+<h3 class="anchored" data-anchor-id="구간-변화율intra-trial-delta-delta-정의">2-4. 구간 변화율(Intra-Trial Delta, <span class="math inline">\(\Delta\)</span>) 정의</h3>
+<p>하나의 시행(Trial)에서 검출된 총 Stride 개수를 <span class="math inline">\(N\)</span>이라 할 때, 초기(Early) 구간과 후기(Late) 구간의 지표 <span class="math inline">\(X\)</span>의 차이를 산출합니다. - <strong>초기 평균 (<span class="math inline">\(\bar{X}_{early}\)</span>)</strong>: <span class="math inline">\(k \in \{2, 3\}\)</span> 번째 Stride 지표의 평균 (1번째는 보행 개시 효과 배제를 위해 제외) - <strong>후기 평균 (<span class="math inline">\(\bar{X}_{late}\)</span>)</strong>: <span class="math inline">\(k \in \{N-2, N-1\}\)</span> 번째 Stride 지표의 평균 (마지막 <span class="math inline">\(N\)</span>번째는 감속 효과 배제를 위해 제외) - <strong>변화율 산출</strong>: <span class="math display">\[\Delta X = \bar{X}_{late} - \bar{X}_{early}\]</span></p>
+</section>
+</section>
+<section id="주요-통계-결과" class="level2">
+<h2 class="anchored" data-anchor-id="주요-통계-결과">2. 주요 통계 결과</h2>
+<section id="차-검정-mann-whitney-u-welchs-t-fdr-보정" class="level3">
+<h3 class="anchored" data-anchor-id="차-검정-mann-whitney-u-welchs-t-fdr-보정">1차 검정: Mann-Whitney U &amp; Welch’s t (FDR 보정)</h3>
+<p>총 4개 가설에 대해 Early vs Late 변화율(Δ)의 군 간 차이를 검정했습니다. (FDR: Benjamini-Hochberg)</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">가설</th>
+<th style="text-align: left;">변수명</th>
+<th style="text-align: center;">HC 평균</th>
+<th style="text-align: center;">PD 평균</th>
+<th style="text-align: center;">Cohen’s d</th>
+<th style="text-align: center;">MWU p (원측)</th>
+<th style="text-align: center;"><strong>MWU p (FDR)</strong></th>
+<th style="text-align: center;">Welch’s p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>H1</strong></td>
+<td style="text-align: left;">Δstride_length_m</td>
+<td style="text-align: center;">0.0192</td>
+<td style="text-align: center;">0.0312</td>
+<td style="text-align: center;">0.228</td>
+<td style="text-align: center;">0.6333</td>
+<td style="text-align: center;">0.7381</td>
+<td style="text-align: center;">0.2451</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>H4</strong></td>
+<td style="text-align: left;">Δtoe_clearance_m</td>
+<td style="text-align: center;">0.0234</td>
+<td style="text-align: center;">-0.0196</td>
+<td style="text-align: center;"><strong>-0.869</strong></td>
+<td style="text-align: center;">0.0022</td>
+<td style="text-align: center;"><strong>0.0088</strong> ✅</td>
+<td style="text-align: center;">0.0001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>H5</strong></td>
+<td style="text-align: left;">Δswing_time_s</td>
+<td style="text-align: center;">-0.0075</td>
+<td style="text-align: center;">-0.0028</td>
+<td style="text-align: center;">0.099</td>
+<td style="text-align: center;">0.3092</td>
+<td style="text-align: center;">0.6185</td>
+<td style="text-align: center;">0.6648</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>H6</strong></td>
+<td style="text-align: left;">Δstep_width_m</td>
+<td style="text-align: center;">-0.0113</td>
+<td style="text-align: center;">-0.0078</td>
+<td style="text-align: center;">0.185</td>
+<td style="text-align: center;">0.7381</td>
+<td style="text-align: center;">0.7381</td>
+<td style="text-align: center;">0.4231</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>H4 (발끝 높이 변화)</strong>만이 통계적으로 유의미한 군 간 차이를 보였습니다. HC는 후반에 발끝이 상승(+2.3cm)한 반면, PD는 하락(-2.0cm)했습니다.</li>
+<li>나머지 변수들은 모두 유의하지 않았습니다.</li>
+</ul>
+</section>
+<section id="차-검정-ols-다변량-보정-및-monte-carlo-1000회-리샘플링" class="level3">
+<h3 class="anchored" data-anchor-id="차-검정-ols-다변량-보정-및-monte-carlo-1000회-리샘플링">2차 검정: OLS 다변량 보정 및 Monte Carlo 1,000회 리샘플링</h3>
+<p>연령(Age)과 성별(Sex)을 통제한 OLS 모델을 구축하고, 1,000회 반복 추출(Random seeding)을 통해 FDR 보정된 p-value들의 중앙값과 기각률(Sig. Rate)을 계산했습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">가설</th>
+<th style="text-align: left;">변수명</th>
+<th style="text-align: center;">OLS Beta (중앙값)</th>
+<th style="text-align: center;">OLS p_FDR (중앙값)</th>
+<th style="text-align: center;"><strong>유의수준 기각률 (%)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>H1</strong></td>
+<td style="text-align: left;">Δstride_length_m</td>
+<td style="text-align: center;">0.00817</td>
+<td style="text-align: center;">0.6900</td>
+<td style="text-align: center;">0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>H4</strong></td>
+<td style="text-align: left;">Δtoe_clearance_m</td>
+<td style="text-align: center;">-0.02155</td>
+<td style="text-align: center;">0.6065</td>
+<td style="text-align: center;"><strong>0.0%</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>H5</strong></td>
+<td style="text-align: left;">Δswing_time_s</td>
+<td style="text-align: center;">-0.01148</td>
+<td style="text-align: center;">0.6596</td>
+<td style="text-align: center;">0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>H6</strong></td>
+<td style="text-align: left;">Δstep_width_m</td>
+<td style="text-align: center;">0.00689</td>
+<td style="text-align: center;">0.6065</td>
+<td style="text-align: center;">0.0%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>모든 변수의 기각률이 0.0%로 하락</strong>하였습니다. 즉, 1차 검정에서 보였던 H4의 유의성은 연령 등 교란 변수를 통제하면 완전히 소실됨을 시사합니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="결과-해석-및-한계점" class="level2">
+<h2 class="anchored" data-anchor-id="결과-해석-및-한계점">3. 결과 해석 및 한계점</h2>
+<section id="δtoe_clearance-결과의-방법론적-인공물artifact-가능성" class="level3">
+<h3 class="anchored" data-anchor-id="δtoe_clearance-결과의-방법론적-인공물artifact-가능성">Δtoe_clearance 결과의 방법론적 인공물(Artifact) 가능성</h3>
+<p>PD군에서 보행 후반부에 발끝이 끌리는 패턴(dragging)이 나타나는 것은 임상적으로 그럴듯해 보이나, 이를 단일 카메라 마커리스 시스템(OpenCap) 데이터에서 관찰된 ’순수한 생리적 변화’로 확정짓기에는 매우 치명적인 <strong>방법론적 한계</strong>가 존재합니다.</p>
+<ol type="1">
+<li><p><strong>단일 지면(Global Floor) 가정의 오류</strong> 현재 파이프라인은 전체 보행 경로의 바닥 높이를 전역 상수(Global constant) 하나로 고정하여 추정합니다. 실제 임상 환경의 미세한 바닥 경사나 캘리브레이션 오차가 있을 경우, 멀리 있는 지면의 실제 높이와 추정된 상수가 달라집니다.</p></li>
+<li><p><strong>카메라 경로 깊이에 따른 투영 왜곡</strong> 보행 후반(Late strides)은 카메라로부터 6m 가까이 멀어진 상태에서 발생합니다. 2D 영상에서 3D 심도를 추론하는 과정에서 카메라에서 멀어질수록 수직(Y축) 추정 정확도가 떨어질 수 있습니다.</p></li>
+<li><p><strong>결론</strong> 초기 보행(Early, 카메라 근처)과 후기 보행(Late, 카메라 원거리) 사이의 Δtoe_clearance 차이는 생리적인 발끝 높이 변화가 아니라, <strong>카메라에서 멀어짐에 따른 3D 공간 재구성의 기하학적 오차(Geometric error)</strong>일 가능성이 매우 높습니다.</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="향후-연구-방향-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="향후-연구-방향-next-steps">4. 향후 연구 방향 (Next Steps)</h2>
+<p>평균값(Trial Mean) 분석에 이어, 보행 변화율(Intra-Trial Delta) 분석에서도 <strong>절대 공간 좌표 기반의 시공간 지표(Spatiotemporal parameters)가 가지는 한계</strong>가 더욱 명확해졌습니다.</p>
+<p>카메라와의 거리, 지면 평탄도 추정 등에 극도로 민감한 절대 좌표 지표를 넘어서서, <strong>카메라 기하학적 편향에 상대적으로 독립적인 “관절 각도(Joint Kinematics)” 분석</strong>으로의 전환이 필수적입니다. 관절 각도는 신체 분절 간의 상대적인 회전량(Relative Rotation)을 의미하므로 전역적인 지면 좌표 오차에서 자유로우며, 파킨슨병의 특징적 소견(강직 증상 등)을 훨씬 더 직접적으로 반영할 수 있습니다.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

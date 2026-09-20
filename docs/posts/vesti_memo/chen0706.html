@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-04-10">
+
+<title>Master Thesis Literature Review - 분석 대상 파생 변수 (Derived Kinematic Variables) 설계서</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">분석 대상 파생 변수 (Derived Kinematic Variables) 설계서</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">vesti_memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 10, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#분석-대상-파생-변수-derived-kinematic-variables-설계서" id="toc-분석-대상-파생-변수-derived-kinematic-variables-설계서" class="nav-link active" data-scroll-target="#분석-대상-파생-변수-derived-kinematic-variables-설계서">분석 대상 파생 변수 (Derived Kinematic Variables) 설계서</a>
+  <ul class="collapse">
+  <li><a href="#기준-보행-주기-gait-cycle-definition" id="toc-기준-보행-주기-gait-cycle-definition" class="nav-link" data-scroll-target="#기준-보행-주기-gait-cycle-definition">1. 기준 보행 주기 (Gait Cycle Definition)</a></li>
+  <li><a href="#표준화-궤적-변수-time-normalized-trajectory-variables" id="toc-표준화-궤적-변수-time-normalized-trajectory-variables" class="nav-link" data-scroll-target="#표준화-궤적-변수-time-normalized-trajectory-variables">2. 100% 표준화 궤적 변수 (Time-Normalized Trajectory Variables)</a>
+  <ul class="collapse">
+  <li><a href="#정규화-각도-궤적-normalized-angle-trajectory" id="toc-정규화-각도-궤적-normalized-angle-trajectory" class="nav-link" data-scroll-target="#정규화-각도-궤적-normalized-angle-trajectory">2.1. 정규화 각도 궤적 (Normalized Angle Trajectory)</a></li>
+  </ul></li>
+  <li><a href="#단일-스칼라-파생-변수-discrete-scalar-variables" id="toc-단일-스칼라-파생-변수-discrete-scalar-variables" class="nav-link" data-scroll-target="#단일-스칼라-파생-변수-discrete-scalar-variables">3. 단일 스칼라 파생 변수 (Discrete Scalar Variables)</a>
+  <ul class="collapse">
+  <li><a href="#진폭-및-각도-범위-지표-amplitude-range-features" id="toc-진폭-및-각도-범위-지표-amplitude-range-features" class="nav-link" data-scroll-target="#진폭-및-각도-범위-지표-amplitude-range-features">3.1. 진폭 및 각도 범위 지표 (Amplitude &amp; Range Features)</a></li>
+  <li><a href="#위상-분리-지표-phase-specific-features" id="toc-위상-분리-지표-phase-specific-features" class="nav-link" data-scroll-target="#위상-분리-지표-phase-specific-features">3.2. 위상 분리 지표 (Phase-Specific Features)</a></li>
+  <li><a href="#동역학적-속도-및-거칠기-지표-kinematic-derivatives" id="toc-동역학적-속도-및-거칠기-지표-kinematic-derivatives" class="nav-link" data-scroll-target="#동역학적-속도-및-거칠기-지표-kinematic-derivatives">3.3. 동역학적 속도 및 거칠기 지표 (Kinematic Derivatives)</a></li>
+  <li><a href="#주파수-및-주기성-지표-frequency-psd-features" id="toc-주파수-및-주기성-지표-frequency-psd-features" class="nav-link" data-scroll-target="#주파수-및-주기성-지표-frequency-psd-features">3.4. 주파수 및 주기성 지표 (Frequency &amp; PSD Features)</a></li>
+  <li><a href="#복잡성-및-안정성-지표-signal-complexity" id="toc-복잡성-및-안정성-지표-signal-complexity" class="nav-link" data-scroll-target="#복잡성-및-안정성-지표-signal-complexity">3.5. 복잡성 및 안정성 지표 (Signal Complexity)</a></li>
+  </ul></li>
+  <li><a href="#명명-규칙-및-데이터-구조-naming-data-format" id="toc-명명-규칙-및-데이터-구조-naming-data-format" class="nav-link" data-scroll-target="#명명-규칙-및-데이터-구조-naming-data-format">4. 명명 규칙 및 데이터 구조 (Naming &amp; Data Format)</a>
+  <ul class="collapse">
+  <li><a href="#a.-명명-규칙-naming-convention" id="toc-a.-명명-규칙-naming-convention" class="nav-link" data-scroll-target="#a.-명명-규칙-naming-convention">A. 명명 규칙 (Naming Convention)</a></li>
+  <li><a href="#b.-데이터-프레임-구조-long-format-권장" id="toc-b.-데이터-프레임-구조-long-format-권장" class="nav-link" data-scroll-target="#b.-데이터-프레임-구조-long-format-권장">B. 데이터 프레임 구조 (Long Format 권장)</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="분석-대상-파생-변수-derived-kinematic-variables-설계서" class="level1">
+<h1>분석 대상 파생 변수 (Derived Kinematic Variables) 설계서</h1>
+<p>본 문서는 OpenCap(OpenSim)에서 추출된 30개의 원시 관절 각도(Joint Kinematics, <code>.mot</code>) 시계열 데이터로부터 파킨슨병(PD)의 특징을 포착하기 위해 추출하는 <strong>파생 변수(Derived Variables)</strong>를 정의합니다. 데이터 분석 목적에 따라 단일 숫자로 요약되는 <strong>스칼라 변수</strong>와, 주기를 통째로 다루는 <strong>100% 표준화 궤적 변수</strong>로 엄격히 구분하며, 각 지표의 산출 수식을 명시합니다.</p>
+<hr>
+<section id="기준-보행-주기-gait-cycle-definition" class="level2">
+<h2 class="anchored" data-anchor-id="기준-보행-주기-gait-cycle-definition">1. 기준 보행 주기 (Gait Cycle Definition)</h2>
+<p>시계열 데이터 <span class="math inline">\(y(t)\)</span> (길이 <span class="math inline">\(N\)</span>, 지속시간 <span class="math inline">\(T\)</span>, 샘플링 간격 <span class="math inline">\(\Delta t\)</span>)를 분할하는 기준은 발뒤꿈치 닿기(Heel Strike, HS)를 기준으로 합니다. - <strong>A. 동측 주기 (Ipsilateral Cycle)</strong>: 타겟 관절과 같은 쪽 발의 연속된 두 HS 사이 구간. - <strong>B. 반대측 주기 (Contralateral Cycle)</strong>: 타겟 관절과 반대 쪽 발의 연속된 두 HS 사이 구간.</p>
+<hr>
+</section>
+<section id="표준화-궤적-변수-time-normalized-trajectory-variables" class="level2">
+<h2 class="anchored" data-anchor-id="표준화-궤적-변수-time-normalized-trajectory-variables">2. 100% 표준화 궤적 변수 (Time-Normalized Trajectory Variables)</h2>
+<p>한 걸음을 걷는 시간(Stride time)은 걸음마다 다릅니다. 보행 주기 전반에 걸친 파형(Pattern) 자체의 형태적 특징을 손실 없이 비교하기 위해, 전체 주기를 0%에서 100%까지 고정된 길이(통상 101 포인트)로 시간 정규화(Time-normalization)한 변수군입니다.</p>
+<section id="정규화-각도-궤적-normalized-angle-trajectory" class="level3">
+<h3 class="anchored" data-anchor-id="정규화-각도-궤적-normalized-angle-trajectory">2.1. 정규화 각도 궤적 (Normalized Angle Trajectory)</h3>
+<ul>
+<li><strong>명명</strong>: <code>{원본관절}_{ipsi/contra}_norm_traj</code></li>
+<li><strong>수식</strong>: Cubic Spline Interpolation을 적용하여 시간축 <span class="math inline">\(t \in [0, T]\)</span>를 <span class="math inline">\(p \in \{0, 1, 2, ..., 100\}\)</span> (%) 로 변환.</li>
+</ul>
+<p><span class="math display">\[ Y_{norm}(p) = \text{Spline}(y(t), t \rightarrow p) \]</span></p>
+<ul>
+<li><strong>활용 (Why?)</strong>:
+<ul>
+<li><strong>SPM (Statistical Parametric Mapping)</strong>: 스칼라 요약값 없이, 보행 주기 중 “몇 % 시점”에서 환자군과 정상군 간의 굴곡/신전 패턴에 유의미한 통계적 차이가 발생하는지 p-value 연속 곡선을 산출할 수 있습니다.</li>
+<li><strong>딥러닝 입력값</strong>: 1D-CNN 또는 RNN/LSTM 모델에 시계열 형태를 그대로 투입할 때 차원(Dimension)을 일치시키기 위한 필수 전처리입니다.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="단일-스칼라-파생-변수-discrete-scalar-variables" class="level2">
+<h2 class="anchored" data-anchor-id="단일-스칼라-파생-변수-discrete-scalar-variables">3. 단일 스칼라 파생 변수 (Discrete Scalar Variables)</h2>
+<p>하나의 보행 주기 데이터 <span class="math inline">\(y(t)\)</span>를 임상적 해석이 가능한 단 하나의 숫자(Scalar) 특성치로 요약하는 지표들입니다.</p>
+<section id="진폭-및-각도-범위-지표-amplitude-range-features" class="level3">
+<h3 class="anchored" data-anchor-id="진폭-및-각도-범위-지표-amplitude-range-features">3.1. 진폭 및 각도 범위 지표 (Amplitude &amp; Range Features)</h3>
+<p>관절의 형태적 한계와 기준 자세를 평가합니다. - <strong><code>Angle_Max</code></strong>: <span class="math inline">\(\max_{0 \le t \le T} y(t)\)</span> - <strong><code>Angle_Min</code></strong>: <span class="math inline">\(\min_{0 \le t \le T} y(t)\)</span> - <strong><code>Angle_Mean</code></strong>: <span class="math inline">\(\frac{1}{T} \int_0^T y(t) dt \approx \frac{1}{N} \sum_{i=1}^N y_i\)</span> (구부정한 자세 평가) - <strong><code>Angle_ROM</code></strong>: <span class="math inline">\(\max(y) - \min(y)\)</span> (가동 범위) - <strong><code>Angle_RMS</code></strong>: <span class="math inline">\(\sqrt{\frac{1}{N} \sum_{i=1}^N y_i^2}\)</span> (에너지 크기)</p>
+</section>
+<section id="위상-분리-지표-phase-specific-features" class="level3">
+<h3 class="anchored" data-anchor-id="위상-분리-지표-phase-specific-features">3.2. 위상 분리 지표 (Phase-Specific Features)</h3>
+<p>발끝 떼기 시점 <span class="math inline">\(t_{TO} = T - \text{swing time}\)</span> 을 기준으로 체중 부하(입각기)와 발 뻗기(유각기)를 분리합니다. - <strong>입각기 (Stance Phase, <span class="math inline">\(0 \le t \le t_{TO}\)</span>)</strong>: - <code>Stance_Max</code> / <code>Stance_Min</code> / <code>Stance_Mean</code> / <code>Stance_ROM</code> : 위 수식에서 구간만 한정. - <strong>유각기 (Swing Phase, <span class="math inline">\(t_{TO} &lt; t \le T\)</span>)</strong>: - <code>Swing_Max</code> / <code>Swing_Min</code> / <code>Swing_Mean</code> / <code>Swing_ROM</code> (발 끌림 현상 포착)</p>
+</section>
+<section id="동역학적-속도-및-거칠기-지표-kinematic-derivatives" class="level3">
+<h3 class="anchored" data-anchor-id="동역학적-속도-및-거칠기-지표-kinematic-derivatives">3.3. 동역학적 속도 및 거칠기 지표 (Kinematic Derivatives)</h3>
+<p>관절 각도를 미분하여 서동증(느린 움직임) 및 운동 거칠기를 정량화합니다. 중앙차분법(Central difference)을 사용합니다. - 각속도 <span class="math inline">\(v_i = \frac{y_{i+1} - y_{i-1}}{2\Delta t}\)</span> - 각가속도 <span class="math inline">\(a_i = \frac{v_{i+1} - v_{i-1}}{2\Delta t}\)</span> - 거칠기(Jerk) <span class="math inline">\(j_i = \frac{a_{i+1} - a_{i-1}}{2\Delta t}\)</span> - <strong><code>Velocity_Max</code></strong>: <span class="math inline">\(\max(v(t))\)</span> (순간 폭발력) - <strong><code>Velocity_Mean_Abs</code></strong>: <span class="math inline">\(\frac{1}{N}\sum |v_i|\)</span> (평균 각속력) - <strong><code>Acceleration_Max</code></strong>: <span class="math inline">\(\max(a(t))\)</span> - <strong><code>Jerk_RMS</code></strong>: <span class="math inline">\(\sqrt{\frac{1}{N} \sum j_i^2}\)</span> (움직임의 덜컹거림, 값이 클수록 불규칙함)</p>
+</section>
+<section id="주파수-및-주기성-지표-frequency-psd-features" class="level3">
+<h3 class="anchored" data-anchor-id="주파수-및-주기성-지표-frequency-psd-features">3.4. 주파수 및 주기성 지표 (Frequency &amp; PSD Features)</h3>
+<p>이산 푸리에 변환(FFT)을 통해 Power Spectral Density <span class="math inline">\(P(f)\)</span>를 도출합니다. 기본 보행 주파수 <span class="math inline">\(f_0 = 1/T\)</span> 입니다. - <strong><code>PSD_Amplitude</code></strong>: <span class="math inline">\(\max(P(f))\)</span> (스펙트럼의 피크 에너지) - <strong><code>Harmonic_Ratio (HR)</code></strong>: 보행의 부드러움과 대칭성. - 하지 관절(2상성): <span class="math inline">\(HR = \frac{\sum P(2k \cdot f_0)}{\sum P((2k-1) \cdot f_0)}\)</span> - <strong><code>Index_of_Harmonicity (IH)</code></strong>: <span class="math inline">\(IH = \frac{P(f_0)}{\sum_{k=1}^6 P(k \cdot f_0)}\)</span></p>
+</section>
+<section id="복잡성-및-안정성-지표-signal-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="복잡성-및-안정성-지표-signal-complexity">3.5. 복잡성 및 안정성 지표 (Signal Complexity)</h3>
+<p>비선형 동역학을 이용해 보행 궤도의 기하학적 형상을 수치화합니다. - <strong>위상 공간 궤도(Phase Plot) 특징</strong>: <span class="math inline">\(y\)</span>-축을 <span class="math inline">\(v(t)\)</span>, <span class="math inline">\(x\)</span>-축을 <span class="math inline">\(y(t)\)</span>로 둔 공분산 행렬 <span class="math inline">\(\Sigma = \text{cov}(y, v)\)</span> 의 고유값 <span class="math inline">\(\lambda_1, \lambda_2\)</span> (<span class="math inline">\(\lambda_1 &gt; \lambda_2\)</span>)를 산출. - <strong><code>Orbit_Area</code></strong>: <span class="math inline">\(\pi \sqrt{\lambda_1 \lambda_2}\)</span> (관절이 한 주기 동안 소모한 2차원 공간 면적) - <strong><code>Orbit_Eccentricity</code></strong>: <span class="math inline">\(\sqrt{1 - \frac{\lambda_2}{\lambda_1}}\)</span> (타원의 찌그러짐 정도) - <strong><code>Lyapunov_Exponent</code></strong>: 상태 공간에서 <span class="math inline">\(\lim_{t \to \infty} \lim_{\delta Z_0 \to 0} \frac{1}{t} \ln \frac{|\delta Z(t)|}{|\delta Z_0|}\)</span> (초기 미세 변동이 기하급수적으로 발산하는 비율. Nolds 패키지 사용)</p>
+<hr>
+</section>
+</section>
+<section id="명명-규칙-및-데이터-구조-naming-data-format" class="level2">
+<h2 class="anchored" data-anchor-id="명명-규칙-및-데이터-구조-naming-data-format">4. 명명 규칙 및 데이터 구조 (Naming &amp; Data Format)</h2>
+<p>수백 종의 변수가 쏟아져 나오므로 머신러닝 처리에 용이하도록 구조화합니다.</p>
+<section id="a.-명명-규칙-naming-convention" class="level3">
+<h3 class="anchored" data-anchor-id="a.-명명-규칙-naming-convention">A. 명명 규칙 (Naming Convention)</h3>
+<ul>
+<li><strong>스칼라 변수</strong>: <code>{원본관절}_{ipsi/contra/L/R}_{파생지표}</code> (예: <code>knee_angle_r_ipsi_max</code>, <code>pelvis_tilt_R_cycle_mean</code>)</li>
+<li><strong>궤적 변수</strong>: <code>{원본관절}_{ipsi/contra/L/R}_norm_traj</code> (값은 크기 101의 배열)</li>
+</ul>
+</section>
+<section id="b.-데이터-프레임-구조-long-format-권장" class="level3">
+<h3 class="anchored" data-anchor-id="b.-데이터-프레임-구조-long-format-권장">B. 데이터 프레임 구조 (Long Format 권장)</h3>
+<p>다양한 보행 횟수를 처리하기 위해 걸음 번호(<code>Stride_Index</code>)를 열(Column)이 아닌 행 식별자(Row)로 배치합니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Subject_ID</th>
+<th style="text-align: center;">Trial_ID</th>
+<th style="text-align: center;">Stride_Index</th>
+<th style="text-align: center;"><code>knee_r_ipsi_max</code> (Scalar)</th>
+<th style="text-align: center;"><code>arm_l_ipsi_jerk</code> (Scalar)</th>
+<th style="text-align: center;"><code>knee_r_ipsi_norm_traj</code> (Array)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">환자 A</td>
+<td style="text-align: center;">1회차</td>
+<td style="text-align: center;"><strong>1번째 걸음</strong></td>
+<td style="text-align: center;">35.2</td>
+<td style="text-align: center;">12.4</td>
+<td style="text-align: center;">[1.2, 1.4, …, 0.9]</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">환자 A</td>
+<td style="text-align: center;">1회차</td>
+<td style="text-align: center;"><strong>2번째 걸음</strong></td>
+<td style="text-align: center;">36.1</td>
+<td style="text-align: center;">14.1</td>
+<td style="text-align: center;">[1.3, 1.5, …, 1.1]</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

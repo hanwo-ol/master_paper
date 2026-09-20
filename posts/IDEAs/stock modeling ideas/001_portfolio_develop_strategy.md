@@ -1,3 +1,10 @@
+---
+title: "001_portfolio_develop_strategy"
+date: 2025-11-17
+author: "김한울"
+categories: ["IDEAs", "stock modeling ideas"]
+---
+
 
 ---
 title: "주식 모델링 아이디어 1"

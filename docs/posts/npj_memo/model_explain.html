@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-04-10">
+
+<title>Master Thesis Literature Review - 다기관 CGM 시계열 예측 Temporal 모델 패밀리 공통 설계서</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">다기관 CGM 시계열 예측 Temporal 모델 패밀리 공통 설계서</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">npj_memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 10, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#다기관-cgm-시계열-예측-temporal-모델-패밀리-공통-설계서" id="toc-다기관-cgm-시계열-예측-temporal-모델-패밀리-공통-설계서" class="nav-link active" data-scroll-target="#다기관-cgm-시계열-예측-temporal-모델-패밀리-공통-설계서">다기관 CGM 시계열 예측 Temporal 모델 패밀리 공통 설계서</a>
+  <ul class="collapse">
+  <li><a href="#공통-데이터-인터페이스-사양" id="toc-공통-데이터-인터페이스-사양" class="nav-link" data-scroll-target="#공통-데이터-인터페이스-사양">1. 공통 데이터 인터페이스 사양</a>
+  <ul class="collapse">
+  <li><a href="#입력-텐서-규격-input-tensor-shape" id="toc-입력-텐서-규격-input-tensor-shape" class="nav-link" data-scroll-target="#입력-텐서-규격-input-tensor-shape">1.1. 입력 텐서 규격 (Input Tensor Shape)</a></li>
+  <li><a href="#출력-텐서-규격-output-tensor-shape" id="toc-출력-텐서-규격-output-tensor-shape" class="nav-link" data-scroll-target="#출력-텐서-규격-output-tensor-shape">1.2. 출력 텐서 규격 (Output Tensor Shape)</a></li>
+  </ul></li>
+  <li><a href="#공통-전처리-및-정상화-모듈-revin-block" id="toc-공통-전처리-및-정상화-모듈-revin-block" class="nav-link" data-scroll-target="#공통-전처리-및-정상화-모듈-revin-block">2. 공통 전처리 및 정상화 모듈 (RevIN Block)</a>
+  <ul class="collapse">
+  <li><a href="#정규화-공식" id="toc-정규화-공식" class="nav-link" data-scroll-target="#정규화-공식">2.1. 정규화 공식</a></li>
+  <li><a href="#역정규화-공식" id="toc-역정규화-공식" class="nav-link" data-scroll-target="#역정규화-공식">2.2. 역정규화 공식</a></li>
+  </ul></li>
+  <li><a href="#세부-모델별-아키텍처-설계-명세" id="toc-세부-모델별-아키텍처-설계-명세" class="nav-link" data-scroll-target="#세부-모델별-아키텍처-설계-명세">3. 세부 모델별 아키텍처 설계 명세</a>
+  <ul class="collapse">
+  <li><a href="#dlinear" id="toc-dlinear" class="nav-link" data-scroll-target="#dlinear">3.1. DLinear</a></li>
+  <li><a href="#n-beats" id="toc-n-beats" class="nav-link" data-scroll-target="#n-beats">3.2. N-BEATS</a></li>
+  <li><a href="#n-hits" id="toc-n-hits" class="nav-link" data-scroll-target="#n-hits">3.3. N-HiTS</a></li>
+  <li><a href="#tsmixer" id="toc-tsmixer" class="nav-link" data-scroll-target="#tsmixer">3.4. TSMixer</a></li>
+  <li><a href="#tide" id="toc-tide" class="nav-link" data-scroll-target="#tide">3.5. TiDE</a></li>
+  <li><a href="#fits" id="toc-fits" class="nav-link" data-scroll-target="#fits">3.6. FITS</a></li>
+  <li><a href="#patchmlp" id="toc-patchmlp" class="nav-link" data-scroll-target="#patchmlp">3.7. PatchMLP</a></li>
+  <li><a href="#xlinear" id="toc-xlinear" class="nav-link" data-scroll-target="#xlinear">3.8. XLinear</a></li>
+  <li><a href="#softs" id="toc-softs" class="nav-link" data-scroll-target="#softs">3.9. SOFTS</a></li>
+  </ul></li>
+  <li><a href="#모듈러-컴포넌트-공유-설계" id="toc-모듈러-컴포넌트-공유-설계" class="nav-link" data-scroll-target="#모듈러-컴포넌트-공유-설계">4. 모듈러 컴포넌트 공유 설계</a>
+  <ul class="collapse">
+  <li><a href="#공통-분해-컴포넌트-decomposition-module" id="toc-공통-분해-컴포넌트-decomposition-module" class="nav-link" data-scroll-target="#공통-분해-컴포넌트-decomposition-module">4.1. 공통 분해 컴포넌트 (Decomposition Module)</a></li>
+  <li><a href="#공통-주파수-연산-모듈-frequency-processing-module" id="toc-공통-주파수-연산-모듈-frequency-processing-module" class="nav-link" data-scroll-target="#공통-주파수-연산-모듈-frequency-processing-module">4.2. 공통 주파수 연산 모듈 (Frequency Processing Module)</a></li>
+  <li><a href="#공통-패칭-연산-모듈-patching-module" id="toc-공통-패칭-연산-모듈-patching-module" class="nav-link" data-scroll-target="#공통-패칭-연산-모듈-patching-module">4.3. 공통 패칭 연산 모듈 (Patching Module)</a></li>
+  </ul></li>
+  <li><a href="#학습-검증-및-임상-지표-최적화-사양" id="toc-학습-검증-및-임상-지표-최적화-사양" class="nav-link" data-scroll-target="#학습-검증-및-임상-지표-최적화-사양">5. 학습, 검증 및 임상 지표 최적화 사양</a>
+  <ul class="collapse">
+  <li><a href="#손실-함수-loss-function" id="toc-손실-함수-loss-function" class="nav-link" data-scroll-target="#손실-함수-loss-function">5.1. 손실 함수 (Loss Function)</a></li>
+  <li><a href="#평가-메트릭-evaluation-metrics" id="toc-평가-메트릭-evaluation-metrics" class="nav-link" data-scroll-target="#평가-메트릭-evaluation-metrics">5.2. 평가 메트릭 (Evaluation Metrics)</a></li>
+  </ul></li>
+  <li><a href="#온디바이스edge-cpu-배포-및-실시간-개인화-규격" id="toc-온디바이스edge-cpu-배포-및-실시간-개인화-규격" class="nav-link" data-scroll-target="#온디바이스edge-cpu-배포-및-실시간-개인화-규격">6. 온디바이스(Edge CPU) 배포 및 실시간 개인화 규격</a>
+  <ul class="collapse">
+  <li><a href="#경량화-및-직렬화-표준" id="toc-경량화-및-직렬화-표준" class="nav-link" data-scroll-target="#경량화-및-직렬화-표준">6.1. 경량화 및 직렬화 표준</a></li>
+  <li><a href="#엣지-실시간-개인화-레이어-on-device-personalization-block" id="toc-엣지-실시간-개인화-레이어-on-device-personalization-block" class="nav-link" data-scroll-target="#엣지-실시간-개인화-레이어-on-device-personalization-block">6.2. 엣지 실시간 개인화 레이어 (On-Device Personalization Block)</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="다기관-cgm-시계열-예측-temporal-모델-패밀리-공통-설계서" class="level1">
+<h1>다기관 CGM 시계열 예측 Temporal 모델 패밀리 공통 설계서</h1>
+<p><strong>— DLinear, N-BEATS, N-HiTS, TSMixer, TiDE, FITS, PatchMLP, XLinear, SOFTS 모델의 통합 아키텍처 및 구현 명세 —</strong></p>
+<p>본 설계서는 <a href="file:///c:/Users/user/Documents/NPJ2/Glucose-ML-Project/000_Glucose_ML_Preprocessing_Pipeline.md">000_Glucose_ML_Preprocessing_Pipeline.md</a>의 엄격한 전처리 파이프라인 및 피처 사양을 준수하며, 최신 시계열 예측 기계학습 모델 군(MLP 및 Linear 계열 9종)을 다기관 연속혈당측정(CGM) 데이터에 일관되게 적용하기 위한 공통 인터페이스, 데이터 토폴로지, 모듈러 아키텍처 및 구현 명세를 정의합니다.</p>
+<hr>
+<section id="공통-데이터-인터페이스-사양" class="level2">
+<h2 class="anchored" data-anchor-id="공통-데이터-인터페이스-사양">1. 공통 데이터 인터페이스 사양</h2>
+<p>모든 Temporal 모델은 데이터 로딩 단계에서 생성되는 동일한 텐서 규격과 피처 차원을 공유하여 공정한 벤치마크 및 플러그앤플레이(Plug-and-Play) 형태의 모델 교체가 가능해야 합니다.</p>
+<section id="입력-텐서-규격-input-tensor-shape" class="level3">
+<h3 class="anchored" data-anchor-id="입력-텐서-규격-input-tensor-shape">1.1. 입력 텐서 규격 (Input Tensor Shape)</h3>
+<ul>
+<li><strong>형태:</strong> <code>[Batch_Size, Lookback_Steps, Input_Channels]</code></li>
+<li><strong>룩백 스텝 (Lookback_Steps):</strong>
+<ul>
+<li>기본값: 3스텝 (단기 예측, 약 15분 관측 버퍼).</li>
+<li>장기 패턴 학습용: 144스텝 (12시간 버퍼, 5분 주기 센서 기준).</li>
+</ul></li>
+<li><strong>입력 채널 (Input_Channels):</strong>
+<ul>
+<li><strong>단변량 모드 (Single Channel):</strong> 혈당 단독 (<code>glucose_value_mg_dl</code>) <span class="math inline">\(\rightarrow 1\)</span> 채널.</li>
+<li><strong>공통 피처 모드 (Global Features):</strong> 동역학/임상/위상 파생 변수 14종 결합 <span class="math inline">\(\rightarrow 14\)</span> 채널.</li>
+<li><strong>다변량 외생 변수 모드 (Global + Local):</strong> 공통 피처 14종 + 각 코호트 고유 채널(인슐린, 식사 탄수화물, 심박수, 걸음 수 등) 조합 <span class="math inline">\(\rightarrow 14 + K\)</span> 채널.</li>
+</ul></li>
+</ul>
+</section>
+<section id="출력-텐서-규격-output-tensor-shape" class="level3">
+<h3 class="anchored" data-anchor-id="출력-텐서-규격-output-tensor-shape">1.2. 출력 텐서 규격 (Output Tensor Shape)</h3>
+<ul>
+<li><strong>형태:</strong> <code>[Batch_Size, Horizon_Steps, Target_Channels]</code></li>
+<li><strong>예측 지평선 (Horizon_Steps):</strong>
+<ul>
+<li>기본값: 3스텝 (5분 주기 기준 15분 후 예측, 15분 주기 기준 45분 후 예측).</li>
+<li>중장기 타겟: 12스텝 (5분 주기 기준 1시간 후 예측).</li>
+</ul></li>
+<li><strong>대상 채널 (Target_Channels):</strong>
+<ul>
+<li>최종 예측 목표는 미래 시점의 혈당 실측값 단독이므로 <span class="math inline">\(1\)</span> 채널 (<code>glucose_value_mg_dl</code>)로 고정합니다.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="공통-전처리-및-정상화-모듈-revin-block" class="level2">
+<h2 class="anchored" data-anchor-id="공통-전처리-및-정상화-모듈-revin-block">2. 공통 전처리 및 정상화 모듈 (RevIN Block)</h2>
+<p>CGM 시계열 데이터의 장기 추세 변동(Concept Drift) 및 환자/기기 간 스케일 차이에 대응하기 위해, 모든 모델의 입출력 단에 <strong>가역적 인스턴스 정규화 (Reversible Instance Normalization, RevIN)</strong> 레이어를 공통 장착합니다.</p>
+<pre><code>       [입력 시퀀스: X]
+              │
+              ▼
+    ┌───────────────────┐
+    │     RevIN.mean    │ ─── 평균(mu) 추출
+    │     RevIN.std     │ ─── 표준편차(sigma) 추출
+    └───────────────────┘
+              │
+              ▼  정상성 텐서(Normalised X)
+    ┌───────────────────┐
+    │   Predictive Model│ (DLinear, TSMixer, PatchMLP 등 9종 중 택1)
+    └───────────────────┘
+              │
+              ▼  정상성 예측 텐서(Normalised Y_pred)
+    ┌───────────────────┐
+    │ RevIN.denormalise │ ◄── 평균(mu) 및 표준편차(sigma) 재주입
+    └───────────────────┘
+              │
+              ▼
+    [최종 예측 혈당: Y_pred (mg/dL)]</code></pre>
+<section id="정규화-공식" class="level3">
+<h3 class="anchored" data-anchor-id="정규화-공식">2.1. 정규화 공식</h3>
+<p><span class="math display">\[\hat{X} = \frac{X - \text{mean}(X, \text{axis}=1)}{\sqrt{\text{var}(X, \text{axis}=1) + \epsilon}}\]</span> - 입력 데이터 <span class="math inline">\(X\)</span>를 시간 축에 대해 인스턴스 정규화하여 데이터 내의 정상성(Stationarity) 정보만 모델 학습에 투입합니다.</p>
+</section>
+<section id="역정규화-공식" class="level3">
+<h3 class="anchored" data-anchor-id="역정규화-공식">2.2. 역정규화 공식</h3>
+<p><span class="math display">\[\hat{Y}_{final} = \hat{Y}_{model} \cdot \sqrt{\text{var}(X, \text{axis}=1) + \epsilon} + \text{mean}(X, \text{axis}=1)\]</span> - 모델이 예측한 정규화 상태의 출력값 <span class="math inline">\(\hat{Y}_{model}\)</span>에 입력 시점의 스케일(<span class="math inline">\(\mu, \sigma\)</span>)을 다시 주입하여 물리 혈당 단위계(<span class="math inline">\(\text{mg/dL}\)</span>)로 안전하게 복원합니다.</p>
+<hr>
+</section>
+</section>
+<section id="세부-모델별-아키텍처-설계-명세" class="level2">
+<h2 class="anchored" data-anchor-id="세부-모델별-아키텍처-설계-명세">3. 세부 모델별 아키텍처 설계 명세</h2>
+<section id="dlinear" class="level3">
+<h3 class="anchored" data-anchor-id="dlinear">3.1. DLinear</h3>
+<ul>
+<li><strong>개념:</strong> 시계열 분해(Decomposition) 기법과 일차 선형 레이어(Linear Layer)의 결합형 구조입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li><p>입력 시퀀스를 이동 평균 필터(Moving Average)를 통해 저주파 성분인 추세(Trend, <span class="math inline">\(X_{Trend}\)</span>)와 고주파 성분인 잔차(Seasonal, <span class="math inline">\(X_{Seasonal}\)</span>)로 분해합니다.</p>
+<p><span class="math display">\[X_{Trend} = \text{AvgPool1D}(X, \text{kernel size})\]</span></p>
+<p><span class="math display">\[X_{Seasonal} = X - X_{Trend}\]</span></p></li>
+<li><p>분해된 두 성분에 대해 개별 선형 레이어 <span class="math inline">\(\mathbf{W} _{Trend}\)</span>와 <span class="math inline">\(\mathbf{W} _{Seasonal}\)</span>을 적용하여 독립적으로 예측 지평선 크기로 사영합니다.</p></li>
+<li><p>두 사영 결과를 합산하여 최종 결과를 산출합니다.</p>
+<p><span class="math display">\[\hat{Y} = \mathbf{W} _{Trend} X _{Trend} + \mathbf{W} _{Seasonal} X _{Seasonal}\]</span></p></li>
+</ol></li>
+<li><strong>특징:</strong> 채널 독립성(Channel Independence) 방식을 채택하여 변수 간 혼선 없이 개별 시계열 트렌드만 일률 매핑하므로 극도로 경량화되어 있습니다.</li>
+</ul>
+</section>
+<section id="n-beats" class="level3">
+<h3 class="anchored" data-anchor-id="n-beats">3.2. N-BEATS</h3>
+<ul>
+<li><strong>개념:</strong> 자가 어텐션이나 순환 연결 없이 다층 퍼셉트론(MLP) 블록의 이중 잔차 연결(Doubly Residual Stacking)만으로 과거 이력을 분해 예측하는 모델입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>여러 개의 FC 블록(Block)을 스택(Stack) 형태로 직렬 연결합니다.</li>
+<li>각 블록 <span class="math inline">\(l\)</span>은 입력을 받아 과거 재구성 값인 백캐스트(Backcast, <span class="math inline">\(\hat{X}_l\)</span>)와 미래 예측 값인 포캐스트(Forecast, <span class="math inline">\(\hat{Y}_l\)</span>)를 생성합니다.</li>
+<li>다음 블록의 입력은 이전 블록의 백캐스트 잔차로 제공됩니다. <span class="math display">\[X_{l} = X_{l-1} - \hat{X}_{l-1}\]</span></li>
+<li>모든 블록에서 도출한 포캐스트 출력을 누적 합산하여 최종 예측을 생성합니다. <span class="math display">\[\hat{Y} = \sum_{l} \hat{Y}_l\]</span></li>
+</ol></li>
+<li><strong>특징:</strong> 해석 가능 모드(Interpretable Mode) 선택 시 블록의 기저 함수(Basis)를 다항식(Polynomial) 및 푸리에(Fourier) 함수로 제안하여 혈당의 기저 변동 패턴과 급격한 섭식 요동을 기하학적으로 분해할 수 있습니다.</li>
+</ul>
+</section>
+<section id="n-hits" class="level3">
+<h3 class="anchored" data-anchor-id="n-hits">3.3. N-HiTS</h3>
+<ul>
+<li><strong>개념:</strong> N-BEATS의 이중 잔차 스태킹을 계층적 풀링(Hierarchical Pooling) 및 보간(Interpolation) 연산으로 확장한 모델입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>각 스택마다 서로 다른 보폭의 풀링 레이어(<span class="math inline">\(\text{MaxPool1D}\)</span> 등)를 통과시켜 입력 시계열의 해상도를 다르게 구성(Multi-rate sampling)합니다.</li>
+<li>저해상도 블록은 거친 트렌드(장기 변동)를 담당하고, 고해상도 블록은 촘촘한 세부 변동(식사 자극 등 초단기 변동)을 파악하도록 설계합니다.</li>
+<li>저해상도 블록의 포캐스트 출력물은 계층적 선형 보간(Hierarchical Interpolation)을 거쳐 원래 해상도의 스텝 수로 복원된 후 합산됩니다.</li>
+</ol></li>
+<li><strong>특징:</strong> 과거 및 미래 예측 지평선이 길어질 때 발생하는 계산 비용을 획기적으로 줄이며 과적합 방지 능력이 탁월합니다.</li>
+</ul>
+</section>
+<section id="tsmixer" class="level3">
+<h3 class="anchored" data-anchor-id="tsmixer">3.4. TSMixer</h3>
+<ul>
+<li><strong>개념:</strong> 채널 독립성 가정을 탈피하고 변수 간(Cross-channel) 및 시간 간(Cross-time) 상관성을 순차 믹싱(Mixing)하는 MLP 기반 다변량 시계열 모델입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li><strong>Time-Mixing MLP:</strong> 입력 텐서의 채널을 고정한 채 시간 차원(<code>Lookback_Steps</code>)에 대해 가중치 행렬을 곱해 시간 축 정보를 결합합니다.</li>
+<li><strong>Feature-Mixing MLP:</strong> 시간 스텝을 고정한 채 변수 채널 차원(<code>Input_Channels</code>)에 대해 가중치 행렬을 곱해 공변량 간 상호작용을 통합합니다.</li>
+<li>위 두 과정을 잔차 연결(Residual Connection) 및 레이어 정규화(Layer Normalization)와 결합하여 여러 층으로 적층(Stacking)합니다.</li>
+</ol></li>
+<li><strong>특징:</strong> 인슐린 및 식사와 혈당 간의 다변량 인과관계를 어텐션 연산 장치 없이 초고속으로 동시 학습할 수 있습니다.</li>
+</ul>
+</section>
+<section id="tide" class="level3">
+<h3 class="anchored" data-anchor-id="tide">3.5. TiDE</h3>
+<ul>
+<li><strong>개념:</strong> 과거 시점의 입력과 미래의 외생적 공변량(Future Covariates) 정보를 인코더-디코더 구조의 MLP 네트워크로 통합 전파하는 아키텍처입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li><strong>Feature Projection:</strong> 과거 및 미래 시점의 모든 공변량(예: 시간 인코딩, 식사 예정량 등)을 저차원의 조밀한 벡터로 매핑합니다.</li>
+<li><strong>Encoder:</strong> 과거 혈당 및 매핑된 공변량 벡터들을 평탄화(Flatten)하여 조밀한 특징 표현(Dense Representation)으로 인코딩합니다.</li>
+<li><strong>Decoder:</strong> 인코더의 특징 표현을 해석하여 미래 시점별 표현 벡터로 디코딩합니다.</li>
+<li><strong>Temporal Decoder:</strong> 미래 표현 벡터에 미래 공변량을 병합하여 각 예측 시점의 아웃풋을 산출합니다.</li>
+<li><strong>Residual Connection:</strong> 입력단 혈당 데이터에서 출력 예측단으로 이어지는 다이렉트 선형 잔차 커넥션을 결합하여 최종 값을 보정합니다.</li>
+</ol></li>
+<li><strong>특징:</strong> 인슐린 주입 패턴과 같은 미래에 이미 결정된 치료 스케줄링(Known Future Covariates) 정보를 예측 파이프라인에 효과적으로 주입할 수 있습니다.</li>
+</ul>
+</section>
+<section id="fits" class="level3">
+<h3 class="anchored" data-anchor-id="fits">3.6. FITS</h3>
+<ul>
+<li><strong>개념:</strong> 시계열 데이터를 주파수 영역(Frequency Domain)으로 전환하여 저주파 필터링 및 복소 주파수 성분 보간을 적용하는 극도로 가벼운 선형 모델입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>입력 시퀀스 <span class="math inline">\(X\)</span>에 대해 1차원 이산 푸리에 변환(Real Fast Fourier Transform, <span class="math inline">\(\text{rFFT}\)</span>)을 실행하여 주파수 영역 복소수 텐서로 변환합니다. <span class="math display">\[X_{freq} = \text{rFFT}(X)\]</span></li>
+<li>고주파 영역의 센서 잡음을 필터링하기 위해 저주파 차원만 슬라이싱하여 추출(Cut-off)합니다.</li>
+<li>주파수 영역에서 학습 가능한 복소 가중치 행렬(Complex Linear Layer)을 결합하여, 과거 주파수 해상도를 미래 해상도로 크기 조정(Frequency Interpolation / Padding)합니다.</li>
+<li>변환 완료된 미래 주파수 성분에 역 푸리에 변환(<span class="math inline">\(\text{irFFT}\)</span>)을 취해 시간 도메인의 미래 혈당 예측값으로 환원합니다.</li>
+</ol></li>
+<li><strong>특징:</strong> 파라미터 수가 룩백이나 예측 지평선 크기가 아닌 주파수 분해능에 비례하므로 연산 효율이 극대화되며, 초경량 엣지 장치 구동에 최적입니다.</li>
+</ul>
+</section>
+<section id="patchmlp" class="level3">
+<h3 class="anchored" data-anchor-id="patchmlp">3.7. PatchMLP</h3>
+<ul>
+<li><strong>개념:</strong> 단일 타임스텝 단위의 입력이 노이즈에 취약한 점을 개선하기 위해, 시계열을 로컬 세그먼트인 패치(Patch) 단위로 분할하여 추세적 흐름을 파악하는 MLP 아키텍처입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>입력 시퀀스를 겹치거나(Overlap) 독립된 크기 <span class="math inline">\(P\)</span> (Patch Length)와 이동 간격 <span class="math inline">\(S\)</span> (Stride)를 기준으로 다수의 패치 토큰으로 분할합니다.</li>
+<li>각 패치 시퀀스를 MLP 임베딩 레이어를 통해 벡터 스페이스로 사영하여 국소적 의미 정보(Semantic Context)를 추출합니다.</li>
+<li>추출된 다중 패치들을 패치 축과 특징 축 기준으로 각각 MLP 교차 믹싱을 수행합니다.</li>
+<li>예측단 사영 레이어를 통해 각 채널별 패치 단위 예측을 수행한 후, 원래 시퀀스 차원으로 복원합니다.</li>
+</ol></li>
+<li><strong>특징:</strong> CGM 신호의 단기 노이즈 변동에 대한 강건성(Robustness)이 우수하며 시계열 수렴도가 뛰어납니다.</li>
+</ul>
+</section>
+<section id="xlinear" class="level3">
+<h3 class="anchored" data-anchor-id="xlinear">3.8. XLinear</h3>
+<ul>
+<li><strong>개념:</strong> DLinear가 갖는 채널 독립성(CI) 제약을 제거하여, 채널 간의 상호 교차 작용(Cross-channel Interaction)을 선형적으로 처리할 수 있도록 확장한 하이브리드 선형 아키텍처입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>입력 시퀀스를 이동 평균 기반의 Trend와 Seasonal 성분으로 분리하는 기조는 DLinear와 동일합니다.</li>
+<li>선형 투사 수행 시, 시간 차원에 대한 학습 파라미터 행렬 외에 채널 차원에 대한 선형 사영 행렬 <span class="math inline">\(\mathbf{W}_{channel}\)</span>을 추가 정의합니다.</li>
+<li>두 영역의 텐서곱(Kronecker Product) 또는 이중 Linear 순차 연산을 결합하여, 과거 <span class="math inline">\(i\)</span>번째 채널의 트렌드가 미래 <span class="math inline">\(j\)</span>번째 채널의 혈당 예측에 미치는 선형적 전파 경로를 연산합니다. <span class="math display">\[\hat{Y} = \text{CrossLinear}_{Trend}(X_{Trend}) + \text{CrossLinear}_{Seasonal}(X_{Seasonal})\]</span></li>
+</ol></li>
+<li><strong>특징:</strong> 연산 속도는 DLinear급의 고속을 유지하면서도 타 채널(인슐린, 식사량 등)이 혈당 변화에 기여하는 동적 상관성을 선형 범위 내에서 명시적으로 학습합니다.</li>
+</ul>
+</section>
+<section id="softs" class="level3">
+<h3 class="anchored" data-anchor-id="softs">3.9. SOFTS</h3>
+<ul>
+<li><strong>개념:</strong> 채널 간 정보 결합(Channel Interaction) 시 자가 어텐션의 고비용(<span class="math inline">\(O(N^2)\)</span>) 문제를 해결하기 위해, 원패스(One-pass) 방식으로 다변량 정보를 병합/분산하는 스케일러블 주파수/MLP 믹싱 모델입니다.</li>
+<li><strong>아키텍처 흐름:</strong>
+<ol type="1">
+<li>입력 시퀀스를 채널별로 인코딩한 뒤, 채널 축 전체를 하나로 병합하는 공통 표현 풀링(Global Core Representation) 연산을 수행합니다.</li>
+<li>병합 과정에 주파수 영역 푸리에 변환(FFT) 또는 피드포워드 MLP 결합을 사용하여 모든 채널의 동역학적 특성을 요약합니다.</li>
+<li>요약된 글로벌 특징 정보망을 개별 채널 디코더에 다시 분배(Broadcast &amp; Multiply)하여 상호 보정합니다.</li>
+<li>복원된 각 채널 특징 벡터에서 최종 혈당 예측 타겟을 사영 도출합니다.</li>
+</ol></li>
+<li><strong>특징:</strong> 채널 수가 수십 개 이상으로 증가해도 계산 복잡도가 채널 수 <span class="math inline">\(N\)</span>에 선형 비례하여 증가하므로 다차원 변수를 보유한 다기관 CGM 실험에 적합합니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="모듈러-컴포넌트-공유-설계" class="level2">
+<h2 class="anchored" data-anchor-id="모듈러-컴포넌트-공유-설계">4. 모듈러 컴포넌트 공유 설계</h2>
+<p>구현 단순화 및 코드 재사용성을 높이기 위해, 각 모델의 고유 연산부를 제외한 보조 레이어들은 공유 모듈로 통합 구현합니다.</p>
+<pre><code>                    [ Raw input tensor ]
+                             │
+                             ▼
+            ┌──────────────────────────────────┐
+            │       RevIN 정상화 모듈          │ (정상성 복원)
+            └──────────────────────────────────┘
+                             │
+         ┌───────────────────┼───────────────────┐
+         ▼                   ▼                   ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+│  Decomposition  │ │    rFFT 모듈    │ │   Patch Split   │ (표현 모듈 분기)
+│ (DLinear, 등)   │ │ (FITS, SOFTS)   │ │  (PatchMLP)     │
+└─────────────────┘ └─────────────────┘ └─────────────────┘</code></pre>
+<section id="공통-분해-컴포넌트-decomposition-module" class="level3">
+<h3 class="anchored" data-anchor-id="공통-분해-컴포넌트-decomposition-module">4.1. 공통 분해 컴포넌트 (Decomposition Module)</h3>
+<ul>
+<li><strong>대상 모델:</strong> DLinear, XLinear, TSMixer, TiDE (선택 적용)</li>
+<li><strong>클래스 정의:</strong> <code>SeriesDecomposition(nn.Module)</code>
+<ul>
+<li><code>moving_avg</code> 커널 크기를 파라미터로 설정하여 추세 및 잔차 텐서 쌍을 리턴하는 단일 헬퍼 클래스를 구현합니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="공통-주파수-연산-모듈-frequency-processing-module" class="level3">
+<h3 class="anchored" data-anchor-id="공통-주파수-연산-모듈-frequency-processing-module">4.2. 공통 주파수 연산 모듈 (Frequency Processing Module)</h3>
+<ul>
+<li><strong>대상 모델:</strong> FITS, SOFTS</li>
+<li>PyTorch의 <code>torch.fft.rfft</code> 및 <code>torch.fft.irfft</code>를 표준 래핑하여 복소수 곱 연산 및 저주파 필터 컷오프 기능을 수행하는 유틸리티로 모듈화합니다.</li>
+</ul>
+</section>
+<section id="공통-패칭-연산-모듈-patching-module" class="level3">
+<h3 class="anchored" data-anchor-id="공통-패칭-연산-모듈-patching-module">4.3. 공통 패칭 연산 모듈 (Patching Module)</h3>
+<ul>
+<li><strong>대상 모델:</strong> PatchMLP</li>
+<li>입력 텐서 <code>[B, L, C]</code>를 <code>[B, C, N_Patches, Patch_Length]</code>로 뷰(View) 및 언폴드(Unfold) 처리하여 변환하는 공유 유틸리티를 설계합니다.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="학습-검증-및-임상-지표-최적화-사양" class="level2">
+<h2 class="anchored" data-anchor-id="학습-검증-및-임상-지표-최적화-사양">5. 학습, 검증 및 임상 지표 최적화 사양</h2>
+<section id="손실-함수-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="손실-함수-loss-function">5.1. 손실 함수 (Loss Function)</h3>
+<p>공통 오차 최적화를 위해 기본 MAE(L1 Loss) 및 MSE(L2 Loss)를 결합하여 사용하되, 임상적 안전성 강화를 위해 저혈당 대역 페널티 손실 함수를 선택적으로 추가합니다. - <strong>저혈당 페널티 손실 (Hypoglycemic Penalty Loss):</strong> 실제 혈당이 <span class="math inline">\(70 \text{ mg/dL}\)</span> 미만일 때 예측값이 실제보다 높게 예측되는 경우(과대평가로 인한 치료 누락 방지), 오차에 페널티 가중치 <span class="math inline">\(\gamma &gt; 1.0\)</span>을 추가 곱하여 계산합니다. <span class="math display">\[\mathcal{L} = \begin{cases}
+  |Y - \hat{Y}| \times \gamma, &amp; \text{if } Y &lt; 70 \text{ and } \hat{Y} &gt; Y \\
+  |Y - \hat{Y}|, &amp; \text{otherwise}
+  \end{cases}\]</span></p>
+</section>
+<section id="평가-메트릭-evaluation-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="평가-메트릭-evaluation-metrics">5.2. 평가 메트릭 (Evaluation Metrics)</h3>
+<ol type="1">
+<li><strong>일반 예측 오차:</strong> RMSE, MAE, MAPE</li>
+<li><strong>임상 안전성 평가 (Clarke Error Grid):</strong>
+<ul>
+<li>예측값과 실측값을 비교하여 안전 구역인 Zone A 및 Zone B에 위치하는 비율(%)을 검출합니다.</li>
+<li>Zone A+B 비율이 최소 98% 이상을 충족하는지 검증합니다.</li>
+</ul></li>
+<li><strong>위험 변동 평가:</strong> 저혈당(<span class="math inline">\(&lt;70 \text{ mg/dL}\)</span>) 대역에서의 예측 민감도(Sensitivity) 및 특이도(Specificity).</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="온디바이스edge-cpu-배포-및-실시간-개인화-규격" class="level2">
+<h2 class="anchored" data-anchor-id="온디바이스edge-cpu-배포-및-실시간-개인화-규격">6. 온디바이스(Edge CPU) 배포 및 실시간 개인화 규격</h2>
+<p>엣지 컴퓨팅 기반의 모바일 디바이스 또는 인슐린 펌프 내부 임베디드 칩 구동을 전제로 한 최적화 표준 설계입니다.</p>
+<section id="경량화-및-직렬화-표준" class="level3">
+<h3 class="anchored" data-anchor-id="경량화-및-직렬화-표준">6.1. 경량화 및 직렬화 표준</h3>
+<ul>
+<li><strong>연산 엔진 고정:</strong> 모바일 디바이스 상의 과도한 메모리 점유 및 배터리 소모를 방지하기 위해 PyTorch의 Autograd(역전파 엔진) 및 동적 그래프 빌더를 완전히 비활성화한 후 추론 모드로 전환합니다.</li>
+<li><strong>ONNX 및 TFLite 컴파일:</strong> 공통 구현 모델들을 ONNX(Open Neural Network Exchange) 형식으로 변환한 뒤, 대상 엣지 타겟에 맞춰 FP16 양자화(Quantization)를 거쳐 TFLite 바이너리로 컴파일하여 구동합니다.</li>
+</ul>
+</section>
+<section id="엣지-실시간-개인화-레이어-on-device-personalization-block" class="level3">
+<h3 class="anchored" data-anchor-id="엣지-실시간-개인화-레이어-on-device-personalization-block">6.2. 엣지 실시간 개인화 레이어 (On-Device Personalization Block)</h3>
+<p>글로벌 데이터로 선학습된 공통 모델 위에, 실시간 환자의 특이 반응(인슐린 저항성 변화, 호르몬 요동)을 장치 단에서 즉시 학습하여 보정하는 초경량 레이어 설계입니다.</p>
+<pre><code>       [공통 글로벌 모델 예측값: Y_global]
+                        │
+                        ▼
+    ┌───────────────────────────────────────┐
+    │     개인화 선형 레이어: W_personal    │ ◄── 환자 최신 잔차 데이터로
+    └───────────────────────────────────────┘     On-Device 실시간 폐형태 해 업데이트
+                        │
+                        ▼
+      [최종 보정 예측 혈당: Y_final (mg/dL)]</code></pre>
+<ul>
+<li><strong>설계 구조:</strong>
+<ul>
+<li>글로벌 모델 추론 출력단 바로 뒤에 학습 가능한 1차원 가중치 파라미터 <span class="math inline">\(\mathbf{W}_{personal}\)</span>과 바이어스 <span class="math inline">\(\mathbf{b}_{personal}\)</span>을 가진 단일 선형 레이어를 연결합니다.</li>
+<li>디바이스 내부 메모리 버퍼에 최근 1시간(12개 샘플)의 예측 오차 잔차 데이터를 유지합니다.</li>
+</ul></li>
+<li><strong>폐형태 해(Closed-form Solution) 초고속 갱신:</strong>
+<ul>
+<li>디바이스의 제한된 CPU 파워로 경사하강법(GD)을 반복 연산하면 하드웨어 자원이 낭비되므로, <code>Moore-Penrose Pseudo-Inverse</code> 의사역행렬 공식을 사용하여 행렬 연산 1회로 최적 가중치 해를 즉시 산출합니다.</li>
+<li>수식: <span class="math display">\[\mathbf{W}_{personal} = \mathbf{Y}_{true} \mathbf{X}_{pred}^{T} (\mathbf{X}_{pred} \mathbf{X}_{pred}^{T})^{-1}\]</span></li>
+<li>이 수식을 통해 디바이스 내부에서 복잡한 최적화 알고리즘 구동 없이, 실시간 버퍼가 갱신될 때마다 가중치를 즉각 업데이트하여 개인 최적화 혈당 경로 보정을 구현합니다.</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
