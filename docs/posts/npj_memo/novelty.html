@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-04-10">
+
+<title>Master Thesis Literature Review - 다기관 CGM 시계열 전이학습 학술적 공헌 및 온디바이스 개인화 가이드</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">다기관 CGM 시계열 전이학습 학술적 공헌 및 온디바이스 개인화 가이드</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">npj_memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 10, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#다기관-cgm-시계열-전이학습-학술적-공헌-및-온디바이스-개인화-가이드" id="toc-다기관-cgm-시계열-전이학습-학술적-공헌-및-온디바이스-개인화-가이드" class="nav-link active" data-scroll-target="#다기관-cgm-시계열-전이학습-학술적-공헌-및-온디바이스-개인화-가이드">다기관 CGM 시계열 전이학습 학술적 공헌 및 온디바이스 개인화 가이드</a>
+  <ul class="collapse">
+  <li><a href="#학술적-노벨티-및-공헌-academic-contributions" id="toc-학술적-노벨티-및-공헌-academic-contributions" class="nav-link" data-scroll-target="#학술적-노벨티-및-공헌-academic-contributions">1. 학술적 노벨티 및 공헌 (Academic Contributions)</a>
+  <ul class="collapse">
+  <li><a href="#세계-최대-규모의-다기관-다주기multi-frequency-크로스-lodo-벤치마크" id="toc-세계-최대-규모의-다기관-다주기multi-frequency-크로스-lodo-벤치마크" class="nav-link" data-scroll-target="#세계-최대-규모의-다기관-다주기multi-frequency-크로스-lodo-벤치마크">1.1. 세계 최대 규모의 다기관 다주기(Multi-frequency) 크로스 LODO 벤치마크</a></li>
+  <li><a href="#고해상도1분-주기-센서-간-전이-시-부정적-전이negative-transfer-메커니즘-최초-규명" id="toc-고해상도1분-주기-센서-간-전이-시-부정적-전이negative-transfer-메커니즘-최초-규명" class="nav-link" data-scroll-target="#고해상도1분-주기-센서-간-전이-시-부정적-전이negative-transfer-메커니즘-최초-규명">1.2. 고해상도(1분 주기) 센서 간 전이 시 “부정적 전이(Negative Transfer) 메커니즘” 최초 규명</a></li>
+  <li><a href="#아키텍처-맞춤형-가중치-동결freezing-프로토콜-공식화" id="toc-아키텍처-맞춤형-가중치-동결freezing-프로토콜-공식화" class="nav-link" data-scroll-target="#아키텍처-맞춤형-가중치-동결freezing-프로토콜-공식화">1.3. 아키텍처 맞춤형 “가중치 동결(Freezing) 프로토콜” 공식화</a></li>
+  </ul></li>
+  <li><a href="#온디바이스-실시간-개인-최적화-혈당-보정-알고리즘" id="toc-온디바이스-실시간-개인-최적화-혈당-보정-알고리즘" class="nav-link" data-scroll-target="#온디바이스-실시간-개인-최적화-혈당-보정-알고리즘">2. 온디바이스 실시간 개인 최적화 혈당 보정 알고리즘</a>
+  <ul class="collapse">
+  <li><a href="#개인화-선형-어댑터personalized-linear-adapter-구조" id="toc-개인화-선형-어댑터personalized-linear-adapter-구조" class="nav-link" data-scroll-target="#개인화-선형-어댑터personalized-linear-adapter-구조">2.1. 개인화 선형 어댑터(Personalized Linear Adapter) 구조</a></li>
+  <li><a href="#의사역행렬을-이용한-폐형태-해closed-form-solution-실시간-업데이트" id="toc-의사역행렬을-이용한-폐형태-해closed-form-solution-실시간-업데이트" class="nav-link" data-scroll-target="#의사역행렬을-이용한-폐형태-해closed-form-solution-실시간-업데이트">2.2. 의사역행렬을 이용한 “폐형태 해(Closed-form Solution)” 실시간 업데이트</a></li>
+  <li><a href="#임상적-실질-효용성" id="toc-임상적-실질-효용성" class="nav-link" data-scroll-target="#임상적-실질-효용성">2.3. 임상적 실질 효용성</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="다기관-cgm-시계열-전이학습-학술적-공헌-및-온디바이스-개인화-가이드" class="level1">
+<h1>다기관 CGM 시계열 전이학습 학술적 공헌 및 온디바이스 개인화 가이드</h1>
+<p>본 가이드 문서는 다기관 연속혈당측정(CGM) 데이터 기반의 시계열 Temporal 모델 패밀리 전이학습 실험이 가지는 학술적 노벨티(Novelty), 기존 연구 대비 차별성, 센서 간 도메인 전이 시의 메커니즘 해석, 그리고 실시간 엣지(Edge) 디바이스 환경에서의 초고속 개인 최적화 혈당 보정 알고리즘 명세를 기술합니다.</p>
+<hr>
+<section id="학술적-노벨티-및-공헌-academic-contributions" class="level2">
+<h2 class="anchored" data-anchor-id="학술적-노벨티-및-공헌-academic-contributions">1. 학술적 노벨티 및 공헌 (Academic Contributions)</h2>
+<section id="세계-최대-규모의-다기관-다주기multi-frequency-크로스-lodo-벤치마크" class="level3">
+<h3 class="anchored" data-anchor-id="세계-최대-규모의-다기관-다주기multi-frequency-크로스-lodo-벤치마크">1.1. 세계 최대 규모의 다기관 다주기(Multi-frequency) 크로스 LODO 벤치마크</h3>
+<ul>
+<li><strong>기존 연구의 한계:</strong> 기존의 당뇨병 혈당 예측 논문들은 대개 단일 데이터셋(예: OhioT1DM 또는 DiaTrend)만을 대상으로 코호트 내부 환자 분할(Within-cohort Split) 평가를 수행했습니다. 이는 새로운 환자 집단이나 이질적인 의료 기관 데이터로 확장 시 발생할 수 있는 일반화 장벽을 노출하지 않아, 모델의 실제 범용 성능을 비현실적으로 과대평가하는 왜곡을 낳았습니다.</li>
+<li><strong>본 연구의 기여:</strong> 본 연구는 26개의 대형 활성 데이터셋을 1분, 5분, 15분 샘플링 주기별로 체계적으로 매핑하고, 특정 코호트를 전면 배제한 채 평가를 수행하는 엄격한 <strong>LODO(Leave-One-Dataset-Out)</strong> 전이학습 프로토콜을 수립했습니다. 이를 바탕으로 9대 시계열 딥러닝 아키텍처를 교차 벤치마크하여 다기관 혈당 전이 성능의 객관적 하한선을 규명했습니다.</li>
+</ul>
+</section>
+<section id="고해상도1분-주기-센서-간-전이-시-부정적-전이negative-transfer-메커니즘-최초-규명" class="level3">
+<h3 class="anchored" data-anchor-id="고해상도1분-주기-센서-간-전이-시-부정적-전이negative-transfer-메커니즘-최초-규명">1.2. 고해상도(1분 주기) 센서 간 전이 시 “부정적 전이(Negative Transfer) 메커니즘” 최초 규명</h3>
+<ul>
+<li><strong>학술적 발견 (Autocorrelation의 맹점):</strong> 1분 단위 고밀도 CGM 데이터는 혈당 신호 특성상 인접한 시점 간의 자기상관성(Autocorrelation)이 극도로 높습니다. 이로 인해 단일 도메인 내 자가 학습(Self-training) 시에는 TiDE(Self_RMSE = 1.9124), SOFTS(Self_RMSE = 3.2585) 등 다수 모델이 완벽한 예측을 하는 것처럼 보입니다.</li>
+<li><strong>일반화 붕괴 현상:</strong> 그러나 제조사가 다른 센서 간 전이(Dexcom G6 소스 <span class="math inline">\(\rightarrow\)</span> FreeStyle Libre 타겟)를 수행할 때 일반화 오차가 DLinear(SAR = 4.7691, FT_RMSE = 102.5960), TiDE(SAR = 27.9206, FT_RMSE = 53.3952)와 같이 심각하게 발산하는 부정적 전이(Negative Transfer) 현상이 관측되었습니다.</li>
+<li><strong>원인 해석:</strong> 제조사별 CGMS 센서가 사용하는 피하 간질액 내 포도당 측정 물리화학 센서의 고유 편향, 보정(Calibration) 주기 및 필터링 알고리즘 시차 등 하드웨어적 도메인 드리프트(Domain Drift)가 1분 주기 데이터가 지닌 강한 시계열 종속성과 불일치를 일으키며 은닉 표상(Hidden Representation)을 왜곡하기 때문입니다.</li>
+<li><strong>아키텍처별 상쇄 강건성 규명:</strong> 본 실험을 통해 이러한 도메인 이질성 노이즈 환경에서도 주파수 도메인 선형 보간을 활용하는 <strong>FITS</strong> (SAR = 0.0628, FT_RMSE = 2.8623) 및 다변량 변수-시간 교차 게이팅을 취하는 <strong>XLinear</strong> (SAR = 0.5434, FT_RMSE = 3.2157) 모델이 도메인 드리프트 노이즈를 완벽하게 흡수하여 예측 정확도를 안정적으로 고정함을 실증했습니다.</li>
+</ul>
+</section>
+<section id="아키텍처-맞춤형-가중치-동결freezing-프로토콜-공식화" class="level3">
+<h3 class="anchored" data-anchor-id="아키텍처-맞춤형-가중치-동결freezing-프로토콜-공식화">1.3. 아키텍처 맞춤형 “가중치 동결(Freezing) 프로토콜” 공식화</h3>
+<p>글로벌 다기관 데이터의 일반 지식(General representation)을 훼손하지 않으면서 타겟 코호트의 특정 데이터에 수렴하도록 모델 분류군별 최적의 레이어 동결 가이드라인을 매핑했습니다: * <strong>TSMixer:</strong> 일반적인 시계열 주기성을 기억하는 시간 축 선형 레이어(<code>temporal_linear</code>)를 동결하고, 변수 간 혼합 레이어와 디코더 프로젝션만 학습시킴으로써 소규모 타겟 코호트 과적합을 방지(SAR 0.57~0.59 달성). * <strong>TiDE:</strong> 입력 데이터 표현을 포착하는 인코더(Encoder) 영역을 동결하여 사전 학습 지식을 보존하고, 예측 시점별 결합을 제어하는 디코더(Decoder) 단만 미세 조정하도록 설계. * <strong>NBeats / NHits:</strong> 거시적 물리 패턴을 추출하는 다중 스택의 하위 베이시스(Basis) 블록들을 완전히 동결하고, 단기 요동 보정을 담당하는 상위 고주파 잔차 블록들만 학습 가능 상태로 개방하여 전이 가동력 극대화.</p>
+<hr>
+</section>
+</section>
+<section id="온디바이스-실시간-개인-최적화-혈당-보정-알고리즘" class="level2">
+<h2 class="anchored" data-anchor-id="온디바이스-실시간-개인-최적화-혈당-보정-알고리즘">2. 온디바이스 실시간 개인 최적화 혈당 보정 알고리즘</h2>
+<p>글로벌 전이학습 모델이 확보한 범용 지식 위에, 디바이스 단(스마트폰 앱 또는 인슐린 펌프 마이크로프로세서)에서 개별 환자의 실시간 대사 변동(식사 섭취율, 일주기 호르몬 요동, 일시적 인슐린 저항성 증가)을 즉각 학습 및 반영할 수 있는 경량 초고속 개인 최적화 로직 설계입니다.</p>
+<section id="개인화-선형-어댑터personalized-linear-adapter-구조" class="level3">
+<h3 class="anchored" data-anchor-id="개인화-선형-어댑터personalized-linear-adapter-구조">2.1. 개인화 선형 어댑터(Personalized Linear Adapter) 구조</h3>
+<p>글로벌 모델의 추론 출력(예측 혈당값) 바로 뒤에 동적으로 오프셋을 보정할 수 있는 1차원 개인화 레이어를 부착합니다.</p>
+<pre><code> [글로벌 전이 모델 예측값: Y_pred_global]
+                  │
+                  ▼
+       ┌─────────────────────┐
+       │   Y_pred_global * W │ ─── 개인화 가중치 연산
+       │         + b         │ ─── 개인화 바이어스 보정
+       └─────────────────────┘
+                  │
+                  ▼
+ [최종 개인화 보정 예측값: Y_final]</code></pre>
+<ul>
+<li><strong>수학적 전사:</strong> <span class="math display">\[Y_{final} = \mathbf{W}_{personal} \cdot Y_{pred\_global} + \mathbf{b}_{personal}\]</span>
+<ul>
+<li><span class="math inline">\(\mathbf{W}_{personal}\)</span>: 개인 최적화 신축(Scaling) 계수</li>
+<li><span class="math inline">\(\mathbf{b}_{personal}\)</span>: 개인 최적화 오프셋(Bias) 보정 계수</li>
+</ul></li>
+<li><strong>데이터 버퍼:</strong> 엣지 디바이스 메모리에 최신 <span class="math inline">\(M\)</span>개(기본 12개 샘플, 약 1시간)의 실제 혈당 실측값 <span class="math inline">\(Y_{true}\)</span>와 글로벌 모델 예측치 <span class="math inline">\(Y_{pred\_global}\)</span>을 슬라이딩 링 버퍼(Sliding Ring Buffer) 형태로 실시간 수집 및 유지합니다.</li>
+</ul>
+</section>
+<section id="의사역행렬을-이용한-폐형태-해closed-form-solution-실시간-업데이트" class="level3">
+<h3 class="anchored" data-anchor-id="의사역행렬을-이용한-폐형태-해closed-form-solution-실시간-업데이트">2.2. 의사역행렬을 이용한 “폐형태 해(Closed-form Solution)” 실시간 업데이트</h3>
+<p>마이크로프로세서 환경에서 일반적인 오차역전파 및 경사하강법(Gradient Descent)을 통해 가중치를 반복 최적화하는 방식은 배터리 과소모, 메모리 점유, 그리고 수렴 실패에 따른 모바일 앱 프리징 위험을 초래합니다. 따라서 최소자승법(Ordinary Least Squares)의 대수적 해인 <strong>의사역행렬(Pseudo-Inverse)</strong> 공식을 적용하여, 단 1회의 행렬 대수 연산으로 전파 루프 없이 최적 개인화 가중치 <span class="math inline">\(\mathbf{W}_{personal}\)</span>을 순간 업데이트합니다.</p>
+<section id="입력-및-출력-벡터-정의" class="level4">
+<h4 class="anchored" data-anchor-id="입력-및-출력-벡터-정의">입력 및 출력 벡터 정의</h4>
+<ul>
+<li>예측 벡터: <span class="math inline">\(\mathbf{X} = \begin{bmatrix} Y_{pred\_global}(t-M+1) &amp; \cdots &amp; Y_{pred\_global}(t) \\ 1 &amp; \cdots &amp; 1 \end{bmatrix} \in \mathbb{R}^{2 \times M}\)</span></li>
+<li>실측 벡터: <span class="math inline">\(\mathbf{Y} = \begin{bmatrix} Y_{true}(t-M+1) &amp; \cdots &amp; Y_{true}(t) \end{bmatrix} \in \mathbb{R}^{1 \times M}\)</span></li>
+<li>목표 파라미터 벡터: <span class="math inline">\(\mathbf{\Theta} = \begin{bmatrix} \mathbf{W}_{personal} &amp; \mathbf{b}_{personal} \end{bmatrix} \in \mathbb{R}^{1 \times 2}\)</span></li>
+</ul>
+</section>
+<section id="의사역행렬-유도-식" class="level4">
+<h4 class="anchored" data-anchor-id="의사역행렬-유도-식">의사역행렬 유도 식</h4>
+<p>가장 단순한 오차 제곱합(L2 Loss)을 최소화하는 목적 함수 <span class="math inline">\(\mathcal{E}\)</span>를 설정합니다: <span class="math display">\[\mathcal{E} = \|\mathbf{Y} - \mathbf{\Theta}\mathbf{X}\|_{2}^{2}\]</span></p>
+<p>이 목적 함수에 대한 최적 매개변수 해 <span class="math inline">\(\mathbf{\Theta}^{\star}\)</span>는 다음 정규 방정식(Normal Equation)을 통해 도출됩니다: <span class="math display">\[\mathbf{\Theta}^{\star} \mathbf{X} \mathbf{X}^{T} = \mathbf{Y} \mathbf{X}^{T}\]</span></p>
+<p><span class="math inline">\(\mathbf{X} \mathbf{X}^{T}\)</span>의 역행렬이 존재한다고 가정할 때, Moore-Penrose 의사역행렬 공식을 사용하여 한 번에 해를 구합니다: <span class="math display">\[\mathbf{\Theta}^{\star} = \mathbf{Y} \mathbf{X}^{T} (\mathbf{X} \mathbf{X}^{T})^{-1}\]</span></p>
+</section>
+<section id="임상적-연산-메커니즘" class="level4">
+<h4 class="anchored" data-anchor-id="임상적-연산-메커니즘">임상적 연산 메커니즘</h4>
+<ol type="1">
+<li>새로운 실측 혈당 샘플 <span class="math inline">\(Y_{true}(t)\)</span>가 블루투스 CGMS로부터 수신되면 슬라이딩 버퍼를 한 칸 밀어 갱신합니다.</li>
+<li>디바이스 CPU는 수집된 최근 <span class="math inline">\(M\)</span>개의 데이터 매트릭스 <span class="math inline">\(\mathbf{X}\)</span>와 <span class="math inline">\(\mathbf{Y}\)</span>를 구성합니다.</li>
+<li><span class="math inline">\(\mathbf{X} \mathbf{X}^{T}\)</span>는 오직 <span class="math inline">\(2 \times 2\)</span> 크기의 극소형 대칭 행렬이 되므로, 역행렬 연산 비용이 사실상 제로(<span class="math inline">\(O(1)\)</span>)에 가깝습니다.</li>
+<li><span class="math inline">\(2 \times 2\)</span> 행렬 곱 및 대수 연산 1회를 수행하여 즉각 <span class="math inline">\(\mathbf{W}_{personal}\)</span>과 <span class="math inline">\(\mathbf{b}_{personal}\)</span>을 갱신합니다.</li>
+<li>갱신 완료된 어댑터 가중치는 다음 주기 예측 혈당값의 즉각적인 개별 편차 오프셋 보정에 즉시 활용됩니다.</li>
+</ol>
+</section>
+</section>
+<section id="임상적-실질-효용성" class="level3">
+<h3 class="anchored" data-anchor-id="임상적-실질-효용성">2.3. 임상적 실질 효용성</h3>
+<ul>
+<li><strong>하이브리드 개인화:</strong> 다기관 사전 학습을 통해 획득한 ’공통적 포도당 소멸 역학 정보’와 환자 고유의 ’식후 인슐린 감수성 임시 변동성’을 조화롭게 결합합니다.</li>
+<li><strong>Zero-Calibrate 배포:</strong> 경사하강법이 없기 때문에 CPU 연산 부하가 극소화되어 저가형 인슐린 펌프 컨트롤 유닛이나 웨어러블 엣지 환경에 오작동 염려 없이 정적 배포(Static deployment)가 가능합니다.</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

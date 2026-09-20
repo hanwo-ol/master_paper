@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-06-29">
+
+<title>Master Thesis Literature Review - vMWM Regular Trial: MCI vs.&nbsp;HC 구별 특징 분석 보고서</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">vMWM Regular Trial: MCI vs.&nbsp;HC 구별 특징 분석 보고서</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">vesti_memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 29, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#vmwm-regular-trial-mci-vs.-hc-구별-특징-분석-보고서" id="toc-vmwm-regular-trial-mci-vs.-hc-구별-특징-분석-보고서" class="nav-link active" data-scroll-target="#vmwm-regular-trial-mci-vs.-hc-구별-특징-분석-보고서">vMWM Regular Trial: MCI vs.&nbsp;HC 구별 특징 분석 보고서</a>
+  <ul class="collapse">
+  <li><a href="#분석-배경-및-핵심-요약" id="toc-분석-배경-및-핵심-요약" class="nav-link" data-scroll-target="#분석-배경-및-핵심-요약">1. 분석 배경 및 핵심 요약</a></li>
+  <li><a href="#주요-행동-지표-비교-분석-path-length-보정-전-vs-후" id="toc-주요-행동-지표-비교-분석-path-length-보정-전-vs-후" class="nav-link" data-scroll-target="#주요-행동-지표-비교-분석-path-length-보정-전-vs-후">2. 주요 행동 지표 비교 분석 (Path Length 보정 전 vs 후)</a></li>
+  <li><a href="#분석-유형별-요약-관계도" id="toc-분석-유형별-요약-관계도" class="nav-link" data-scroll-target="#분석-유형별-요약-관계도">3. 분석 유형별 요약 관계도</a>
+  <ul class="collapse">
+  <li><a href="#기본-분석-path-length-미보정" id="toc-기본-분석-path-length-미보정" class="nav-link" data-scroll-target="#기본-분석-path-length-미보정">① 기본 분석 (Path Length 미보정)</a></li>
+  <li><a href="#상호작용-효과-path-length-변화-추이" id="toc-상호작용-효과-path-length-변화-추이" class="nav-link" data-scroll-target="#상호작용-효과-path-length-변화-추이">② 상호작용 효과 (Path Length 변화 추이)</a></li>
+  <li><a href="#통제-분석-path-length-보정-후" id="toc-통제-분석-path-length-보정-후" class="nav-link" data-scroll-target="#통제-분석-path-length-보정-후">③ 통제 분석 (Path Length 보정 후)</a></li>
+  </ul></li>
+  <li><a href="#세부-지표별-구별-특징-및-해석" id="toc-세부-지표별-구별-특징-및-해석" class="nav-link" data-scroll-target="#세부-지표별-구별-특징-및-해석">4. 세부 지표별 구별 특징 및 해석</a>
+  <ul class="collapse">
+  <li><a href="#이동-경로-길이-path-length-학습-곡선-learning-curve" id="toc-이동-경로-길이-path-length-학습-곡선-learning-curve" class="nav-link" data-scroll-target="#이동-경로-길이-path-length-학습-곡선-learning-curve">1) 이동 경로 길이 (Path Length) &amp; 학습 곡선 (Learning Curve)</a></li>
+  <li><a href="#소요-시간-latency" id="toc-소요-시간-latency" class="nav-link" data-scroll-target="#소요-시간-latency">2) 소요 시간 (Latency)</a></li>
+  <li><a href="#부유-시간-비율-time-floating" id="toc-부유-시간-비율-time-floating" class="nav-link" data-scroll-target="#부유-시간-비율-time-floating">3) 부유 시간 비율 (Time Floating %)</a></li>
+  <li><a href="#보정-근접-거리-corrected-gallagher-proximity" id="toc-보정-근접-거리-corrected-gallagher-proximity" class="nav-link" data-scroll-target="#보정-근접-거리-corrected-gallagher-proximity">4) 보정 근접 거리 (Corrected Gallagher Proximity)</a></li>
+  </ul></li>
+  <li><a href="#결론-및-향후-분석-방향" id="toc-결론-및-향후-분석-방향" class="nav-link" data-scroll-target="#결론-및-향후-분석-방향">5. 결론 및 향후 분석 방향</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="vmwm-regular-trial-mci-vs.-hc-구별-특징-분석-보고서" class="level1">
+<h1>vMWM Regular Trial: MCI vs.&nbsp;HC 구별 특징 분석 보고서</h1>
+<p>본 보고서는 가상 모리스 수중 미로(vMWM) 실험의 <strong>Regular Trial(플랫폼을 찾으면 종료되는 실험)</strong> 에서 정상 대조군(HC)과 경도인지장애 환자군(MCI) 간에 나타나는 통계적 및 임상적 차이를 분석하고 요약한 것입니다.</p>
+<p>특히 정상 대조군(HC) 수의 증가(<span class="math inline">\(n = 64 \rightarrow n = 73\)</span>)에 따른 데이터셋 변화와, 행동 지표 간의 상관관계를 통제하기 위해 <strong>이동 경로 길이(Path Length)를 공변량으로 통제(보정)한 분석 결과</strong>를 중점적으로 다룹니다.</p>
+<hr>
+<section id="분석-배경-및-핵심-요약" class="level2">
+<h2 class="anchored" data-anchor-id="분석-배경-및-핵심-요약">1. 분석 배경 및 핵심 요약</h2>
+<p>정상 대조군(HC) 군의 추가 모집에 따라 단순 비교 시 기존에 유의했던 변수들의 유의성이 변화하는 현상이 관찰되었습니다. vMWM의 주요 행동 지표들(소요 시간, 부유 시간, 근접 거리 등)은 물리적으로 이동 경로 길이(Path Length)와 매우 강한 상관관계를 보입니다.</p>
+<p>따라서 <strong>경로 길이의 영향을 통제(보정)한 상태에서 각 그룹 간의 순수한 인지적 차이를 재검증</strong>하였으며, 그 결과 세 가지 핵심 지표에서 MCI와 HC 간의 매우 뚜렷하고 독립적인 병리적 차이를 발견했습니다.</p>
+<blockquote class="blockquote">
+<p>[!IMPORTANT] <strong>핵심 발견 (Path Length 통제 후)</strong> 1. <strong>학습 패턴의 차이</strong>: HC는 반복 시행을 통해 경로가 급격히 단축되는 정상적인 학습 곡선을 보이나, MCI는 반복 시행에도 경로 길이에 변화가 없이 평평하여 <strong>공간 학습 장애</strong>를 나타냅니다. 2. <strong>이동 효율성 저하</strong>: 동일한 거리를 이동할 때 MCI 환자는 빈번하게 멈추어 <strong>부유 행동(Floating)</strong> 을 보이며, 이로 인해 소요 시간(Latency)이 유의미하게 깁니다. 3. <strong>인지 지도(Cognitive Map) 손상</strong>: 동일한 거리를 이동하더라도 MCI 환자는 플랫폼으로 수렴하지 못하고 무작위로 분산 배회하여 <strong>플랫폼과의 평균 근접 거리(Proximity)</strong> 가 유의미하게 멉니다.</p>
+</blockquote>
+<hr>
+</section>
+<section id="주요-행동-지표-비교-분석-path-length-보정-전-vs-후" class="level2">
+<h2 class="anchored" data-anchor-id="주요-행동-지표-비교-분석-path-length-보정-전-vs-후">2. 주요 행동 지표 비교 분석 (Path Length 보정 전 vs 후)</h2>
+<p>연령, 성별, 교육 수준 및 <strong>이동 경로 길이(Path Length)</strong> 통제 여부에 따른 각 지표의 집단 효과(Group p-value) 요약입니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">평가 지표 (Outcome)</th>
+<th style="text-align: center;">보정 전 집단 효과 (<span class="math inline">\(p\)</span>)</th>
+<th style="text-align: center;">보정 후 집단 효과 (<span class="math inline">\(p\)</span>)</th>
+<th style="text-align: left;">통계적 유의성 변화 및 임상적 해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>소요 시간 <br>(Latency, s)</strong></td>
+<td style="text-align: center;">0.142</td>
+<td style="text-align: center;"><strong>0.002</strong> <br><em>(유의함)</em></td>
+<td style="text-align: left;"><strong>[비유의 <span class="math inline">\(\rightarrow\)</span> 유의]</strong><br>동일 거리를 이동하더라도 MCI 환자가 더 많은 시간을 소요함. 이동 과정 중 빈번하게 멈추는 부유 행동(Floating)이 원인임.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>이동 경로 길이 <br>(Path length, m)</strong></td>
+<td style="text-align: center;">0.157</td>
+<td style="text-align: center;"><em>N/A</em></td>
+<td style="text-align: left;"><strong>[집단 주효과 비유의 / 상호작용 유의 (<span class="math inline">\(p=0.016\)</span>)]</strong><br>전체 시행 평균 경로는 차이가 없으나, 시행 반복에 따른 단축 패턴(기울기)에서 HC와 MCI 간 뚜렷한 차이가 존재함.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>부유 시간 비율 <br>(Time floating, %)</strong></td>
+<td style="text-align: center;"><strong>0.003</strong> <br><em>(유의함)</em></td>
+<td style="text-align: center;"><strong>0.006</strong> <br><em>(유의함)</em></td>
+<td style="text-align: left;"><strong>[유의성 유지]</strong><br>경로 길이와의 높은 상관관계(r = -0.55)를 배제하더라도, MCI 환자의 부유 행동은 경로 길이와 무관하게 나타나는 독자적 특징임.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>보정 근접 거리 <br>(Gallagher proximity, m)</strong></td>
+<td style="text-align: center;">0.119</td>
+<td style="text-align: center;"><strong>0.022</strong> <br><em>(유의함)</em></td>
+<td style="text-align: left;"><strong>[비유의 <span class="math inline">\(\rightarrow\)</span> 유의]</strong><br>동일한 총 거리를 이동했을 때 MCI 환자가 플랫폼에서 더 먼 영역을 무작위 배회함. 이는 인지 지도(Cognitive Map)의 질적 손상을 시사함.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>평균 속도 <br>(Active speed, m/s)</strong></td>
+<td style="text-align: center;">0.807</td>
+<td style="text-align: center;">0.846</td>
+<td style="text-align: left;">두 집단 간 유의미한 속도 차이는 존재하지 않음. 즉, 운동 능력 자체의 저하 보다는 탐색 전략의 차이가 존재함.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>목표 사분면 체류 비율 <br>(Time in target quadrant, %)</strong></td>
+<td style="text-align: center;">0.345</td>
+<td style="text-align: center;">0.221</td>
+<td style="text-align: left;">목표 사분면 내 단순 체류 시간 비율은 두 집단 간에 유의미한 차이를 보이지 않음.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="분석-유형별-요약-관계도" class="level2">
+<h2 class="anchored" data-anchor-id="분석-유형별-요약-관계도">3. 분석 유형별 요약 관계도</h2>
+<section id="기본-분석-path-length-미보정" class="level3">
+<h3 class="anchored" data-anchor-id="기본-분석-path-length-미보정">① 기본 분석 (Path Length 미보정)</h3>
+<pre class="mermaid"><code>graph TD
+    HC_MCI1["HC vs. MCI"] --&gt;|유의미하지 않음| Latency["소요 시간 (Latency)"]
+    HC_MCI1 --&gt;|유의미| Floating["부유 시간 비율 (Time Floating)"]
+    HC_MCI1 --&gt;|유의미하지 않음| Proximity["보정 근접 거리 (Gallagher Proximity)"]</code></pre>
+</section>
+<section id="상호작용-효과-path-length-변화-추이" class="level3">
+<h3 class="anchored" data-anchor-id="상호작용-효과-path-length-변화-추이">② 상호작용 효과 (Path Length 변화 추이)</h3>
+<pre class="mermaid"><code>graph TD
+    Group_Trial["집단 x 시행 상호작용 (p = 0.016)"] --&gt; Path_Length["이동 경로 길이 (Path Length)"]
+    Path_Length --&gt;|학습 곡선 존재| HC_Curve["HC: 시행 반복 시 경로 단축 (정상 학습)"]
+    Path_Length --&gt;|학습 곡선 평평| MCI_Curve["MCI: 시행 반복 시 경로 일정 (공간학습 손상)"]</code></pre>
+</section>
+<section id="통제-분석-path-length-보정-후" class="level3">
+<h3 class="anchored" data-anchor-id="통제-분석-path-length-보정-후">③ 통제 분석 (Path Length 보정 후)</h3>
+<pre class="mermaid"><code>graph TD
+    HC_MCI2["HC vs. MCI (이동거리 통제)"] -- "유의미 (p = 0.002)" --&gt; Latency_C["소요 시간 차이 발생 (MCI &gt; HC)&lt;br/&gt;*이유: 빈번한 멈춤/Floating"]
+    HC_MCI2 -- "유의미 (p = 0.006)" --&gt; Floating_C["부유 시간 비율 차이 유지 (MCI &gt; HC)&lt;br/&gt;*독립적인 병리적 특징"]
+    HC_MCI2 -- "유의미 (p = 0.022)" --&gt; Proximity_C["근접 거리 차이 발생 (MCI &gt; HC)&lt;br/&gt;*Cognitive Map의 질적 손상 (무작위 배회)"]</code></pre>
+<hr>
+</section>
+</section>
+<section id="세부-지표별-구별-특징-및-해석" class="level2">
+<h2 class="anchored" data-anchor-id="세부-지표별-구별-특징-및-해석">4. 세부 지표별 구별 특징 및 해석</h2>
+<section id="이동-경로-길이-path-length-학습-곡선-learning-curve" class="level3">
+<h3 class="anchored" data-anchor-id="이동-경로-길이-path-length-학습-곡선-learning-curve">1) 이동 경로 길이 (Path Length) &amp; 학습 곡선 (Learning Curve)</h3>
+<ul>
+<li><strong>통계 결과</strong>: 집단 주효과(Group main effect)는 비유의미(<span class="math inline">\(p = 0.157\)</span>)하나, <strong>집단 × 시행 상호작용(Group × Trial Interaction) 효과는 유의미(<span class="math inline">\(p = 0.016\)</span>)</strong> 합니다.</li>
+<li><strong>임상적 의미</strong>:
+<ul>
+<li><strong>HC</strong>: Trial 1 (3.2m) <span class="math inline">\(\rightarrow\)</span> Trial 2 (2.9m) <span class="math inline">\(\rightarrow\)</span> Trial 3 (1.9m)로 진행될수록 경로의 길이가 뚜렷하게 짧아집니다. 이는 정상적인 공간 정보 습득과 최적 경로 탐색 과정을 보여줍니다.</li>
+<li><strong>MCI</strong>: Trial 1 (2.8m) <span class="math inline">\(\rightarrow\)</span> Trial 2 (2.7m) <span class="math inline">\(\rightarrow\)</span> Trial 3 (2.5m) <span class="math inline">\(\rightarrow\)</span> Trial 4 (2.6m)로, 시행이 반복되어도 경로 길이에 거의 변화가 없으며 평평한 수준을 유지합니다. 이는 <strong>공간적 반복 노출에 따른 학습이 원활히 이루어지지 않고 있음</strong>을 나타냅니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="소요-시간-latency" class="level3">
+<h3 class="anchored" data-anchor-id="소요-시간-latency">2) 소요 시간 (Latency)</h3>
+<ul>
+<li><strong>통계 결과</strong>: 경로 길이를 통제하지 않았을 때는 차이가 없었으나(<span class="math inline">\(p = 0.142\)</span>), <strong>경로 길이를 통제하자 집단 간 차이가 유의해졌습니다 (<span class="math inline">\(p = 0.002\)</span>)</strong>.</li>
+<li><strong>임상적 의미</strong>: “동일한 거리를 이동한다고 가정할 때, MCI 군이 HC 군에 비해 훨씬 많은 시간을 소요한다”는 것을 뜻합니다. 이는 MCI 환자가 이동 중 방향을 잃거나 판단이 흐려져 <strong>자주 멈추고 제자리에 떠 있는 행동(Floating)</strong> 을 보이기 때문입니다.</li>
+</ul>
+</section>
+<section id="부유-시간-비율-time-floating" class="level3">
+<h3 class="anchored" data-anchor-id="부유-시간-비율-time-floating">3) 부유 시간 비율 (Time Floating %)</h3>
+<ul>
+<li><strong>통계 결과</strong>: 경로 보정 전(<span class="math inline">\(p = 0.003\)</span>)과 보정 후(<span class="math inline">\(p = 0.006\)</span>) <strong>모두 유의미한 집단 차이</strong>를 보였습니다.</li>
+<li><strong>임상적 의미</strong>: 부유 행동은 경로 길이와 통계적으로 음의 상관관계(<span class="math inline">\(r = -0.55\)</span>)를 보이지만, 그 교란 효과를 통계적으로 완벽히 제거하더라도 여전히 MCI 환자에게서 독자적으로 많이 관찰되는 강력한 병리적 특징입니다.</li>
+</ul>
+</section>
+<section id="보정-근접-거리-corrected-gallagher-proximity" class="level3">
+<h3 class="anchored" data-anchor-id="보정-근접-거리-corrected-gallagher-proximity">4) 보정 근접 거리 (Corrected Gallagher Proximity)</h3>
+<ul>
+<li><strong>통계 결과</strong>: 경로 보정 전에는 차이가 없었으나(<span class="math inline">\(p = 0.119\)</span>), <strong>경로 길이를 통제하자 집단 간 차이가 유의해졌습니다 (<span class="math inline">\(p = 0.022\)</span>)</strong>.</li>
+<li><strong>임상적 의미</strong>:
+<ul>
+<li>동일한 총 거리를 이동하더라도, MCI 군은 플랫폼 주변에서 탐색을 집중하지 못하고 플랫폼으로부터 먼 지역을 무작위로 방황했음을 의미합니다.</li>
+<li>이는 <strong>Cognitive Map(뇌 내 인지 지도)의 질적 손상을 시사하는 가장 직접적인 증거</strong>입니다. 정상인은 대략적인 위치 정보를 기반으로 타겟을 향해 수렴하며 이동하지만, MCI 환자는 단순 탐색 거리만 채울 뿐 타겟 방향으로의 지향성 없이 분산된 무작위 탐색을 수행하고 있음을 나타냅니다.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="결론-및-향후-분석-방향" class="level2">
+<h2 class="anchored" data-anchor-id="결론-및-향후-분석-방향">5. 결론 및 향후 분석 방향</h2>
+<p>이번 분석은 단순 소요 시간이나 경로 길이의 평균 비교로는 드러나지 않던 <strong>MCI 환자의 질적인 탐색 실패 요인</strong>들을 통계적 통제(이동 경로 통제)를 통해 효과적으로 규명했습니다.</p>
+<ol type="1">
+<li><strong>상호작용 효과 분석의 중요성</strong>: 집단 간 단순 평균 비교보다는 시행 반복에 따른 경향성 변화(기울기 상호작용)가 MCI 진단에 더 민감한 바이오마커로 작동할 수 있습니다.</li>
+<li><strong>분류기(Classifier) 개발 시 특성(Feature) 반영</strong>:
+<ul>
+<li>머신러닝/딥러닝 모델 개발 시, 단순 <code>Latency</code>나 <code>Path length</code> 단일 값보다는 <strong>시행 간 Path Length의 감소율(기울기)</strong> 및 <strong>이동거리 대비 소요시간 비율(이동 효율성)</strong>, <strong>이동거리 대비 근접 거리의 무작위도</strong> 등을 파생 변수(Derived Features)로 설계하여 입력하는 것이 분류 성능 향상에 크게 기여할 것입니다.</li>
+</ul></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

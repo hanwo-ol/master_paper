@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="김한울">
+<meta name="dcterms.date" content="2026-04-10">
+
+<title>Master Thesis Literature Review - 1. 시계열 어텐션 기반 FiLM 주입 (Temporal Attention-based FiLM Injection)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Master Thesis Literature Review</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.qmd">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">
+        <li>
+    <a class="dropdown-item" href="../posts/index.html">
+ <span class="dropdown-text">All posts</span></a>
+  </li>
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">1. 시계열 어텐션 기반 FiLM 주입 (Temporal Attention-based FiLM Injection)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">memo</div>
+              </div>
+                  </div>
+  </div>
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>김한울 </p>
+            </div>
+    </div>
+
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 10, 2026</p>
+      </div>
+    </div>
+
+
+    </div>
+
+
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#시계열-어텐션-기반-film-주입-temporal-attention-based-film-injection" id="toc-시계열-어텐션-기반-film-주입-temporal-attention-based-film-injection" class="nav-link active" data-scroll-target="#시계열-어텐션-기반-film-주입-temporal-attention-based-film-injection">1. 시계열 어텐션 기반 FiLM 주입 (Temporal Attention-based FiLM Injection)</a></li>
+  <li><a href="#공간-브로드캐스팅-및-spade-연동-spatial-broadcasting-spade-integration" id="toc-공간-브로드캐스팅-및-spade-연동-spatial-broadcasting-spade-integration" class="nav-link" data-scroll-target="#공간-브로드캐스팅-및-spade-연동-spatial-broadcasting-spade-integration">2. 공간 브로드캐스팅 및 SPADE 연동 (Spatial Broadcasting &amp; SPADE Integration)</a></li>
+  <li><a href="#잠재변수-기반-크로스-어텐션-주입-cross-attention-at-the-bottleneck" id="toc-잠재변수-기반-크로스-어텐션-주입-cross-attention-at-the-bottleneck" class="nav-link" data-scroll-target="#잠재변수-기반-크로스-어텐션-주입-cross-attention-at-the-bottleneck">3. 잠재변수 기반 크로스-어텐션 주입 (Cross-Attention at the Bottleneck)</a></li>
+  <li><a href="#확산-타임스텝-임베딩-모듈레이션-diffusion-timestep-embedding-modulation" id="toc-확산-타임스텝-임베딩-모듈레이션-diffusion-timestep-embedding-modulation" class="nav-link" data-scroll-target="#확산-타임스텝-임베딩-모듈레이션-diffusion-timestep-embedding-modulation">4. 확산 타임스텝 임베딩 모듈레이션 (Diffusion Timestep Embedding Modulation)</a></li>
+  <li><a href="#보조-구조-복원-손실-함수-auxiliary-structural-reconstruction-loss" id="toc-보조-구조-복원-손실-함수-auxiliary-structural-reconstruction-loss" class="nav-link" data-scroll-target="#보조-구조-복원-손실-함수-auxiliary-structural-reconstruction-loss">5. 보조 구조 복원 손실 함수 (Auxiliary Structural Reconstruction Loss)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>다변량 내재변수 시계열 <span class="math inline">\(\mathbf{V} \in \mathbb{R}^{T \times 5}\)</span> 결합을 위한 5가지 수학적 아이디어 다음은 5차원 내재변수(Latent Vector: LV1, LV3, LV4, GA, GB)가 과거 <span class="math inline">\(T\)</span>개의 시계열 프레임에 대해 <span class="math inline">\(\mathbf{V} = [\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_T]^\top \in \mathbb{R}^{T \times 5}\)</span> 형태로 주어질 때, 기존 확산 모델(Diffusion Model) 아키텍처에 통합하여 최종 테스트 MSE를 최소화하기 위한 5가지 수학적 접근법입니다. 코딩 용어를 철저히 배제하고 전체 파이프라인의 수식과 기호로 엄밀하게 정의하였습니다.</p>
+<p>기호 정의 (Notation)</p>
+<p><span class="math inline">\(\mathbf{X} \in \mathbb{R}^{T \times C \times H \times W}\)</span>: 입력 과거 이미지 시퀀스 (조건부 텐서)</p>
+<p><span class="math inline">\(\mathbf{x}_0 \in \mathbb{R}^{C \times H \times W}\)</span>: 모델이 예측해야 하는 타겟 시점의 원본 이미지 (Target GT)</p>
+<p><span class="math inline">\(\mathbf{x}_t \in \mathbb{R}^{C \times H \times W}\)</span>: 타임스텝 <span class="math inline">\(t \in (0, 1]\)</span> 에서의 노이즈가 추가된 확산 이미지</p>
+<p><span class="math inline">\(\mathbf{V} \in \mathbb{R}^{T \times 5}\)</span>: 입력 과거 시퀀스에 대응하는 내재변수 시계열 행렬. 각 <span class="math inline">\(\mathbf{v}_i \in \mathbb{R}^5\)</span></p>
+<p><span class="math inline">\(\mathbf{z}_{bottleneck} \in \mathbb{R}^{C' \times H' \times W'}\)</span>: UNet 인코더를 통과한 후의 병목(Bottleneck) 특징 맵</p>
+<p><span class="math inline">\(\mathcal{F}_{\theta}\)</span>: 학습 가능한 파라미터 <span class="math inline">\(\theta\)</span> 를 가지는 신경망 함수 (예: 인코더, 디코더, 어텐션)</p>
+<section id="시계열-어텐션-기반-film-주입-temporal-attention-based-film-injection" class="level1">
+<h1>1. 시계열 어텐션 기반 FiLM 주입 (Temporal Attention-based FiLM Injection)</h1>
+<p>개념: 기존 글로벌 특징(GLCM, 계절 정보)을 병합하는 FiLM(Feature-wise Linear Modulation) 계층에 시계열 내재변수 <span class="math inline">\(\mathbf{V}\)</span>를 단순히 평균내지 않고, 타임스텝과 비선형적 상호작용을 고려하여 어텐션 가중합 형태로 인코딩하여 주입합니다.</p>
+<p>입력 및 인코딩: <span class="math inline">\(\mathbf{V}\)</span>를 시퀀스 처리기 <span class="math inline">\(\mathcal{F}{seq}\)</span> (예: 1D-CNN 또는 Transformer 인코더)에 통과시켜 각 프레임 간의 시간적 역학 구조를 포착한 임베딩 <span class="math inline">\(\mathbf{E}V \in \mathbb{R}^{D}\)</span> 를 산출합니다.</p>
+<p><span class="math display">\[ \mathbf{E}_V = \text{Pooling}\Big(\mathcal{F}_{seq}(\mathbf{V})\Big) \]</span></p>
+<p>기존 스칼라 조건들(GLCM 행렬 <span class="math inline">\(\mathbf{C}{GLCM}\)</span>, 계절 임베딩 <span class="math inline">\(\mathbf{C}{season}\)</span>)과 연결합니다.</p>
+<p><span class="math display">\[ \mathbf{C}_{total} = [\mathbf{C}_{GLCM} \oplus \mathbf{C}_{season} \oplus \mathbf{E}_V] \in \mathbb{R}^{D_{total}} \]</span></p>
+<p>훈련 (Forward Pass): <span class="math inline">\(\mathbf{C}{total}\)</span>은 아핀 변환 행렬 <span class="math inline">\(\mathbf{W}\gamma, \mathbf{W}\beta\)</span>를 통해 크기(Scale) 및 이동(Shift) 파라미터로 사상됩니다.</p>
+<p><span class="math display">\[ \gamma = \mathbf{W}_\gamma \mathbf{C}_{total} + \mathbf{b}_\gamma, \quad \beta = \mathbf{W}_\beta \mathbf{C}_{total} + \mathbf{b}_\beta \]</span></p>
+<p>병목 특징 <span class="math inline">\(\mathbf{z}{bottleneck}\)</span>에 모듈레이션을 수행합니다.</p>
+<p><span class="math display">\[ \tilde{\mathbf{z}}_{bottleneck} = \gamma \odot \text{LayerNorm}(\mathbf{z}_{bottleneck}) + \beta \]</span></p>
+<p>검증 및 추론: 테스트 시 <span class="math inline">\(\mathbf{V}\)</span> 시퀀스가 입력되면 동일한 <span class="math inline">\(\mathcal{F}_{seq}\)</span>를 거쳐 고정된 <span class="math inline">\(\gamma, \beta\)</span>로 평가되며, 글로벌 구조 방정식(LV/GA/GB)이 전체 맵의 생성 방향(Style/Structure)을 제어하여 MSE를 감소시킵니다.</p>
+</section>
+<section id="공간-브로드캐스팅-및-spade-연동-spatial-broadcasting-spade-integration" class="level1">
+<h1>2. 공간 브로드캐스팅 및 SPADE 연동 (Spatial Broadcasting &amp; SPADE Integration)</h1>
+<p>개념: 전역(Global) 스칼라인 내재변수를 공간(Spatial) 맵 형태로 브로드캐스팅(Broadcasting)하여, 기존에 적용되고 있는 2D 라플라시안(Laplacian) 공간 조건과 융합한 뒤 SPADE 블록에 직접 주입합니다. 내재변수에 따른 지역적(Local) 민감도를 학습하도록 강제합니다.</p>
+<p>입력 및 인코딩: 시퀀스의 마지막 시점 내재변수 <span class="math inline">\(\mathbf{v}_T \in \mathbb{R}^5\)</span> (또는 <span class="math inline">\(\mathbf{V}\)</span>의 가중 평균 <span class="math inline">\(\bar{\mathbf{v}}\)</span>)를 1D <span class="math inline">\(\rightarrow\)</span> 2D 브로드캐스팅 연산자 <span class="math inline">\(\mathcal{B}\)</span>를 통해 공간 조건의 해상도 <span class="math inline">\(H \times W\)</span>로 복제합니다.</p>
+<p><span class="math display">\[ \mathbf{S}_V = \mathcal{B}(\mathbf{v}_T) \in \mathbb{R}^{5 \times H \times W} \]</span></p>
+<p>이를 기존 라플라시안 특징 맵 <span class="math inline">\(\mathbf{L} \in \mathbb{R}^{1 \times H \times W}\)</span> 과 채널 차원으로 연결합니다.</p>
+<p><span class="math display">\[ \mathbf{M}_{cond} = [\mathbf{L} \oplus \mathbf{S}_V] \in \mathbb{R}^{6 \times H \times W} \]</span></p>
+<p>훈련 (Forward Pass): SPADE(Spatially-Adaptive Normalization) 계층 내에서 <span class="math inline">\(\mathbf{M}{cond}\)</span>는 두 개의 합성곱 계층 <span class="math inline">\(\mathcal{F}{\gamma_spade}, \mathcal{F}_{\beta_spade}\)</span> 을 통과하여 공간 의존적인 파라미터 행렬을 산출합니다.</p>
+<p>디코더 특징 맵 <span class="math inline">\(\mathbf{h} \in \mathbb{R}^{C \times H \times W}\)</span> 에 대해:</p>
+<p><span class="math display">\[ \boldsymbol{\Gamma} = \mathcal{F}_{\gamma\_spade}(\mathbf{M}_{cond}), \quad \mathbf{B} = \mathcal{F}_{\beta\_spade}(\mathbf{M}_{cond}) \]</span></p>
+<p><span class="math display">\[ \tilde{\mathbf{h}} = \boldsymbol{\Gamma} \odot \frac{\mathbf{h} - \mu(\mathbf{h})}{\sigma(\mathbf{h})} + \mathbf{B} \]</span></p>
+<p>검증 및 추론: 라플라시안이 포착하는 엣지(Edge) 정보와 <span class="math inline">\(\mathbf{v}_T\)</span> 가 함의하는 구조적 지표가 화소(Pixel) 단위로 얽히게 되어, 테스트 셋의 구조적 변형을 세밀하게 제어(MSE 감소)합니다.</p>
+</section>
+<section id="잠재변수-기반-크로스-어텐션-주입-cross-attention-at-the-bottleneck" class="level1">
+<h1>3. 잠재변수 기반 크로스-어텐션 주입 (Cross-Attention at the Bottleneck)</h1>
+<p>개념: 병목(Bottleneck) 구간에서 이미지 특징은 질의(Query)로, 내재변수 시계열 행렬 <span class="math inline">\(\mathbf{V}\)</span>는 키(Key)와 값(Value)으로 취급하는 크로스-어텐션(Cross-Attention) 연산을 도입하여 차원 간 이질성을 극복합니다.</p>
+<p>입력 및 인코딩: 입력 행렬 <span class="math inline">\(\mathbf{V} \in \mathbb{R}^{T \times 5}\)</span>를 다층 퍼셉트론 <span class="math inline">\(\mathcal{F}_{mlp}\)</span>에 통과시켜 특성 차원을 <span class="math inline">\(D_k\)</span>로 프로젝션합니다.</p>
+<p><span class="math display">\[ \mathbf{K} = \mathcal{F}_{mlp\_k}(\mathbf{V}) \in \mathbb{R}^{T \times D_k}, \quad \mathbf{V}_{val} = \mathcal{F}_{mlp\_v}(\mathbf{V}) \in \mathbb{R}^{T \times D_k} \]</span></p>
+<p>훈련 (Forward Pass): 병목 특징 <span class="math inline">\(\mathbf{z}{bottleneck} \in \mathbb{R}^{C' \times H' \times W'}\)</span>을 평탄화(Flatten)하여 <span class="math inline">\(N = H' \times W'\)</span> 길이를 갖는 시퀀스로 변환하고 이를 질의 <span class="math inline">\(\mathbf{Q} \in \mathbb{R}^{N \times D_k}\)</span>로 투영합니다.</p>
+<p><span class="math display">\[ \mathbf{Q} = \mathcal{F}_{mlp\_q}(\text{Flatten}(\mathbf{z}_{bottleneck})) \]</span></p>
+<p>내적 기반 크로스 어텐션 <span class="math inline">\(\mathcal{A}\)</span> 연산을 수행합니다:</p>
+<p><span class="math display">\[ \mathbf{Z}_{attn} = \text{Softmax}\left( \frac{\mathbf{Q} \mathbf{K}^\top}{\sqrt{D_k}} \right) \mathbf{V}_{val} \in \mathbb{R}^{N \times D_k} \]</span></p>
+<p>이후 <span class="math inline">\(\mathbf{Z}{attn}\)</span>을 다시 <span class="math inline">\(H' \times W'\)</span> 형태의 텐서로 재배열(Reshape)한 뒤 기존 병목 텐서에 잔차(Residual)로 더해줍니다.</p>
+<p><span class="math display">\[ \tilde{\mathbf{z}}_{bottleneck} = \mathbf{z}_{bottleneck} + \mathcal{F}_{out}(\text{Reshape}(\mathbf{Z}_{attn})) \]</span></p>
+<p>검증 및 추론: 이미지 상의 각 공간적 픽셀 위치가 과거 <span class="math inline">\(T\)</span>개의 내재변수 역학 중 어느 시점에 집중해야 할지 동적으로 결정하므로, 강건한 미래 분포 예측이 가능합니다.</p>
+</section>
+<section id="확산-타임스텝-임베딩-모듈레이션-diffusion-timestep-embedding-modulation" class="level1">
+<h1>4. 확산 타임스텝 임베딩 모듈레이션 (Diffusion Timestep Embedding Modulation)</h1>
+<p>개념: 내재변수가 모델 전체의 시간적 생성을 포괄적으로 제어하도록, 확산 모델의 뼈대가 되는 타임스텝 임베딩(Timestep Embedding) 자체를 내재변수로 변조합니다.</p>
+<p>입력 및 인코딩: 정현파(Sinusoidal) 타임스텝 <span class="math inline">\(t\)</span>에 대한 임베딩 벡터 <span class="math inline">\(\mathbf{e}t \in \mathbb{R}^D\)</span>가 존재합니다. 시계열 변수 <span class="math inline">\(\mathbf{V}\)</span>를 인코더 <span class="math inline">\(\mathcal{F}{latent}\)</span> 에 통과시켜 동일한 차원 <span class="math inline">\(\mathbb{R}^D\)</span>를 갖는 컨텍스트 벡터 <span class="math inline">\(\mathbf{c}_V\)</span>를 생성합니다.</p>
+<p><span class="math display">\[ \mathbf{c}_V = \mathcal{F}_{latent}(\mathbf{V}) \]</span></p>
+<p>훈련 (Forward Pass): 시간 임베딩 <span class="math inline">\(\mathbf{e}_t\)</span> 와 내재 컨텍스트 <span class="math inline">\(\mathbf{c}_V\)</span> 를 비선형적으로 결합(예: Gated Linear Unit, 혹은 하다마르 곱)하여 변조된 시간 임베딩 <span class="math inline">\(\tilde{\mathbf{e}}_t\)</span> 를 생성합니다.</p>
+<p><span class="math display">\[ \tilde{\mathbf{e}}_t = \sigma(\mathbf{W}_1 \mathbf{c}_V) \odot \mathbf{e}_t + \mathbf{W}_2 \mathbf{c}_V \]</span></p>
+<p>이렇게 변조된 타임스텝 임베딩 <span class="math inline">\(\tilde{\mathbf{e}}_t\)</span>는 UNet의 모든 ResBlock에 위치한 잔차 연결 부위로 전달됩니다.</p>
+<p>검증 및 추론: 확산(Diffusion) 과정(노이즈 제거 단계 전체)이 단일 타임스텝이 아닌 “구조방정식(내재변수) 조건부 타임스텝”의 유도를 받게 되어, 구조 역학이 불안정한 데이터(Outlier)에 대한 재구성 오차(MSE)를 근본적으로 방어합니다.</p>
+</section>
+<section id="보조-구조-복원-손실-함수-auxiliary-structural-reconstruction-loss" class="level1">
+<h1>5. 보조 구조 복원 손실 함수 (Auxiliary Structural Reconstruction Loss)</h1>
+<p>개념: 병목(Bottleneck) 표현이 암묵적으로 미래의 내재 변수 구조를 인지하도록, 미래 시점(타겟)의 내재변수 <span class="math inline">\(\mathbf{v}{T+1}\)</span>를 모델 스스로 추론하게 만드는 보조 손실(Auxiliary Loss)을 도입합니다. (<em>단, 추론 시점에는 미래 <span class="math inline">\(\mathbf{v}{T+1}\)</span>가 필요하지 않은 Asymmetric 설계입니다.</em>)</p>
+<p>입력 및 인코딩: 훈련 데이터는 <span class="math inline">\({\mathbf{X}, \mathbf{x}0, \mathbf{V}, \mathbf{v}{target}}\)</span> 로 구성된다고 가정합니다. (<span class="math inline">\(\mathbf{v}_{target}\)</span> 은 <span class="math inline">\(\mathbf{x}_0\)</span> 에 해당하는 타겟 내재변수)</p>
+<p>훈련 (Forward Pass &amp; Loss): UNet 병목(Bottleneck) 특징 <span class="math inline">\(\mathbf{z}{bottleneck}\)</span> 위에 별도의 경량 프로젝션 헤드 <span class="math inline">\(\mathcal{H}{aux}\)</span> 를 부착합니다.</p>
+<p><span class="math display">\[ \hat{\mathbf{v}}_{target} = \mathcal{H}_{aux}(\mathbf{z}_{bottleneck}) \]</span></p>
+<p>최종 손실 함수 <span class="math inline">\(\mathcal{L}{total}\)</span> 은 주 목적인 V-prediction 손실 <span class="math inline">\(\mathcal{L}{diff}\)</span> 에 보조 MSE 손실 <span class="math inline">\(\mathcal{L}_{aux}\)</span> 을 선형 결합합니다.</p>
+<p><span class="math display">\[ \mathcal{L}_{aux} = \lambda \cdot \| \hat{\mathbf{v}}_{target} - \mathbf{v}_{target} \|_2^2 \]</span></p>
+<p><span class="math display">\[ \mathcal{L}_{total} = \mathcal{L}_{diff}(\mathbf{x}_t, \epsilon_{\theta}(\dots)) + \mathcal{L}_{aux} \]</span> 여기서 <span class="math inline">\(\lambda\)</span>는 가중치 하이퍼파라미터입니다.</p>
+<p>검증 및 추론: 테스트 환경에서는 보조 헤드 <span class="math inline">\(\mathcal{H}_{aux}\)</span> 를 폐기(Discard)합니다. 하지만 이미 모델 파라미터 <span class="math inline">\(\theta\)</span>는 훈련 과정을 통해 구조방정식 지표(<span class="math inline">\(\mathbf{v}\)</span>)의 메커니즘을 병목 벡터에 강제로 함의하도록 정규화(Regularization)되었기 때문에, 추가적인 연산량 증가 없이 추론 이미지의 테스트 MSE가 하락하는 효과를 얻게 됩니다.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
