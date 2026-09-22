@@ -2,11 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/sub_1/notebooks/04_Backtesting_Analysis.html",
-      "/posts/sub_1/notebooks/03_Uncertainty_Decomposition.html",
-      "/posts/sub_1/notebooks/05_Business_Value.html",
-      "/posts/sub_1/notebooks/02_Model_Training.html",
-      "/posts/sub_1/notebooks/01_Exploratory_Data_Analysis.html",
       "/posts/index.html",
       "/posts/about.html",
       "/posts/vesti_memo/20260704_2.html",
@@ -38,7 +33,6 @@
       "/posts/root_memo.html",
       "/posts/디퓨전아이디어.html",
       "/posts/vesti_memo/wei/paper1_memo1.html",
-      "/posts/vesti_memo/wei/0716authorQuery.html",
       "/posts/vesti_memo/wei/0720reviewer-attack.html",
       "/posts/vesti_memo/gait_trc_1.html",
       "/posts/vesti_memo/chen0706.html",
@@ -82,13 +76,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
-      "/posts/sub_1/notebooks/01_Exploratory_Data_Analysis.html",
       "/posts/npj_memo/variables_definition.html",
-      "/posts/sub_1/notebooks/02_Model_Training.html",
-      "/posts/sub_1/notebooks/03_Uncertainty_Decomposition.html",
-      "/posts/sub_1/notebooks/04_Backtesting_Analysis.html",
-      "/posts/sub_1/notebooks/05_Business_Value.html",
-      "/posts/vesti_memo/wei/0716authorQuery.html",
       "/posts/vesti_memo/wei/0720reviewer-attack.html",
       "/posts/memo/20260414.html",
       "/posts/디퓨전아이디어.html",
